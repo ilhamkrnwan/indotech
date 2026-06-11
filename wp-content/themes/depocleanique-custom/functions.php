@@ -23,6 +23,14 @@ function depocleanique_enqueue_assets() {
         null
     );
 
+    // Google Fonts — Material Symbols Outlined (icon font dipakai header/footer/section)
+    wp_enqueue_style(
+        'depocleanique-material-symbols',
+        'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap',
+        [],
+        null
+    );
+
     // Tailwind CSS CDN (sementara untuk testing)
     wp_enqueue_script(
         'depocleanique-tailwind',

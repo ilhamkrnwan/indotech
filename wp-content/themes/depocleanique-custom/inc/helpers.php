@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string
  */
 function dc_get_wa_number() {
-    return get_theme_mod( 'dc_wa_number', '6281234567890' );
+    return get_theme_mod( 'dc_wa_number', '6285600061005' );
 }
 
 /**
@@ -36,7 +36,7 @@ function dc_get_wa_number() {
  * @return string
  */
 function dc_get_wa_label() {
-    return get_theme_mod( 'dc_wa_label', '+62 812-3456-7890' );
+    return get_theme_mod( 'dc_wa_label', '0856-0006-1005' );
 }
 
 /**
@@ -64,6 +64,7 @@ function dc_get_wa_url( $context = 'default', $custom = '' ) {
             'cta'         => 'Halo Depo Cleanique! Saya siap bergabung sebagai mitra.',
             'contact'     => 'Halo Depo Cleanique! Saya ingin berkonsultasi.',
             'floating'    => 'Halo Depo Cleanique! Saya ingin bertanya mengenai produk dan kemitraan.',
+            'footer'      => 'Halo Depo Cleanique! Saya ingin bertanya lebih lanjut.',
             'about'       => 'Halo Depo Cleanique! Saya ingin mengenal lebih jauh tentang peluang kemitraan.',
             'faq'         => 'Halo Depo Cleanique! Saya punya pertanyaan.',
             'default'     => 'Halo Depo Cleanique!',
@@ -94,7 +95,7 @@ function dc_get_email() {
 function dc_get_address() {
     return get_theme_mod(
         'dc_address',
-        "Jl. Contoh No. 123\nKelurahan, Kecamatan\nKota, Provinsi 12345\nIndonesia"
+        "Jongke Tengah No. 30 RT.01/RW.23\nMlati, Sleman\nYogyakarta 55285\nIndonesia"
     );
 }
 

@@ -42,30 +42,30 @@ function depocleanique_customizer_register( $wp_customize ) {
 
     // ── Nomor WhatsApp ─────────────────────────────
     $wp_customize->add_setting( 'dc_wa_number', [
-        'default'           => '6281234567890',
+        'default'           => '6285600061005',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ] );
     $wp_customize->add_control( 'dc_wa_number', [
         'label'       => __( 'Nomor WhatsApp', 'depocleanique-custom' ),
-        'description' => __( 'Tanpa tanda +, spasi, atau strip. Contoh: 6281234567890', 'depocleanique-custom' ),
+        'description' => __( 'Tanpa tanda +, spasi, atau strip. Contoh: 6285600061005', 'depocleanique-custom' ),
         'section'     => 'dc_contact_section',
         'type'        => 'text',
-        'input_attrs' => [ 'placeholder' => '6281234567890' ],
+        'input_attrs' => [ 'placeholder' => '6285600061005' ],
     ] );
 
     // ── Label Tampil Nomor WA ──────────────────────
     $wp_customize->add_setting( 'dc_wa_label', [
-        'default'           => '+62 812-3456-7890',
+        'default'           => '0856-0006-1005',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ] );
     $wp_customize->add_control( 'dc_wa_label', [
         'label'       => __( 'Label Tampil WhatsApp', 'depocleanique-custom' ),
-        'description' => __( 'Format cantik yang ditampilkan ke pengunjung. Contoh: +62 812-3456-7890', 'depocleanique-custom' ),
+        'description' => __( 'Format cantik yang ditampilkan ke pengunjung. Contoh: 0856-0006-1005', 'depocleanique-custom' ),
         'section'     => 'dc_contact_section',
         'type'        => 'text',
-        'input_attrs' => [ 'placeholder' => '+62 812-3456-7890' ],
+        'input_attrs' => [ 'placeholder' => '0856-0006-1005' ],
     ] );
 
     // ── Email ──────────────────────────────────────
@@ -83,7 +83,7 @@ function depocleanique_customizer_register( $wp_customize ) {
 
     // ── Alamat ─────────────────────────────────────
     $wp_customize->add_setting( 'dc_address', [
-        'default'           => "Jl. Contoh No. 123\nKelurahan, Kecamatan\nKota, Provinsi 12345\nIndonesia",
+        'default'           => "Jongke Tengah No. 30 RT.01/RW.23\nMlati, Sleman\nYogyakarta 55285\nIndonesia",
         'sanitize_callback' => 'sanitize_textarea_field',
         'transport'         => 'refresh',
     ] );
