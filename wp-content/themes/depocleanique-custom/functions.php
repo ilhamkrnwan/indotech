@@ -146,6 +146,25 @@ function depocleanique_enqueue_assets() {
         $v,
         true
     );
+
+    $is_product_search = is_search() && 'product' === get_query_var( 'post_type' );
+    $is_wc_context     = function_exists( 'is_shop' )
+        && (
+            is_shop()
+            || is_product()
+            || is_product_category()
+            || is_product_tag()
+            || $is_product_search
+        );
+
+    if ( $is_wc_context ) {
+        wp_enqueue_style(
+            'depocleanique-woocommerce',
+            $uri . '/assets/css/woocommerce.css',
+            [ 'depocleanique-main' ],
+            $v
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'depocleanique_enqueue_assets' );
 
@@ -153,6 +172,10 @@ add_action( 'wp_enqueue_scripts', 'depocleanique_enqueue_assets' );
 function depocleanique_theme_setup() {
     add_theme_support( 'title-tag' );
     add_theme_support( 'post-thumbnails' );
+    add_theme_support( 'woocommerce' );
+    add_theme_support( 'wc-product-gallery-zoom' );
+    add_theme_support( 'wc-product-gallery-lightbox' );
+    add_theme_support( 'wc-product-gallery-slider' );
     add_post_type_support( 'page', 'excerpt' );
     add_theme_support( 'html5', [
         'search-form',

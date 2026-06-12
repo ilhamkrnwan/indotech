@@ -15,6 +15,14 @@ $dc_anchor = static function ( $id ) {
     return is_front_page() ? '#' . $id : esc_url( home_url( '/#' . $id ) );
 };
 
+$dc_catalog_url = function_exists( 'wc_get_page_permalink' )
+    ? wc_get_page_permalink( 'shop' )
+    : home_url( '/katalog/' );
+
+if ( empty( $dc_catalog_url ) ) {
+    $dc_catalog_url = home_url( '/katalog/' );
+}
+
 $dc_year = date( 'Y' );
 
 // Kolom navigasi — label => href
@@ -25,7 +33,7 @@ $dc_foot_company = [
 ];
 $dc_foot_service = [
     [ 'label' => __( 'Paket Kemitraan', 'depocleanique-custom' ),  'href' => $dc_anchor( 'paket' ) ],
-    [ 'label' => __( 'Katalog Produk', 'depocleanique-custom' ),   'href' => $dc_anchor( 'katalog' ) ],
+    [ 'label' => __( 'Katalog Produk', 'depocleanique-custom' ),   'href' => esc_url( $dc_catalog_url ) ],
     [ 'label' => __( 'Alur Kemitraan', 'depocleanique-custom' ),   'href' => $dc_anchor( 'alur-kemitraan' ) ],
 ];
 

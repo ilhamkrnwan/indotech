@@ -22,11 +22,29 @@ $dc_anchor = static function ( $id ) {
     return is_front_page() ? '#' . $id : esc_url( home_url( '/#' . $id ) );
 };
 
+$dc_catalog_url = function_exists( 'wc_get_page_permalink' )
+    ? wc_get_page_permalink( 'shop' )
+    : home_url( '/katalog/' );
+
+if ( empty( $dc_catalog_url ) ) {
+    $dc_catalog_url = home_url( '/katalog/' );
+}
+
+$dc_catalog_active = is_page( 'katalog' );
+
+if ( function_exists( 'is_shop' ) ) {
+    $dc_catalog_active = $dc_catalog_active
+        || is_shop()
+        || is_product_category()
+        || is_product_tag()
+        || is_product();
+}
+
 // Daftar link navigasi — label => href
 $dc_nav_links = [
     [ 'label' => __( 'Beranda', 'depocleanique-custom' ),      'href' => esc_url( home_url( '/' ) ),              'active' => is_front_page() ],
     [ 'label' => __( 'Tentang Kami', 'depocleanique-custom' ), 'href' => esc_url( home_url( '/tentang-kami/' ) ), 'active' => is_page( 'tentang-kami' ) ],
-    [ 'label' => __( 'Produk', 'depocleanique-custom' ),       'href' => $dc_anchor( 'katalog' ),                 'active' => false ],
+    [ 'label' => __( 'Katalog', 'depocleanique-custom' ),      'href' => esc_url( $dc_catalog_url ),              'active' => $dc_catalog_active ],
     [ 'label' => __( 'Paket', 'depocleanique-custom' ),        'href' => $dc_anchor( 'paket' ),                   'active' => false ],
     [ 'label' => __( 'Kemitraan', 'depocleanique-custom' ),    'href' => $dc_anchor( 'alur-kemitraan' ),          'active' => false ],
     [ 'label' => __( 'FAQ', 'depocleanique-custom' ),          'href' => $dc_anchor( 'faq' ),                     'active' => false ],
