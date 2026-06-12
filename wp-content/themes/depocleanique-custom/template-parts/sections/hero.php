@@ -1,90 +1,154 @@
 <?php
 /**
  * Section: Hero
- * Bagian utama landing page — headline, CTA, visual.
+ * Diport dari _landing-source.html — split layout, float cards, stats.
+ * Gambar lokal: assets/images/hero-store.jpg (path via get_template_directory_uri()).
+ * CTA WhatsApp via helper dc_get_wa_url().
  */
 
-// TODO: Teks placeholder — ganti dengan konten final saat migrasi landing page.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+$dc_img = get_template_directory_uri() . '/assets/images';
 ?>
 
-<section id="hero" class="relative bg-gradient-to-br from-teal-50 via-white to-cyan-50 py-20 lg:py-28 overflow-hidden">
+<header class="hero-bg relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden">
+    <!-- Decorative blobs -->
+    <div class="hero-blob-green" style="top: -120px; right: -80px"></div>
+    <div class="hero-blob-blue" style="bottom: -60px; left: -60px"></div>
+    <!-- Soft grid texture overlay -->
+    <div class="absolute inset-0 pointer-events-none"
+         style="background-image: radial-gradient(rgba(8,121,201,0.05) 1px, transparent 1px); background-size: 28px 28px; opacity: 0.7;"></div>
 
-    <!-- Background decoration -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-teal-100 rounded-full opacity-30 blur-3xl"></div>
-        <div class="absolute bottom-0 -left-24 w-72 h-72 bg-cyan-100 rounded-full opacity-40 blur-3xl"></div>
-    </div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
-            <!-- Left: Text content -->
-            <div>
-                <span class="dc-section-label">
-                    🧼 Produk Kebersihan Premium
-                </span>
-                <h1 class="text-4xl lg:text-5xl xl:text-[3.25rem] font-bold text-gray-900 leading-tight mb-5">
-                    Solusi Bersih<br>
-                    <span class="text-teal-600">Rumah Tangga</span><br>
-                    Anda
-                </h1>
-                <p class="text-lg text-gray-600 leading-relaxed mb-8 max-w-lg">
-                    Depo Cleanique menghadirkan produk sabun curah dan homecare berkualitas tinggi dengan harga terjangkau. Mulai usaha kemitraan yang menguntungkan bersama kami.
-                </p>
-                <div class="flex flex-wrap gap-3">
-                    <a href="<?php echo esc_url( home_url( '/#paket' ) ); ?>"
-                       class="bg-teal-600 hover:bg-teal-700 active:bg-teal-800 text-white px-6 py-3.5 rounded-xl font-semibold text-sm transition-colors">
-                        Lihat Paket Kemitraan
-                    </a>
-                    <a href="<?php echo esc_url( dc_get_wa_url( 'hero' ) ); ?>"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="border-2 border-gray-300 hover:border-teal-400 hover:text-teal-600 text-gray-700 px-6 py-3.5 rounded-xl font-semibold text-sm transition-colors flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                        </svg>
-                        Konsultasi Gratis
-                    </a>
+    <div class="container mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
+        <div class="grid md:grid-cols-2 gap-14 lg:gap-24 items-center">
+            <!-- ────────────── LEFT : Copy ────────────── -->
+            <div class="space-y-8">
+                <!-- Badge -->
+                <div class="hero-badge">
+                    <span class="material-symbols-outlined" style="font-size: 15px; color: #78be20; font-variation-settings: 'FILL' 1;">verified</span>
+                    <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #075a96;">
+                        <?php esc_html_e( 'Terpercaya Sejak 2011', 'depocleanique-custom' ); ?>
+                    </span>
                 </div>
 
-                <!-- Trust indicators -->
-                <div class="flex flex-wrap items-center gap-5 mt-8 pt-8 border-t border-gray-200">
-                    <div class="flex items-center gap-1.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-sm text-gray-600">Produk Bersertifikat</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-sm text-gray-600">Support Penuh</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-sm text-gray-600">Modal Terjangkau</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right: Visual placeholder -->
-            <div class="relative hidden lg:block">
-                <div class="w-full aspect-square max-w-md mx-auto bg-gradient-to-br from-teal-100 to-cyan-50 rounded-3xl flex items-center justify-center">
-                    <div class="text-center">
-                        <div class="w-24 h-24 bg-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                <!-- Headline -->
+                <div>
+                    <h1 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(36px, 5vw, 56px); font-weight: 800; line-height: 1.1; letter-spacing: -0.025em; color: #17212b;">
+                        <?php esc_html_e( 'Peluang Usaha', 'depocleanique-custom' ); ?><br />
+                        <span style="color: #0879c9; position: relative; display: inline-block;">
+                            <?php esc_html_e( 'Depo Sabun Curah', 'depocleanique-custom' ); ?>
+                            <!-- Underline accent -->
+                            <svg aria-hidden="true" style="position: absolute; bottom: -6px; left: 0; width: 100%; height: 8px;" viewBox="0 0 300 8" preserveAspectRatio="none">
+                                <path d="M0 6 Q75 0 150 5 Q225 10 300 4" stroke="#78be20" stroke-width="3" fill="none" stroke-linecap="round" />
                             </svg>
+                        </span>
+                        <br />&amp; Homecare
+                    </h1>
+                </div>
+
+                <!-- Body -->
+                <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; line-height: 1.7; color: #66727d; max-width: 440px;">
+                    <?php esc_html_e( 'Investasi cerdas dengan dukungan', 'depocleanique-custom' ); ?>
+                    <strong style="color: #075a96"><?php esc_html_e( 'AI marketing', 'depocleanique-custom' ); ?></strong>
+                    <?php esc_html_e( 'dan produk kebutuhan harian yang pasti laku. Ekosistem bisnis modern yang teruji.', 'depocleanique-custom' ); ?>
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap gap-3">
+                    <a class="hero-cta-primary"
+                       href="<?php echo esc_url( dc_get_wa_url( 'hero' ) ); ?>"
+                       target="_blank" rel="noopener noreferrer">
+                        <?php esc_html_e( 'Mulai Investasi', 'depocleanique-custom' ); ?>
+                        <span class="material-symbols-outlined" style="font-size: 18px">trending_up</span>
+                    </a>
+                    <a class="hero-cta-ghost" href="<?php echo esc_url( home_url( '/#keunggulan' ) ); ?>">
+                        <?php esc_html_e( 'Pelajari Selengkapnya', 'depocleanique-custom' ); ?>
+                    </a>
+                </div>
+
+                <!-- Animated social proof ticker -->
+                <div class="hero-ticker" aria-label="<?php esc_attr_e( 'Ringkasan kepercayaan dan performa Depo Cleanique', 'depocleanique-custom' ); ?>">
+                    <?php
+                    $hero_ticker_items = [
+                        '500+ Mitra Aktif',
+                        '74% Growth YoY',
+                        'Break Even 4&ndash;6 Bulan',
+                        'Dipercaya UMKM &amp; Retail',
+                        'Produk Kebutuhan Harian',
+                        'Support Marketing &amp; Branding',
+                    ];
+                    ?>
+                    <?php for ( $i = 0; $i < 2; $i++ ) : ?>
+                        <div class="hero-ticker-track" aria-hidden="<?php echo 0 === $i ? 'false' : 'true'; ?>">
+                            <?php foreach ( $hero_ticker_items as $item ) : ?>
+                                <span class="hero-ticker-item">
+                                    <?php echo wp_kses_post( $item ); ?>
+                                </span>
+                            <?php endforeach; ?>
                         </div>
-                        <p class="text-teal-700 font-semibold text-sm">Foto Produk</p>
-                        <p class="text-teal-500 text-xs mt-1">Akan diganti saat migrasi</p>
-                    </div>
+                    <?php endfor; ?>
                 </div>
             </div>
 
+            <!-- ────────────── RIGHT : Visual ────────────── -->
+            <div class="hidden md:block relative" style="padding: 20px 20px 40px 10px">
+                <!-- Main image -->
+                <div class="hero-image-wrap" style="aspect-ratio: 4/3; position: relative">
+                    <img src="<?php echo esc_url( $dc_img . '/hero-store.jpg' ); ?>"
+                         alt="<?php esc_attr_e( 'Depo Cleanique Store', 'depocleanique-custom' ); ?>"
+                         style="width: 100%; height: 100%; object-fit: cover;" />
+                    <!-- Subtle vignette at bottom -->
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.12) 0%, transparent 40%); border-radius: 28px;"></div>
+                    <!-- Label chip on image -->
+                    <div style="position: absolute; top: 16px; left: 16px; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-radius: 12px; padding: 6px 14px; display: flex; align-items: center; gap: 6px;">
+                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #78be20; display: inline-block;"></span>
+                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; color: #17212b;"><?php esc_html_e( 'Buka Sekarang', 'depocleanique-custom' ); ?></span>
+                    </div>
+                </div>
+
+                <!-- Float Card: Investment (bottom-left) -->
+                <div class="float-card float-anim" style="position: absolute; bottom: -28px; left: -24px; padding: 16px 20px; min-width: 190px;">
+                    <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600; color: #66727d; letter-spacing: 0.04em; text-transform: uppercase;"><?php esc_html_e( 'Min. Investment', 'depocleanique-custom' ); ?></p>
+                    <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 800; color: #123b5d; margin: 4px 0 8px;">Rp 15 Juta</p>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span class="material-symbols-outlined" style="font-size: 14px; color: #4d7f0b; font-variation-settings: 'FILL' 1;">trending_up</span>
+                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; color: #4d7f0b;"><?php esc_html_e( '+74% per tahun', 'depocleanique-custom' ); ?></span>
+                    </div>
+                </div>
+
+                <!-- Float Card: Progress (top-right) -->
+                <div class="float-card float-anim-slow" style="position: absolute; top: -20px; right: -20px; padding: 16px 20px; min-width: 180px;">
+                    <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600; color: #66727d; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px;"><?php esc_html_e( 'Target Progress', 'depocleanique-custom' ); ?></p>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; color: #17212b;">Q4 2024</span>
+                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; color: #075a96;">88%</span>
+                    </div>
+                    <div style="width: 100%; height: 7px; background: #eaf6fd; border-radius: 999px; overflow: hidden;">
+                        <div class="mini-bar" style="width: 88%; height: 100%"></div>
+                    </div>
+                    <!-- Mini bar chart -->
+                    <div style="display: flex; align-items: flex-end; gap: 3px; margin-top: 12px; height: 28px;">
+                        <div style="flex: 1; background: #cfefff; border-radius: 3px 3px 0 0; height: 45%;"></div>
+                        <div style="flex: 1; background: #8fd1f5; border-radius: 3px 3px 0 0; height: 60%;"></div>
+                        <div style="flex: 1; background: #0879c9; border-radius: 3px 3px 0 0; height: 75%;"></div>
+                        <div style="flex: 1; background: #78be20; border-radius: 3px 3px 0 0; height: 100%;"></div>
+                    </div>
+                </div>
+
+                <!-- Float Card: Break Even (bottom-right) -->
+                <div class="float-card" style="position: absolute; bottom: -16px; right: 20px; padding: 14px 18px; display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 40px; height: 40px; border-radius: 12px; background: #eaf6fd; display: flex; align-items: center; justify-content: center;">
+                        <span class="material-symbols-outlined" style="font-size: 20px; color: #0879c9; font-variation-settings: 'FILL' 1;">schedule</span>
+                    </div>
+                    <div>
+                        <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600; color: #66727d;"><?php esc_html_e( 'Break Even', 'depocleanique-custom' ); ?></p>
+                        <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 800; color: #123b5d;">4&ndash;6 Bulan</p>
+                    </div>
+                </div>
+            </div>
+            <!-- end RIGHT -->
         </div>
     </div>
-</section>
+</header>

@@ -1,15 +1,8 @@
-<?php
-/**
- * Template: Front Page
- * Titik masuk utama landing page Depo Cleanique.
- * Setiap section dipanggil via get_template_part() agar modular dan mudah diedit.
- */
+<?php get_header(); ?>
 
-get_header();
-get_template_part( 'template-parts/layout/site-header' );
-?>
+<?php get_template_part( 'template-parts/layout/site-header' ); ?>
 
-<main id="main-content">
+<main id="primary" class="site-main">
     <?php get_template_part( 'template-parts/sections/hero' ); ?>
     <?php get_template_part( 'template-parts/sections/social-proof' ); ?>
     <?php get_template_part( 'template-parts/sections/about-preview' ); ?>

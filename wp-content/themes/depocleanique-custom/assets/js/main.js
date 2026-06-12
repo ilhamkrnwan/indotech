@@ -11,17 +11,39 @@ document.addEventListener("DOMContentLoaded", function () {
   const iconClose = document.getElementById("icon-close");
 
   function openMobileMenu() {
+    if (!menuToggle || !mobileMenu) {
+      return;
+    }
+
     mobileMenu.classList.remove("hidden");
+    mobileMenu.classList.add("is-open");
     menuToggle.setAttribute("aria-expanded", "true");
-    iconHamburger.classList.add("hidden");
-    iconClose.classList.remove("hidden");
+
+    if (iconHamburger) {
+      iconHamburger.classList.add("hidden");
+    }
+
+    if (iconClose) {
+      iconClose.classList.remove("hidden");
+    }
   }
 
   function closeMobileMenu() {
+    if (!menuToggle || !mobileMenu) {
+      return;
+    }
+
     mobileMenu.classList.add("hidden");
+    mobileMenu.classList.remove("is-open");
     menuToggle.setAttribute("aria-expanded", "false");
-    iconHamburger.classList.remove("hidden");
-    iconClose.classList.add("hidden");
+
+    if (iconHamburger) {
+      iconHamburger.classList.remove("hidden");
+    }
+
+    if (iconClose) {
+      iconClose.classList.add("hidden");
+    }
   }
 
   if (menuToggle && mobileMenu) {
@@ -33,6 +55,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // Tutup menu saat link diklik
     mobileMenu.querySelectorAll("a").forEach(function (link) {
       link.addEventListener("click", closeMobileMenu);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeMobileMenu();
+      }
+    });
+
+    document.addEventListener("click", function (event) {
+      const isOpen = !mobileMenu.classList.contains("hidden");
+      const clickInsideHeader = siteHeader && siteHeader.contains(event.target);
+
+      if (isOpen && !clickInsideHeader) {
+        closeMobileMenu();
+      }
     });
   }
 
@@ -75,28 +112,38 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* ─── FAQ Accordion ───────────────────────────────── */
-  document.querySelectorAll(".dc-faq-trigger").forEach(function (trigger) {
-    trigger.addEventListener("click", function () {
-      const item = trigger.closest(".dc-faq-item");
-      const panel = item.querySelector(".dc-faq-panel");
-      const icon = item.querySelector(".dc-faq-icon");
-      const isOpen = icon.classList.contains("is-open");
+  const faqItems = document.querySelectorAll(".dc-faq-item");
 
-      // Tutup semua item lain
-      document.querySelectorAll(".dc-faq-item").forEach(function (otherItem) {
-        otherItem.querySelector(".dc-faq-panel").classList.remove("is-open");
-        otherItem.querySelector(".dc-faq-icon").classList.remove("is-open");
-        otherItem
-          .querySelector(".dc-faq-trigger")
-          .setAttribute("aria-expanded", "false");
+  function setFaqOpen(item, shouldOpen) {
+    const trigger = item.querySelector(".dc-faq-trigger");
+    const panel = item.querySelector(".dc-faq-panel");
+    const icon = item.querySelector(".dc-faq-icon");
+
+    if (!trigger || !panel || !icon) {
+      return;
+    }
+
+    panel.classList.toggle("is-open", shouldOpen);
+    icon.classList.toggle("is-open", shouldOpen);
+    trigger.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+    panel.setAttribute("aria-hidden", shouldOpen ? "false" : "true");
+  }
+
+  faqItems.forEach(function (item) {
+    const trigger = item.querySelector(".dc-faq-trigger");
+
+    if (!trigger) {
+      return;
+    }
+
+    trigger.addEventListener("click", function () {
+      const isOpen = trigger.getAttribute("aria-expanded") === "true";
+
+      faqItems.forEach(function (otherItem) {
+        setFaqOpen(otherItem, false);
       });
 
-      // Toggle item yang diklik
-      if (!isOpen) {
-        panel.classList.add("is-open");
-        icon.classList.add("is-open");
-        trigger.setAttribute("aria-expanded", "true");
-      }
+      setFaqOpen(item, !isOpen);
     });
   });
 

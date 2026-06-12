@@ -1,67 +1,98 @@
 <?php
 /**
- * Section: Advantages
- * Keunggulan produk dan kemitraan Depo Cleanique — 6 kartu.
+ * Section: Advantages (Keunggulan — bento grid)
+ * Diport dari _landing-source.html (id="keunggulan").
+ * Gambar lokal: about-hq.png, avatar-1..3.png.
  */
 
-$advantages = [
-    [
-        'icon'  => '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/>',
-        'title' => 'Produk Bersertifikat',
-        'desc'  => 'Semua produk telah terdaftar di BPOM dan memiliki sertifikasi halal, aman untuk seluruh keluarga.',
-    ],
-    [
-        'icon'  => '<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/>',
-        'title' => 'Harga Kompetitif',
-        'desc'  => 'Harga langsung dari produsen tanpa perantara, sehingga margin keuntungan mitra lebih besar.',
-    ],
-    [
-        'icon'  => '<path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/>',
-        'title' => 'Jaringan Mitra Luas',
-        'desc'  => 'Bergabung dengan komunitas 200+ mitra aktif yang saling mendukung dan berbagi pengalaman.',
-    ],
-    [
-        'icon'  => '<path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>',
-        'title' => 'Training & Mentoring',
-        'desc'  => 'Setiap mitra mendapatkan training produk, teknik penjualan, dan mentoring bisnis secara berkala.',
-    ],
-    [
-        'icon'  => '<path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/>',
-        'title' => 'Produk Lengkap',
-        'desc'  => 'Tersedia 15+ jenis produk: sabun cuci, deterjen, pembersih lantai, sabun mandi, dan lainnya.',
-    ],
-    [
-        'icon'  => '<path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/>',
-        'title' => 'Support Penuh',
-        'desc'  => 'Tim support siap membantu melalui WhatsApp, konsultasi gratis kapanpun Anda membutuhkan.',
-    ],
-];
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+$dc_img = get_template_directory_uri() . '/assets/images';
 ?>
 
-<section id="keunggulan" class="bg-white py-16 lg:py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-        <div class="text-center mb-12">
-            <span class="dc-section-label">Kenapa Pilih Kami</span>
-            <h2 class="dc-section-title mb-3">Keunggulan Depo Cleanique</h2>
-            <p class="dc-section-subtitle mx-auto">
-                Kami tidak sekadar menjual produk — kami membangun ekosistem kemitraan yang saling menguntungkan dan berkelanjutan.
+<section class="py-24 bg-surface" id="keunggulan">
+    <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <h2 class="font-headline-lg text-headline-lg text-on-surface"><?php esc_html_e( 'Data-Driven Advantages', 'depocleanique-custom' ); ?></h2>
+            <p class="text-on-surface-variant">
+                <?php esc_html_e( 'Mengapa ribuan pengusaha memilih Depo Cleanique sebagai mitra strategis mereka?', 'depocleanique-custom' ); ?>
             </p>
         </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php foreach ( $advantages as $item ) : ?>
-            <div class="group bg-gray-50 hover:bg-teal-50 border border-gray-100 hover:border-teal-200 rounded-2xl p-6 transition-all duration-200">
-                <div class="w-12 h-12 bg-teal-100 group-hover:bg-teal-200 rounded-xl flex items-center justify-center mb-4 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                        <?php echo $item['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                    </svg>
+        <div class="grid grid-cols-1 md:grid-cols-12 grid-rows-2 gap-gutter h-full md:h-[600px]">
+            <!-- Card 1: Stabilitas -->
+            <div class="md:col-span-8 bg-white p-8 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between group hover:shadow-lg transition-all card-accent">
+                <div class="flex justify-between items-start">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">monetization_on</span>
+                        </div>
+                        <h3 class="text-2xl font-bold"><?php esc_html_e( 'Stabilitas Harga Terjamin', 'depocleanique-custom' ); ?></h3>
+                        <p class="text-on-surface-variant max-w-md">
+                            <?php esc_html_e( 'Kami memastikan tidak ada perang harga di antara mitra. Kontrak eksklusif wilayah menjaga profit margin Anda tetap sehat dan berkelanjutan.', 'depocleanique-custom' ); ?>
+                        </p>
+                    </div>
+                    <img class="w-32 h-32 object-cover rounded-lg hidden lg:block"
+                         src="<?php echo esc_url( $dc_img . '/about-hq.png' ); ?>"
+                         alt="<?php esc_attr_e( 'Stabilitas harga Depo Cleanique', 'depocleanique-custom' ); ?>" />
                 </div>
-                <h3 class="font-bold text-gray-900 mb-2"><?php echo esc_html( $item['title'] ); ?></h3>
-                <p class="text-sm text-gray-600 leading-relaxed"><?php echo esc_html( $item['desc'] ); ?></p>
+                <div class="flex gap-4">
+                    <span class="px-3 py-1 bg-surface-container rounded-full text-xs font-bold uppercase tracking-wider"><?php esc_html_e( 'No Royalty Fee', 'depocleanique-custom' ); ?></span>
+                    <span class="px-3 py-1 bg-surface-container rounded-full text-xs font-bold uppercase tracking-wider"><?php esc_html_e( 'Fixed Margin', 'depocleanique-custom' ); ?></span>
+                </div>
             </div>
-            <?php endforeach; ?>
+            <!-- Card 2: AI Marketing -->
+            <div class="md:col-span-4 bg-secondary text-white p-8 rounded-xl flex flex-col justify-between relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-8 opacity-20 transform group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-8xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+                </div>
+                <div class="space-y-4 relative z-10">
+                    <h3 class="text-2xl font-bold"><?php esc_html_e( 'Automasi AI Marketing', 'depocleanique-custom' ); ?></h3>
+                    <p class="text-surface-variant text-sm">
+                        <?php esc_html_e( 'Dukungan teknologi AI untuk mapping calon pembeli potensial di radius 5km dari lokasi depo Anda.', 'depocleanique-custom' ); ?>
+                    </p>
+                </div>
+                <button class="w-fit text-primary-fixed font-bold flex items-center gap-2 group-hover:gap-4 transition-all relative z-10">
+                    <?php esc_html_e( 'Lihat Cara Kerja', 'depocleanique-custom' ); ?>
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+            </div>
+            <!-- Card 3: Legalitas -->
+            <div class="md:col-span-4 bg-white p-8 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col gap-6 group hover:shadow-lg transition-all">
+                <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center text-secondary">
+                    <span class="material-symbols-outlined">gavel</span>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-xl font-bold"><?php esc_html_e( 'Legalitas Penuh', 'depocleanique-custom' ); ?></h3>
+                    <p class="text-on-surface-variant text-sm">
+                        <?php esc_html_e( 'Dibantu pengurusan izin OSS, Kemenkes, hingga sertifikasi Halal secara tuntas dan cepat.', 'depocleanique-custom' ); ?>
+                    </p>
+                </div>
+            </div>
+            <!-- Card 4: Forecast Graph -->
+            <div class="md:col-span-8 bg-on-secondary-fixed text-white p-8 rounded-xl flex flex-col md:flex-row gap-8 items-center justify-between">
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold"><?php esc_html_e( 'Prediksi Omzet Rp 50jt+', 'depocleanique-custom' ); ?></h3>
+                    <p class="text-surface-variant text-sm max-w-xs">
+                        <?php esc_html_e( 'Berdasarkan data historis 100+ mitra aktif kami di seluruh Indonesia.', 'depocleanique-custom' ); ?>
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="flex -space-x-3">
+                            <img class="w-10 h-10 rounded-full border-2 border-on-secondary-fixed" src="<?php echo esc_url( $dc_img . '/avatar-1.png' ); ?>" alt="<?php esc_attr_e( 'Mitra Depo Cleanique', 'depocleanique-custom' ); ?>" />
+                            <img class="w-10 h-10 rounded-full border-2 border-on-secondary-fixed" src="<?php echo esc_url( $dc_img . '/avatar-2.png' ); ?>" alt="<?php esc_attr_e( 'Mitra Depo Cleanique', 'depocleanique-custom' ); ?>" />
+                            <img class="w-10 h-10 rounded-full border-2 border-on-secondary-fixed" src="<?php echo esc_url( $dc_img . '/avatar-3.png' ); ?>" alt="<?php esc_attr_e( 'Mitra Depo Cleanique', 'depocleanique-custom' ); ?>" />
+                        </div>
+                        <span class="text-xs font-bold"><?php esc_html_e( '+120 Mitra Sukses', 'depocleanique-custom' ); ?></span>
+                    </div>
+                </div>
+                <div class="w-full md:w-64 h-32 bg-white/5 rounded-lg border border-white/10 p-4 flex items-end gap-2">
+                    <div class="flex-1 bg-primary-container/40 h-[40%] rounded-t-sm"></div>
+                    <div class="flex-1 bg-primary-container/60 h-[60%] rounded-t-sm"></div>
+                    <div class="flex-1 bg-primary-container/80 h-[75%] rounded-t-sm"></div>
+                    <div class="flex-1 bg-primary-container h-[100%] rounded-t-sm"></div>
+                </div>
+            </div>
         </div>
-
     </div>
 </section>

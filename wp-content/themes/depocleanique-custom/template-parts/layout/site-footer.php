@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Part: Site Footer
- * Footer global (desain gelap #0f1a09 mengikuti _landing-source.html).
+ * Footer global dengan latar gelap netral dan aksen brand.
  *
  * Semua data global via helper dc_get_*() — tidak ada hardcode.
  * Tahun copyright dinamis.
@@ -68,7 +68,7 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
                              style="height:52px;width:auto;object-fit:contain;display:block;">
                     <?php else : ?>
                         <span class="font-extrabold text-xl tracking-tight" style="color:#fff;">
-                            <span style="color:#9acd32;">Depo</span>Cleanique
+                            <span style="color:#1E5FA8;">Depo</span>Cleanique
                         </span>
                     <?php endif; ?>
                 </a>
@@ -92,7 +92,7 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
                            target="_blank"
                            rel="noopener noreferrer"
                            aria-label="<?php echo esc_attr( sprintf( /* translators: %s: nama platform */ __( '%s Depo Cleanique', 'depocleanique-custom' ), $s['label'] ) ); ?>">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="<?php echo esc_attr( $s['svg'] ); ?>"/>
                             </svg>
                         </a>
@@ -162,7 +162,7 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
                 <a class="footer-link" href="<?php echo esc_url( home_url( '/syarat-ketentuan/' ) ); ?>" style="font-size:12px;"><?php esc_html_e( 'Syarat & Ketentuan', 'depocleanique-custom' ); ?></a>
                 <a href="<?php echo esc_url( dc_get_wa_url( 'footer' ) ); ?>"
                    target="_blank" rel="noopener noreferrer"
-                   style="font-size:12px;color:rgba(154,205,50,0.6);text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
+                   style="font-size:12px;color:rgba(79,179,255,0.8);text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
                     <span class="material-symbols-outlined" style="font-size:13px;">chat</span>
                     <?php echo esc_html( dc_get_wa_label() ); ?>
                 </a>

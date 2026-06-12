@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Nomor WhatsApp mentah (tanpa + atau spasi).
- * Diambil dari Customizer. Fallback: '6281234567890'.
+ * Diambil dari Customizer. Fallback: '6285600061005'.
  *
  * @return string
  */

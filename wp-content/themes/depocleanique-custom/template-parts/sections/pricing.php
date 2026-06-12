@@ -1,131 +1,201 @@
 <?php
 /**
  * Section: Pricing
- * Paket kemitraan — Starter, Reguler, Premium.
+ * Paket kemitraan dari _landing-source.html.
  * Anchor: id="paket"
  */
 
-// TODO: Harga dan detail paket — ganti dengan data final atau field ACF di tahap berikutnya.
+// TODO: Convert pricing packages to editable fields in a later phase.
 
 $packages = [
     [
-        'name'     => 'Starter',
-        'price'    => 'Rp 2.500.000',
-        'period'   => 'Modal awal',
-        'featured' => false,
-        'desc'     => 'Cocok untuk pemula yang baru memulai usaha depo sabun curah.',
-        'features' => [
-            '5 jenis produk pilihan',
-            'Kemasan 5 liter × 10 pcs',
-            'Materi marketing digital',
-            'Support WA 1 bulan',
-            'Sertifikat mitra',
-        ],
-        'exclude'  => [
-            'Rak display produk',
-            'Training on-site',
-        ],
-    ],
-    [
-        'name'     => 'Reguler',
-        'price'    => 'Rp 5.000.000',
-        'period'   => 'Modal awal',
-        'featured' => true,
-        'desc'     => 'Paket paling populer — stok lengkap, support penuh, siap langsung jalan.',
-        'features' => [
-            '10 jenis produk lengkap',
-            'Kemasan 5 & 10 liter',
-            'Rak display produk',
-            'Materi marketing digital',
-            'Support WA 3 bulan',
-            'Training via video call',
-            'Sertifikat mitra',
-        ],
-        'exclude'  => [
-            'Training on-site',
+        'name'           => 'Starter',
+        'icon'           => 'rocket_launch',
+        'price'          => '15jt',
+        'discount_price' => '',
+        'price_note'     => 'Rupiah',
+        'payment_note'   => 'Sekali Bayar',
+        'break_even'     => '4 – 6 Bulan',
+        'progress'       => 52,
+        'recommended'    => false,
+        'cta_label'      => 'Pilih Paket Starter',
+        'features'       => [
+            [ 'label' => 'Hak Lisensi Seumur Hidup', 'included' => true ],
+            [ 'label' => 'Initial Stok 200L (Campur)', 'included' => true ],
+            [ 'label' => 'Banner & Media Promosi Offline', 'included' => true ],
+            [ 'label' => '1 Month Premium Support', 'included' => true ],
+            [ 'label' => 'Eksklusif Wilayah 5KM', 'included' => false ],
+            [ 'label' => 'Full AI Marketing Support', 'included' => false ],
         ],
     ],
     [
-        'name'     => 'Premium',
-        'price'    => 'Rp 10.000.000',
-        'period'   => 'Modal awal',
-        'featured' => false,
-        'desc'     => 'Paket lengkap terbaik dengan training langsung dan dukungan jangka panjang.',
-        'features' => [
-            'Semua produk (15+ jenis)',
-            'Kemasan 5, 10 & 20 liter',
-            'Rak display + spanduk',
-            'Materi marketing digital',
-            'Support WA 6 bulan',
-            'Training on-site',
-            'Sertifikat mitra premium',
-            'Prioritas restok',
+        'name'           => 'King',
+        'icon'           => 'crown',
+        'price'          => '27.5jt',
+        'discount_price' => '',
+        'price_note'     => 'Rupiah',
+        'payment_note'   => 'Sekali Bayar',
+        'break_even'     => '3 – 4 Bulan',
+        'progress'       => 88,
+        'recommended'    => true,
+        'badge'          => 'Paling Populer',
+        'cta_label'      => 'Pilih Paket King →',
+        'features'       => [
+            [ 'label' => 'Eksklusif Area (Radius 5KM)', 'included' => true ],
+            [ 'label' => 'Initial Stok 600L + Dispenser', 'included' => true ],
+            [ 'label' => 'Full AI Marketing Support (3 Bulan)', 'included' => true ],
+            [ 'label' => 'Lifetime Training & Priority Support', 'included' => true ],
+            [ 'label' => '3D Interior Design Depo', 'included' => true ],
+            [ 'label' => 'SEO Landing Page Eksklusif', 'included' => true ],
         ],
-        'exclude'  => [],
     ],
+];
+
+$trust_items = [
+    [ 'icon' => 'shield', 'label' => '100% Garansi Modal Kembali' ],
+    [ 'icon' => 'payments', 'label' => 'Tanpa Biaya Royalti' ],
+    [ 'icon' => 'support_agent', 'label' => 'Support Seumur Hidup' ],
+    [ 'icon' => 'verified', 'label' => 'Izin Kemenkes & Halal' ],
 ];
 ?>
 
-<section id="paket" class="bg-white py-16 lg:py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-        <div class="text-center mb-12">
-            <span class="dc-section-label">Paket Kemitraan</span>
-            <h2 class="dc-section-title mb-3">Pilih Paket yang Tepat</h2>
-            <p class="dc-section-subtitle mx-auto">
-                Modal terjangkau, hasil optimal. Semua paket sudah termasuk produk, materi marketing, dan dukungan dari tim kami.
+<section id="paket" class="pricing-section">
+    <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
+        <div class="pricing-heading">
+            <div class="section-kicker">
+                <span class="section-kicker-dot" aria-hidden="true"></span>
+                <span>
+                    Investasi Sekali Seumur Hidup
+                </span>
+            </div>
+            <h2>
+                Pilihan Paket Kemitraan
+            </h2>
+            <p>
+                Tidak ada royalti bulanan — bayar sekali, nikmati keuntungan selamanya.
             </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6 items-start">
-            <?php foreach ( $packages as $pkg ) : ?>
-            <div class="rounded-2xl border <?php echo $pkg['featured'] ? 'dc-pricing-featured' : 'border-gray-200'; ?> p-7 bg-white flex flex-col">
-                <?php if ( $pkg['featured'] ) : ?>
-                    <div class="dc-pricing-badge">PALING POPULER</div>
-                <?php endif; ?>
+        <div class="pricing-grid">
+            <?php foreach ( $packages as $package ) : ?>
+                <?php
+                $is_recommended = ! empty( $package['recommended'] );
+                $wa_message      = sprintf(
+                    'Halo! Saya tertarik dengan Paket %s Depo Cleanique.',
+                    $package['name']
+                );
+                ?>
+                <article
+                    class="pricing-card<?php echo $is_recommended ? ' is-featured' : ''; ?>"
+                >
+                    <?php if ( $is_recommended ) : ?>
+                        <div class="pricing-popular-badge">
+                            <span class="material-symbols-outlined" aria-hidden="true">star</span>
+                            <span>
+                                <?php echo esc_html( $package['badge'] ); ?>
+                            </span>
+                        </div>
+                    <?php endif; ?>
 
-                <div class="mb-6">
-                    <h3 class="font-bold text-lg text-gray-900 mb-1"><?php echo esc_html( $pkg['name'] ); ?></h3>
-                    <p class="text-sm text-gray-500 mb-4"><?php echo esc_html( $pkg['desc'] ); ?></p>
-                    <div class="flex items-end gap-1">
-                        <span class="text-2xl font-bold text-gray-900"><?php echo esc_html( $pkg['price'] ); ?></span>
+                    <div class="pricing-card-head">
+                        <div class="pricing-icon">
+                            <span class="material-symbols-outlined" style="<?php echo 'crown' === $package['icon'] ? "font-variation-settings:'FILL' 1;" : ''; ?>" aria-hidden="true">
+                                <?php echo esc_html( $package['icon'] ); ?>
+                            </span>
+                        </div>
+                        <div>
+                            <p class="pricing-eyebrow">
+                                Paket
+                            </p>
+                            <h3>
+                                <?php echo esc_html( $package['name'] ); ?>
+                            </h3>
+                        </div>
                     </div>
-                    <p class="text-xs text-gray-400 mt-1"><?php echo esc_html( $pkg['period'] ); ?></p>
-                </div>
 
-                <ul class="space-y-2.5 mb-6 flex-1">
-                    <?php foreach ( $pkg['features'] as $feature ) : ?>
-                    <li class="flex items-center gap-2.5 text-sm text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <?php echo esc_html( $feature ); ?>
-                    </li>
-                    <?php endforeach; ?>
-                    <?php foreach ( $pkg['exclude'] as $exc ) : ?>
-                    <li class="flex items-center gap-2.5 text-sm text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                        </svg>
-                        <?php echo esc_html( $exc ); ?>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
+                    <div class="pricing-price-block">
+                        <div class="pricing-price-row">
+                            <?php if ( ! empty( $package['discount_price'] ) ) : ?>
+                                <span class="pricing-discount-price">
+                                    <?php echo esc_html( $package['price'] ); ?>
+                                </span>
+                                <span class="pricing-price">
+                                    <?php echo esc_html( $package['discount_price'] ); ?>
+                                </span>
+                            <?php else : ?>
+                                <span class="pricing-price">
+                                    <?php echo esc_html( $package['price'] ); ?>
+                                </span>
+                            <?php endif; ?>
+                            <div>
+                                <p class="pricing-price-note">
+                                    <?php echo esc_html( $package['price_note'] ); ?>
+                                </p>
+                                <p class="pricing-payment-note">
+                                    <?php echo esc_html( $package['payment_note'] ); ?>
+                                </p>
+                            </div>
+                        </div>
 
-                <a href="<?php echo esc_url( dc_get_wa_url( 'pricing' ) ); ?>"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block text-center px-5 py-3 rounded-xl font-semibold text-sm transition-colors <?php echo $pkg['featured'] ? 'bg-teal-600 hover:bg-teal-700 text-white' : 'border-2 border-teal-600 text-teal-600 hover:bg-teal-50'; ?>"
-                   aria-label="<?php echo esc_attr( 'Daftar paket ' . $pkg['name'] . ' via WhatsApp' ); ?>">
-                    Mulai dengan Paket Ini
-                </a>
-            </div>
+                        <div class="pricing-progress">
+                            <div class="pricing-progress-meta">
+                                <span>
+                                    Est. Break Even
+                                </span>
+                                <strong>
+                                    <?php echo esc_html( $package['break_even'] ); ?>
+                                </strong>
+                            </div>
+                            <div class="pricing-progress-track">
+                                <div class="pricing-progress-fill" style="width:<?php echo esc_attr( (string) absint( $package['progress'] ) ); ?>%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="pricing-features">
+                        <?php foreach ( $package['features'] as $feature ) : ?>
+                            <li class="<?php echo $feature['included'] ? 'is-included' : 'is-muted'; ?>">
+                                <span
+                                    class="material-symbols-outlined"
+                                    style="<?php echo $feature['included'] ? "font-variation-settings:'FILL' 1;" : ''; ?>"
+                                    aria-hidden="true"
+                                >
+                                    <?php echo $feature['included'] ? 'check_circle' : 'remove_circle'; ?>
+                                </span>
+                                <span>
+                                    <?php echo esc_html( $feature['label'] ); ?>
+                                </span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+
+                    <a
+                        href="<?php echo esc_url( dc_get_wa_url( 'pricing', $wa_message ) ); ?>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="pricing-card-cta"
+                        aria-label="<?php echo esc_attr( 'Pilih Paket ' . $package['name'] . ' via WhatsApp' ); ?>"
+                    >
+                        <?php echo esc_html( $package['cta_label'] ); ?>
+                    </a>
+                </article>
             <?php endforeach; ?>
         </div>
 
-        <p class="text-center text-sm text-gray-400 mt-8">
-            Belum yakin? <a href="<?php echo esc_url( dc_get_wa_url( 'pricing' ) ); ?>" target="_blank" rel="noopener noreferrer" class="text-teal-600 hover:underline font-medium">Konsultasi gratis</a> terlebih dahulu, tanpa paksaan.
-        </p>
-
+        <div class="pricing-trust-row">
+            <?php foreach ( $trust_items as $index => $item ) : ?>
+                <?php if ( $index > 0 ) : ?>
+                    <div class="pricing-trust-separator hidden md:block" aria-hidden="true"></div>
+                <?php endif; ?>
+                <div class="pricing-trust-item">
+                    <span class="material-symbols-outlined" aria-hidden="true">
+                        <?php echo esc_html( $item['icon'] ); ?>
+                    </span>
+                    <span>
+                        <?php echo esc_html( $item['label'] ); ?>
+                    </span>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 </section>
