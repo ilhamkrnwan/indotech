@@ -41,7 +41,7 @@ get_template_part( 'template-parts/layout/site-header' );
 
         <article id="post-<?php the_ID(); ?>" <?php post_class( 'partnership-detail' ); ?>>
             <header class="partnership-detail-hero">
-                <div class="partnership-container">
+                <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
                     <nav class="partnership-breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'depocleanique-custom' ); ?>">
                         <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Beranda', 'depocleanique-custom' ); ?></a>
                         <span aria-hidden="true">/</span>
@@ -52,7 +52,10 @@ get_template_part( 'template-parts/layout/site-header' );
 
                     <div class="partnership-detail-hero-grid">
                         <div>
-                            <span class="partnership-eyebrow"><?php echo esc_html( $badge ?: $type_label ?: __( 'Mitra Terdaftar', 'depocleanique-custom' ) ); ?></span>
+                            <div class="section-kicker">
+                                <span class="section-kicker-dot" aria-hidden="true"></span>
+                                <span><?php echo esc_html( $badge ?: $type_label ?: __( 'Mitra Terdaftar', 'depocleanique-custom' ) ); ?></span>
+                            </div>
                             <h1><?php the_title(); ?></h1>
                             <?php if ( $summary ) : ?>
                                 <p><?php echo esc_html( $summary ); ?></p>
@@ -81,18 +84,7 @@ get_template_part( 'template-parts/layout/site-header' );
                 </div>
             </header>
 
-            <div class="partnership-container">
-                <div class="partnership-highlight-grid">
-                    <?php foreach ( $highlights as $item ) : ?>
-                        <div class="partnership-highlight-card">
-                            <span><?php echo esc_html( $item['label'] ); ?></span>
-                            <strong><?php echo esc_html( $item['value'] ); ?></strong>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <div class="partnership-container partnership-single-layout">
+            <div class="container mx-auto px-margin-mobile md:px-margin-desktop partnership-single-layout">
                 <div class="partnership-single-main">
                     <?php if ( trim( wp_strip_all_tags( $content ) ) ) : ?>
                         <section class="partnership-content">
@@ -100,34 +92,14 @@ get_template_part( 'template-parts/layout/site-header' );
                         </section>
                     <?php endif; ?>
 
-                    <?php if ( $address || $owner || $phone || $since ) : ?>
-                        <section class="partnership-info-section">
-                            <h2><?php echo dc_icon( 'map-pin' ); ?><?php esc_html_e( 'Detail Informasi Mitra', 'depocleanique-custom' ); ?></h2>
-                            <ul class="partnership-check-list">
-                                <?php if ( $address ) : ?>
-                                    <li><?php echo dc_icon( 'map-pin' ); ?><?php echo nl2br( esc_html( $address ) ); ?></li>
-                                <?php endif; ?>
-                                <?php if ( $owner ) : ?>
-                                    <li><?php echo dc_icon( 'user' ); ?><?php echo esc_html( sprintf( __( 'Penanggung jawab: %s', 'depocleanique-custom' ), $owner ) ); ?></li>
-                                <?php endif; ?>
-                                <?php if ( $phone ) : ?>
-                                    <li><?php echo dc_icon( 'phone' ); ?><?php echo esc_html( sprintf( __( 'Kontak: %s', 'depocleanique-custom' ), $phone ) ); ?></li>
-                                <?php endif; ?>
-                                <?php if ( $since ) : ?>
-                                    <li><?php echo dc_icon( 'calendar' ); ?><?php echo esc_html( sprintf( __( 'Bergabung sejak: %s', 'depocleanique-custom' ), $since ) ); ?></li>
-                                <?php endif; ?>
-                            </ul>
-                        </section>
-                    <?php endif; ?>
-
                     <?php foreach ( $sections as $meta_key => $section ) : ?>
                         <?php $items = dc_parse_lines( dc_get_partnership_meta( $post_id, $meta_key ) ); ?>
                         <?php if ( $items ) : ?>
-                            <section class="partnership-info-section">
-                                <h2><?php echo dc_icon( $section['icon'] ); ?><?php echo esc_html( $section['title'] ); ?></h2>
-                                <ul class="partnership-check-list">
+                            <section class="partnership-info-flat">
+                                <h2><?php echo dc_icon( $section['icon'] ); ?><span><?php echo esc_html( $section['title'] ); ?></span></h2>
+                                <ul class="partnership-check-list-flat">
                                     <?php foreach ( $items as $item ) : ?>
-                                        <li><?php echo dc_icon( 'check-circle' ); ?><?php echo esc_html( $item ); ?></li>
+                                        <li><?php echo dc_icon( 'check-circle' ); ?><span><?php echo esc_html( $item ); ?></span></li>
                                     <?php endforeach; ?>
                                 </ul>
                             </section>

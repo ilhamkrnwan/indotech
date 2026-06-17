@@ -40,23 +40,24 @@ if ( '' === trim( wp_strip_all_tags( $archive_description ) ) ) {
                 </div>
             <?php endif; ?>
 
-            <div class="dc-wc-hero-grid">
-                <div class="dc-wc-hero-copy">
-                    <p class="dc-wc-eyebrow">
-                        <span aria-hidden="true"></span>
-                        <?php esc_html_e( 'Katalog Produk', 'depocleanique-custom' ); ?>
-                    </p>
-                    <h1><?php echo esc_html( $archive_title ); ?></h1>
-                    <div class="dc-wc-hero-description">
-                        <?php echo wp_kses_post( wpautop( $archive_description ) ); ?>
-                    </div>
-                </div>
-
-                <div class="dc-wc-search" role="search" aria-label="<?php esc_attr_e( 'Cari produk', 'depocleanique-custom' ); ?>">
-                    <span class="material-symbols-outlined" aria-hidden="true">search</span>
-                    <?php get_product_search_form(); ?>
+            <div class="dc-wc-hero-copy">
+                <p class="dc-wc-eyebrow">
+                    <span aria-hidden="true"></span>
+                    <?php esc_html_e( 'Katalog Produk', 'depocleanique-custom' ); ?>
+                </p>
+                <h1><?php echo esc_html( $archive_title ); ?></h1>
+                <div class="dc-wc-hero-description">
+                    <?php echo wp_kses_post( wpautop( $archive_description ) ); ?>
                 </div>
             </div>
+
+            <form class="dc-wc-search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                <label class="screen-reader-text" for="dc-wc-search-field"><?php esc_html_e( 'Cari produk', 'depocleanique-custom' ); ?></label>
+                <span aria-hidden="true"><?php echo dc_icon( 'search' ); ?></span>
+                <input id="dc-wc-search-field" type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php esc_attr_e( 'Cari produk Depo Cleanique', 'depocleanique-custom' ); ?>">
+                <input type="hidden" name="post_type" value="product">
+                <button type="submit"><?php esc_html_e( 'Cari', 'depocleanique-custom' ); ?></button>
+            </form>
         </div>
     </section>
 
@@ -94,7 +95,7 @@ if ( '' === trim( wp_strip_all_tags( $archive_description ) ) ) {
                 <?php woocommerce_pagination(); ?>
             <?php else : ?>
                 <div class="dc-wc-empty-state">
-                    <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
+                    <?php echo dc_icon( 'package', 'dc-icon-lg' ); ?>
                     <h2><?php esc_html_e( 'Produk belum ditemukan', 'depocleanique-custom' ); ?></h2>
                     <p><?php esc_html_e( 'Coba gunakan kata kunci lain atau kembali ke katalog utama untuk melihat pilihan produk yang tersedia.', 'depocleanique-custom' ); ?></p>
                     <a class="dc-wc-button" href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/katalog/' ) ); ?>">

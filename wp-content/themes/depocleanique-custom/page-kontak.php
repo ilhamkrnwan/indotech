@@ -104,6 +104,22 @@ get_template_part( 'template-parts/layout/site-header' );
                             </a>
                         </aside>
                     </div>
+
+                    <!-- Peta Lokasi (Google Maps Embed) -->
+                    <div class="internal-contact-map-row mt-16">
+                        <div class="bg-white p-4 rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden">
+                            <iframe
+                                src="https://maps.google.com/maps?q=<?php echo urlencode( dc_get_address() ); ?>&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                                width="100%"
+                                height="450"
+                                style="border:0; border-radius: 12px; display: block;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="<?php esc_attr_e( 'Lokasi Depo Cleanique', 'depocleanique-custom' ); ?>"
+                            ></iframe>
+                        </div>
+                    </div>
                 </div>
             </section>
 

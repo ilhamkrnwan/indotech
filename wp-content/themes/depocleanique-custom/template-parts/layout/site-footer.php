@@ -73,27 +73,27 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
                     <?php if ( file_exists( $dc_logo_path ) ) : ?>
                         <img src="<?php echo esc_url( $dc_logo_uri ); ?>"
                              alt="<?php bloginfo( 'name' ); ?>"
-                             style="height:52px;width:auto;object-fit:contain;display:block;">
+                             class="footer-logo">
                     <?php else : ?>
-                        <span class="font-extrabold text-xl tracking-tight" style="color:#fff;">
-                            <span style="color:#1E5FA8;">Depo</span>Cleanique
+                        <span class="font-extrabold text-xl tracking-tight footer-logo-wordmark">
+                            <span class="text-primary-blue">Depo</span>Cleanique
                         </span>
                     <?php endif; ?>
                 </a>
 
-                <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.38);max-width:280px;">
+                <p class="footer-brand-text">
                     <?php esc_html_e( 'Pionir refill station berbasis AI di Indonesia sejak 2011. Membantu UMKM tumbuh lewat bisnis homecare terjangkau.', 'depocleanique-custom' ); ?>
                 </p>
 
                 <!-- Certification badges -->
-                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <div class="footer-badge-wrap">
                     <span class="footer-badge"><?php echo dc_icon( 'award', 'dc-icon-sm' ); ?><?php esc_html_e( 'Kemenkes RI', 'depocleanique-custom' ); ?></span>
                     <span class="footer-badge"><?php echo dc_icon( 'check-circle', 'dc-icon-sm' ); ?><?php esc_html_e( 'Halal MUI', 'depocleanique-custom' ); ?></span>
                     <span class="footer-badge"><?php echo dc_icon( 'scale', 'dc-icon-sm' ); ?><?php esc_html_e( 'DIRJEN HAKI', 'depocleanique-custom' ); ?></span>
                 </div>
 
                 <!-- Social -->
-                <div style="display:flex;gap:8px;" aria-label="<?php esc_attr_e( 'Media sosial', 'depocleanique-custom' ); ?>">
+                <div class="footer-social-wrap" aria-label="<?php esc_attr_e( 'Media sosial', 'depocleanique-custom' ); ?>">
                     <?php foreach ( $dc_socials as $key => $s ) : ?>
                         <a href="<?php echo esc_url( dc_get_social_url( $key ) ); ?>"
                            class="footer-social"
@@ -133,26 +133,26 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
                 <span class="footer-col-label"><?php esc_html_e( 'Kontak', 'depocleanique-custom' ); ?></span>
                 <ul class="space-y-3.5">
                     <li>
-                        <a class="footer-link" style="display:inline-flex;align-items:center;gap:6px;"
+                        <a class="footer-link footer-contact-link"
                            href="<?php echo esc_url( dc_get_wa_url( 'footer' ) ); ?>"
                            target="_blank" rel="noopener noreferrer">
-                            <span class="material-symbols-outlined" style="font-size:15px;">chat</span>
+                            <span class="material-symbols-outlined footer-contact-icon">chat</span>
                             <?php echo esc_html( dc_get_wa_label() ); ?>
                         </a>
                     </li>
                     <li>
-                        <a class="footer-link" style="display:inline-flex;align-items:center;gap:6px;"
+                        <a class="footer-link footer-contact-link"
                            href="<?php echo esc_url( 'mailto:' . dc_get_email() ); ?>">
-                            <span class="material-symbols-outlined" style="font-size:15px;">mail</span>
+                            <span class="material-symbols-outlined footer-contact-icon">mail</span>
                             <?php echo esc_html( dc_get_email() ); ?>
                         </a>
                     </li>
-                    <li style="display:flex;align-items:flex-start;gap:6px;color:rgba(255,255,255,0.4);font-size:14px;">
-                        <span class="material-symbols-outlined" style="font-size:15px;line-height:1.4;">location_on</span>
-                        <address class="not-italic" style="line-height:1.6;"><?php echo dc_get_address_html(); // sudah di-escape di helper ?></address>
+                    <li class="footer-contact-item footer-contact-item-align-start">
+                        <span class="material-symbols-outlined footer-contact-icon footer-contact-icon-spaced">location_on</span>
+                        <address class="not-italic footer-contact-address"><?php echo dc_get_address_html(); // sudah di-escape di helper ?></address>
                     </li>
-                    <li style="display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.4);font-size:14px;">
-                        <span class="material-symbols-outlined" style="font-size:15px;">schedule</span>
+                    <li class="footer-contact-item">
+                        <span class="material-symbols-outlined footer-contact-icon">schedule</span>
                         <?php echo esc_html( dc_get_business_hours() ); ?>
                     </li>
                 </ul>
@@ -161,17 +161,16 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
 
         <!-- Bottom bar -->
         <div class="footer-divider"></div>
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-top:24px;">
-            <p style="font-size:12px;color:rgba(255,255,255,0.2);">
+        <div class="footer-bottom-inner">
+            <p class="footer-copyright-text">
                 &copy; <?php echo esc_html( $dc_year ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'All rights reserved.', 'depocleanique-custom' ); ?>
             </p>
-            <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
-                <a class="footer-link" href="<?php echo esc_url( home_url( '/kebijakan-privasi/' ) ); ?>" style="font-size:12px;"><?php esc_html_e( 'Kebijakan Privasi', 'depocleanique-custom' ); ?></a>
-                <a class="footer-link" href="<?php echo esc_url( home_url( '/syarat-ketentuan/' ) ); ?>" style="font-size:12px;"><?php esc_html_e( 'Syarat & Ketentuan', 'depocleanique-custom' ); ?></a>
-                <a href="<?php echo esc_url( dc_get_wa_url( 'footer' ) ); ?>"
-                   target="_blank" rel="noopener noreferrer"
-                   style="font-size:12px;color:rgba(79,179,255,0.8);text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
-                    <span class="material-symbols-outlined" style="font-size:13px;">chat</span>
+            <div class="footer-bottom-links">
+                <a class="footer-link footer-bottom-link" href="<?php echo esc_url( home_url( '/kebijakan-privasi/' ) ); ?>"><?php esc_html_e( 'Kebijakan Privasi', 'depocleanique-custom' ); ?></a>
+                <a class="footer-link footer-bottom-link" href="<?php echo esc_url( home_url( '/syarat-ketentuan/' ) ); ?>"><?php esc_html_e( 'Syarat & Ketentuan', 'depocleanique-custom' ); ?></a>
+                <a class="footer-wa-link" href="<?php echo esc_url( dc_get_wa_url( 'footer' ) ); ?>"
+                   target="_blank" rel="noopener noreferrer">
+                    <span class="material-symbols-outlined footer-wa-icon">chat</span>
                     <?php echo esc_html( dc_get_wa_label() ); ?>
                 </a>
             </div>

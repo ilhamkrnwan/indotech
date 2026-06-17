@@ -99,9 +99,8 @@ $dc_logo_markup = static function () use ( $dc_logo_path, $dc_logo_uri ) {
             <?php $dc_logo_markup(); ?>
         </a>
 
-        <!-- ② Nav links — pill group (desktop ≥1024px) -->
-        <nav class="site-nav items-center gap-0.5 rounded-full px-1.5 py-1"
-             style="background:var(--color-surface-soft);"
+        <!-- ② Nav links — desktop (≥1024px) -->
+        <nav class="site-nav items-center gap-1.5"
              aria-label="<?php esc_attr_e( 'Navigasi utama', 'depocleanique-custom' ); ?>">
             <?php foreach ( $dc_nav_links as $link ) : ?>
                 <a class="nav-link<?php echo $link['active'] ? ' active' : ''; ?>"
@@ -120,22 +119,22 @@ $dc_logo_markup = static function () use ( $dc_logo_path, $dc_logo_uri ) {
                class="nav-cta nav-cta-solid"
                title="<?php esc_attr_e( 'Konsultasi Gratis', 'depocleanique-custom' ); ?>"
                aria-label="<?php esc_attr_e( 'Konsultasi gratis via WhatsApp', 'depocleanique-custom' ); ?>">
-                <span class="material-symbols-outlined nav-cta-icon" aria-hidden="true">forum</span>
+                <?php echo dc_icon( 'message-circle', 'nav-cta-icon dc-icon-sm' ); ?>
                 <span class="nav-cta-label"><?php esc_html_e( 'Konsultasi Gratis', 'depocleanique-custom' ); ?></span>
-                <span class="material-symbols-outlined nav-cta-arrow" aria-hidden="true">arrow_forward</span>
+                <?php echo dc_icon( 'arrow-right', 'nav-cta-arrow dc-icon-sm' ); ?>
             </a>
         </div>
 
         <!-- ④ Mobile hamburger (<1024px) -->
         <button id="mobile-menu-toggle"
                 type="button"
-                class="mobile-menu-toggle site-menu-toggle p-2 rounded-xl"
-                style="background:var(--color-surface-soft); border:1px solid var(--color-border);"
+                class="mobile-menu-toggle site-menu-toggle p-2 rounded-xl flex items-center justify-center"
+                style="background:var(--color-surface-soft); border:1px solid var(--color-border); width:40px; height:40px;"
                 aria-label="<?php esc_attr_e( 'Buka menu navigasi', 'depocleanique-custom' ); ?>"
                 aria-expanded="false"
                 aria-controls="mobile-menu">
-            <span id="icon-hamburger" class="material-symbols-outlined align-middle" style="font-size:22px;color:var(--color-navy);">menu</span>
-            <span id="icon-close" class="material-symbols-outlined align-middle hidden" style="font-size:22px;color:var(--color-navy);">close</span>
+            <span id="icon-hamburger" class="flex items-center justify-center" style="color:var(--color-navy);"><?php echo dc_icon( 'menu', 'dc-icon-md' ); ?></span>
+            <span id="icon-close" class="flex items-center justify-center hidden" style="color:var(--color-navy);"><?php echo dc_icon( 'x', 'dc-icon-md' ); ?></span>
         </button>
     </div>
 
@@ -148,28 +147,14 @@ $dc_logo_markup = static function () use ( $dc_logo_path, $dc_logo_uri ) {
            aria-hidden="true"
            aria-label="<?php esc_attr_e( 'Menu navigasi mobile', 'depocleanique-custom' ); ?>">
 
-        <!-- Header drawer: logo kiri, tombol X kanan -->
-        <div class="mobile-menu-drawer-header">
-            <a href="<?php echo esc_url( home_url( '/' ) ); ?>"
-               class="site-logo mobile-drawer-logo flex items-center no-underline"
-               aria-label="<?php esc_attr_e( 'Depo Cleanique — Kembali ke beranda', 'depocleanique-custom' ); ?>">
-                <?php $dc_logo_markup(); ?>
-            </a>
-            <button type="button"
-                    class="mobile-menu-close"
-                    data-mobile-menu-close
-                    aria-label="<?php esc_attr_e( 'Tutup menu navigasi', 'depocleanique-custom' ); ?>">
-                <span class="material-symbols-outlined" aria-hidden="true">close</span>
-            </button>
-        </div>
-
         <!-- List menu satu kolom penuh -->
         <nav class="mobile-menu-nav" aria-label="<?php esc_attr_e( 'Navigasi utama', 'depocleanique-custom' ); ?>">
             <?php foreach ( $dc_nav_links as $link ) : ?>
                 <a class="mobile-menu-link<?php echo $link['active'] ? ' is-active' : ''; ?>"
                    href="<?php echo $link['href']; // already escaped ?>"
                    <?php echo $link['active'] ? 'aria-current="page"' : ''; ?>>
-                    <?php echo esc_html( $link['label'] ); ?>
+                    <span><?php echo esc_html( $link['label'] ); ?></span>
+                    <?php echo dc_icon( 'arrow-right', 'dc-icon-sm opacity-55' ); ?>
                 </a>
             <?php endforeach; ?>
         </nav>
@@ -180,13 +165,22 @@ $dc_logo_markup = static function () use ( $dc_logo_path, $dc_logo_uri ) {
            rel="noopener noreferrer"
            class="mobile-menu-cta"
            aria-label="<?php esc_attr_e( 'Konsultasi gratis via WhatsApp', 'depocleanique-custom' ); ?>">
-            <span class="material-symbols-outlined" style="font-size:20px;" aria-hidden="true">forum</span>
+            <?php echo dc_icon( 'message-circle', 'dc-icon-md' ); ?>
             <?php esc_html_e( 'Konsultasi Gratis', 'depocleanique-custom' ); ?>
         </a>
     </aside>
 </header>
 
 <?php if ( ! is_front_page() ) : ?>
+    <?php
+    $dc_spacer_classes = 'internal-page-spacer h-24';
+
+    if ( is_page( [ 'kontak', 'tentang-kami' ] ) ) {
+        $dc_spacer_classes .= ' internal-page-spacer--hero';
+    } elseif ( $dc_blog_active ) {
+        $dc_spacer_classes .= ' internal-page-spacer--article';
+    }
+    ?>
     <!-- Spacer untuk pill nav fixed (halaman non-homepage). Hero homepage punya padding sendiri. -->
-    <div class="h-24" aria-hidden="true"></div>
+    <div class="<?php echo esc_attr( $dc_spacer_classes ); ?>" aria-hidden="true"></div>
 <?php endif; ?>

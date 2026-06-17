@@ -123,13 +123,9 @@ $comparison_totals = [
                                     ?>
                                     <td class="comparison-cell<?php echo $is_recommended ? ' is-featured' : ''; ?>">
                                         <?php if ( 'check' === $cell['type'] ) : ?>
-                                            <span class="material-symbols-outlined comparison-status is-check" aria-label="<?php esc_attr_e( 'Tersedia', 'depocleanique-custom' ); ?>">
-                                                check_circle
-                                            </span>
+                                            <?php echo dc_icon( 'check-circle', 'dc-icon-md comparison-status is-check' ); ?>
                                         <?php elseif ( 'remove' === $cell['type'] ) : ?>
-                                            <span class="material-symbols-outlined comparison-status is-remove" aria-label="<?php esc_attr_e( 'Tidak tersedia', 'depocleanique-custom' ); ?>">
-                                                remove_circle
-                                            </span>
+                                            <?php echo dc_icon( 'x', 'dc-icon-sm comparison-status is-remove' ); ?>
                                         <?php else : ?>
                                             <span class="comparison-value<?php echo ! empty( $cell['strong'] ) ? ' is-strong' : ''; ?><?php echo ! empty( $cell['muted'] ) ? ' is-muted' : ''; ?>">
                                                 <?php echo esc_html( $cell['label'] ); ?>
@@ -158,6 +154,29 @@ $comparison_totals = [
                                     <p>
                                         <?php echo esc_html( $total['price'] ); ?>
                                     </p>
+                                </td>
+                            <?php endforeach; ?>
+                        </tr>
+                        <tr class="comparison-cta-row">
+                            <th scope="row" class="comparison-cta-label"></th>
+                            <?php foreach ( $comparison_columns as $column ) : ?>
+                                <?php
+                                $column_key     = $column['key'];
+                                $is_recommended = ! empty( $column['recommended'] );
+                                $wa_message      = sprintf(
+                                    'Halo! Saya tertarik dengan Paket %s Depo Cleanique.',
+                                    $column['name']
+                                );
+                                ?>
+                                <td class="comparison-cta-cell<?php echo $is_recommended ? ' is-featured' : ''; ?>">
+                                    <a
+                                        href="<?php echo esc_url( dc_get_wa_url( 'pricing', $wa_message ) ); ?>"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="comparison-cta<?php echo $is_recommended ? ' is-featured' : ''; ?>"
+                                    >
+                                        Pilih <?php echo esc_html( $column['name'] ); ?>
+                                    </a>
                                 </td>
                             <?php endforeach; ?>
                         </tr>

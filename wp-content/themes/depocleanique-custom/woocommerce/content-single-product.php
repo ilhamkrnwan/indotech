@@ -71,9 +71,7 @@ $stock_class       = $product->is_in_stock() ? 'is-in-stock' : 'is-out-of-stock'
                 </div>
 
                 <div class="dc-single-stock <?php echo esc_attr( $stock_class ); ?>">
-                    <span class="material-symbols-outlined" aria-hidden="true">
-                        <?php echo $product->is_in_stock() ? 'check_circle' : 'cancel'; ?>
-                    </span>
+                    <?php echo $product->is_in_stock() ? dc_icon( 'check-circle', 'dc-icon-sm' ) : dc_icon( 'x', 'dc-icon-sm' ); ?>
                     <span><?php echo esc_html( $stock_label ); ?></span>
                 </div>
 
@@ -94,7 +92,7 @@ $stock_class       = $product->is_in_stock() ? 'is-in-stock' : 'is-out-of-stock'
                 <?php endif; ?>
 
                 <a class="dc-single-whatsapp" href="<?php echo esc_url( $whatsapp_url ); ?>" target="_blank" rel="noopener noreferrer">
-                    <span class="material-symbols-outlined" aria-hidden="true">chat</span>
+                    <?php echo dc_icon( 'whatsapp', 'dc-icon-sm' ); ?>
                     <span><?php esc_html_e( 'Tanya via WhatsApp', 'depocleanique-custom' ); ?></span>
                 </a>
 

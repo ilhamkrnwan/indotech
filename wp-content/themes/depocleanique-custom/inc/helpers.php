@@ -134,7 +134,7 @@ function dc_get_social_url( $platform ) {
     return get_theme_mod( 'dc_social_' . $platform, '#' );
 }
 
-/* Artikel */
+/* ─── Icon System ────────────────────────────────────── */
 
 if ( ! function_exists( 'dc_icon' ) ) {
     /**
@@ -179,6 +179,7 @@ if ( ! function_exists( 'dc_icon' ) ) {
             'map-pin'       => '<path d="M12 21s7-6.3 7-11a7 7 0 0 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/>',
             'phone'         => '<path d="M5 3h3l2 5-2.5 1.5a12 12 0 0 0 5 5L19 11l5 2v3a2 2 0 0 1-2.2 2A17 17 0 0 1 3 5.2 2 2 0 0 1 5 3Z"/>',
             'rocket'        => '<path d="M5 14c-1.5.5-3 2-3 5 3 0 4.5-1.5 5-3"/><path d="M9 13a18 18 0 0 1 8-9 11 11 0 0 1 4 0 11 11 0 0 1 0 4 18 18 0 0 1-9 8l-3-3Z"/><circle cx="15" cy="9" r="1.5"/>',
+            'menu'          => '<line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>',
         ];
 
         if ( ! isset( $icons[ $name ] ) ) {
@@ -192,6 +193,9 @@ if ( ! function_exists( 'dc_icon' ) ) {
         );
     }
 }
+
+
+/* ─── Artikel / Blog Helpers ─────────────────────────── */
 
 function dc_article_reading_time( $post_id = null ) {
     $post_id = $post_id ?: get_the_ID();

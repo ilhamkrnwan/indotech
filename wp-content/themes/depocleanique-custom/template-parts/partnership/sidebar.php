@@ -12,6 +12,8 @@ $summary    = dc_get_partnership_summary( $post_id );
 $location   = dc_get_partnership_location( $post_id );
 $owner      = dc_get_partnership_meta( $post_id, '_partnership_owner' );
 $phone      = dc_get_partnership_meta( $post_id, '_partnership_phone' );
+$address    = dc_get_partnership_meta( $post_id, '_partnership_address' );
+$since      = dc_get_partnership_meta( $post_id, '_partnership_since' );
 $type_label = dc_get_partnership_types_label( $post_id );
 ?>
 
@@ -25,6 +27,12 @@ $type_label = dc_get_partnership_types_label( $post_id );
             <dt><?php esc_html_e( 'Kota / area', 'depocleanique-custom' ); ?></dt>
             <dd><?php echo esc_html( $location ?: '-' ); ?></dd>
         </div>
+        <?php if ( $address ) : ?>
+            <div>
+                <dt><?php esc_html_e( 'Alamat lengkap', 'depocleanique-custom' ); ?></dt>
+                <dd><?php echo nl2br( esc_html( $address ) ); ?></dd>
+            </div>
+        <?php endif; ?>
         <?php if ( $owner ) : ?>
             <div>
                 <dt><?php esc_html_e( 'Penanggung jawab', 'depocleanique-custom' ); ?></dt>
@@ -35,6 +43,12 @@ $type_label = dc_get_partnership_types_label( $post_id );
             <div>
                 <dt><?php esc_html_e( 'Kontak', 'depocleanique-custom' ); ?></dt>
                 <dd><?php echo esc_html( $phone ); ?></dd>
+            </div>
+        <?php endif; ?>
+        <?php if ( $since ) : ?>
+            <div>
+                <dt><?php esc_html_e( 'Bergabung sejak', 'depocleanique-custom' ); ?></dt>
+                <dd><?php echo esc_html( $since ); ?></dd>
             </div>
         <?php endif; ?>
         <?php if ( $type_label ) : ?>

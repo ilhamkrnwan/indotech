@@ -45,8 +45,11 @@ if ( ! $related->have_posts() ) {
 ?>
 
 <section class="partnership-related" aria-labelledby="partnership-related-title">
-    <div class="partnership-section-heading">
-        <span><?php esc_html_e( 'Mitra Lain', 'depocleanique-custom' ); ?></span>
+    <div class="partnership-heading is-left">
+        <div class="section-kicker">
+            <span class="section-kicker-dot" aria-hidden="true"></span>
+            <span><?php esc_html_e( 'Mitra Lain', 'depocleanique-custom' ); ?></span>
+        </div>
         <h2 id="partnership-related-title"><?php esc_html_e( 'Mitra terdaftar lain yang bisa dilihat', 'depocleanique-custom' ); ?></h2>
     </div>
     <div class="partnership-grid">

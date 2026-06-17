@@ -110,22 +110,22 @@ $badge_styles = [
                 $is_final      = ! empty( $step['final'] );
                 ?>
                 <article class="relative z-10 flex flex-row items-start gap-[18px] pb-9 md:pb-[52px] last:pb-0 md:w-[calc(50%+23px)] <?php echo esc_attr( $desktop_class ); ?>">
-                    <div class="partnership-step-number<?php echo $is_final ? ' is-final' : ''; ?>">
+                    <div class="partnership-flow-number<?php echo $is_final ? ' is-final' : ''; ?>">
                         <?php echo esc_html( $step['number'] ); ?>
                     </div>
 
                     <div
-                        class="partnership-step-card min-w-0 flex-1<?php echo $is_final ? ' is-final' : ''; ?>"
+                        class="partnership-flow-card min-w-0 flex-1<?php echo $is_final ? ' is-final' : ''; ?>"
                     >
-                        <span class="partnership-step-label">
+                        <div class="partnership-flow-bg-icon" style="color: <?php echo esc_attr( $step['icon_color'] ); ?>;">
+                            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;" aria-hidden="true">
+                                <?php echo esc_html( $step['icon'] ); ?>
+                            </span>
+                        </div>
+                        <span class="partnership-flow-label">
                             <?php echo esc_html( $step['label'] ); ?>
                         </span>
-                        <div class="flex items-center gap-3 mb-2.5">
-                            <div style="width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:<?php echo esc_attr( $step['icon_bg'] ); ?>;">
-                                <span class="material-symbols-outlined" style="font-size:19px;color:<?php echo esc_attr( $step['icon_color'] ); ?>;font-variation-settings:'FILL' 1;" aria-hidden="true">
-                                    <?php echo esc_html( $step['icon'] ); ?>
-                                </span>
-                            </div>
+                        <div class="partnership-flow-card-head">
                             <h3>
                                 <?php echo esc_html( $step['title'] ); ?>
                             </h3>
@@ -133,7 +133,7 @@ $badge_styles = [
                         <p>
                             <?php echo esc_html( $step['description'] ); ?>
                         </p>
-                        <span class="partnership-step-badge" style="<?php echo esc_attr( $badge_styles[ $step['badge_style'] ] ); ?>">
+                        <span class="partnership-flow-badge" style="<?php echo esc_attr( $badge_styles[ $step['badge_style'] ] ); ?>">
                             <?php if ( ! empty( $step['badge_icon'] ) ) : ?>
                                 <?php echo dc_icon( $step['badge_icon'], 'dc-icon-sm' ); ?>
                             <?php endif; ?>

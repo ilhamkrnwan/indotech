@@ -11,7 +11,7 @@ $post_id = get_the_ID();
 $wa_url  = is_singular( 'partnership' ) ? dc_get_partnership_whatsapp_url( $post_id ) : dc_get_wa_url( 'partnership' );
 ?>
 
-<section class="partnership-cta" aria-labelledby="partnership-cta-title">
+<section class="partnership-cta-section" aria-labelledby="partnership-cta-title">
     <div>
         <span><?php esc_html_e( 'Kemitraan Depo Cleanique', 'depocleanique-custom' ); ?></span>
         <h2 id="partnership-cta-title"><?php esc_html_e( 'Ingin terdaftar sebagai mitra Depo Cleanique?', 'depocleanique-custom' ); ?></h2>

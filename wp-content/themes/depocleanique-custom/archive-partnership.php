@@ -30,13 +30,36 @@ $faqs = [
     [ 'q' => 'Bagaimana cara menambahkan mitra?', 'a' => 'Admin dapat membuka menu Kemitraan, tambah mitra baru, isi informasi, pilih jenis kemitraan, lalu publish.' ],
     [ 'q' => 'Apakah data kontak wajib publik?', 'a' => 'Kontak bisa diisi sesuai kebutuhan. Jika WhatsApp mitra kosong, tombol akan memakai WhatsApp global Depo Cleanique.' ],
 ];
+$testimonials = [
+    [
+        'name'   => 'Ibu Hani Syarifah',
+        'role'   => 'Owner Depo Cleanique Cibinong',
+        'rating' => 5,
+        'quote'  => 'Sangat terbantu dengan sistem kemitraan Depo Cleanique. Produknya disukai pelanggan karena wangi tahan lama dan ramah lingkungan. Penjualan stabil setiap bulan!',
+    ],
+    [
+        'name'   => 'Bapak Budi Santoso',
+        'role'   => 'Owner Depo Cleanique Semarang',
+        'rating' => 5,
+        'quote'  => 'Pendampingan dari tim Depo Cleanique sangat intensif. Dari survei lokasi, layout outlet, sampai training karyawan dibantu sampai bisa. Sangat recommended untuk pemula.',
+    ],
+    [
+        'name'   => 'Ibu Rina Wijaya',
+        'role'   => 'Mitra Agen Depo Cleanique Bandung',
+        'rating' => 5,
+        'quote'  => 'Modal terjangkau dengan margin keuntungan yang sangat menarik. Pengiriman produk tepat waktu dan tim support-nya cepat tanggap dalam membantu promosi lokal.',
+    ],
+];
 ?>
 
 <main id="main-content" class="partnership-archive">
     <section class="partnership-hero" aria-labelledby="partnership-archive-title">
-        <div class="partnership-container partnership-hero-inner">
+        <div class="container mx-auto px-margin-mobile md:px-margin-desktop partnership-hero-inner">
             <div class="partnership-hero-copy">
-                <span class="partnership-eyebrow"><?php esc_html_e( 'Kemitraan Depo Cleanique', 'depocleanique-custom' ); ?></span>
+                <div class="section-kicker">
+                    <span class="section-kicker-dot" aria-hidden="true"></span>
+                    <span><?php esc_html_e( 'Kemitraan Depo Cleanique', 'depocleanique-custom' ); ?></span>
+                </div>
                 <h1 id="partnership-archive-title"><?php esc_html_e( 'Daftar mitra resmi Depo Cleanique', 'depocleanique-custom' ); ?></h1>
                 <p><?php esc_html_e( 'Temukan informasi mitra Depo Cleanique yang sudah terdaftar, mulai dari area operasional, jenis kemitraan, profil singkat, hingga produk dan layanan yang tersedia.', 'depocleanique-custom' ); ?></p>
                 <div class="partnership-hero-actions">
@@ -44,16 +67,11 @@ $faqs = [
                     <a class="partnership-button partnership-button-ghost" href="#daftar-mitra"><?php esc_html_e( 'Lihat Mitra', 'depocleanique-custom' ); ?><?php echo dc_icon( 'arrow-right' ); ?></a>
                 </div>
             </div>
-            <div class="partnership-hero-card" aria-label="<?php esc_attr_e( 'Keunggulan kemitraan', 'depocleanique-custom' ); ?>">
-                <?php foreach ( [ 'Profil mitra terdaftar', 'Area operasional', 'Jenis kemitraan', 'Kontak dan layanan' ] as $item ) : ?>
-                    <div><?php echo dc_icon( 'check-circle' ); ?><span><?php echo esc_html( $item ); ?></span></div>
-                <?php endforeach; ?>
-            </div>
         </div>
     </section>
 
     <section class="partnership-trust">
-        <div class="partnership-container partnership-trust-grid">
+        <div class="container mx-auto px-margin-mobile md:px-margin-desktop partnership-trust-grid">
             <?php foreach ( $trust_items as $item ) : ?>
                 <div class="partnership-trust-item"><?php echo dc_icon( $item['icon'] ); ?><span><?php echo esc_html( $item['title'] ); ?></span></div>
             <?php endforeach; ?>
@@ -61,9 +79,12 @@ $faqs = [
     </section>
 
     <section id="daftar-mitra" class="partnership-programs" aria-labelledby="partnership-programs-title">
-        <div class="partnership-container">
-            <div class="partnership-section-heading">
-                <span><?php esc_html_e( 'Daftar Mitra', 'depocleanique-custom' ); ?></span>
+        <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
+            <div class="partnership-heading">
+                <div class="section-kicker">
+                    <span class="section-kicker-dot" aria-hidden="true"></span>
+                    <span><?php esc_html_e( 'Daftar Mitra', 'depocleanique-custom' ); ?></span>
+                </div>
                 <h2 id="partnership-programs-title"><?php esc_html_e( 'Semua mitra yang sudah terdaftar', 'depocleanique-custom' ); ?></h2>
             </div>
             <?php if ( have_posts() ) : ?>
@@ -81,63 +102,84 @@ $faqs = [
         </div>
     </section>
 
-    <section class="partnership-section">
-        <div class="partnership-container">
-            <div class="partnership-section-heading">
-                <span><?php esc_html_e( 'Direktori Mitra', 'depocleanique-custom' ); ?></span>
-                <h2><?php esc_html_e( 'Informasi mitra yang mudah ditemukan', 'depocleanique-custom' ); ?></h2>
-            </div>
-            <div class="partnership-audience-grid">
-                <?php foreach ( $audiences as $item ) : ?>
-                    <div class="partnership-mini-card"><?php echo dc_icon( $item['icon'] ); ?><span><?php echo esc_html( $item['title'] ); ?></span></div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
-    <section class="partnership-section partnership-steps" aria-labelledby="partnership-steps-title">
-        <div class="partnership-container">
-            <div class="partnership-section-heading">
-                <span><?php esc_html_e( 'Alur Data', 'depocleanique-custom' ); ?></span>
-                <h2 id="partnership-steps-title"><?php esc_html_e( 'Cara data mitra tampil di website', 'depocleanique-custom' ); ?></h2>
-            </div>
-            <div class="partnership-step-grid">
-                <?php foreach ( $steps as $index => $step ) : ?>
-                    <div class="partnership-step-card"><span><?php echo esc_html( $index + 1 ); ?></span><h3><?php echo esc_html( $step ); ?></h3></div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
-    <section class="partnership-section">
-        <div class="partnership-container partnership-two-column">
-            <div>
-                <div class="partnership-section-heading">
-                    <span><?php esc_html_e( 'Kelengkapan Data', 'depocleanique-custom' ); ?></span>
-                    <h2><?php esc_html_e( 'Informasi penting untuk setiap mitra', 'depocleanique-custom' ); ?></h2>
+    <section class="partnership-section partnership-testimonials" aria-labelledby="testimonials-title">
+        <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
+            <div class="partnership-heading">
+                <div class="section-kicker">
+                    <span class="section-kicker-dot" aria-hidden="true"></span>
+                    <span><?php esc_html_e( 'Testimoni Mitra', 'depocleanique-custom' ); ?></span>
                 </div>
-                <ul class="partnership-check-list">
-                    <?php foreach ( $requirements as $item ) : ?>
-                        <li><?php echo dc_icon( 'check-circle' ); ?><?php echo esc_html( $item ); ?></li>
-                    <?php endforeach; ?>
-                </ul>
+                <h2 id="testimonials-title"><?php esc_html_e( 'Cerita sukses para mitra kami', 'depocleanique-custom' ); ?></h2>
             </div>
-            <div class="partnership-faq">
-                <div class="partnership-section-heading">
+            <div class="testimonials-grid">
+                <?php foreach ( $testimonials as $item ) : ?>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <?php for ( $i = 0; $i < $item['rating']; $i++ ) : ?>
+                                <?php echo dc_icon( 'star', 'dc-icon-sm' ); ?>
+                            <?php endfor; ?>
+                        </div>
+                        <p class="testimonial-quote">"<?php echo esc_html( $item['quote'] ); ?>"</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <span><?php echo esc_html( substr( $item['name'], 4, 1 ) ?: substr( $item['name'], 0, 1 ) ); ?></span>
+                            </div>
+                            <div class="testimonial-meta">
+                                <h4><?php echo esc_html( $item['name'] ); ?></h4>
+                                <span><?php echo esc_html( $item['role'] ); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="partnership-section" id="faq-mitra">
+        <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
+            <div class="partnership-heading">
+                <div class="section-kicker">
+                    <span class="section-kicker-dot" aria-hidden="true"></span>
                     <span><?php esc_html_e( 'FAQ Mitra', 'depocleanique-custom' ); ?></span>
-                    <h2><?php esc_html_e( 'Pertanyaan seputar direktori mitra', 'depocleanique-custom' ); ?></h2>
                 </div>
-                <?php foreach ( $faqs as $faq ) : ?>
-                    <details>
-                        <summary><?php echo esc_html( $faq['q'] ); ?></summary>
-                        <p><?php echo esc_html( $faq['a'] ); ?></p>
-                    </details>
+                <h2><?php esc_html_e( 'Pertanyaan seputar direktori mitra', 'depocleanique-custom' ); ?></h2>
+            </div>
+            <div class="faq-list">
+                <?php foreach ( $faqs as $faq_index => $faq ) : ?>
+                    <?php
+                    $partner_faq_trigger = 'partner-faq-trigger-' . $faq_index;
+                    $partner_faq_panel   = 'partner-faq-panel-' . $faq_index;
+                    ?>
+                    <div class="dc-faq-item">
+                        <button
+                            id="<?php echo esc_attr( $partner_faq_trigger ); ?>"
+                            type="button"
+                            class="dc-faq-trigger"
+                            aria-expanded="false"
+                            aria-controls="<?php echo esc_attr( $partner_faq_panel ); ?>"
+                        >
+                            <span class="dc-faq-question-wrap">
+                                <span class="dc-faq-number"><?php echo esc_html( str_pad( (string) ( $faq_index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+                                <span class="dc-faq-question"><?php echo esc_html( $faq['q'] ); ?></span>
+                            </span>
+                            <span class="material-symbols-outlined dc-faq-icon" aria-hidden="true">expand_more</span>
+                        </button>
+                        <div
+                            id="<?php echo esc_attr( $partner_faq_panel ); ?>"
+                            class="dc-faq-panel"
+                            role="region"
+                            aria-labelledby="<?php echo esc_attr( $partner_faq_trigger ); ?>"
+                            aria-hidden="true"
+                        >
+                            <div class="dc-faq-answer"><?php echo esc_html( $faq['a'] ); ?></div>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>
     </section>
 
-    <div class="partnership-container">
+    <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
         <?php get_template_part( 'template-parts/partnership/cta' ); ?>
     </div>
 </main>

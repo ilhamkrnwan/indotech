@@ -25,7 +25,7 @@ $dc_img = get_template_directory_uri() . '/assets/images';
             <div class="md:col-span-8 bg-white p-8 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between group hover:shadow-lg transition-all card-accent">
                 <div class="flex justify-between items-start">
                     <div class="space-y-4">
-                        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                             <span class="material-symbols-outlined">monetization_on</span>
                         </div>
                         <h3 class="text-2xl font-bold"><?php esc_html_e( 'Stabilitas Harga Terjamin', 'depocleanique-custom' ); ?></h3>
@@ -60,7 +60,7 @@ $dc_img = get_template_directory_uri() . '/assets/images';
             </div>
             <!-- Card 3: Legalitas -->
             <div class="md:col-span-4 bg-white p-8 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col gap-6 group hover:shadow-lg transition-all">
-                <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center text-secondary">
+                <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center text-secondary">
                     <span class="material-symbols-outlined">gavel</span>
                 </div>
                 <div class="space-y-2">
