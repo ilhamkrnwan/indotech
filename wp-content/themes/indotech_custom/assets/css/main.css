@@ -64,7 +64,12 @@
 
 /* ── Reset ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
+}
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -74,6 +79,9 @@ body {
   background: var(--white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -1571,6 +1579,45 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .hbs-pills { gap: 6px; }
   .services-grid { max-width: 100%; }
   .section-title { font-size: clamp(28px, 8vw, 40px); }
+
+  /* Stats responsive column stack */
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat-item {
+    padding: 32px 16px;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .stat-item:last-child {
+    border-bottom: none;
+  }
+
+  /* Contact info card layout for ultra small viewports */
+  .contact-info-card {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    justify-items: center;
+  }
+  .contact-info-icon {
+    grid-row: span 1 !important;
+    margin-bottom: 8px;
+  }
+
+  /* Operating hours font-size adjustment */
+  .operating-hours {
+    padding: 16px;
+  }
+  .oh-day, .oh-time {
+    font-size: 12px;
+  }
+
+  /* WA Strip on kontak page */
+  .contact-wa-strip {
+    padding: 16px;
+    gap: 12px;
+  }
+  .contact-wa-number {
+    font-size: 15px;
+  }
 }
 
 /* ============================================================
@@ -2249,7 +2296,17 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 @media (max-width: 900px) {
   .contact-cards-grid { grid-template-columns: 1fr; }
-  .contact-info-card { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 16px; }
+  .contact-info-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    align-items: center;
+    padding: 24px 20px;
+  }
+  .contact-info-icon {
+    grid-row: span 3;
+    margin-bottom: 0;
+  }
   .blog-featured-card { grid-template-columns: 1fr; }
   .blog-featured-body { padding: 32px; }
   .about-cert-grid { grid-template-columns: 1fr; }
