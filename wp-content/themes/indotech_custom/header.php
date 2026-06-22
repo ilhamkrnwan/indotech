@@ -69,6 +69,24 @@
                     echo '</ul>';
                 },
             ]); ?>
+
+            <div class="mobile-nav-extra">
+                <div class="mobile-nav-divider"></div>
+                <div class="mobile-nav-contact">
+                    <span class="mn-label">Hubungi Kami</span>
+                    <a href="tel:<?php echo esc_attr( preg_replace('/[\s\-]/', '', indotech_opt('phone', '+62 812-3456-7890')) ); ?>" class="mn-link">
+                        <?php echo esc_html( indotech_opt('phone', '+62 812-3456-7890') ); ?>
+                    </a>
+                    <a href="mailto:<?php echo esc_attr( indotech_opt('email', 'info@indotech.id') ); ?>" class="mn-link">
+                        <?php echo esc_html( indotech_opt('email', 'info@indotech.id') ); ?>
+                    </a>
+                </div>
+                <div class="mobile-nav-social">
+                    <a href="#" class="mn-social-link" aria-label="Instagram">IG</a>
+                    <a href="#" class="mn-social-link" aria-label="Facebook">FB</a>
+                    <a href="https://wa.me/<?php echo esc_attr( preg_replace('/[^0-9]/', '', indotech_opt('whatsapp', '6281234567890')) ); ?>" class="mn-social-link" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+                </div>
+            </div>
         </nav>
 
         <!-- ═══ ACTIONS ═════════════════════════════════════════════════ -->
