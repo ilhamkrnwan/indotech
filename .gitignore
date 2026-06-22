@@ -1,27 +1,45 @@
 # ─────────────────────────────────────────────────────────────
 # Strategi: abaikan SEMUA isi WordPress, lalu izinkan HANYA
-# tema kustom milik kita (depocleanique-custom).
-# Dengan begitu yang ter-push cuma tema custom, bukan core WP.
+# file custom milik proyek Indotech:
+#   - wp-content/themes/indotech_custom/   (tema utama)
+#   - wp-content/plugins/indotech-core/    (plugin inti)
+#   - speedrun/                            (docs & planning)
 # ─────────────────────────────────────────────────────────────
 
-# 1. Abaikan semuanya
+# 1. Abaikan semua file di root
 /*
 
-# 2. Tapi jangan abaikan file/folder ini (whitelist)
+# 2. Whitelist file penting di root
 !.gitignore
 !README.md
 
-# 3. Buka jalur menuju tema kustom
-#    (tiap level folder harus di-unignore dulu sebelum isinya)
+# ── Tema Custom: indotech_custom ──────────────────────────────
+# Buka jalur level per level (wajib di setiap level folder)
 !wp-content/
 wp-content/*
 !wp-content/themes/
 wp-content/themes/*
-!wp-content/themes/depocleanique-custom/
+!wp-content/themes/indotech_custom/
 
-# ─── Pengecualian di dalam tema kustom ───────────────────────
-# (hal-hal yang tetap tidak ingin di-commit walau di dalam tema)
-wp-content/themes/depocleanique-custom/**/node_modules/
-wp-content/themes/depocleanique-custom/**/vendor/
-wp-content/themes/depocleanique-custom/**/*.log
-wp-content/themes/depocleanique-custom/**/.DS_Store
+# Exclude hal yang tidak perlu di-commit
+wp-content/themes/indotech_custom/**/node_modules/
+wp-content/themes/indotech_custom/**/vendor/
+wp-content/themes/indotech_custom/**/*.log
+wp-content/themes/indotech_custom/**/.DS_Store
+
+# ── Plugin Custom: indotech-core ─────────────────────────────
+!wp-content/plugins/
+wp-content/plugins/*
+!wp-content/plugins/indotech-core/
+
+# Exclude vendor (composer) karena bisa di-generate ulang
+wp-content/plugins/indotech-core/vendor/
+wp-content/plugins/indotech-core/**/*.log
+wp-content/plugins/indotech-core/**/.DS_Store
+
+# ── Speedrun docs & planning ─────────────────────────────────
+!speedrun/
+
+# ─────────────────────────────────────────────────────────────
+# TIDAK di-push: wp-config.php, .env, uploads, core WP, dsb.
+# ─────────────────────────────────────────────────────────────

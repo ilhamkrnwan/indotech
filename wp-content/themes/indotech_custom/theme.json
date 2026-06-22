@@ -1,0 +1,94 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "palette": [
+        {
+          "slug": "cobalt",
+          "color": "#0057FF",
+          "name": "Electric Blue"
+        },
+        {
+          "slug": "cobalt-dark",
+          "color": "#0041CC",
+          "name": "Electric Blue Dark"
+        },
+        {
+          "slug": "ink",
+          "color": "#0A0F1E",
+          "name": "Ink Dark"
+        },
+        {
+          "slug": "white",
+          "color": "#FFFFFF",
+          "name": "White"
+        },
+        {
+          "slug": "surface",
+          "color": "#F8F9FC",
+          "name": "Light Surface"
+        },
+        {
+          "slug": "border",
+          "color": "#E4E8F0",
+          "name": "Border Gray"
+        }
+      ],
+      "custom": false,
+      "customGradient": false,
+      "gradients": [],
+      "link": true
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "'Space Grotesk', sans-serif",
+          "name": "Space Grotesk",
+          "slug": "space-grotesk"
+        },
+        {
+          "fontFamily": "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+          "name": "Inter",
+          "slug": "inter"
+        }
+      ],
+      "customFontSize": false,
+      "fontSizes": [
+        {
+          "size": "0.75rem",
+          "slug": "small",
+          "name": "Small"
+        },
+        {
+          "size": "1rem",
+          "slug": "medium",
+          "name": "Normal"
+        },
+        {
+          "size": "1.25rem",
+          "slug": "large",
+          "name": "Large"
+        },
+        {
+          "size": "1.75rem",
+          "slug": "x-large",
+          "name": "Extra Large"
+        },
+        {
+          "size": "2.5rem",
+          "slug": "xx-large",
+          "name": "Huge"
+        }
+      ]
+    },
+    "layout": {
+      "contentSize": "1200px",
+      "wideSize": "1400px"
+    },
+    "spacing": {
+      "units": [ "rem", "px", "%" ]
+    }
+  }
+}
