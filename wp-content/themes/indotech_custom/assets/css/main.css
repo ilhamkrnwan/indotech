@@ -2022,14 +2022,35 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   padding: 48px 40px;
+  width: 100%;
+  min-width: 0;
 }
-.contact-form { display: flex; flex-direction: column; gap: 20px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.form-group { display: flex; flex-direction: column; gap: 6px; }
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  min-width: 0;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  min-width: 0;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+}
 .form-label { font-size: 13px; font-weight: 600; color: var(--ink); }
 .form-required { color: var(--cobalt); }
 .form-input {
   width: 100%;
+  max-width: 100%;
   padding: 11px 16px;
   font-family: 'Inter', sans-serif;
   font-size: 14px;
