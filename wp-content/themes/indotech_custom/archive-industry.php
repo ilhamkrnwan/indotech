@@ -12,7 +12,7 @@ get_header();
         
         <!-- Header -->
         <header style="margin-bottom: 50px; text-align: center;">
-            <div class="section-tag" style="margin-bottom: 12px;">B2B Solutions</div>
+            <div class="section-tag" style="margin-bottom: 12px;">Solusi B2B</div>
             <h1 style="font-size: clamp(32px, 5vw, 46px); font-weight: 700; letter-spacing: -0.04em; margin-bottom: 12px; line-height: 1.1;">Solusi Sektor Industri</h1>
             <p style="color: var(--text-secondary); font-size: 16px; max-width: 600px; margin: 0 auto; line-height: 1.6;">PT Indotech Berkah Abadi menyediakan formula pembersih khusus dan pasokan kimia terstandarisasi untuk berbagai kebutuhan industri.</p>
         </header>

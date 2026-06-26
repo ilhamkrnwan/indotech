@@ -7,21 +7,24 @@
 get_header();
 ?>
 
+<section class="inner-page-hero" id="brands-hero">
+    <div class="hero-bg" aria-hidden="true">
+        <div class="hero-grid-overlay"></div>
+        <div class="hero-glow hero-glow--1" style="opacity:.4;"></div>
+    </div>
+    <div class="container inner-page-hero-inner reveal">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Brand</span>
+        </nav>
+        <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Portofolio Brand</span>
+        <h1 class="inner-page-title">Portofolio <em>Brand Kami</em></h1>
+        <p class="inner-page-subtitle">Menghadirkan formulasi terbaik dan kualitas B2B berstandar tinggi untuk memenuhi segmen industri laundry, pembersih rumahan, hingga makanan premium.</p>
+    </div>
+</section>
+
 <div class="brand-archive-wrapper" style="background: var(--surface); min-height: 100vh;">
-    
-    <!-- ── Hero Section ── -->
-    <section class="brand-archive-hero" style="background: var(--ink); color: var(--white); padding: 90px 0; border-bottom: 1px solid var(--border); text-align: center; position: relative; overflow: hidden;">
-        <div class="container" style="position: relative; z-index: 2;">
-            <div class="section-tag section-tag--white" style="margin-bottom: 16px;">Brand Portfolio</div>
-            <h1 style="font-size: clamp(36px, 6vw, 56px); font-weight: 700; letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1.05;">
-                Portofolio <em>Brand Kami</em>
-            </h1>
-            <p style="font-size: 17px; font-weight: 300; color: rgba(255,255,255,.55); max-width: 600px; margin: 0 auto; line-height: 1.75;">
-                Menghadirkan formulasi terbaik dan kualitas berstandar tinggi untuk memenuhi beragam segmen industri laundry, pembersih rumahan, hingga makanan premium.
-            </p>
-        </div>
-        <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,87,255,.15), transparent 70%); top: -300px; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 1;"></div>
-    </section>
 
     <!-- ── Brands Grid ── -->
     <section class="brand-archive-grid-section" style="padding: 80px 0;">
@@ -39,6 +42,9 @@ get_header();
 
                 if ($brand_query->have_posts()) :
                     while ($brand_query->have_posts()) : $brand_query->the_post();
+                        if (strtolower(trim(get_the_title())) === 'cokusi') {
+                            continue;
+                        }
                         $brand_id = get_the_ID();
                         $accent = carbon_get_post_meta($brand_id, 'brand_accent_color') ?: '#0057FF';
                         $tagline = carbon_get_post_meta($brand_id, 'brand_tagline');
@@ -60,11 +66,16 @@ get_header();
                     <div class="brand-card-top" style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; width: 100%;">
                         <!-- Logo / Initials Container -->
                         <div class="brand-icon-wrap" style="width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 1px solid var(--border); background: var(--surface); color: var(--ba);">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('thumbnail', ['style' => 'width:100%;height:100%;object-fit:cover;border-radius:10px;']); ?>
-                            <?php else : ?>
-                                <?php echo esc_html($initials); ?>
-                            <?php endif; ?>
+                            <?php 
+                            $local_logo = indotech_get_brand_logo_url(get_the_title());
+                            if (has_post_thumbnail()) : 
+                                the_post_thumbnail('thumbnail', ['style' => 'width:100%;height:100%;object-fit:cover;border-radius:10px;']);
+                            elseif (!empty($local_logo)) : 
+                                echo '<img src="' . esc_url($local_logo) . '" alt="' . esc_attr(get_the_title()) . ' logo" style="width:100%;height:100%;object-fit:contain;border-radius:10px;padding:4px;">';
+                            else : 
+                                echo esc_html($initials); 
+                            endif; 
+                            ?>
                         </div>
                     </div>
 

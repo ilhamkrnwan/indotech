@@ -183,6 +183,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   line-height: 1.75;
   font-weight: 400;
   max-width: 460px;
+  margin: 16px auto 0;
 }
 
 /* Section number (decorative) */
@@ -693,7 +694,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ── BRANDS ──────────────────────────────────────────────── */
 .brands-section { background: var(--white); }
-.brands-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.brands-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
 
 .brand-card {
   background: var(--white);
@@ -720,16 +721,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .brand-card-top {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-/* Rounded-square brand logo container */
+/* Rectangular brand logo container */
 .brand-icon-wrap {
-  width: 52px; height: 52px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: var(--radius-md);
+  width: 110px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
   font-size: 14px;
   font-weight: 700;
   font-family: 'Space Grotesk', sans-serif;
@@ -738,8 +744,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--cobalt);
+  padding: 4px 6px;
 }
-.brand-thumb-img { width: 100%; height: 100%; object-fit: cover; }
+.brand-thumb-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
 
 /* Pill-shaped category badge */
 .brand-tag {
@@ -917,7 +930,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .why-card {
   background: var(--white);
   border-bottom: 1px solid var(--border);
-  padding: 28px 0;
+  padding: 28px 0 28px 20px;
   display: grid;
   grid-template-columns: 64px 1fr;
   align-items: start;
@@ -931,7 +944,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .why-card::before {
   content: '';
   position: absolute;
-  left: -8px; top: 28px; bottom: 28px; width: 2px;
+  left: 0; top: 28px; bottom: 28px; width: 2px;
   background: transparent;
   transition: background var(--trans);
   border-radius: 2px;
@@ -960,6 +973,77 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ── TESTIMONIALS ────────────────────────────────────────── */
 .testimonials-section { background: var(--surface); }
 .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+
+/* Infinite scroll marquee for testimonials */
+.testimonials-marquee-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  padding: 16px 0;
+  mask-image: linear-gradient(to right, transparent, var(--white) 15%, var(--white) 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, var(--white) 15%, var(--white) 85%, transparent);
+}
+
+.testimonials-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 24px;
+}
+
+.testimonials-marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 24px;
+  animation: scroll-marquee 45s linear infinite;
+}
+
+.testimonials-marquee-container:hover .testimonials-marquee-group {
+  animation-play-state: paused;
+}
+
+.testimonials-marquee-group .testimonial-card {
+  width: 380px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-xs);
+}
+
+@keyframes scroll-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% - 24px));
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonials-marquee-group .testimonial-card {
+    width: 330px;
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonials-marquee-group .testimonial-card {
+    width: 290px;
+    padding: 28px 22px;
+  }
+  .testimonials-marquee-track {
+    gap: 16px;
+  }
+  .testimonials-marquee-group {
+    gap: 16px;
+  }
+  @keyframes scroll-marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-100% - 16px));
+    }
+  }
+}
 
 .testimonial-card {
   background: var(--white);
@@ -2371,11 +2455,20 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .partner-steps { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .contact-form-wrap { padding: 28px 24px; }
+  .contact-grid { gap: 32px; }
+  .contact-map-placeholder { aspect-ratio: auto; height: 260px; }
   .wa-cta-inner { flex-direction: column; text-align: center; }
   .wa-cta-btn { width: 100%; justify-content: center; }
   .blog-filter-tabs { gap: 6px; }
   .blog-pagination { flex-direction: column; gap: 12px; }
   .legal-contact-strip { flex-direction: column; }
+}
+
+@media (max-width: 480px) {
+  .contact-form-wrap { padding: 24px 16px; }
+  .contact-wa-strip { padding: 16px; gap: 12px; }
+  .contact-wa-number { font-size: 14px; }
+  .operating-hours { padding: 20px 16px; }
 }
 
 /* ============================================================

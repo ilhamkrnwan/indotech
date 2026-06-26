@@ -18,68 +18,22 @@ get_header();
 <main id="main-content">
 
     <!-- ════════════════════════════════════════════════════════
-         HERO — Dark ink background, company tagline
+         HERO — Pendek, elegant (seperti kontak)
     ════════════════════════════════════════════════════════ -->
-    <section class="about-hero-section" id="tentang-kami-hero">
+    <section class="inner-page-hero" id="tentang-kami-hero">
         <div class="hero-bg" aria-hidden="true">
             <div class="hero-grid-overlay"></div>
-            <div class="hero-glow hero-glow--1"></div>
-            <div class="hero-glow hero-glow--2"></div>
+            <div class="hero-glow hero-glow--1" style="opacity:.4;"></div>
         </div>
-
-        <div class="container about-hero-container">
-            <div class="about-hero-content reveal">
-                <div class="hero-eyebrow">
-                    <span class="hero-badge">
-                        <span class="badge-dot" aria-hidden="true"></span>
-                        Berdiri sejak 2011
-                    </span>
-                    <span class="hero-badge-sep" aria-hidden="true">/</span>
-                    <span class="hero-badge hero-badge--plain">PT Indotech Berkah Abadi</span>
-                </div>
-
-                <h1 class="hero-headline">
-                    Membangun Kepercayaan<br>
-                    <em>Bisnis B2B</em> Indonesia
-                </h1>
-                <p class="hero-subtitle">
-                    Kami adalah pemasok produk homecare, laundry, dan pewangi B2B yang berkomitmen menghadirkan kualitas premium dengan harga kompetitif untuk mitra bisnis di seluruh Indonesia.
-                </p>
-
-                <div class="hero-actions">
-                    <a href="<?php echo esc_url( home_url('/kemitraan') ); ?>" class="btn btn-gold btn-lg">
-                        Jadi Mitra Kami
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                    <a href="#our-story" class="btn btn-outline-white btn-lg">
-                        Pelajari Lebih Lanjut
-                    </a>
-                </div>
-            </div>
-
-            <!-- Floating stat cards -->
-            <div class="about-hero-visual" aria-hidden="true">
-                <div class="hv-card hv-card--1">
-                    <div class="hvc-top">
-                        <div class="hvc-icon">TAHUN</div>
-                        <span class="hvc-trend hvc-trend--up">+13 Thn</span>
-                    </div>
-                    <div class="hvc-value">2011</div>
-                    <div class="hvc-label">Berdiri & Beroperasi</div>
-                </div>
-                <div class="hv-card hv-card--2">
-                    <div class="hvc-top">
-                        <div class="hvc-icon">MITRA</div>
-                        <span class="hvc-trend hvc-trend--up">Aktif</span>
-                    </div>
-                    <div class="hvc-value">500+</div>
-                    <div class="hvc-label">Mitra Bisnis B2B</div>
-                </div>
-                <div class="hv-badge-cert">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    BPOM &middot; Halal MUI &middot; ISO 9001
-                </div>
-            </div>
+        <div class="container inner-page-hero-inner reveal">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">Tentang Kami</span>
+            </nav>
+            <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Profil Perusahaan</span>
+            <h1 class="inner-page-title">Membangun Kepercayaan <em>Bisnis B2B</em> Indonesia</h1>
+            <p class="inner-page-subtitle">Kami adalah pemasok produk homecare, laundry, dan pewangi B2B yang berkomitmen menghadirkan kualitas premium dengan harga kompetitif untuk mitra bisnis di seluruh Indonesia.</p>
         </div>
     </section>
 
@@ -152,8 +106,8 @@ get_header();
                         <div class="timeline-dot" aria-hidden="true"></div>
                         <div class="timeline-body">
                             <span class="timeline-year">2020</span>
-                            <h4>Peluncuran 4 Brand Unggulan</h4>
-                            <p>Orchid Care, Depo Cleanique, Malabeez, dan Cokusi resmi diluncurkan sebagai brand andalan perusahaan.</p>
+                            <h4>Peluncuran Brand Unggulan</h4>
+                            <p>Cleanique Academy, Cleanique Lab, Cleanique Mart, Depo Cleanique, Malabeez, Orchid Care, dan Prokopi resmi diluncurkan sebagai brand andalan perusahaan.</p>
                         </div>
                     </div>
                     <div class="timeline-item timeline-item--active">

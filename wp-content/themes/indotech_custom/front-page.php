@@ -9,6 +9,7 @@
     <?php get_template_part('template-parts/home/why-us'); ?>
     <?php get_template_part('template-parts/home/testimonials'); ?>
     <?php get_template_part('template-parts/home/blog-preview'); ?>
+    <?php get_template_part('template-parts/home/faq'); ?>
     <?php get_template_part('template-parts/home/cta-banner'); ?>
 
 </main>

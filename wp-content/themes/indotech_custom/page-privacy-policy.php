@@ -60,7 +60,7 @@ $default_content = '
 <h3>B. Data Profil Bisnis dan Legalitas</h3>
 <p>Nama badan usaha (PT/CV/UD), alamat kantor pusat, alamat pengiriman gudang/Franco, dokumen legalitas usaha (NIB, SIUP) untuk verifikasi kelayakan distribusi produk.</p>
 <h3>C. Data Keuangan dan Transaksi</h3>
-<p>Detail rekening bank pengirim, informasi bukti transfer pembayaran, riwayat pesanan produk (Orchid Care, Depo Cleanique, Malabeez, Cokusi), total volume pembelian, serta status penawaran harga (*price inquiry*).</p>
+<p>Detail rekening bank pengirim, informasi bukti transfer pembayaran, riwayat pesanan produk (Cleanique Academy, Cleanique Lab, Cleanique Mart, Depo Cleanique, Malabeez, Orchid Care, Prokopi), total volume pembelian, serta status penawaran harga (*price inquiry*).</p>
 <h3>D. Data Teknis dan Kunjungan Web</h3>
 <p>Alamat IP (*Internet Protocol*), tipe peramban web (*browser*), zona waktu, sistem operasi yang digunakan, aktivitas kunjungan halaman (*clickstream*), durasi kunjungan, serta informasi yang diperoleh melalui cookie analitis.</p>
 

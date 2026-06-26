@@ -18,7 +18,7 @@ $terms = get_terms([
         
         <!-- Header -->
         <header style="margin-bottom: 50px; text-align: center;">
-            <div class="section-tag" style="margin-bottom: 12px;">Resource Library</div>
+            <div class="section-tag" style="margin-bottom: 12px;">Perpustakaan Dokumen</div>
             <h1 style="font-size: clamp(32px, 5vw, 46px); font-weight: 700; letter-spacing: -0.04em; margin-bottom: 12px; line-height: 1.1;">Pusat Unduhan Dokumen</h1>
             <p style="color: var(--text-secondary); font-size: 16px; max-width: 600px; margin: 0 auto; line-height: 1.6;">Akses lembar data keselamatan (SDS/MSDS), sertifikat legalitas, dan katalog PDF produk resmi kami.</p>
         </header>
@@ -57,12 +57,12 @@ $terms = get_terms([
                             ?>
                                 <div style="display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; min-height: 140px; justify-content: space-between;">
                                     <div>
-                                        <span style="font-size: 11px; font-weight: 700; color: var(--cobalt); text-transform: uppercase; display: block; margin-bottom: 6px;">PDF RESOURCE</span>
+                                        <span style="font-size: 11px; font-weight: 700; color: var(--cobalt); text-transform: uppercase; display: block; margin-bottom: 6px;">DOKUMEN PDF</span>
                                         <h3 style="font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.4; margin-bottom: 8px;"><?php echo esc_html($file->post_title); ?></h3>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
                                         <?php if ($is_gated) : ?>
-                                            <span style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Lead Form Gated</span>
+                                            <span style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Wajib Isi Formulir</span>
                                         <?php else : ?>
                                             <span style="font-size: 10px; font-weight: 700; color: #137333; text-transform: uppercase;">Akses Bebas</span>
                                         <?php endif; ?>

@@ -175,12 +175,12 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
     <div class="footer-bottom">
         <div class="container footer-bottom-inner">
             <p class="copyright">
-                &copy; <?php echo esc_html( date('Y') ); ?> PT Indotech Berkah Abadi. All rights reserved.
+                &copy; <?php echo esc_html( date('Y') ); ?> PT Indotech Berkah Abadi. Hak cipta dilindungi undang-undang.
             </p>
             <div class="footer-legal">
-                <a href="<?php echo esc_url( home_url('/privacy-policy') ); ?>">Privacy Policy</a>
-                <a href="<?php echo esc_url( home_url('/syarat-ketentuan') ); ?>">Term of Use</a>
-                <a href="<?php echo esc_url( home_url('/cookie-policy') ); ?>">Cookie Policy</a>
+                <a href="<?php echo esc_url( home_url('/privacy-policy') ); ?>">Kebijakan Privasi</a>
+                <a href="<?php echo esc_url( home_url('/syarat-ketentuan') ); ?>">Syarat & Ketentuan</a>
+                <a href="<?php echo esc_url( home_url('/cookie-policy') ); ?>">Kebijakan Cookie</a>
             </div>
         </div>
     </div>

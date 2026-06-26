@@ -118,12 +118,12 @@ class InquiryHandler {
         $headers = ['Content-Type: text/html; charset=UTF-8'];
 
         // Email to Admin (Sales Team)
-        $admin_subject = "Inquiry Produk Baru (B2B): " . $product_title;
+        $admin_subject = "Permintaan Penawaran Baru (B2B): " . $product_title;
         $admin_body = "
         <html>
         <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
             <div style='max-width: 600px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 8px;'>
-                <h2 style='color: #0057FF; border-bottom: 2px solid #EEF3FF; padding-bottom: 10px;'>Inquiry Masuk Baru</h2>
+                <h2 style='color: #0057FF; border-bottom: 2px solid #EEF3FF; padding-bottom: 10px;'>Permintaan Penawaran Baru</h2>
                 <p>Halo Tim Sales Indotech,</p>
                 <p>Prospek B2B baru saja mengajukan penawaran harga untuk produk berikut:</p>
                 <table style='width: 100%; border-collapse: collapse;'>
@@ -144,7 +144,7 @@ class InquiryHandler {
         @wp_mail($admin_email, $admin_subject, $admin_body, $headers);
 
         // Email to Customer (Auto Confirmation)
-        $customer_subject = "Terima Kasih Atas Inquiry Anda - PT Indotech Berkah Abadi";
+        $customer_subject = "Terima Kasih Atas Permintaan Penawaran Anda - PT Indotech Berkah Abadi";
         $customer_body = "
         <html>
         <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>

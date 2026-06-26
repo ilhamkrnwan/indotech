@@ -347,7 +347,7 @@ while (have_posts()) : the_post();
                                 <?php if (has_post_thumbnail()) : ?>
                                     <?php the_post_thumbnail('large'); ?>
                                 <?php else : ?>
-                                    <span style="font-weight:700; color:var(--text-muted); font-size:16px;">NO IMAGE</span>
+                                    <span style="font-weight:700; color:var(--text-muted); font-size:16px;">TIDAK ADA GAMBAR</span>
                                 <?php endif; ?>
                             </div>
                             
@@ -538,7 +538,7 @@ while (have_posts()) : the_post();
                                         <?php if (has_post_thumbnail($rp_id)) : ?>
                                             <?php echo get_the_post_thumbnail($rp_id, 'indotech-thumb', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
                                         <?php else : ?>
-                                            <span style="font-weight:700; color: var(--text-muted); font-size: 13px;">NO IMAGE</span>
+                                            <span style="font-weight:700; color: var(--text-muted); font-size: 13px;">TIDAK ADA GAMBAR</span>
                                         <?php endif; ?>
                                     </div>
                                     <div style="flex: 1; display: flex; flex-direction: column;">
@@ -569,7 +569,7 @@ while (have_posts()) : the_post();
             <!-- ── RIGHT COLUMN: STICKY B2B INQUIRY FORM ── -->
             <aside style="position: sticky; top: calc(var(--header-h) + 20px); z-index: 10;">
                 <div style="background: var(--white); border: 1px solid var(--brand-accent); border-radius: 16px; padding: 40px; box-shadow: var(--shadow-md);">
-                    <h3 style="font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.02em;">Request for Quotation</h3>
+                    <h3 style="font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.02em;">Permintaan Penawaran B2B</h3>
                     <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px;">Hubungi tim penjualan B2B kami untuk konsultasi formula, harga grosir, atau kemitraan maklon.</p>
 
                     <!-- Inquiry Form -->
@@ -625,12 +625,12 @@ while (have_posts()) : the_post();
 
 <!-- Lightbox Modal -->
 <div id="gallery-lightbox" class="gallery-lightbox">
-    <button class="lightbox-close" aria-label="Close Gallery">&times;</button>
-    <button class="lightbox-prev" aria-label="Previous Image">&lsaquo;</button>
+    <button class="lightbox-close" aria-label="Tutup Galeri">&times;</button>
+    <button class="lightbox-prev" aria-label="Gambar Sebelumnya">&lsaquo;</button>
     <div class="lightbox-content">
-        <img id="lightbox-img" src="" alt="Product View">
+        <img id="lightbox-img" src="" alt="Tampilan Produk">
     </div>
-    <button class="lightbox-next" aria-label="Next Image">&rsaquo;</button>
+    <button class="lightbox-next" aria-label="Gambar Berikutnya">&rsaquo;</button>
     <div class="lightbox-counter"><span id="lightbox-current">1</span> / <span id="lightbox-total">1</span></div>
 </div>
 

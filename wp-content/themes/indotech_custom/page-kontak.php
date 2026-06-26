@@ -95,7 +95,7 @@ get_header();
 
                     <div style="margin-bottom:36px;">
                         <span class="section-tag section-tag--dark">Kirim Pesan</span>
-                        <h2 class="section-title" style="margin-top:16px;font-size:clamp(26px,3vw,40px);">Form Inquiry</h2>
+                        <h2 class="section-title" style="margin-top:16px;font-size:clamp(26px,3vw,40px);">Formulir Permintaan Penawaran</h2>
                         <p class="section-desc" style="max-width:100%;">Isi form di bawah dan kami akan menghubungi Anda secepatnya.</p>
                     </div>
 
@@ -133,7 +133,7 @@ get_header();
                             <label class="form-label" for="kontak-subject">Subjek</label>
                             <select id="kontak-subject" name="subject" class="form-input form-select">
                                 <option value="" disabled selected>Pilih topik...</option>
-                                <option value="inquiry-produk">Inquiry Produk</option>
+                                <option value="inquiry-produk">Permintaan Produk</option>
                                 <option value="kemitraan">Kemitraan & Distribusi</option>
                                 <option value="penawaran-harga">Permintaan Penawaran Harga</option>
                                 <option value="komplain">Keluhan / Komplain</option>

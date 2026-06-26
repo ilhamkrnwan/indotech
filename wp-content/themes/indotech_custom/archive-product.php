@@ -6,8 +6,9 @@
 
 get_header();
 
-$paged    = get_query_var('paged') ? get_query_var('paged') : 1;
-$per_page = 9;
+$paged       = get_query_var('paged') ? get_query_var('paged') : 1;
+$per_page    = 9;
+$search_init = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
 
 // Fetch all product categories for the filter (cached using Transient API)
 $categories = get_transient('indotech_filter_categories');
@@ -46,6 +47,11 @@ if ($categories === false) {
     padding-bottom: 12px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+#product-search:focus {
+    outline: none;
+    border-color: var(--cobalt) !important;
+    box-shadow: 0 0 0 3px rgba(0, 87, 255, 0.08);
 }
 .filter-group-title {
     font-size: 11px;
@@ -252,15 +258,25 @@ if ($categories === false) {
 }
 </style>
 
-<div class="product-archive-wrapper" style="background: var(--surface); min-height: 100vh; padding-top: 120px; padding-bottom: 80px;">
+<section class="inner-page-hero" id="product-hero">
+    <div class="hero-bg" aria-hidden="true">
+        <div class="hero-grid-overlay"></div>
+        <div class="hero-glow hero-glow--1" style="opacity:.4;"></div>
+    </div>
+    <div class="container inner-page-hero-inner reveal">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Produk</span>
+        </nav>
+        <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Katalog B2B</span>
+        <h1 class="inner-page-title">Katalog <em>Produk Kami</em></h1>
+        <p class="inner-page-subtitle">Temukan spesifikasi teknis dan formulasi bahan kimia pembersih, sabun laundry, serta pangan olahan premium.</p>
+    </div>
+</section>
+
+<div class="product-archive-wrapper" style="background: var(--surface); min-height: 100vh; padding: 80px 0;">
     <div class="container">
-        
-        <!-- Header -->
-        <header style="margin-bottom: 40px;">
-            <div class="section-tag" style="margin-bottom: 12px;">B2B Catalog</div>
-            <h1 style="font-size: clamp(32px, 5vw, 44px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 8px;">Katalog Produk Kami</h1>
-            <p style="color: var(--text-secondary); font-size: 15px;">Temukan spesifikasi teknis dan formulasi bahan kimia pembersih, sabun laundry, serta pangan olahan premium.</p>
-        </header>
 
         <!-- ── Layout Grid: Filters on Left (or Top) & Products on Right ── -->
         <div class="product-archive-container">
@@ -268,6 +284,19 @@ if ($categories === false) {
             <!-- Filter Panel -->
             <aside class="filter-panel">
                 <h3 class="filter-panel-title">Filter Katalog</h3>
+
+                <!-- Search Input -->
+                <div style="margin-bottom: 24px;">
+                    <span class="filter-group-title">Cari Produk</span>
+                    <div style="position: relative; display: flex; align-items: center;">
+                        <input type="text" id="product-search" placeholder="Masukkan kata kunci..." value="<?php echo esc_attr($search_init); ?>"
+                               style="width: 100%; padding: 10px 36px 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13.5px; font-family: inherit; transition: border-color var(--trans);" />
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
+                             style="position: absolute; right: 12px; color: var(--text-muted); pointer-events: none;">
+                            <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                </div>
 
                 <!-- Filter: Categories -->
                 <div>
@@ -294,12 +323,16 @@ if ($categories === false) {
                 <div id="products-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px;">
                     
                     <?php
-                    $product_query = new WP_Query([
+                    $query_args = [
                         'post_type'      => 'product',
                         'posts_per_page' => $per_page,
                         'paged'          => $paged,
                         'post_status'    => 'publish'
-                    ]);
+                    ];
+                    if (!empty($search_init)) {
+                        $query_args['s'] = $search_init;
+                    }
+                    $product_query = new WP_Query($query_args);
 
                     if ($product_query->have_posts()) :
                         while ($product_query->have_posts()) : $product_query->the_post();
@@ -320,7 +353,7 @@ if ($categories === false) {
                                 <?php if (has_post_thumbnail()) : ?>
                                     <?php the_post_thumbnail('indotech-thumb', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
                                 <?php else : ?>
-                                    <span style="font-weight:700; color: var(--text-muted); font-size: 14px;">NO IMAGE</span>
+                                    <span style="font-weight:700; color: var(--text-muted); font-size: 14px;">TIDAK ADA GAMBAR</span>
                                 <?php endif; ?>
                             </div>
                             <div style="flex: 1; display: flex; flex-direction: column;">
@@ -359,44 +392,45 @@ if ($categories === false) {
                 <div id="product-pagination-wrap">
                 <?php if ($total_pages > 1) : ?>
                     <nav class="product-pagination" aria-label="Navigasi halaman produk">
-                        <?php if ($paged > 1) : ?>
-                            <a href="<?php echo esc_url(add_query_arg('paged', $paged - 1, $base_url)); ?>" class="page-btn" aria-label="Halaman sebelumnya">
-                                &lsaquo; Sebelumnya
-                            </a>
-                        <?php endif; ?>
-
-                        <?php
-                        // Show numbered pages — max 5 window
-                        $start = max(1, $paged - 2);
-                        $end   = min($total_pages, $paged + 2);
-                        if ($start > 1) :
-                        ?>
-                            <a href="<?php echo esc_url(add_query_arg('paged', 1, $base_url)); ?>" class="page-btn">1</a>
-                            <?php if ($start > 2) : ?><span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span><?php endif; ?>
-                        <?php endif; ?>
-
-                        <?php for ($i = $start; $i <= $end; $i++) : ?>
-                            <a
-                                href="<?php echo esc_url(add_query_arg('paged', $i, $base_url)); ?>"
-                                class="page-btn <?php echo $i === $paged ? 'active' : ''; ?>"
-                                <?php echo $i === $paged ? 'aria-current="page"' : ''; ?>
-                            >
-                                <?php echo $i; ?>
-                            </a>
-                        <?php endfor; ?>
-
-                        <?php if ($end < $total_pages) : ?>
-                            <?php if ($end < $total_pages - 1) : ?><span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span><?php endif; ?>
-                            <a href="<?php echo esc_url(add_query_arg('paged', $total_pages, $base_url)); ?>" class="page-btn"><?php echo $total_pages; ?></a>
-                        <?php endif; ?>
-
-                        <?php if ($paged < $total_pages) : ?>
-                            <a href="<?php echo esc_url(add_query_arg('paged', $paged + 1, $base_url)); ?>" class="page-btn" aria-label="Halaman berikutnya">
-                                Berikutnya &rsaquo;
-                            </a>
-                        <?php endif; ?>
-                    </nav>
-                    <p class="product-pagination-info">Halaman <?php echo $paged; ?> dari <?php echo $total_pages; ?></p>
+                         <?php if ($paged > 1) : ?>
+                             <a href="<?php echo esc_url(add_query_arg('paged', $paged - 1, $base_url)); ?>" class="page-btn ajax-page-btn" data-page="<?php echo $paged - 1; ?>" aria-label="Halaman sebelumnya">
+                                 &lsaquo; Sebelumnya
+                             </a>
+                         <?php endif; ?>
+ 
+                         <?php
+                         // Show numbered pages — max 5 window
+                         $start = max(1, $paged - 2);
+                         $end   = min($total_pages, $paged + 2);
+                         if ($start > 1) :
+                         ?>
+                             <a href="<?php echo esc_url(add_query_arg('paged', 1, $base_url)); ?>" class="page-btn ajax-page-btn" data-page="1">1</a>
+                             <?php if ($start > 2) : ?><span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span><?php endif; ?>
+                         <?php endif; ?>
+ 
+                         <?php for ($i = $start; $i <= $end; $i++) : ?>
+                             <a
+                                 href="<?php echo esc_url(add_query_arg('paged', $i, $base_url)); ?>"
+                                 class="page-btn ajax-page-btn <?php echo $i === $paged ? 'active' : ''; ?>"
+                                 data-page="<?php echo $i; ?>"
+                                 <?php echo $i === $paged ? 'aria-current="page"' : ''; ?>
+                             >
+                                 <?php echo $i; ?>
+                             </a>
+                         <?php endfor; ?>
+ 
+                         <?php if ($end < $total_pages) : ?>
+                             <?php if ($end < $total_pages - 1) : ?><span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span><?php endif; ?>
+                             <a href="<?php echo esc_url(add_query_arg('paged', $total_pages, $base_url)); ?>" class="page-btn ajax-page-btn" data-page="<?php echo $total_pages; ?>"><?php echo $total_pages; ?></a>
+                         <?php endif; ?>
+ 
+                         <?php if ($paged < $total_pages) : ?>
+                             <a href="<?php echo esc_url(add_query_arg('paged', $paged + 1, $base_url)); ?>" class="page-btn ajax-page-btn" data-page="<?php echo $paged + 1; ?>" aria-label="Halaman berikutnya">
+                                 Berikutnya &rsaquo;
+                             </a>
+                         <?php endif; ?>
+                     </nav>
+                     <p class="product-pagination-info">Halaman <?php echo $paged; ?> dari <?php echo $total_pages; ?></p>
                 <?php endif; ?>
                 </div>
             </div>
@@ -410,19 +444,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterBtns = document.querySelectorAll('.filter-btn');
     const grid       = document.getElementById('products-grid');
     const paginWrap  = document.getElementById('product-pagination-wrap');
+    const searchInput = document.getElementById('product-search');
     if (!grid || !filterBtns.length) return;
 
-    let activeBrand = '';
-    let activeCat   = '';
-    let activePage  = 1;
+    let activeBrand   = '';
+    let activeCat     = '';
+    let activePage    = 1;
+    let searchQuery   = searchInput ? searchInput.value : '';
+    let searchTimeout = null;
 
     function doFetch() {
         grid.classList.add('products-loading');
 
         const formData = new FormData();
-        formData.append('action', 'indotech_filter_products');
+        formData.append('action',   'indotech_filter_products');
         formData.append('brand_id', activeBrand);
         formData.append('cat_slug', activeCat);
+        formData.append('search',   searchQuery);
         formData.append('page',     activePage);
         formData.append('nonce',    indotechData.nonce);
 
@@ -453,6 +491,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 doFetch();
                 grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
+        });
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            searchQuery = this.value;
+            activePage = 1;
+
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                doFetch();
+            }, 400);
         });
     }
 

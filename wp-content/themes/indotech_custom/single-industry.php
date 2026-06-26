@@ -80,7 +80,7 @@ while (have_posts()) : the_post();
                                             <?php if (has_post_thumbnail()) : ?>
                                                 <?php the_post_thumbnail('indotech-thumb', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
                                             <?php else : ?>
-                                                <span style="font-weight:700; color: var(--text-muted); font-size: 14px;">NO IMAGE</span>
+                                                <span style="font-weight:700; color: var(--text-muted); font-size: 14px;">TIDAK ADA GAMBAR</span>
                                             <?php endif; ?>
                                         </div>
                                         <div style="flex: 1; display: flex; flex-direction: column;">

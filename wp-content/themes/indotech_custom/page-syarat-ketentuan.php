@@ -86,7 +86,7 @@ $default_content = '
 </ul>
 
 <h2>6. Hak Kekayaan Intelektual</h2>
-<p>Semua materi di situs web ini, termasuk desain visual, teks, nama brand dagang (**Orchid Care, Depo Cleanique, Malabeez, Cokusi**), logo perusahaan PT. Indotech Berkah Abadi, grafis, dan kode pemrograman adalah hak cipta milik kami. Penggunaan komersial, reproduksi, atau modifikasi konten tanpa izin tertulis dari direksi PT Indotech Berkah Abadi sangat dilarang dan dapat dituntut secara hukum.</p>
+<p>Semua materi di situs web ini, termasuk desain visual, teks, nama brand dagang (**Cleanique Academy, Cleanique Lab, Cleanique Mart, Depo Cleanique, Malabeez, Orchid Care, Prokopi**), logo perusahaan PT. Indotech Berkah Abadi, grafis, dan kode pemrograman adalah hak cipta milik kami. Penggunaan komersial, reproduksi, atau modifikasi konten tanpa izin tertulis dari direksi PT Indotech Berkah Abadi sangat dilarang dan dapat dituntut secara hukum.</p>
 
 <h2>7. Hukum yang Berlaku & Resolusi Perselisihan</h2>
 <p>Syarat & Ketentuan ini diatur dan ditafsirkan berdasarkan hukum Negara Kesatuan Republik Indonesia. Setiap perselisihan, sengketa dagang, atau tuntutan hukum yang timbul terkait dengan layanan dan produk PT Indotech Berkah Abadi akan diselesaikan secara musyawarah mufakat terlebih dahulu. Apabila tidak tercapai mufakat, perselisihan akan diselesaikan melalui **Pengadilan Negeri Sleman**, Daerah Istimewa Yogyakarta.</p>

@@ -22,7 +22,7 @@ if ( ! $posts->have_posts() ) return;
         <!-- Header split: judul besar kiri, CTA kanan -->
         <div class="blog-section-header">
             <div class="blog-section-left">
-                <div class="section-tag">Blog &amp; Insight</div>
+                <div class="section-tag">Blog &amp; Wawasan</div>
                 <h2 class="section-title">Artikel &amp; <em>Tips Bisnis</em></h2>
             </div>
             <a href="<?php echo esc_url( home_url('/blog') ); ?>" class="btn btn-outline blog-section-cta">
@@ -50,7 +50,7 @@ if ( ! $posts->have_posts() ) return;
                             Posts → Edit → Set Featured Image.
                         -->
                         <div class="blog-img-placeholder">
-                            <span class="blog-placeholder-label">No Image</span>
+                            <span class="blog-placeholder-label">Tidak Ada Gambar</span>
                         </div>
                     <?php endif; ?>
 

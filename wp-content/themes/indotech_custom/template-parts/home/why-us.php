@@ -10,7 +10,7 @@ $reasons = [
     'Produsen & distributor langsung — tanpa perantara',
     'Jaringan distribusi tersebar di 34 provinsi Indonesia',
     'Bersertifikat BPOM, Halal MUI & ISO 9001:2015',
-    'Tim support B2B responsif, 7 hari seminggu via WA',
+    'Tim dukungan B2B responsif, 7 hari seminggu via WA',
     'Stok selalu tersedia, pengiriman cepat & aman',
     'Harga kompetitif dengan margin profit optimal mitra',
 ];
@@ -57,7 +57,7 @@ $reasons = [
                     <div class="why-card-num">01</div>
                     <div class="why-card-body">
                         <h4>Kualitas Terjamin</h4>
-                        <p>Setiap produk melewati quality control ketat sebelum keluar dari pabrik. Zero-defect policy.</p>
+                        <p>Setiap produk melewati quality control ketat sebelum keluar dari pabrik. Kebijakan bebas cacat produksi.</p>
                     </div>
                 </div>
 
@@ -72,8 +72,8 @@ $reasons = [
                 <div class="why-card">
                     <div class="why-card-num">03</div>
                     <div class="why-card-body">
-                        <h4>Layanan Dedicated</h4>
-                        <p>Setiap mitra mendapat account manager khusus. Masalah apapun direspon dalam 24 jam.</p>
+                        <h4>Layanan Khusus</h4>
+                        <p>Setiap mitra mendapat manajer akun khusus. Masalah apa pun direspons dalam 24 jam.</p>
                     </div>
                 </div>
 

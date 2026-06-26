@@ -131,10 +131,13 @@ function indotech_filter_products_handler() {
 
     $brand_id = isset($_POST['brand_id']) ? sanitize_text_field($_POST['brand_id']) : '';
     $cat_slug = isset($_POST['cat_slug']) ? sanitize_text_field($_POST['cat_slug']) : '';
+    $search   = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
+    $paged    = isset($_POST['page']) ? absint($_POST['page']) : 1;
 
     $args = [
         'post_type'      => 'product',
-        'posts_per_page' => 12,
+        'posts_per_page' => 9,
+        'paged'          => $paged,
         'post_status'    => 'publish',
     ];
 
@@ -159,6 +162,10 @@ function indotech_filter_products_handler() {
         ];
     }
 
+    if (!empty($search)) {
+        $args['s'] = $search;
+    }
+
     $product_query = new WP_Query($args);
 
     ob_start();
@@ -181,7 +188,7 @@ function indotech_filter_products_handler() {
                     <?php if (has_post_thumbnail()) : ?>
                         <?php the_post_thumbnail('indotech-thumb', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
                     <?php else : ?>
-                        <span style="font-weight:700; color: var(--text-muted); font-size: 14px;">NO IMAGE</span>
+                        <span style="font-weight:700; color: var(--text-muted); font-size: 14px;">TIDAK ADA GAMBAR</span>
                     <?php endif; ?>
                 </div>
                 <div style="flex: 1; display: flex; flex-direction: column;">
@@ -213,6 +220,51 @@ function indotech_filter_products_handler() {
 
     $html = ob_get_clean();
 
-    wp_send_json_success(['html' => $html]);
+    // Generate updated pagination HTML
+    $total_pages = $product_query->max_num_pages;
+    $pagination_html = '';
+    
+    if ($total_pages > 1) {
+        $pagination_html .= '<nav class="product-pagination" aria-label="Navigasi halaman produk">';
+        
+        if ($paged > 1) {
+            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . ($paged - 1) . '" aria-label="Halaman sebelumnya">&lsaquo; Sebelumnya</a>';
+        }
+        
+        $start = max(1, $paged - 2);
+        $end   = min($total_pages, $paged + 2);
+        
+        if ($start > 1) {
+            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="1">1</a>';
+            if ($start > 2) {
+                $pagination_html .= '<span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span>';
+            }
+        }
+        
+        for ($i = $start; $i <= $end; $i++) {
+            $active_class = $i === $paged ? 'active' : '';
+            $aria_current = $i === $paged ? ' aria-current="page"' : '';
+            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn ' . $active_class . '" data-page="' . $i . '"' . $aria_current . '>' . $i . '</a>';
+        }
+        
+        if ($end < $total_pages) {
+            if ($end < $total_pages - 1) {
+                $pagination_html .= '<span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span>';
+            }
+            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . $total_pages . '">' . $total_pages . '</a>';
+        }
+        
+        if ($paged < $total_pages) {
+            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . ($paged + 1) . '" aria-label="Halaman berikutnya">Berikutnya &rsaquo;</a>';
+        }
+        
+        $pagination_html .= '</nav>';
+        $pagination_html .= '<p class="product-pagination-info">Halaman ' . $paged . ' dari ' . $total_pages . '</p>';
+    }
+
+    wp_send_json_success([
+        'html'       => $html,
+        'pagination' => $pagination_html
+    ]);
 }
 

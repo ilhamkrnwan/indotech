@@ -24,7 +24,7 @@ $whatsapp = preg_replace('/[^0-9]/', '', indotech_opt('whatsapp', '6285600061005
             <div class="hero-eyebrow">
                 <span class="hero-badge">
                     <span class="badge-dot" aria-hidden="true"></span>
-                    B2B Expert sejak 2011
+                    Spesialis B2B sejak 2011
                 </span>
                 <span class="hero-badge-sep" aria-hidden="true">/</span>
                 <span class="hero-badge hero-badge--plain">PT Indotech Berkah Abadi</span>
@@ -52,10 +52,13 @@ $whatsapp = preg_replace('/[^0-9]/', '', indotech_opt('whatsapp', '6285600061005
             <div class="hero-brands-strip">
                 <span class="hbs-label">Brand kami:</span>
                 <div class="hbs-pills">
-                    <span class="hbs-pill">Orchid Care</span>
+                    <span class="hbs-pill">Cleanique Academy</span>
+                    <span class="hbs-pill">Cleanique Lab</span>
+                    <span class="hbs-pill">Cleanique Mart</span>
                     <span class="hbs-pill">Depo Cleanique</span>
                     <span class="hbs-pill">Malabeez</span>
-                    <span class="hbs-pill">Cokusi</span>
+                    <span class="hbs-pill">Orchid Care</span>
+                    <span class="hbs-pill">Prokopi</span>
                 </div>
             </div>
 
