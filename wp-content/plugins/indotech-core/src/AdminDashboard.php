@@ -142,70 +142,74 @@ class AdminDashboard {
                 <li><a href="<?php echo admin_url('admin.php?page=indotech-inquiries&status=completed'); ?>" class="<?php echo $active_status === 'completed' ? 'current' : ''; ?>"><?php _e('Selesai', 'indotech-core'); ?></a></li>
             </ul>
 
-            <form method="get">
-                <table class="wp-list-table widefat fixed striped table-view-list posts" style="margin-top: 15px;">
-                    <thead>
-                        <tr>
-                            <th style="width: 50px;">ID</th>
-                            <th style="width: 150px;">Nama Pengirim</th>
-                            <th style="width: 180px;">Kontak (Email / Phone)</th>
-                            <th style="width: 130px;">Perusahaan</th>
-                            <th style="width: 200px;">Produk Target</th>
-                            <th style="width: 60px; text-align: center;">Qty</th>
-                            <th>Pesan</th>
-                            <th style="width: 100px;">Status</th>
-                            <th style="width: 180px; text-align: center;">Tanggal Masuk</th>
-                            <th style="width: 200px; text-align: right;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($results)) : ?>
-                            <?php foreach ($results as $row) : 
-                                $p_name = get_the_title($row->product_id) ?: '<em style="color:red;">Produk Dihapus</em>';
-                                $badge_color = '';
-                                if ($row->status === 'pending') $badge_color = '#C5221F'; // Red
-                                if ($row->status === 'contacted') $badge_color = '#E37400'; // Orange
-                                if ($row->status === 'completed') $badge_color = '#137333'; // Green
-                                
-                                $nonce_url = 'indotech_action_' . $row->id;
-                            ?>
+            <form method="get" style="clear: both;">
+                <div style="overflow-x: auto; margin-top: 15px; margin-bottom: 15px;">
+                    <table class="wp-list-table widefat striped table-view-list" style="min-width: 1000px; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; vertical-align: middle;">ID</th>
+                                <th style="width: 150px; vertical-align: middle;">Nama Pengirim</th>
+                                <th style="width: 180px; vertical-align: middle;">Kontak (Email / Phone)</th>
+                                <th style="width: 130px; vertical-align: middle;">Perusahaan</th>
+                                <th style="width: 180px; vertical-align: middle;">Produk Target</th>
+                                <th style="width: 60px; text-align: center; vertical-align: middle;">Qty</th>
+                                <th style="vertical-align: middle;">Pesan</th>
+                                <th style="width: 100px; vertical-align: middle;">Status</th>
+                                <th style="width: 160px; text-align: center; vertical-align: middle;">Tanggal Masuk</th>
+                                <th style="width: 200px; text-align: right; vertical-align: middle;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($results)) : ?>
+                                <?php foreach ($results as $row) : 
+                                    $p_name = get_the_title($row->product_id) ?: '<em style="color:red;">Produk Dihapus</em>';
+                                    $badge_color = '';
+                                    if ($row->status === 'pending') $badge_color = '#C5221F'; // Red
+                                    if ($row->status === 'contacted') $badge_color = '#E37400'; // Orange
+                                    if ($row->status === 'completed') $badge_color = '#137333'; // Green
+                                    
+                                    $nonce_url = 'indotech_action_' . $row->id;
+                                ?>
+                                    <tr>
+                                        <td style="vertical-align: middle;"><?php echo esc_html($row->id); ?></td>
+                                        <td style="vertical-align: middle;"><strong><?php echo esc_html($row->full_name); ?></strong></td>
+                                        <td style="vertical-align: middle;">
+                                            <a href="mailto:<?php echo esc_attr($row->email); ?>"><?php echo esc_html($row->email); ?></a><br>
+                                            <a href="https://wa.me/<?php echo esc_attr(preg_replace('/[^0-9]/', '', $row->phone)); ?>" target="_blank" style="color: #25D366; font-weight: 600;">WA: <?php echo esc_html($row->phone); ?></a>
+                                        </td>
+                                        <td style="vertical-align: middle;"><?php echo esc_html($row->company_name ?: '-'); ?></td>
+                                        <td style="vertical-align: middle;"><strong><?php echo $p_name; ?></strong></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?php echo esc_html($row->quantity); ?></td>
+                                        <td style="vertical-align: middle;"><span style="font-size: 12.5px; color: #555;"><?php echo nl2br(esc_html($row->message)); ?></span></td>
+                                        <td style="vertical-align: middle;">
+                                            <span style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; color: white; background: <?php echo $badge_color; ?>;">
+                                                <?php echo strtoupper($row->status); ?>
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center; font-size: 12px; vertical-align: middle;"><?php echo esc_html($row->created_at); ?></td>
+                                        <td style="text-align: right; vertical-align: middle;">
+                                            <div style="display: flex; gap: 6px; justify-content: flex-end; align-items: center;">
+                                                <?php if ($row->status === 'pending') : ?>
+                                                    <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=indotech-inquiries&action=status_contacted&id=' . $row->id), $nonce_url)); ?>" class="button button-secondary"><?php _e('Hubungi', 'indotech-core'); ?></a>
+                                                <?php endif; ?>
+                                                <?php if ($row->status !== 'completed') : ?>
+                                                    <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=indotech-inquiries&action=status_completed&id=' . $row->id), $nonce_url)); ?>" class="button button-primary"><?php _e('Selesai', 'indotech-core'); ?></a>
+                                                <?php endif; ?>
+                                                <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=indotech-inquiries&action=delete&id=' . $row->id), $nonce_url)); ?>" class="button delete" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" style="color: red; border-color: red;"><?php _e('Hapus', 'indotech-core'); ?></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
                                 <tr>
-                                    <td><?php echo esc_html($row->id); ?></td>
-                                    <td><strong><?php echo esc_html($row->full_name); ?></strong></td>
-                                    <td>
-                                        <a href="mailto:<?php echo esc_attr($row->email); ?>"><?php echo esc_html($row->email); ?></a><br>
-                                        <a href="https://wa.me/<?php echo esc_attr(preg_replace('/[^0-9]/', '', $row->phone)); ?>" target="_blank" style="color: #25D366; font-weight: 600;">WA: <?php echo esc_html($row->phone); ?></a>
-                                    </td>
-                                    <td><?php echo esc_html($row->company_name ?: '-'); ?></td>
-                                    <td><strong><?php echo $p_name; ?></strong></td>
-                                    <td style="text-align: center;"><?php echo esc_html($row->quantity); ?></td>
-                                    <td><span style="font-size: 12.5px; color: #555;"><?php echo nl2br(esc_html($row->message)); ?></span></td>
-                                    <td>
-                                        <span style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; color: white; background: <?php echo $badge_color; ?>;">
-                                            <?php echo strtoupper($row->status); ?>
-                                        </span>
-                                    </td>
-                                    <td style="text-align: center; font-size: 12px;"><?php echo esc_html($row->created_at); ?></td>
-                                    <td style="text-align: right; display: flex; gap: 6px; justify-content: flex-end; align-items: center; height: 100%;">
-                                        <?php if ($row->status === 'pending') : ?>
-                                            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=indotech-inquiries&action=status_contacted&id=' . $row->id), $nonce_url)); ?>" class="button button-secondary"><?php _e('Hubungi', 'indotech-core'); ?></a>
-                                        <?php endif; ?>
-                                        <?php if ($row->status !== 'completed') : ?>
-                                            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=indotech-inquiries&action=status_completed&id=' . $row->id), $nonce_url)); ?>" class="button button-primary"><?php _e('Selesai', 'indotech-core'); ?></a>
-                                        <?php endif; ?>
-                                        <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=indotech-inquiries&action=delete&id=' . $row->id), $nonce_url)); ?>" class="button delete" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" style="color: red; border-color: red;"><?php _e('Hapus', 'indotech-core'); ?></a>
+                                    <td colspan="10" style="text-align: center; padding: 30px; color: #777;">
+                                        <?php _e('Tidak ada leads inquiry ditemukan.', 'indotech-core'); ?>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <tr>
-                                <td colspan="10" style="text-align: center; padding: 30px; color: #777;">
-                                    <?php _e('Tidak ada leads inquiry ditemukan.', 'indotech-core'); ?>
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </form>
         </div>
         <?php
