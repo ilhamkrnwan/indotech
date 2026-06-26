@@ -98,15 +98,6 @@ function indotech_register_cpts() {
         'menu_icon'   => 'dashicons-format-quote',
         'supports'    => ['title', 'editor', 'thumbnail'],
     ]);
-
-    // Brands
-    register_post_type('brand', [
-        'labels'      => ['name' => 'Brands', 'singular_name' => 'Brand'],
-        'public'      => false,
-        'show_ui'     => true,
-        'menu_icon'   => 'dashicons-tag',
-        'supports'    => ['title', 'editor', 'thumbnail', 'custom-fields'],
-    ]);
 }
 add_action('init', 'indotech_register_cpts');
 
@@ -130,3 +121,98 @@ add_filter('excerpt_more', 'indotech_excerpt_more');
 // ── Include Partials ──────────────────────────────────────────────────────────
 require_once INDOTECH_DIR . '/inc/customizer.php';
 require_once INDOTECH_DIR . '/inc/helpers.php';
+
+// ── AJAX Product Filtering ───────────────────────────────────────────────────
+add_action('wp_ajax_indotech_filter_products', 'indotech_filter_products_handler');
+add_action('wp_ajax_nopriv_indotech_filter_products', 'indotech_filter_products_handler');
+
+function indotech_filter_products_handler() {
+    check_ajax_referer('indotech_nonce', 'nonce');
+
+    $brand_id = isset($_POST['brand_id']) ? sanitize_text_field($_POST['brand_id']) : '';
+    $cat_slug = isset($_POST['cat_slug']) ? sanitize_text_field($_POST['cat_slug']) : '';
+
+    $args = [
+        'post_type'      => 'product',
+        'posts_per_page' => 12,
+        'post_status'    => 'publish',
+    ];
+
+    if (!empty($brand_id)) {
+        global $wpdb;
+        $product_ids = $wpdb->get_col($wpdb->prepare("
+            SELECT post_id 
+            FROM {$wpdb->postmeta} 
+            WHERE (meta_key = '_product_brand' AND meta_value = %s)
+               OR (meta_key = '_product_brand|||0|id' AND meta_value = %d)
+        ", 'post:brand:' . absint($brand_id), absint($brand_id)));
+        $args['post__in'] = !empty($product_ids) ? $product_ids : [0];
+    }
+
+    if (!empty($cat_slug)) {
+        $args['tax_query'] = [
+            [
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => $cat_slug
+            ]
+        ];
+    }
+
+    $product_query = new WP_Query($args);
+
+    ob_start();
+    if ($product_query->have_posts()) :
+        while ($product_query->have_posts()) : $product_query->the_post();
+            $p_id = get_the_ID();
+            $sku = carbon_get_post_meta($p_id, 'product_sku');
+            $brand_relation = carbon_get_post_meta($p_id, 'product_brand');
+            
+            $b_title = '';
+            $b_accent = '#0057FF';
+            if (!empty($brand_relation) && isset($brand_relation[0]['id'])) {
+                $b_id = $brand_relation[0]['id'];
+                $b_title = get_the_title($b_id);
+                $b_accent = carbon_get_post_meta($b_id, 'brand_accent_color') ?: '#0057FF';
+            }
+            ?>
+            <article class="brand-product-card" style="--brand-accent: <?php echo esc_attr($b_accent); ?>;">
+                <div class="brand-product-card-img-wrap">
+                    <?php if (has_post_thumbnail()) : ?>
+                        <?php the_post_thumbnail('indotech-thumb', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
+                    <?php else : ?>
+                        <span style="font-weight:700; color: var(--text-muted); font-size: 14px;">NO IMAGE</span>
+                    <?php endif; ?>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <?php if ($sku) : ?>
+                        <div class="brand-product-card-sku-wrap">
+                            <span><?php echo esc_html($sku); ?></span>
+                            <?php if ($b_title) : ?>
+                                <span style="opacity: 0.7; font-weight: 600; text-transform: none;"><?php echo esc_html($b_title); ?></span>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                    <h3 class="brand-product-card-title"><?php the_title(); ?></h3>
+                    <p class="brand-product-card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 12); ?></p>
+                    <a href="<?php the_permalink(); ?>" class="btn btn-outline">
+                        Lihat Produk &rarr;
+                    </a>
+                </div>
+            </article>
+            <?php
+        endwhile;
+        wp_reset_postdata();
+    else :
+        ?>
+        <div style="grid-column: 1 / -1; background: var(--white); padding: 40px; border-radius: 12px; text-align: center; color: var(--text-muted); border: 1px solid var(--border);">
+            Belum ada produk terdaftar.
+        </div>
+        <?php
+    endif;
+
+    $html = ob_get_clean();
+
+    wp_send_json_success(['html' => $html]);
+}
+

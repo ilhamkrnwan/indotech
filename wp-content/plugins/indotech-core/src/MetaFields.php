@@ -52,6 +52,8 @@ class MetaFields {
                     ->set_max(1)
                     ->set_required(true)
                     ->set_help_text(__('Kaitkan produk ini dengan salah satu brand korporat', 'indotech-core')),
+                Field::make('media_gallery', 'product_gallery', __('Galeri Foto Produk', 'indotech-core'))
+                    ->set_help_text(__('Galeri foto pendukung produk (selain foto utama)', 'indotech-core')),
                 Field::make('association', 'product_downloads', __('Dokumen Unduhan Terkait', 'indotech-core'))
                     ->set_types([
                         [
@@ -125,13 +127,14 @@ class MetaFields {
 
                 // Tab: Informasi Kontak
                 Field::make('text', 'company_whatsapp', __('WhatsApp Hotline', 'indotech-core'))
-                    ->set_default_value('6281234567890')
-                    ->set_help_text(__('Nomor WA dengan kode negara, tanpa spasi/simbol (misal: 6281234567890)', 'indotech-core')),
+                    ->set_default_value('6285600061005')
+                    ->set_help_text(__('Nomor WA dengan kode negara, tanpa spasi/simbol (misal: 6285600061005)', 'indotech-core')),
                 Field::make('text', 'company_email', __('Email Resmi', 'indotech-core'))
-                    ->set_default_value('info@indotech.id'),
+                    ->set_default_value('indotechberkahabadi@gmail.com'),
                 Field::make('text', 'company_phone', __('Telepon Kantor', 'indotech-core'))
-                    ->set_default_value('+62 21 1234 5678'),
-                Field::make('textarea', 'company_address', __('Alamat Pabrik & Kantor', 'indotech-core')),
+                    ->set_default_value('+62 856-0006-1005'),
+                Field::make('textarea', 'company_address', __('Alamat Pabrik & Kantor', 'indotech-core'))
+                    ->set_default_value('Jongke Tengah No. 30, RT.01/RW.23, Sendangadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55285'),
                 Field::make('text', 'company_maps_url', __('Google Maps Embed URL / Koordinat', 'indotech-core')),
 
                 // Tab: Sosial Media

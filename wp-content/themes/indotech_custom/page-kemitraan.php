@@ -6,9 +6,9 @@
  * Sections: Hero · Keunggulan · Alur Kemitraan · Tipe Mitra · FAQ · Form Pendaftaran
  */
 
-$whatsapp = indotech_opt( 'whatsapp', '6281234567890' );
+$whatsapp = indotech_opt( 'whatsapp', '6285600061005' );
 $wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );
-$wa_msg   = rawurlencode( 'Halo Indotech, saya tertarik untuk mendaftar sebagai mitra distribusi. Mohon informasi lebih lanjut.' );
+$wa_msg   = rawurlencode( 'Halo indotech.id, saya tertarik untuk mendaftar sebagai mitra distribusi. Mohon informasi lebih lanjut.' );
 
 get_header();
 ?>

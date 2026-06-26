@@ -6,11 +6,11 @@
  * Sections: Hero · Our Story · Visi & Misi · Nilai Perusahaan · Sertifikasi · CTA
  */
 
-$phone    = indotech_opt( 'phone',    '+62 812-3456-7890' );
-$email    = indotech_opt( 'email',    'info@indotech.id' );
-$whatsapp = indotech_opt( 'whatsapp', '6281234567890' );
+$phone    = indotech_opt( 'phone',    '+62 856-0006-1005' );
+$email    = indotech_opt( 'email',    'indotechberkahabadi@gmail.com' );
+$whatsapp = indotech_opt( 'whatsapp', '6285600061005' );
 $wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );
-$wa_msg   = rawurlencode( 'Halo Indotech, saya ingin mengetahui lebih lanjut tentang perusahaan Anda.' );
+$wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin mengetahui lebih lanjut tentang perusahaan Anda.' );
 
 get_header();
 ?>
@@ -319,6 +319,31 @@ get_header();
                         <p>Sistem manajemen mutu internasional</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         LOKASI KANTOR — Map Interaktif
+    ════════════════════════════════════════════════════════ -->
+    <section class="about-map-section section-padding" id="lokasi-kantor" style="background: var(--surface);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag section-tag--dark">Kunjungi Kami</span>
+                <h2 class="section-title" style="margin-top:16px;">Lokasi Kantor</h2>
+                <p class="section-desc">Kantor pusat dan operasional PT Indotech Berkah Abadi di Yogyakarta.</p>
+            </div>
+            
+            <div class="about-map-wrap reveal" style="border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-sm); aspect-ratio: 16/9; min-height: 350px;">
+                <iframe
+                    src="https://maps.google.com/maps?q=PT.+Indotech+Berkah+Abadi+Sleman+Yogyakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
     </section>

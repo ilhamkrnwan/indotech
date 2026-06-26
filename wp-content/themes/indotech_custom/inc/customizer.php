@@ -31,10 +31,10 @@ function indotech_customizer($wp_customize) {
     ]);
 
     $contact_fields = [
-        'phone'    => ['Phone', '+62 21 1234 5678'],
-        'email'    => ['Email', 'info@indotech.id'],
-        'address'  => ['Address', 'Jakarta, Indonesia'],
-        'whatsapp' => ['WhatsApp', '+6281234567890'],
+        'phone'    => ['Phone', '+62 856-0006-1005'],
+        'email'    => ['Email', 'indotechberkahabadi@gmail.com'],
+        'address'  => ['Address', 'Jongke Tengah No. 30, RT.01/RW.23, Sendangadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55285'],
+        'whatsapp' => ['WhatsApp', '6285600061005'],
     ];
 
     foreach ($contact_fields as $key => [$label, $default]) {

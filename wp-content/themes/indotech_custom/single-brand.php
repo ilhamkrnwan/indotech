@@ -15,18 +15,20 @@ while (have_posts()) : the_post();
     $website_url = carbon_get_post_meta($brand_id, 'brand_website_url');
     $gallery = carbon_get_post_meta($brand_id, 'brand_gallery');
 
-    // Query all products belonging to this brand
+    // Query all products belonging to this brand (robustly supporting both old and new Carbon Fields formats)
+    global $wpdb;
+    $product_ids = $wpdb->get_col($wpdb->prepare("
+        SELECT post_id 
+        FROM {$wpdb->postmeta} 
+        WHERE (meta_key = '_product_brand' AND meta_value = %s)
+           OR (meta_key = '_product_brand|||0|id' AND meta_value = %s)
+    ", 'post:brand:' . $brand_id, $brand_id));
+
     $product_query = new WP_Query([
         'post_type'      => 'product',
         'posts_per_page' => -1,
         'post_status'    => 'publish',
-        'meta_query'     => [
-            [
-                'key'     => '_product_brand',
-                'value'   => 'post:brand:' . $brand_id,
-                'compare' => '='
-            ]
-        ]
+        'post__in'       => !empty($product_ids) ? $product_ids : [0]
     ]);
 ?>
 

@@ -6,12 +6,12 @@
  * Sections: Hero · Info Kontak · Map · Form Inquiry · WhatsApp Strip
  */
 
-$phone    = indotech_opt( 'phone',    '+62 812-3456-7890' );
-$email    = indotech_opt( 'email',    'info@indotech.id' );
-$address  = indotech_opt( 'address',  'Jakarta, Indonesia' );
-$whatsapp = indotech_opt( 'whatsapp', '6281234567890' );
+$phone    = indotech_opt( 'phone',    '+62 856-0006-1005' );
+$email    = indotech_opt( 'email',    'indotechberkahabadi@gmail.com' );
+$address  = indotech_opt( 'address',  'Jongke Tengah No. 30, RT.01/RW.23, Sendangadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55285' );
+$whatsapp = indotech_opt( 'whatsapp', '6285600061005' );
 $wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );
-$wa_msg   = rawurlencode( 'Halo Indotech, saya ingin bertanya mengenai produk/layanan Anda.' );
+$wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk/layanan Anda.' );
 
 get_header();
 ?>
@@ -57,7 +57,7 @@ get_header();
                 </div>
 
                 <div class="contact-info-card contact-info-card--featured reveal reveal-delay-1">
-                    <div class="contact-info-icon" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2);" aria-hidden="true">
+                    <div class="contact-info-icon" style="background:#ffffff; border-color:#ffffff; color:var(--cobalt);" aria-hidden="true">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </div>
                     <span class="contact-info-label" style="color:rgba(255,255,255,.5);">Email</span>
@@ -156,24 +156,19 @@ get_header();
                     </form>
                 </div>
 
-                <!-- Informasi tambahan + Map placeholder -->
+                <!-- Informasi tambahan + Map -->
                 <div class="contact-info reveal reveal-delay-1">
 
-                    <div class="contact-map-placeholder" role="img" aria-label="Lokasi PT Indotech Berkah Abadi di Jakarta">
-                        <div class="map-placeholder-inner">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="color:var(--cobalt);opacity:.6;" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                            <p>PT Indotech Berkah Abadi</p>
-                            <span><?php echo esc_html( $address ); ?></span>
-                            <a
-                                href="https://maps.google.com/?q=<?php echo esc_attr( urlencode($address) ); ?>"
-                                class="btn btn-outline"
-                                style="margin-top:16px;"
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                Buka di Google Maps
-                            </a>
-                        </div>
+                    <div class="contact-map-placeholder" aria-label="Peta Lokasi PT Indotech Berkah Abadi">
+                        <iframe
+                            src="https://maps.google.com/maps?q=PT.+Indotech+Berkah+Abadi+Sleman+Yogyakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
 
                     <div class="contact-wa-strip" style="margin-top:28px;">

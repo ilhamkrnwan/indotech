@@ -6,16 +6,8 @@
 
 get_header();
 
-// Fetch all available brands for the filter (cached using Transient API)
-$brands = get_transient('indotech_filter_brands');
-if ($brands === false) {
-    $brands = get_posts([
-        'post_type'      => 'brand',
-        'posts_per_page' => -1,
-        'post_status'    => 'publish'
-    ]);
-    set_transient('indotech_filter_brands', $brands, DAY_IN_SECONDS);
-}
+$paged    = get_query_var('paged') ? get_query_var('paged') : 1;
+$per_page = 9;
 
 // Fetch all product categories for the filter (cached using Transient API)
 $categories = get_transient('indotech_filter_categories');
@@ -28,7 +20,239 @@ if ($categories === false) {
 }
 ?>
 
-<div class="product-archive-wrapper" style="background: var(--surface); min-height: 100vh; padding-top: 40px; padding-bottom: 80px;">
+<style>
+.product-archive-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    align-items: start;
+}
+.filter-panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    z-index: 10;
+}
+.filter-panel-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.filter-group-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+}
+.filter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.filter-btn {
+    text-align: left;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all var(--trans);
+}
+.filter-btn:hover {
+    background: var(--surface);
+    color: var(--ink);
+}
+.filter-btn.active {
+    font-weight: 700;
+    color: var(--cobalt);
+    background: var(--cobalt-pale);
+}
+.brand-product-card {
+    --brand-accent: var(--cobalt);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    transition: all var(--trans);
+    position: relative;
+    box-shadow: var(--shadow-xs);
+}
+.brand-product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(0, 87, 255, 0.15);
+}
+.brand-product-card-img-wrap {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    transition: border-color var(--trans);
+}
+.brand-product-card:hover .brand-product-card-img-wrap {
+    border-color: rgba(0, 87, 255, 0.15);
+}
+.brand-product-card-sku-wrap {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--brand-accent);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.brand-product-card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    transition: color var(--trans);
+}
+.brand-product-card:hover .brand-product-card-title {
+    color: var(--brand-accent);
+}
+.brand-product-card-excerpt {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+.brand-product-card .btn-outline {
+    margin-top: auto;
+    font-size: 12px;
+    text-align: center;
+    display: block;
+    border-color: var(--brand-accent) !important;
+    color: var(--brand-accent) !important;
+    background: transparent;
+    padding: 10px 16px;
+    transition: all var(--trans);
+}
+.brand-product-card:hover .btn-outline {
+    background: var(--brand-accent) !important;
+    color: var(--white) !important;
+    border-color: var(--brand-accent) !important;
+    box-shadow: 0 4px 12px rgba(0, 87, 255, 0.15);
+}
+
+/* Responsive & Loading Styles */
+@media (max-width: 991px) {
+    .product-archive-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .filter-panel {
+        position: relative;
+        top: 0 !important;
+        margin-bottom: 10px;
+    }
+    .filter-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .filter-btn {
+        width: auto;
+        display: inline-block;
+        padding: 8px 16px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 30px;
+        font-size: 13px;
+    }
+    .filter-btn.active {
+        border-color: var(--cobalt-pale);
+    }
+}
+#products-grid {
+    transition: opacity 0.25s ease;
+}
+.products-loading {
+    opacity: 0.4;
+    pointer-events: none;
+}
+.product-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+.product-pagination .page-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--trans);
+    text-decoration: none;
+}
+.product-pagination .page-btn:hover {
+    border-color: var(--cobalt);
+    color: var(--cobalt);
+    background: var(--cobalt-pale);
+}
+.product-pagination .page-btn.active {
+    background: var(--cobalt);
+    border-color: var(--cobalt);
+    color: var(--white);
+}
+.product-pagination .page-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+.product-pagination-info {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 12px;
+}
+</style>
+
+<div class="product-archive-wrapper" style="background: var(--surface); min-height: 100vh; padding-top: 120px; padding-bottom: 80px;">
     <div class="container">
         
         <!-- Header -->
@@ -39,43 +263,24 @@ if ($categories === false) {
         </header>
 
         <!-- ── Layout Grid: Filters on Left (or Top) & Products on Right ── -->
-        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: start;">
+        <div class="product-archive-container">
             
             <!-- Filter Panel -->
-            <aside style="background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: var(--shadow-xs);">
-                <h3 style="font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em;">Filter Katalog</h3>
-
-                <!-- Filter: Brands -->
-                <div style="margin-bottom: 24px;">
-                    <span style="font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 10px;">Brand Ekosistem</span>
-                    <ul class="filter-group" style="display: flex; flex-direction: column; gap: 6px; list-style: none; padding: 0;">
-                        <li>
-                            <button class="filter-btn active" data-filter-type="brand" data-filter-val="" style="text-align: left; font-size: 13.5px; font-weight: 600; color: var(--cobalt); width: 100%; padding: 6px 10px; border-radius: 6px; background: var(--cobalt-pale); border: none;">
-                                Semua Brand
-                            </button>
-                        </li>
-                        <?php foreach ($brands as $b) : ?>
-                            <li>
-                                <button class="filter-btn" data-filter-type="brand" data-filter-val="<?php echo esc_attr($b->ID); ?>" style="text-align: left; font-size: 13.5px; font-weight: 500; color: var(--text-secondary); width: 100%; padding: 6px 10px; border-radius: 6px; background: transparent; border: none; cursor: pointer;">
-                                    <?php echo esc_html($b->post_title); ?>
-                                </button>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
+            <aside class="filter-panel">
+                <h3 class="filter-panel-title">Filter Katalog</h3>
 
                 <!-- Filter: Categories -->
                 <div>
-                    <span style="font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 10px;">Kategori Produk</span>
-                    <ul class="filter-group" style="display: flex; flex-direction: column; gap: 6px; list-style: none; padding: 0;">
+                    <span class="filter-group-title">Kategori Produk</span>
+                    <ul class="filter-list">
                         <li>
-                            <button class="filter-btn active" data-filter-type="cat" data-filter-val="" style="text-align: left; font-size: 13.5px; font-weight: 600; color: var(--cobalt); width: 100%; padding: 6px 10px; border-radius: 6px; background: var(--cobalt-pale); border: none;">
+                            <button class="filter-btn active" data-filter-type="cat" data-filter-val="">
                                 Semua Kategori
                             </button>
                         </li>
                         <?php foreach ($categories as $cat) : ?>
                             <li>
-                                <button class="filter-btn" data-filter-type="cat" data-filter-val="<?php echo esc_attr($cat->slug); ?>" style="text-align: left; font-size: 13.5px; font-weight: 500; color: var(--text-secondary); width: 100%; padding: 6px 10px; border-radius: 6px; background: transparent; border: none; cursor: pointer;">
+                                <button class="filter-btn" data-filter-type="cat" data-filter-val="<?php echo esc_attr($cat->slug); ?>">
                                     <?php echo esc_html($cat->name); ?>
                                 </button>
                             </li>
@@ -91,7 +296,8 @@ if ($categories === false) {
                     <?php
                     $product_query = new WP_Query([
                         'post_type'      => 'product',
-                        'posts_per_page' => 12,
+                        'posts_per_page' => $per_page,
+                        'paged'          => $paged,
                         'post_status'    => 'publish'
                     ]);
 
@@ -109,8 +315,8 @@ if ($categories === false) {
                                 $b_accent = carbon_get_post_meta($b_id, 'brand_accent_color') ?: '#0057FF';
                             }
                     ?>
-                        <article class="brand-product-card" style="background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; transition: all var(--trans); position: relative;">
-                            <div style="margin-bottom: 16px; border-radius: 8px; overflow: hidden; background: var(--surface); height: 180px; display: flex; align-items: center; justify-content: center;">
+                        <article class="brand-product-card" style="--brand-accent: <?php echo esc_attr($b_accent); ?>;">
+                            <div class="brand-product-card-img-wrap">
                                 <?php if (has_post_thumbnail()) : ?>
                                     <?php the_post_thumbnail('indotech-thumb', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
                                 <?php else : ?>
@@ -119,16 +325,16 @@ if ($categories === false) {
                             </div>
                             <div style="flex: 1; display: flex; flex-direction: column;">
                                 <?php if ($sku) : ?>
-                                    <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: <?php echo esc_attr($b_accent); ?>; letter-spacing: 0.05em; margin-bottom: 6px; display: flex; justify-content: space-between;">
+                                    <div class="brand-product-card-sku-wrap">
                                         <span><?php echo esc_html($sku); ?></span>
                                         <?php if ($b_title) : ?>
                                             <span style="opacity: 0.7; font-weight: 600; text-transform: none;"><?php echo esc_html($b_title); ?></span>
                                         <?php endif; ?>
-                                    </span>
+                                    </div>
                                 <?php endif; ?>
-                                <h3 style="font-size: 17px; margin-bottom: 8px; line-height: 1.3; font-weight: 700; letter-spacing: -0.01em;"><?php the_title(); ?></h3>
-                                <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px;"><?php echo wp_trim_words(get_the_excerpt(), 12); ?></p>
-                                <a href="<?php the_permalink(); ?>" class="btn btn-outline" style="margin-top: auto; font-size: 12px; text-align: center; display: block; border-color: <?php echo esc_attr($b_accent); ?>; color: <?php echo esc_attr($b_accent); ?>;">
+                                <h3 class="brand-product-card-title"><?php the_title(); ?></h3>
+                                <p class="brand-product-card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 12); ?></p>
+                                <a href="<?php the_permalink(); ?>" class="btn btn-outline">
                                     Lihat Produk &rarr;
                                 </a>
                             </div>
@@ -144,11 +350,135 @@ if ($categories === false) {
                     <?php endif; ?>
 
                 </div>
+
+                <!-- Pagination -->
+                <?php
+                $total_pages = $product_query->max_num_pages;
+                $base_url    = get_permalink();
+                ?>
+                <div id="product-pagination-wrap">
+                <?php if ($total_pages > 1) : ?>
+                    <nav class="product-pagination" aria-label="Navigasi halaman produk">
+                        <?php if ($paged > 1) : ?>
+                            <a href="<?php echo esc_url(add_query_arg('paged', $paged - 1, $base_url)); ?>" class="page-btn" aria-label="Halaman sebelumnya">
+                                &lsaquo; Sebelumnya
+                            </a>
+                        <?php endif; ?>
+
+                        <?php
+                        // Show numbered pages — max 5 window
+                        $start = max(1, $paged - 2);
+                        $end   = min($total_pages, $paged + 2);
+                        if ($start > 1) :
+                        ?>
+                            <a href="<?php echo esc_url(add_query_arg('paged', 1, $base_url)); ?>" class="page-btn">1</a>
+                            <?php if ($start > 2) : ?><span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span><?php endif; ?>
+                        <?php endif; ?>
+
+                        <?php for ($i = $start; $i <= $end; $i++) : ?>
+                            <a
+                                href="<?php echo esc_url(add_query_arg('paged', $i, $base_url)); ?>"
+                                class="page-btn <?php echo $i === $paged ? 'active' : ''; ?>"
+                                <?php echo $i === $paged ? 'aria-current="page"' : ''; ?>
+                            >
+                                <?php echo $i; ?>
+                            </a>
+                        <?php endfor; ?>
+
+                        <?php if ($end < $total_pages) : ?>
+                            <?php if ($end < $total_pages - 1) : ?><span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span><?php endif; ?>
+                            <a href="<?php echo esc_url(add_query_arg('paged', $total_pages, $base_url)); ?>" class="page-btn"><?php echo $total_pages; ?></a>
+                        <?php endif; ?>
+
+                        <?php if ($paged < $total_pages) : ?>
+                            <a href="<?php echo esc_url(add_query_arg('paged', $paged + 1, $base_url)); ?>" class="page-btn" aria-label="Halaman berikutnya">
+                                Berikutnya &rsaquo;
+                            </a>
+                        <?php endif; ?>
+                    </nav>
+                    <p class="product-pagination-info">Halaman <?php echo $paged; ?> dari <?php echo $total_pages; ?></p>
+                <?php endif; ?>
+                </div>
             </div>
 
         </div>
     </div>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const grid       = document.getElementById('products-grid');
+    const paginWrap  = document.getElementById('product-pagination-wrap');
+    if (!grid || !filterBtns.length) return;
+
+    let activeBrand = '';
+    let activeCat   = '';
+    let activePage  = 1;
+
+    function doFetch() {
+        grid.classList.add('products-loading');
+
+        const formData = new FormData();
+        formData.append('action', 'indotech_filter_products');
+        formData.append('brand_id', activeBrand);
+        formData.append('cat_slug', activeCat);
+        formData.append('page',     activePage);
+        formData.append('nonce',    indotechData.nonce);
+
+        fetch(indotechData.ajaxUrl, { method: 'POST', body: formData })
+            .then(res => res.json())
+            .then(data => {
+                grid.classList.remove('products-loading');
+                if (data.success && data.data) {
+                    if (data.data.html !== undefined)  grid.innerHTML = data.data.html;
+                    if (data.data.pagination !== undefined && paginWrap) {
+                        paginWrap.innerHTML = data.data.pagination;
+                        bindPaginationClicks();
+                    }
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                grid.classList.remove('products-loading');
+            });
+    }
+
+    function bindPaginationClicks() {
+        if (!paginWrap) return;
+        paginWrap.querySelectorAll('.ajax-page-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                activePage = parseInt(this.dataset.page);
+                doFetch();
+                grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const type = this.dataset.filterType;
+            const val  = this.dataset.filterVal;
+
+            const siblings = this.closest('ul').querySelectorAll('.filter-btn');
+            siblings.forEach(s => s.classList.remove('active'));
+            this.classList.add('active');
+
+            if (type === 'brand') activeBrand = val;
+            else if (type === 'cat') activeCat = val;
+
+            activePage = 1; // reset to first page on filter change
+            doFetch();
+        });
+    });
+
+    bindPaginationClicks();
+});
+</script>
+
 <?php
 get_footer();
+
