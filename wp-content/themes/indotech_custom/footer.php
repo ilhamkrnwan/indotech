@@ -75,7 +75,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                         TODO: Ganti href="#" dengan URL halaman akun Instagram resmi Indotech.
                         Contoh: href="https://www.instagram.com/indotech.id/"
                     -->
-                    <a href="#" class="social-link" aria-label="Instagram Indotech">
+                    <a href="https://www.instagram.com/orchidcareofficial" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram Indotech">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -87,7 +87,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                         TODO: Ganti href="#" dengan URL halaman Facebook resmi Indotech.
                         Contoh: href="https://www.facebook.com/indotech.id"
                     -->
-                    <a href="#" class="social-link" aria-label="Facebook Indotech">
+                    <a href="https://www.facebook.com/indotechgroup/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook Indotech">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                         </svg>

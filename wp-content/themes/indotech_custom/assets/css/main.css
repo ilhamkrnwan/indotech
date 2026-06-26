@@ -1932,18 +1932,27 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: 40px 32px;
   position: relative;
   transition: all var(--trans);
+  z-index: 1;
 }
 .value-card:hover { background: var(--cobalt-pale); }
 .value-num {
+  position: absolute;
+  top: 16px;
+  right: 24px;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 48px; font-weight: 700;
+  font-size: 72px;
+  font-weight: 700;
   color: var(--border);
   line-height: 1;
   letter-spacing: -0.04em;
-  margin-bottom: 20px;
-  display: block;
+  pointer-events: none;
+  transition: all var(--trans);
+  z-index: -1;
 }
-.value-card:hover .value-num { color: rgba(0,87,255,.12); }
+.value-card:hover .value-num {
+  color: rgba(0, 87, 255, 0.12);
+  transform: scale(1.05);
+}
 .partner-type-tag {
   font-size: 10px; font-weight: 700;
   letter-spacing: .12em; text-transform: uppercase;
