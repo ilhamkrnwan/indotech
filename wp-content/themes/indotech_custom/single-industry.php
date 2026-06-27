@@ -13,34 +13,46 @@ while (have_posts()) : the_post();
     $tagline = carbon_get_post_meta($industry_id, 'industry_tagline');
     $icon = carbon_get_post_meta($industry_id, 'industry_icon');
 
-    // Query products related to this industry
+    // Query products related to this industry (robustly supporting both formats)
+    global $wpdb;
+    $product_ids = $wpdb->get_col($wpdb->prepare("
+        SELECT post_id 
+        FROM {$wpdb->postmeta} 
+        WHERE (meta_key = '_product_industries' AND meta_value = %s)
+           OR (meta_key = '_product_industries|||0|id' AND meta_value = %s)
+    ", 'post:industry:' . $industry_id, $industry_id));
+
     $product_query = new WP_Query([
         'post_type'      => 'product',
         'posts_per_page' => 12,
         'post_status'    => 'publish',
-        'meta_query'     => [
-            [
-                'key'     => '_product_industries',
-                'value'   => 'post:industry:' . $industry_id,
-                'compare' => '='
-            ]
-        ]
+        'post__in'       => !empty($product_ids) ? $product_ids : [0]
     ]);
 ?>
 
 <div class="industry-detail-wrapper" style="background: var(--surface); min-height: 100vh; padding-bottom: 80px;">
     
     <!-- ── Hero Banner ── -->
-    <header class="industry-hero" style="background: var(--ink); color: var(--white); padding: 80px 0; border-bottom: 3px solid var(--cobalt); position: relative; overflow: hidden;">
-        <div class="container" style="position: relative; z-index: 2; max-width: 900px; text-align: center;">
-            <span class="section-tag section-tag--white" style="margin-bottom: 16px;">Solusi Sektor Industri</span>
-            <h1 style="font-size: clamp(32px, 5vw, 46px); margin-bottom: 12px; letter-spacing: -0.03em; line-height: 1.1;"><?php the_title(); ?></h1>
+    <section class="inner-page-hero" id="industry-single-hero">
+        <div class="hero-bg" aria-hidden="true">
+            <div class="hero-grid-overlay"></div>
+            <div class="hero-glow hero-glow--1" style="opacity:.4;"></div>
+        </div>
+        <div class="container inner-page-hero-inner reveal">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a>
+                <span aria-hidden="true">/</span>
+                <a href="<?php echo esc_url( get_post_type_archive_link('industry') ); ?>">Industri</a>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page"><?php the_title(); ?></span>
+            </nav>
+            <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Solusi Sektor Industri</span>
+            <h1 class="inner-page-title"><?php the_title(); ?></h1>
             <?php if ($tagline) : ?>
-                <p style="font-size: 18px; color: var(--cobalt-light); font-weight: 500; font-family: 'Space Grotesk', sans-serif;"><?php echo esc_html($tagline); ?></p>
+                <p class="inner-page-subtitle"><?php echo esc_html($tagline); ?></p>
             <?php endif; ?>
         </div>
-        <div style="position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(0,87,255,0.18), transparent 70%); right: -100px; top: -100px; pointer-events: none; z-index: 1;"></div>
-    </header>
+    </section>
 
     <!-- ── Content Area ── -->
     <section style="padding: 60px 0;">

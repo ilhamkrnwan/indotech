@@ -62,6 +62,14 @@ class MetaFields {
                         ]
                     ])
                     ->set_help_text(__('Pilih file PDF (SDS/MSDS/Katalog) dari Media Library untuk produk ini', 'indotech-core')),
+                Field::make('association', 'product_industries', __('Pilih Sektor Industri', 'indotech-core'))
+                    ->set_types([
+                        [
+                            'type'      => 'post',
+                            'post_type' => 'industry',
+                        ]
+                    ])
+                    ->set_help_text(__('Kaitkan produk ini dengan satu atau lebih solusi industri B2B', 'indotech-core')),
                 Field::make('complex', 'product_specifications', __('Spesifikasi Produk (Tabel Key-Value)', 'indotech-core'))
                     ->set_layout('tabbed-horizontal')
                     ->add_fields([

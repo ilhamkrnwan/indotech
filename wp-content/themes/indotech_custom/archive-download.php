@@ -169,6 +169,7 @@ $files = get_posts([
     justify-content: space-between;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    text-align: left; /* Enforce default left align */
 }
 .download-item:hover {
     transform: translateY(-3px);
@@ -195,9 +196,15 @@ $files = get_posts([
     line-height: 1.45;
     margin-bottom: 8px;
     transition: color 0.2s;
+    text-align: left; /* Enforce default left align */
 }
 .download-item:hover .download-title {
     color: var(--cobalt);
+}
+
+.download-meta-wrap {
+    text-align: left; /* Enforce default left align */
+    width: 100%;
 }
 
 .download-meta {
@@ -232,25 +239,34 @@ $files = get_posts([
     align-items: center;
     justify-content: space-between;
     padding: 14px 20px;
+    text-align: left;
 }
 .download-grid.view-list .download-content-left {
     display: flex;
     align-items: center;
     gap: 16px;
     flex: 1;
+    text-align: left;
 }
 .download-grid.view-list .pdf-icon-wrapper {
     width: 42px;
     height: 42px;
     font-size: 11px;
+    margin-left: 0;
+    margin-right: 0;
 }
 .download-grid.view-list .download-details {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    text-align: left;
 }
 .download-grid.view-list .download-title {
     margin-bottom: 0;
+    text-align: left;
+}
+.download-grid.view-list .download-meta-wrap {
+    text-align: left;
 }
 .download-grid.view-list .download-actions-wrap {
     display: flex;
@@ -269,12 +285,22 @@ $files = get_posts([
 }
 .download-grid.view-card .download-item {
     min-height: 190px;
+    align-items: flex-start;
+    text-align: left;
 }
 .download-grid.view-card .pdf-icon-wrapper {
     width: 48px;
     height: 48px;
     font-size: 12px;
     margin-bottom: 14px;
+    margin-left: 0;
+    margin-right: auto;
+}
+.download-grid.view-card .download-title {
+    text-align: left;
+}
+.download-grid.view-card .download-meta-wrap {
+    text-align: left;
 }
 .download-grid.view-card .download-actions {
     margin-top: 16px;
@@ -287,15 +313,23 @@ $files = get_posts([
 }
 .download-grid.view-grid .download-item {
     min-height: 160px;
+    align-items: flex-start;
+    text-align: left;
 }
 .download-grid.view-grid .pdf-icon-wrapper {
     width: 38px;
     height: 38px;
     font-size: 10px;
     margin-bottom: 12px;
+    margin-left: 0;
+    margin-right: auto;
 }
 .download-grid.view-grid .download-title {
     font-size: 13.5px;
+    text-align: left;
+}
+.download-grid.view-grid .download-meta-wrap {
+    text-align: left;
 }
 .download-grid.view-grid .download-actions {
     margin-top: 12px;
@@ -316,11 +350,17 @@ $files = get_posts([
     height: 48px;
     font-size: 12px;
     margin-bottom: 12px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .download-grid.view-icon-small .download-title {
     font-size: 13px;
     line-height: 1.35;
     margin-bottom: 6px;
+    text-align: center;
+}
+.download-grid.view-icon-small .download-meta-wrap {
+    text-align: center;
 }
 .download-grid.view-icon-small .download-actions {
     margin-top: 12px;
@@ -341,11 +381,17 @@ $files = get_posts([
     height: 68px;
     font-size: 15px;
     margin-bottom: 16px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .download-grid.view-icon-medium .download-title {
     font-size: 14px;
     line-height: 1.4;
     margin-bottom: 8px;
+    text-align: center;
+}
+.download-grid.view-icon-medium .download-meta-wrap {
+    text-align: center;
 }
 .download-grid.view-icon-medium .download-actions {
     margin-top: 14px;
@@ -366,11 +412,17 @@ $files = get_posts([
     height: 96px;
     font-size: 20px;
     margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .download-grid.view-icon-large .download-title {
     font-size: 15px;
     line-height: 1.45;
     margin-bottom: 10px;
+    text-align: center;
+}
+.download-grid.view-icon-large .download-meta-wrap {
+    text-align: center;
 }
 .download-grid.view-icon-large .download-actions {
     margin-top: 18px;

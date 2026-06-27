@@ -7,15 +7,25 @@
 get_header();
 ?>
 
-<div class="industry-archive-wrapper" style="background: var(--surface); min-height: 100vh; padding-top: 40px; padding-bottom: 80px;">
+    <section class="inner-page-hero" id="industries-hero">
+        <div class="hero-bg" aria-hidden="true">
+            <div class="hero-grid-overlay"></div>
+            <div class="hero-glow hero-glow--1" style="opacity:.4;"></div>
+        </div>
+        <div class="container inner-page-hero-inner reveal">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">Industri</span>
+            </nav>
+            <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Solusi B2B</span>
+            <h1 class="inner-page-title">Solusi Sektor <em>Industri</em></h1>
+            <p class="inner-page-subtitle">PT Indotech Berkah Abadi menyediakan formula pembersih khusus dan pasokan kimia terstandarisasi untuk berbagai kebutuhan industri.</p>
+        </div>
+    </section>
+
+<div class="industry-archive-wrapper" style="background: var(--surface); min-height: 50vh; padding-top: 60px; padding-bottom: 80px;">
     <div class="container">
-        
-        <!-- Header -->
-        <header style="margin-bottom: 50px; text-align: center;">
-            <div class="section-tag" style="margin-bottom: 12px;">Solusi B2B</div>
-            <h1 style="font-size: clamp(32px, 5vw, 46px); font-weight: 700; letter-spacing: -0.04em; margin-bottom: 12px; line-height: 1.1;">Solusi Sektor Industri</h1>
-            <p style="color: var(--text-secondary); font-size: 16px; max-width: 600px; margin: 0 auto; line-height: 1.6;">PT Indotech Berkah Abadi menyediakan formula pembersih khusus dan pasokan kimia terstandarisasi untuk berbagai kebutuhan industri.</p>
-        </header>
 
         <!-- Industries Grid -->
         <div class="industries-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">

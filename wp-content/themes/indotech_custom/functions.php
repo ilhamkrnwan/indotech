@@ -268,3 +268,148 @@ function indotech_filter_products_handler() {
     ]);
 }
 
+// ── AJAX Blog Post Filtering ──────────────────────────────────────────────────
+add_action('wp_ajax_indotech_filter_posts', 'indotech_filter_posts_handler');
+add_action('wp_ajax_nopriv_indotech_filter_posts', 'indotech_filter_posts_handler');
+
+function indotech_filter_posts_handler() {
+    check_ajax_referer('indotech_nonce', 'nonce');
+
+    $cat_slug = isset($_POST['cat_slug']) ? sanitize_text_field($_POST['cat_slug']) : '';
+    $search   = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
+    $sort_by  = isset($_POST['sort_by']) ? sanitize_text_field($_POST['sort_by']) : 'newest';
+    $paged    = isset($_POST['page']) ? absint($_POST['page']) : 1;
+    $per_page = 6;
+
+    $args = [
+        'post_type'      => 'post',
+        'posts_per_page' => $per_page,
+        'paged'          => $paged,
+        'post_status'    => 'publish',
+    ];
+
+    if (!empty($cat_slug)) {
+        $args['category_name'] = $cat_slug;
+    }
+
+    if (!empty($search)) {
+        $args['s'] = $search;
+    }
+
+    switch ($sort_by) {
+        case 'oldest':
+            $args['orderby'] = 'date';
+            $args['order']   = 'ASC';
+            break;
+        case 'title_asc':
+            $args['orderby'] = 'title';
+            $args['order']   = 'ASC';
+            break;
+        case 'newest':
+        default:
+            $args['orderby'] = 'date';
+            $args['order']   = 'DESC';
+            break;
+    }
+
+    $blog_query = new WP_Query($args);
+
+    ob_start();
+    if ($blog_query->have_posts()) :
+        while ($blog_query->have_posts()) : $blog_query->the_post();
+            $thumb     = get_the_post_thumbnail_url(null, 'medium_large');
+            $post_cats = get_the_category();
+            $cat_lbl   = $post_cats ? esc_html($post_cats[0]->name) : '';
+            ?>
+            <article class="blog-card reveal" role="listitem" id="post-<?php the_ID(); ?>">
+                <a href="<?php the_permalink(); ?>" class="blog-thumb" aria-label="Baca: <?php the_title_attribute(); ?>">
+                    <?php if ($thumb) : ?>
+                        <img src="<?php echo esc_url($thumb); ?>" alt="<?php the_title_attribute(); ?>" class="blog-img" loading="lazy">
+                    <?php else : ?>
+                        <div class="blog-img-placeholder"><span class="blog-placeholder-label">Indotech</span></div>
+                    <?php endif; ?>
+                    <?php if ($cat_lbl) : ?>
+                        <span class="blog-category"><?php echo $cat_lbl; ?></span>
+                    <?php endif; ?>
+                </a>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <time datetime="<?php echo get_the_date('Y-m-d'); ?>"><?php echo get_the_date('d M Y'); ?></time>
+                        <span class="blog-meta-sep" aria-hidden="true">·</span>
+                        <span><?php the_author(); ?></span>
+                    </div>
+                    <h3 class="blog-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                    <p class="blog-excerpt"><?php echo esc_html(wp_trim_words(get_the_excerpt(), 22, '...')); ?></p>
+                    <a href="<?php the_permalink(); ?>" class="blog-read-more" aria-label="Baca selengkapnya: <?php the_title_attribute(); ?>">
+                        Baca Selengkapnya →
+                    </a>
+                </div>
+            </article>
+            <?php
+        endwhile;
+        wp_reset_postdata();
+    else :
+        ?>
+        <div class="blog-empty reveal" style="text-align:center;padding:80px 0;grid-column:1/-1;">
+            <div class="blog-empty-icon" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="color:var(--border-dark);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            </div>
+            <h3 style="font-size:20px;margin:20px 0 8px;">Belum ada artikel</h3>
+            <p style="color:var(--text-secondary);margin-bottom:28px;">
+                Coba cari dengan kata kunci atau filter kategori yang berbeda.
+            </p>
+            <a href="#" class="btn btn-outline reset-filters-btn">Lihat Semua Artikel</a>
+        </div>
+        <?php
+    endif;
+    $html = ob_get_clean();
+
+    // Generate updated pagination HTML
+    $total_pages = $blog_query->max_num_pages;
+    $pagination_html = '';
+
+    if ($total_pages > 1) {
+        $pagination_html .= '<nav class="product-pagination" aria-label="Navigasi halaman blog">';
+        
+        if ($paged > 1) {
+            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . ($paged - 1) . '" aria-label="Halaman sebelumnya">&lsaquo; Sebelumnya</a>';
+        }
+        
+        $start = max(1, $paged - 2);
+        $end   = min($total_pages, $paged + 2);
+        
+        if ($start > 1) {
+            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="1">1</a>';
+            if ($start > 2) {
+                $pagination_html .= '<span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span>';
+            }
+        }
+        
+        for ($i = $start; $i <= $end; $i++) {
+            $active_class = $i === $paged ? 'active' : '';
+            $aria_current = $i === $paged ? ' aria-current="page"' : '';
+            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn ' . $active_class . '" data-page="' . $i . '"' . $aria_current . '>' . $i . '</a>';
+        }
+        
+        if ($end < $total_pages) {
+            if ($end < $total_pages - 1) {
+                $pagination_html .= '<span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span>';
+            }
+            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . $total_pages . '">' . $total_pages . '</a>';
+        }
+        
+        if ($paged < $total_pages) {
+            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . ($paged + 1) . '" aria-label="Halaman berikutnya">Berikutnya &rsaquo;</a>';
+        }
+        
+        $pagination_html .= '</nav>';
+        $pagination_html .= '<p class="product-pagination-info">Halaman ' . $paged . ' dari ' . $total_pages . '</p>';
+    }
+
+    wp_send_json_success([
+        'html'       => $html,
+        'pagination' => $pagination_html
+    ]);
+}
+
+
