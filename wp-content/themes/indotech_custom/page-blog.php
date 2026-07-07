@@ -156,36 +156,37 @@ get_header();
                 <!-- Filter Panel -->
                 <aside class="filter-panel">
                     <h3 class="filter-panel-title">Filter Artikel</h3>
+                    <!-- Search & Sort Row -->
+                    <div class="blog-search-sort-row">
+                        <!-- Search Input -->
+                        <div class="blog-search-group" style="margin-bottom: 24px;">
+                            <span class="filter-group-title">Cari Artikel</span>
+                            <div style="position: relative; display: flex; align-items: center;">
+                                <input type="text" id="blog-search" placeholder="Masukkan kata kunci..." value=""
+                                       style="width: 100%; padding: 10px 36px 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13.5px; font-family: inherit; transition: border-color var(--trans);" />
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
+                                     style="position: absolute; right: 12px; color: var(--text-muted); pointer-events: none;">
+                                    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </div>
+                        </div>
 
-                    <!-- Search Input -->
-                    <div style="margin-bottom: 24px;">
-                        <span class="filter-group-title">Cari Artikel</span>
-                        <div style="position: relative; display: flex; align-items: center;">
-                            <input type="text" id="blog-search" placeholder="Masukkan kata kunci..." value=""
-                                   style="width: 100%; padding: 10px 36px 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13.5px; font-family: inherit; transition: border-color var(--trans);" />
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
-                                 style="position: absolute; right: 12px; color: var(--text-muted); pointer-events: none;">
-                                <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
+                        <!-- Sorting Dropdown -->
+                        <div class="blog-sort-group" style="margin-bottom: 24px;">
+                            <span class="filter-group-title">Urutkan Artikel</span>
+                            <div style="position: relative; display: flex; align-items: center;">
+                                <select id="blog-sort" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13.5px; font-family: inherit; transition: border-color var(--trans); background: var(--white); cursor: pointer; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
+                                    <option value="newest">Terbaru (Default)</option>
+                                    <option value="oldest">Terlama</option>
+                                    <option value="title_asc">Judul (A-Z)</option>
+                                </select>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" 
+                                     style="position: absolute; right: 12px; color: var(--text-muted); pointer-events: none;">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Sorting Dropdown -->
-                    <div style="margin-bottom: 24px;">
-                        <span class="filter-group-title">Urutkan Artikel</span>
-                        <div style="position: relative; display: flex; align-items: center;">
-                            <select id="blog-sort" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13.5px; font-family: inherit; transition: border-color var(--trans); background: var(--white); cursor: pointer; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
-                                <option value="newest">Terbaru (Default)</option>
-                                <option value="oldest">Terlama</option>
-                                <option value="title_asc">Judul (A-Z)</option>
-                            </select>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" 
-                                 style="position: absolute; right: 12px; color: var(--text-muted); pointer-events: none;">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </div>
-
                     <!-- Filter: Categories -->
                     <?php if ( $categories ) : ?>
                     <div>

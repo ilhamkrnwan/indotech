@@ -12,6 +12,8 @@
 # 2. Whitelist file penting di root
 !.gitignore
 !README.md
+!update.md
+!Update.md
 
 # ── Tema Custom: indotech_custom ──────────────────────────────
 # Buka jalur level per level (wajib di setiap level folder)

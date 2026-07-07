@@ -181,26 +181,44 @@ if ($categories === false) {
         position: relative;
         top: 0 !important;
         margin-bottom: 10px;
+        overflow: hidden;
     }
     .filter-list {
         flex-direction: row;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         gap: 8px;
+        padding-bottom: 8px;
+        scrollbar-width: none;
+    }
+    .filter-list::-webkit-scrollbar {
+        display: none;
     }
     .filter-btn {
         width: auto;
+        white-space: nowrap;
+        flex-shrink: 0;
         display: inline-block;
         padding: 8px 16px;
         background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: 30px;
+        border-radius: 6px;
         font-size: 13px;
     }
     .filter-btn.active {
         border-color: var(--cobalt-pale);
     }
 }
+.product-archive-wrapper {
+    background: var(--surface);
+    min-height: 100vh;
+    padding: 80px 0;
+}
 #products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
     transition: opacity 0.25s ease;
 }
 .products-loading {
@@ -256,6 +274,71 @@ if ($categories === false) {
     text-align: center;
     margin-top: 12px;
 }
+
+/* Mobile responsive enhancements */
+@media (max-width: 767px) {
+    .product-archive-wrapper {
+        padding: 30px 0 !important;
+    }
+    .product-archive-container {
+        gap: 20px !important;
+    }
+    /* Reduce lateral padding on mobile container so it doesn't waste space */
+    .product-archive-wrapper .container {
+        padding: 0 12px !important;
+    }
+    
+    #products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    /* Reduced padding and smaller rounded cards */
+    .brand-product-card {
+        padding: 10px !important;
+        border-radius: 6px !important;
+    }
+    .brand-product-card-img-wrap {
+        height: 120px !important;
+        margin-bottom: 8px !important;
+        border-radius: 4px !important;
+    }
+    .brand-product-card-sku-wrap {
+        font-size: 8px !important;
+        margin-bottom: 4px !important;
+    }
+    .brand-product-card-title {
+        font-size: 13px !important;
+        margin-bottom: 4px !important;
+        line-height: 1.25 !important;
+    }
+    .brand-product-card-excerpt {
+        font-size: 11px !important;
+        margin-bottom: 12px !important;
+        line-height: 1.4 !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .brand-product-card .btn-outline {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+        border-radius: 4px !important;
+        margin-top: auto !important;
+    }
+    
+    /* Horizontal scrolling category filter */
+    .filter-panel {
+        padding: 16px 16px !important;
+        border-radius: 8px !important;
+    }
+    .filter-btn {
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+        border-radius: 4px !important;
+    }
+}
 </style>
 
 <section class="inner-page-hero" id="product-hero">
@@ -275,7 +358,7 @@ if ($categories === false) {
     </div>
 </section>
 
-<div class="product-archive-wrapper" style="background: var(--surface); min-height: 100vh; padding: 80px 0;">
+<div class="product-archive-wrapper">
     <div class="container">
 
         <!-- ── Layout Grid: Filters on Left (or Top) & Products on Right ── -->
@@ -320,7 +403,7 @@ if ($categories === false) {
 
             <!-- Products View Grid -->
             <div>
-                <div id="products-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px;">
+                <div id="products-grid">
                     
                     <?php
                     $query_args = [

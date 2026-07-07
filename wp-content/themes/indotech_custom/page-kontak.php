@@ -124,10 +124,7 @@ get_header();
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="kontak-email">Alamat Email <span class="form-required">*</span></label>
-                            <input type="email" id="kontak-email" name="contact_email" class="form-input" placeholder="email@perusahaan.com" required autocomplete="email">
-                        </div>
+
 
                         <div class="form-group">
                             <label class="form-label" for="kontak-subject">Subjek</label>

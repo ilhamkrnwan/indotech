@@ -183,6 +183,49 @@ while (have_posts()) : the_post();
             grid-template-columns: 1fr;
         }
     }
+
+    /* Brand Description List Styling */
+    .brand-description ol,
+    .brand-description ul {
+        padding-left: 24px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+    .brand-description ol {
+        list-style-type: decimal;
+    }
+    .brand-description ul {
+        list-style-type: disc;
+    }
+    .brand-description li {
+        margin-bottom: 8px;
+    }
+
+    @media (max-width: 767px) {
+        .brand-detail-wrapper {
+            padding-bottom: 40px !important;
+        }
+        .brand-detail-wrapper .container {
+            padding: 0 12px !important;
+        }
+        .brand-description-box {
+            padding: 24px 16px !important;
+            border-radius: 8px !important;
+            margin-bottom: 24px !important;
+        }
+        .brand-inquiry-box {
+            padding: 24px 16px !important;
+            border-radius: 8px !important;
+        }
+        .brand-gallery-box {
+            padding: 24px 16px !important;
+            border-radius: 8px !important;
+        }
+        .brand-info-box {
+            padding: 24px 16px !important;
+            border-radius: 8px !important;
+        }
+    }
     </style>
 
     <!-- ── Brand Hero Header ── -->
@@ -484,7 +527,7 @@ while (have_posts()) : the_post();
                 <!-- Right Column: Sidebar (Gallery & Info) -->
                 <aside>
                     <!-- B2B Inquiry Box specific to Brand -->
-                    <div style="background: var(--white); border: 1px solid var(--brand-color); border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: var(--shadow-sm);">
+                    <div class="brand-inquiry-box" style="background: var(--white); border: 1px solid var(--brand-color); border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: var(--shadow-sm);">
                         <h3 style="font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.01em;">Kemitraan & Maklon</h3>
                         <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px;">Hubungi tim penjualan B2B kami untuk meminta katalog harga grosir atau konsultasi Private Label (Maklon) brand <strong><?php the_title(); ?></strong>.</p>
                         
@@ -501,9 +544,9 @@ while (have_posts()) : the_post();
                             }
                         }
                         ?>
-
                         <form id="indotech-inquiry-form" method="POST" style="display: flex; flex-direction: column; gap: 14px;">
                             <input type="hidden" name="product_id" value="<?php echo esc_attr($first_product_id); ?>">
+                            <input type="hidden" name="brand_title" value="<?php echo esc_attr(get_the_title()); ?>">
                             <input type="text" name="website_url" value="" style="display: none;" tabindex="-1" autocomplete="off"> <!-- Honeypot -->
 
                             <div>
@@ -517,20 +560,9 @@ while (have_posts()) : the_post();
                             </div>
 
                             <div>
-                                <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Nomor WA / Telepon *</label>
-                                <input type="tel" name="phone" placeholder="Contoh: 0812345678" required style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px;">
-                            </div>
-
-                            <div>
-                                <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Nama Bisnis / Perusahaan</label>
-                                <input type="text" name="company_name" placeholder="Nama bisnis Anda" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px;">
-                            </div>
-
-                            <div>
                                 <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Pesan Kustom</label>
                                 <textarea name="message" rows="3" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px; resize: vertical;">Halo, saya tertarik untuk meminta katalog produk dan harga grosir untuk brand <?php the_title(); ?>.</textarea>
                             </div>
-
                             <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; background: var(--brand-color); border-color: var(--brand-color); padding: 12px; font-size: 13.5px; font-weight: 700;">
                                 Kirim Permintaan &rarr;
                             </button>

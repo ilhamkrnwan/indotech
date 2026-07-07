@@ -266,6 +266,97 @@ get_header();
     .lightbox-next { right: 12px; width: 44px; height: 44px; font-size: 24px; }
     .lightbox-close { top: 12px; right: 12px; font-size: 32px; }
 }
+
+.products-grid-catalog {
+    display: grid;
+    gap: 24px;
+}
+
+@media (max-width: 767px) {
+    .product-detail-wrapper {
+        padding-top: 80px !important;
+        padding-bottom: 40px !important;
+    }
+    .product-detail-grid {
+        gap: 20px !important;
+    }
+    /* Reduce lateral padding on mobile container so it doesn't waste space */
+    .product-detail-wrapper .container {
+        padding: 0 12px !important;
+    }
+    
+    /* Header card content padding */
+    .product-detail-grid > div > div {
+        padding: 20px 12px !important;
+        border-radius: 8px !important;
+    }
+    
+    .product-header-block {
+        gap: 16px !important;
+    }
+    .product-main-image-wrap {
+        height: 220px !important;
+        border-radius: 6px !important;
+    }
+    
+    /* Related products grid */
+    .products-grid-catalog {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    .brand-product-card {
+        padding: 10px !important;
+        border-radius: 6px !important;
+    }
+    .brand-product-card-img-wrap {
+        height: 120px !important;
+        margin-bottom: 8px !important;
+        border-radius: 4px !important;
+    }
+    .brand-product-card-sku-wrap {
+        font-size: 8px !important;
+        margin-bottom: 4px !important;
+    }
+    .brand-product-card-title {
+        font-size: 13px !important;
+        margin-bottom: 4px !important;
+        line-height: 1.25 !important;
+        min-height: auto !important;
+    }
+    .brand-product-card-excerpt {
+        font-size: 11px !important;
+        margin-bottom: 12px !important;
+        line-height: 1.4 !important;
+    }
+    .brand-product-card .btn-outline {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+        border-radius: 4px !important;
+    }
+    
+    /* Inquiry form container card */
+    .product-inquiry-box {
+        padding: 24px 16px !important;
+        border-radius: 8px !important;
+    }
+}
+
+/* Product Description List Styling */
+.product-description ol,
+.product-description ul {
+    padding-left: 24px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.product-description ol {
+    list-style-type: decimal;
+}
+.product-description ul {
+    list-style-type: disc;
+}
+.product-description li {
+    margin-bottom: 8px;
+}
 </style>
 
 <?php
@@ -518,7 +609,7 @@ while (have_posts()) : the_post();
                     <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 40px; margin-top: 30px; box-shadow: var(--shadow-xs);">
                         <h2 style="font-size: 20px; margin-bottom: 24px; letter-spacing: -0.02em; border-bottom: 1px solid var(--border); padding-bottom: 12px; font-weight: 700; color: var(--ink);">Produk Serupa</h2>
                         
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px;">
+                        <div class="products-grid-catalog" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                             <?php 
                             foreach ($related_posts as $post_item) :
                                 $rp_id = $post_item->ID;
@@ -568,7 +659,7 @@ while (have_posts()) : the_post();
 
             <!-- ── RIGHT COLUMN: STICKY B2B INQUIRY FORM ── -->
             <aside style="position: sticky; top: calc(var(--header-h) + 20px); z-index: 10;">
-                <div style="background: var(--white); border: 1px solid var(--brand-accent); border-radius: 16px; padding: 40px; box-shadow: var(--shadow-md);">
+                <div class="product-inquiry-box" style="background: var(--white); border: 1px solid var(--brand-accent); border-radius: 16px; padding: 40px; box-shadow: var(--shadow-md);">
                     <h3 style="font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.02em;">Permintaan Penawaran B2B</h3>
                     <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px;">Hubungi tim penjualan B2B kami untuk konsultasi formula, harga grosir, atau kemitraan maklon.</p>
 
@@ -576,6 +667,7 @@ while (have_posts()) : the_post();
                     <form id="indotech-inquiry-form" method="POST" style="display: flex; flex-direction: column; gap: 16px;">
                         <!-- Hidden inputs -->
                         <input type="hidden" name="product_id" value="<?php echo esc_attr($product_id); ?>">
+                        <input type="hidden" name="product_title" value="<?php echo esc_attr(get_the_title($product_id)); ?>">
                         <input type="text" name="website_url" value="" style="display: none;" tabindex="-1" autocomplete="off"> <!-- Honeypot -->
 
                         <div>
@@ -586,22 +678,6 @@ while (have_posts()) : the_post();
                         <div>
                             <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">Email Bisnis *</label>
                             <input type="email" name="email" placeholder="nama@perusahaan.com" required style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: inherit; font-size: 14px;">
-                        </div>
-
-                        <div>
-                            <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">Nomor WA / Telepon *</label>
-                            <input type="tel" name="phone" placeholder="Contoh: 0812345678" required style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: inherit; font-size: 14px;">
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                            <div>
-                                <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">Perusahaan</label>
-                                <input type="text" name="company_name" placeholder="PT / CV" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: inherit; font-size: 14px;">
-                            </div>
-                            <div>
-                                <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">Estimasi Qty (Unit)</label>
-                                <input type="number" name="quantity" min="1" value="1" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: inherit; font-size: 14px;">
-                            </div>
                         </div>
 
                         <div>

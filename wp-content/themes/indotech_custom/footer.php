@@ -123,12 +123,39 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
             <div class="footer-col">
                 <h4 class="footer-heading">Brand Kami</h4>
                 <ul class="footer-links footer-brand-list">
-                    <li><a href="https://orchidbrand.id/" target="_blank" rel="noopener">Orchid Care</a></li>
-                    <li><a href="https://cleaniquelab.com/" target="_blank" rel="noopener">Cleanique Lab</a></li>
-                    <li><a href="https://depocleanique.co.id/" target="_blank" rel="noopener">Depo Cleanique</a></li>
-                    <li><a href="https://cleaniqueacademy.com/" target="_blank" rel="noopener">Cleanique Academy</a></li>
-                    <li><a href="https://cleaniquemart.com/" target="_blank" rel="noopener">Cleanique Mart</a></li>
-                    <li><a href="https://malabeez.co.id/" target="_blank" rel="noopener">Malabeez</a></li>
+                    <?php
+                    $brands_query = new WP_Query([
+                        'post_type'      => 'brand',
+                        'posts_per_page' => -1,
+                        'post_status'    => 'publish',
+                        'orderby'        => 'menu_order',
+                        'order'          => 'ASC'
+                    ]);
+                    if ($brands_query->have_posts()) :
+                        while ($brands_query->have_posts()) : $brands_query->the_post();
+                            $b_url = carbon_get_post_meta(get_the_ID(), 'brand_website_url');
+                            if (empty($b_url)) {
+                                $b_url = get_permalink();
+                            }
+                            if (strtolower(trim(get_the_title())) === 'cokusi') {
+                                continue;
+                            }
+                            ?>
+                            <li><a href="<?php echo esc_url($b_url); ?>" target="_blank" rel="noopener"><?php the_title(); ?></a></li>
+                            <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    else :
+                        ?>
+                        <li><a href="https://orchidbrand.id/" target="_blank" rel="noopener">Orchid Care</a></li>
+                        <li><a href="https://cleaniquelab.com/" target="_blank" rel="noopener">Cleanique Lab</a></li>
+                        <li><a href="https://depocleanique.co.id/" target="_blank" rel="noopener">Depo Cleanique</a></li>
+                        <li><a href="https://cleaniqueacademy.com/" target="_blank" rel="noopener">Cleanique Academy</a></li>
+                        <li><a href="https://cleaniquemart.com/" target="_blank" rel="noopener">Cleanique Mart</a></li>
+                        <li><a href="https://malabeez.co.id/" target="_blank" rel="noopener">Malabeez</a></li>
+                        <?php
+                    endif;
+                    ?>
                 </ul>
             </div>
 

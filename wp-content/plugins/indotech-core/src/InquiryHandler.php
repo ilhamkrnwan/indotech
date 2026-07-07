@@ -64,21 +64,21 @@ class InquiryHandler {
         }
 
         // 3. Sanitization & Parsing
-        $name         = isset($_POST['full_name']) ? sanitize_text_field($_POST['full_name']) : '';
-        $email        = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
-        $phone        = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
+        $name         = isset($_POST['full_name']) ? sanitize_text_field($_POST['full_name']) : (isset($_POST['contact_name']) ? sanitize_text_field($_POST['contact_name']) : '');
+        $email        = isset($_POST['email']) ? sanitize_email($_POST['email']) : (isset($_POST['contact_email']) ? sanitize_email($_POST['contact_email']) : '');
+        $phone        = isset($_POST['phone']) && !empty(trim($_POST['phone'])) ? sanitize_text_field($_POST['phone']) : (isset($_POST['contact_phone']) && !empty(trim($_POST['contact_phone'])) ? sanitize_text_field($_POST['contact_phone']) : '-');
         $company      = isset($_POST['company_name']) ? sanitize_text_field($_POST['company_name']) : '';
         $quantity     = isset($_POST['quantity']) ? absint($_POST['quantity']) : 1;
-        $message      = isset($_POST['message']) ? sanitize_textarea_field($_POST['message']) : '';
+        $message      = isset($_POST['message']) ? sanitize_textarea_field($_POST['message']) : (isset($_POST['contact_message']) ? sanitize_textarea_field($_POST['contact_message']) : '');
         $product_id   = isset($_POST['product_id']) ? absint($_POST['product_id']) : 0;
 
         // 4. Validate Mandatory Fields
-        if (empty($name) || empty($email) || empty($phone) || empty($product_id)) {
-            wp_send_json_error(['message' => __('Mohon lengkapi semua kolom wajib.', 'indotech-core')]);
+        if (empty($name)) {
+            wp_send_json_error(['message' => __('Nama lengkap wajib diisi.', 'indotech-core')]);
         }
 
-        if (!is_email($email)) {
-            wp_send_json_error(['message' => __('Format email bisnis tidak valid.', 'indotech-core')]);
+        if (!empty($email) && !is_email($email)) {
+            wp_send_json_error(['message' => __('Format email tidak valid.', 'indotech-core')]);
         }
 
         // 5. Insert into custom database table
@@ -86,11 +86,11 @@ class InquiryHandler {
         $table_name = self::get_table_name();
 
         $inserted = $wpdb->insert($table_name, [
-            'product_id'   => $product_id,
+            'product_id'   => $product_id ?: null,
             'full_name'    => $name,
-            'email'        => $email,
+            'email'        => $email ?: '-',
             'phone'        => $phone,
-            'company_name' => $company,
+            'company_name' => $company ?: '-',
             'quantity'     => $quantity,
             'message'      => $message,
             'status'       => 'pending'
@@ -101,13 +101,13 @@ class InquiryHandler {
         }
 
         // 6. Send Emails (Dual Notification)
-        $product_title = get_the_title($product_id);
+        $product_title = $product_id ? get_the_title($product_id) : (isset($_POST['subject']) ? sanitize_text_field($_POST['subject']) : 'Pesan Kontak Umum');
         $admin_email   = get_option('_company_email', get_option('admin_email')); // Use options page email, fallback to default WP admin
 
         self::send_notification_emails($admin_email, $email, $name, $phone, $company, $quantity, $message, $product_title);
 
         wp_send_json_success([
-            'message' => __('Pertanyaan Anda berhasil dikirim! Tim penjualan kami akan segera menghubungi Anda.', 'indotech-core')
+            'message' => __('Pertanyaan Anda berhasil dikirim! Tim kami akan segera menghubungi Anda.', 'indotech-core')
         ]);
     }
 
@@ -167,6 +167,8 @@ class InquiryHandler {
         </body>
         </html>";
 
-        @wp_mail($customer_email, $customer_subject, $customer_body, $headers);
+        if (!empty($customer_email) && is_email($customer_email)) {
+            @wp_mail($customer_email, $customer_subject, $customer_body, $headers);
+        }
     }
 }

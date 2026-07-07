@@ -5,7 +5,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-define('INDOTECH_VERSION', '2.0.1');
+define('INDOTECH_VERSION', '2.0.3');
 define('INDOTECH_DIR', get_template_directory());
 define('INDOTECH_URI', get_template_directory_uri());
 
@@ -56,9 +56,13 @@ function indotech_enqueue() {
     // Inquiry AJAX JS (depends on jQuery and indotech-main for localized object)
     wp_enqueue_script('indotech-inquiry', INDOTECH_URI . '/assets/js/inquiry-ajax.js', ['jquery', 'indotech-main'], INDOTECH_VERSION, true);
 
+    $whatsapp = indotech_opt( 'whatsapp', '6285600061005' );
+    $wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );
+
     wp_localize_script('indotech-main', 'indotechData', [
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce'   => wp_create_nonce('indotech_nonce'),
+        'ajaxUrl'  => admin_url('admin-ajax.php'),
+        'nonce'    => wp_create_nonce('indotech_nonce'),
+        'whatsapp' => $wa_num,
     ]);
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {

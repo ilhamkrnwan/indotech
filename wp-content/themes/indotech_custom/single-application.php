@@ -35,6 +35,106 @@ while (have_posts()) : the_post();
     }
 ?>
 
+<style>
+.app-grid-container {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: start;
+}
+.app-description-card {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    margin-bottom: 40px;
+    box-shadow: var(--shadow-xs);
+}
+.app-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+.app-cta-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+}
+
+/* App Description List Styling */
+.app-description-card ol,
+.app-description-card ul {
+    padding-left: 24px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.app-description-card ol {
+    list-style-type: decimal;
+}
+.app-description-card ul {
+    list-style-type: disc;
+}
+.app-description-card li {
+    margin-bottom: 8px;
+}
+
+@media (max-width: 991px) {
+    .app-grid-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    .application-detail-wrapper {
+        padding-bottom: 40px !important;
+    }
+    .application-detail-wrapper .container {
+        padding: 0 12px !important;
+    }
+    .app-description-card {
+        padding: 24px 16px !important;
+        border-radius: 8px !important;
+        margin-bottom: 24px !important;
+    }
+    .app-products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    .app-products-grid article {
+        padding: 10px !important;
+        border-radius: 6px !important;
+    }
+    .app-products-grid article > div:first-child {
+        height: 120px !important;
+        margin-bottom: 8px !important;
+        border-radius: 4px !important;
+    }
+    .app-products-grid h3 {
+        font-size: 13px !important;
+        margin-bottom: 4px !important;
+        line-height: 1.25 !important;
+    }
+    .app-products-grid p {
+        font-size: 11px !important;
+        margin-bottom: 12px !important;
+        line-height: 1.4 !important;
+    }
+    .app-products-grid .btn-outline {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+        border-radius: 4px !important;
+    }
+    .app-cta-card {
+        padding: 24px 16px !important;
+        border-radius: 8px !important;
+    }
+}
+</style>
+
 <div class="application-detail-wrapper" style="background: var(--surface); min-height: 100vh; padding-bottom: 80px;">
     
     <!-- ── Hero Banner ── -->
@@ -62,12 +162,12 @@ while (have_posts()) : the_post();
     <!-- ── Content Area ── -->
     <section style="padding: 60px 0;">
         <div class="container">
-            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: start;">
+            <div class="app-grid-container">
                 
                 <!-- Left: Description & Recomended Products -->
                 <div>
                     <!-- Detail Text -->
-                    <div style="background: var(--white); padding: 40px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 40px; box-shadow: var(--shadow-xs);">
+                    <div class="app-description-card">
                         <h2 style="font-size: 22px; margin-bottom: 16px; letter-spacing: -0.02em;">Deskripsi Layanan & Formula B2B</h2>
                         <div style="color: var(--text-secondary); line-height: 1.75; font-size: 15px;">
                             <?php the_content(); ?>
@@ -78,7 +178,7 @@ while (have_posts()) : the_post();
                     <div>
                         <h2 style="font-size: 26px; margin-bottom: 24px; letter-spacing: -0.03em;">Rekomendasi Produk Pilihan</h2>
                         <?php if ($product_query && $product_query->have_posts()) : ?>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+                            <div class="app-products-grid">
                                 <?php while ($product_query->have_posts()) : $product_query->the_post(); 
                                     $p_id = get_the_ID();
                                     $sku = carbon_get_post_meta($p_id, 'product_sku');
@@ -126,12 +226,17 @@ while (have_posts()) : the_post();
 
                 <!-- Right: Sticky Corporate Info & CTA -->
                 <aside style="position: sticky; top: calc(var(--header-h) + 20px); z-index: 10;">
-                    <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: var(--shadow-sm); text-align: center;">
+                    <div class="app-cta-card">
                         <div style="width: 50px; height: 50px; background: var(--cobalt-pale); border-radius: 50%; color: var(--cobalt); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 20px; font-weight: 700;">?</div>
                         <h3 style="font-size: 18px; margin-bottom: 8px; letter-spacing: -0.01em;">Butuh Solusi Maklon?</h3>
                         <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px;">PT Indotech Berkah Abadi menyediakan konsultasi formula kimia, sabun laundry, dan maklon kustom untuk memenuhi spesifikasi industri Anda.</p>
-                        <a href="<?php echo esc_url(home_url('/kontak')); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                            Hubungi Kami
+                        <?php
+                        $whatsapp = indotech_opt( 'whatsapp', '6285600061005' );
+                        $wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );
+                        $wa_msg   = rawurlencode( 'Halo indotech.id, saya tertarik dengan layanan formula/maklon untuk sektor ' . get_the_title() . '.' );
+                        ?>
+                        <a href="https://wa.me/<?php echo esc_attr( $wa_num ); ?>?text=<?php echo $wa_msg; ?>" class="btn btn-primary" style="width: 100%; justify-content: center;" target="_blank" rel="noopener">
+                            Hubungi via WhatsApp
                         </a>
                     </div>
                 </aside>
