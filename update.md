@@ -85,3 +85,39 @@ Dokumen ini mencantumkan detail file yang berubah serta penjelasannya terkait pe
 * **Kenaikan Versi & Enqueue Config**:
   * Menaikkan versi theme `INDOTECH_VERSION` menjadi `2.0.3`.
   * Membaca opsi nomor WhatsApp perusahaan dari pengaturan tema (`indotech_opt`), membersihkannya dari karakter non-numerik, dan menyalurkannya ke script JS (`indotechData.whatsapp`).
+
+---
+
+### 5. Pembaruan Sesi Hari Ini (Versi 2.0.4)
+#### [archive-brand.php](file:///c:/wp-content/themes/indotech_custom/archive-brand.php)
+* **Penyelarasan Tampilan & Fix Crop**:
+  * Menyelaraskan desain card brand agar memiliki border 2px dan efek hover transisi yang sama persis dengan section brand di beranda (homepage).
+  * Menghapus batasan jumlah brand yang ditampilkan (mengubah query limit menjadi `-1`) agar seluruh brand terdaftar muncul di halaman arsip.
+  * Menggunakan resolusi gambar `'large'` (sebelumnya `'thumbnail'`) untuk logo brand guna mencegah pemotongan gambar oleh WordPress crop.
+
+#### [single-brand.php](file:///c:/wp-content/themes/indotech_custom/single-brand.php)
+* **Bento Grid Galeri & Official Link**:
+  * Mengimplementasikan layout galeri foto brand menggunakan sistem Bento Grid responsif (campuran ukuran box foto yang estetik).
+  * Menghubungkan CTA tombol brand langsung ke website official secara dinamis dari database meta fields (`brand_website_url`).
+  * Mengubah resolusi gambar logo brand utama ke ukuran `'large'` untuk mencegah terpotongnya logo di bagian atas halaman detail brand.
+  * Menambahkan fitur Lightbox Carousel interaktif untuk semua foto di galeri bento brand.
+
+#### [single.php](file:///c:/wp-content/themes/indotech_custom/single.php)
+* **Fix Duplikasi Artikel Terkait & Lightbox Post**:
+  * Memperbaiki bug duplikasi artikel terkait di mana sistem menampilkan artikel yang sedang dibaca saat ini. Menggunakan pemulihan global `$post` (`setup_postdata`) di dalam custom WP Query.
+  * Menambahkan fitur Lightbox Modal Carousel otomatis untuk semua gambar yang diunggah di dalam konten artikel (`.post-body img`) dan gambar fitur utama (`.post-featured-img img`).
+
+#### [footer.php](file:///c:/wp-content/themes/indotech_custom/footer.php)
+* **Penyempurnaan Tombol Melayang (Floating WA Buttons)**:
+  * Mengganti panel WhatsApp melayang lama dengan deretan horizontal 3 tombol CS WhatsApp (Keagenan, Retail, Pelatihan) dalam bentuk kapsul rapi di sisi kiri tombol pemicu utama.
+  * Mengatur agar di layar mobile, ketiga tombol CS tersebut otomatis menumpuk secara vertikal di atas tombol pemicu utama untuk menghindari luapan layar (*horizontal overflow*).
+  * Menghapus semua kemiringan diagonal pada tombol-tombol agar teks dan ikon tetap sejajar mendatar serta nyaman dibaca.
+
+#### [assets/css/main.css](file:///c:/wp-content/themes/indotech_custom/assets/css/main.css)
+* **Style Tambahan**:
+  * Menambahkan styling untuk bento grid galeri brand.
+  * Menghapus overflow terpotong dan merapikan visual badge diagonal "Unggulan" pada halaman jasa/services.
+
+#### [functions.php](file:///c:/wp-content/themes/indotech_custom/functions.php)
+* **Cache Busting Dinamis**:
+  * Mengubah cache buster `INDOTECH_VERSION` statis untuk file CSS dan JS utama menjadi berbasis waktu modifikasi file (`filemtime`) agar perubahan style langsung terdeteksi oleh browser pengguna tanpa perlu clear cache manual.

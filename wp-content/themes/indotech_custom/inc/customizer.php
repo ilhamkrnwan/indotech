@@ -41,9 +41,30 @@ function indotech_customizer($wp_customize) {
         $wp_customize->add_setting("indotech_{$key}", ['default' => $default, 'sanitize_callback' => 'sanitize_text_field']);
         $wp_customize->add_control("indotech_{$key}", ['label' => $label, 'section' => 'indotech_contact', 'type' => 'text']);
     }
+
+    // ── Section: Testimonials ─────────────────────────────────────────────────
+    $wp_customize->add_section('indotech_testimonials', [
+        'title'    => __('Testimonials Section', 'indotech'),
+        'priority' => 40,
+    ]);
+
+    $wp_customize->add_setting('indotech_testi_hover_bg', [
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ]);
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'indotech_testi_hover_bg', [
+        'label'    => __('Hover Background Image (Latar Belakang Toko)', 'indotech'),
+        'section'  => 'indotech_testimonials',
+        'settings' => 'indotech_testi_hover_bg',
+    ]));
 }
 add_action('customize_register', 'indotech_customizer');
 
 function indotech_opt($key, $default = '') {
-    return get_theme_mod("indotech_{$key}", $default);
+    $val = get_theme_mod("indotech_{$key}", $default);
+    if ($key === 'whatsapp' && ($val === '6285600061005' || empty($val))) {
+        return '6287885590088'; // Default B2B Agent (CS Keagenan)
+    }
+    return $val;
 }

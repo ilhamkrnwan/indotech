@@ -166,67 +166,233 @@ while (have_posts()) : the_post();
         justify-content: center;
         flex-shrink: 0;
     }
-    .brand-gallery-img {
-        transition: transform var(--trans);
-    }
-    .brand-gallery-img:hover {
-        transform: scale(1.05);
-    }
-    @media (max-width: 991px) {
-        .brand-grid-container {
-            grid-template-columns: 1fr;
-            gap: 30px;
+        .brand-gallery-img {
+            transition: transform var(--trans);
         }
-    }
-    @media (max-width: 768px) {
-        .brand-usp-grid {
-            grid-template-columns: 1fr;
+        .brand-gallery-img:hover {
+            transform: scale(1.05);
         }
-    }
+        @media (max-width: 991px) {
+            .brand-grid-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        @media (max-width: 768px) {
+            .brand-usp-grid {
+                grid-template-columns: 1fr;
+            }
+        }
 
-    /* Brand Description List Styling */
-    .brand-description ol,
-    .brand-description ul {
-        padding-left: 24px;
-        margin-top: 10px;
-        margin-bottom: 20px;
-    }
-    .brand-description ol {
-        list-style-type: decimal;
-    }
-    .brand-description ul {
-        list-style-type: disc;
-    }
-    .brand-description li {
-        margin-bottom: 8px;
-    }
+        /* Brand Description List Styling */
+        .brand-description ol,
+        .brand-description ul {
+            padding-left: 24px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .brand-description ol {
+            list-style-type: decimal;
+        }
+        .brand-description ul {
+            list-style-type: disc;
+        }
+        .brand-description li {
+            margin-bottom: 8px;
+        }
 
-    @media (max-width: 767px) {
-        .brand-detail-wrapper {
-            padding-bottom: 40px !important;
+        @media (max-width: 767px) {
+            .brand-detail-wrapper {
+                padding-bottom: 40px !important;
+            }
+            .brand-detail-wrapper .container {
+                padding: 0 12px !important;
+            }
+            .brand-description-box {
+                padding: 24px 16px !important;
+                border-radius: 8px !important;
+                margin-bottom: 24px !important;
+            }
+            .brand-inquiry-box {
+                padding: 24px 16px !important;
+                border-radius: 8px !important;
+            }
+            .brand-gallery-box {
+                padding: 24px 16px !important;
+                border-radius: 8px !important;
+            }
+            .brand-info-box {
+                padding: 24px 16px !important;
+                border-radius: 8px !important;
+            }
         }
-        .brand-detail-wrapper .container {
-            padding: 0 12px !important;
+
+        /* Bento Grid Gallery Style */
+        .brand-bento-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 140px;
+            gap: 12px;
+            margin-top: 30px;
+            margin-bottom: 40px;
         }
-        .brand-description-box {
-            padding: 24px 16px !important;
-            border-radius: 8px !important;
-            margin-bottom: 24px !important;
+        .brand-bento-item {
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            display: block;
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--trans), box-shadow var(--trans);
         }
-        .brand-inquiry-box {
-            padding: 24px 16px !important;
-            border-radius: 8px !important;
+        .brand-bento-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
-        .brand-gallery-box {
-            padding: 24px 16px !important;
-            border-radius: 8px !important;
+        .brand-bento-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        .brand-info-box {
-            padding: 24px 16px !important;
-            border-radius: 8px !important;
+        .brand-bento-item:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
         }
-    }
-    </style>
+        .brand-bento-item:nth-child(2) {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+        .brand-bento-item:nth-child(3) {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+        .brand-bento-item:nth-child(4) {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+        @media (max-width: 768px) {
+            .brand-bento-gallery {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 100px;
+                gap: 8px;
+            }
+            .brand-bento-item:nth-child(1) {
+                grid-column: span 2;
+                grid-row: span 2;
+            }
+            .brand-bento-item:nth-child(2) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            .brand-bento-item:nth-child(3) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            .brand-bento-item:nth-child(4) {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+        }
+
+        /* Lightbox Modal Style */
+        .gallery-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .gallery-lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .lightbox-content {
+            max-width: 85%;
+            max-height: 85%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: scale(0.95);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .gallery-lightbox.active .lightbox-content {
+            transform: scale(1);
+        }
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 40px;
+            line-height: 1;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all var(--trans);
+            z-index: 2;
+        }
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+        .lightbox-prev, .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--white);
+            font-size: 32px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.6;
+            transition: all var(--trans);
+            user-select: none;
+            z-index: 2;
+        }
+        .lightbox-prev:hover, .lightbox-next:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .lightbox-prev {
+            left: 24px;
+        }
+        .lightbox-next {
+            right: 24px;
+        }
+        .lightbox-counter {
+            position: absolute;
+            bottom: 24px;
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+        @media (max-width: 767px) {
+            .lightbox-prev { left: 12px; width: 44px; height: 44px; font-size: 24px; }
+            .lightbox-next { right: 12px; width: 44px; height: 44px; font-size: 24px; }
+            .lightbox-close { top: 12px; right: 12px; font-size: 32px; }
+        }
+        </style>
 
     <!-- ── Brand Hero Header ── -->
     <?php
@@ -255,7 +421,7 @@ while (have_posts()) : the_post();
                     <div class="brand-hero-logo" style="width: 100px; height: 100px; background: var(--white); padding: 12px; border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
                         <?php 
                         if (has_post_thumbnail()) {
-                            the_post_thumbnail('thumbnail', ['style' => 'max-width:100%;max-height:100%;object-fit:contain;']);
+                            the_post_thumbnail('large', ['style' => 'max-width:100%;max-height:100%;object-fit:contain;']);
                         } else {
                             echo '<img src="' . esc_url($local_logo) . '" alt="' . esc_attr(get_the_title()) . ' logo" style="max-width:100%;max-height:100%;object-fit:contain;">';
                         }
@@ -501,6 +667,33 @@ while (have_posts()) : the_post();
                         <?php endif; ?>
                     </div>
 
+                    <?php if (!empty($gallery)) : ?>
+                        <?php
+                        $gallery_urls = [];
+                        foreach ($gallery as $img_id) {
+                            $gallery_urls[] = wp_get_attachment_image_url($img_id, 'large');
+                        }
+                        ?>
+                        <script id="brand-gallery-data" type="application/json">
+                            <?php echo json_encode($gallery_urls); ?>
+                        </script>
+
+                        <div class="brand-bento-gallery">
+                            <?php 
+                            $idx = 0;
+                            foreach ($gallery as $img_id) : 
+                                $img_url = wp_get_attachment_image_url($img_id, 'large');
+                            ?>
+                                <a href="<?php echo esc_url($img_url); ?>" class="brand-bento-item brand-gallery-link" data-index="<?php echo $idx; ?>">
+                                    <?php echo wp_get_attachment_image($img_id, 'large', false); ?>
+                                </a>
+                            <?php 
+                                $idx++;
+                            endforeach; 
+                            ?>
+                        </div>
+                    <?php endif; ?>
+
                     <!-- Brand Features / USP -->
                     <div class="brand-features-box" style="margin-bottom: 50px;">
                         <h2 style="font-size: 24px; margin-bottom: 24px; letter-spacing: -0.02em; font-weight: 700;">Mengapa Memilih Produk <em><?php the_title(); ?></em>?</h2>
@@ -547,44 +740,30 @@ while (have_posts()) : the_post();
                         <form id="indotech-inquiry-form" method="POST" style="display: flex; flex-direction: column; gap: 14px;">
                             <input type="hidden" name="product_id" value="<?php echo esc_attr($first_product_id); ?>">
                             <input type="hidden" name="brand_title" value="<?php echo esc_attr(get_the_title()); ?>">
+                            <input type="hidden" name="whatsapp_number" value="6287885590088">
                             <input type="text" name="website_url" value="" style="display: none;" tabindex="-1" autocomplete="off"> <!-- Honeypot -->
 
                             <div>
-                                <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Nama Lengkap *</label>
-                                <input type="text" name="full_name" placeholder="Masukkan nama Anda" required style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px;">
+                                <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Nama Lengkap</label>
+                                <input type="text" name="full_name" placeholder="Masukkan nama Anda" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px;">
                             </div>
 
                             <div>
-                                <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Email Bisnis *</label>
-                                <input type="email" name="email" placeholder="nama@perusahaan.com" required style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px;">
+                                <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Email Bisnis</label>
+                                <input type="email" name="email" placeholder="nama@perusahaan.com" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px;">
                             </div>
 
                             <div>
                                 <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Pesan Kustom</label>
                                 <textarea name="message" rows="3" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px; resize: vertical;">Halo, saya tertarik untuk meminta katalog produk dan harga grosir untuk brand <?php the_title(); ?>.</textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; background: var(--brand-color); border-color: var(--brand-color); padding: 12px; font-size: 13.5px; font-weight: 700;">
+                            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; background: #0f172a; border-color: #0f172a; color: #ffffff; padding: 12px; font-size: 13.5px; font-weight: 700;">
                                 Kirim Permintaan &rarr;
                             </button>
                         </form>
 
                         <div id="indotech-inquiry-response" style="display: none; margin-top: 14px; padding: 10px 14px; border-radius: 8px; font-size: 13px; line-height: 1.4; font-weight: 500;"></div>
                     </div>
-
-                    <?php if (!empty($gallery)) : ?>
-                        <div class="brand-gallery-box" style="background: var(--white); padding: 30px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 30px;">
-                            <h3 style="font-size: 18px; margin-bottom: 20px; letter-spacing: -0.01em; font-weight: 700;">Galeri Brand</h3>
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                                <?php foreach ($gallery as $img_id) : 
-                                    $img_url = wp_get_attachment_image_url($img_id, 'large');
-                                ?>
-                                    <a href="<?php echo esc_url($img_url); ?>" target="_blank" style="border-radius: 8px; overflow: hidden; height: 100px; display: block;">
-                                        <?php echo wp_get_attachment_image($img_id, 'thumbnail', false, ['style' => 'width:100%;height:100%;object-fit:cover;transition:transform var(--trans);', 'class' => 'brand-gallery-img']); ?>
-                                    </a>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
 
                     <div class="brand-info-box" style="background: var(--white); padding: 30px; border-radius: 16px; border: 1px solid var(--border);">
                         <h3 style="font-size: 18px; margin-bottom: 20px; letter-spacing: -0.01em; font-weight: 700;">Holding Korporat</h3>
@@ -608,6 +787,114 @@ while (have_posts()) : the_post();
 
 <?php
 endwhile;
+?>
 
+<!-- Lightbox Modal -->
+<div id="gallery-lightbox" class="gallery-lightbox">
+    <button class="lightbox-close" aria-label="Tutup Galeri">&times;</button>
+    <button class="lightbox-prev" aria-label="Gambar Sebelumnya">&lsaquo;</button>
+    <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="Galeri Brand">
+    </div>
+    <button class="lightbox-next" aria-label="Gambar Berikutnya">&rsaquo;</button>
+    <div class="lightbox-counter"><span id="lightbox-current">1</span> / <span id="lightbox-total">1</span></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const imagesEl = document.getElementById('brand-gallery-data');
+    if (!imagesEl) return;
+    
+    const images = JSON.parse(imagesEl.textContent);
+    if (!images || !images.length) return;
+
+    let currentIndex = 0;
+
+    // Lightbox Modal selectors
+    const lightbox = document.getElementById('gallery-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = lightbox ? lightbox.querySelector('.lightbox-close') : null;
+    const lightboxPrev = lightbox ? lightbox.querySelector('.lightbox-prev') : null;
+    const lightboxNext = lightbox ? lightbox.querySelector('.lightbox-next') : null;
+    const lightboxCurrent = document.getElementById('lightbox-current');
+    const lightboxTotal = document.getElementById('lightbox-total');
+
+    if (lightboxTotal) {
+        lightboxTotal.textContent = images.length;
+    }
+
+    function updateLightboxImage() {
+        if (lightboxImg) {
+            lightboxImg.src = images[currentIndex];
+        }
+        if (lightboxCurrent) {
+            lightboxCurrent.textContent = currentIndex + 1;
+        }
+    }
+
+    function openLightbox(index) {
+        if (!lightbox) return;
+        currentIndex = index;
+        updateLightboxImage();
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        if (!lightbox) return;
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function showNext() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateLightboxImage();
+    }
+
+    function showPrev() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateLightboxImage();
+    }
+
+    // Attach click events to gallery links
+    const galleryLinks = document.querySelectorAll('.brand-gallery-link');
+    galleryLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const index = parseInt(this.dataset.index) || 0;
+            openLightbox(index);
+        });
+    });
+
+    if (lightboxClose) {
+        lightboxClose.addEventListener('click', closeLightbox);
+    }
+    if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', showPrev);
+    }
+    if (lightboxNext) {
+        lightboxNext.addEventListener('click', showNext);
+    }
+
+    // Close on clicking overlay (outside content image)
+    if (lightbox) {
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+                closeLightbox();
+            }
+        });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') showNext();
+        if (e.key === 'ArrowLeft') showPrev();
+    });
+});
+</script>
+
+<?php
 get_footer();
 

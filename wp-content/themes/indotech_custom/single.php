@@ -16,6 +16,115 @@
 .post-body li {
     margin-bottom: 8px;
 }
+
+/* Lightbox Modal Style for Blog Content Images */
+.post-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.95);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.post-lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.lightbox-content {
+    max-width: 85%;
+    max-height: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.95);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.post-lightbox.active .lightbox-content {
+    transform: scale(1);
+}
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+.lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 40px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all var(--trans);
+    z-index: 2;
+}
+.lightbox-close:hover {
+    opacity: 1;
+}
+.lightbox-prev, .lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--white);
+    font-size: 32px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: all var(--trans);
+    user-select: none;
+    z-index: 2;
+}
+.lightbox-prev:hover, .lightbox-next:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.2);
+}
+.lightbox-prev {
+    left: 24px;
+}
+.lightbox-next {
+    right: 24px;
+}
+.lightbox-counter {
+    position: absolute;
+    bottom: 24px;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+.post-body img,
+.post-featured-img img {
+    cursor: zoom-in;
+    transition: opacity var(--trans);
+}
+.post-body img:hover,
+.post-featured-img img:hover {
+    opacity: 0.9;
+}
+@media (max-width: 767px) {
+    .lightbox-prev { left: 12px; width: 44px; height: 44px; font-size: 24px; }
+    .lightbox-next { right: 12px; width: 44px; height: 44px; font-size: 24px; }
+    .lightbox-close { top: 12px; right: 12px; font-size: 32px; }
+}
 </style>
 
 <?php while (have_posts()): the_post(); ?>
@@ -90,42 +199,192 @@ if ($related_query->post_count < 3) {
 ?>
 
 <?php if (!empty($related_posts)) : ?>
-    <section style="background: var(--surface); padding: 60px 0; border-top: 1px solid var(--border); margin-top: 60px;">
-        <div class="container" style="max-width: 1000px; padding: 0 16px;">
-            <h2 style="font-size: 20px; margin-bottom: 28px; letter-spacing: -0.02em; font-weight: 700; color: var(--ink);">Artikel Terkait</h2>
+    <section class="blog-section section-padding" style="background: var(--surface); border-top: 1px solid var(--border); margin-top: 60px;">
+        <div class="container" style="max-width: 1000px;">
             
-            <div class="blog-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <div class="blog-section-header" style="margin-bottom: 32px;">
+                <div class="blog-section-left">
+                    <span class="section-tag">Rekomendasi</span>
+                    <h2 class="section-title" style="margin-top: 8px;">Artikel <em>Terkait</em></h2>
+                </div>
+            </div>
+            
+            <div class="blog-grid">
                 <?php 
-                foreach ($related_posts as $rp) : 
-                    $rp_thumb = get_the_post_thumbnail_url($rp->ID, 'medium_large');
-                    $rp_cats  = get_the_category($rp->ID);
-                    $rp_cat   = $rp_cats ? esc_html($rp_cats[0]->name) : '';
+                global $post;
+                foreach ($related_posts as $post) : 
+                    setup_postdata($post);
                 ?>
-                    <article class="blog-card" style="border: 1px solid var(--border); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; background: var(--white); transition: transform var(--trans), box-shadow var(--trans);">
-                        <a href="<?php echo get_permalink($rp->ID); ?>" class="blog-thumb" style="aspect-ratio: 16/10; position: relative; display: block; overflow: hidden;">
-                            <?php if ($rp_thumb) : ?>
-                                <img src="<?php echo esc_url($rp_thumb); ?>" alt="<?php echo esc_attr($rp->post_title); ?>" class="blog-img" style="width: 100%; height: 100%; object-fit: cover;">
-                            <?php else : ?>
-                                <div class="blog-img-placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--surface-2);"><span class="blog-placeholder-label">Indotech</span></div>
+                    <article class="blog-card">
+                        <!-- Thumbnail -->
+                        <a href="<?php the_permalink(); ?>" class="blog-thumb" tabindex="-1" aria-hidden="true">
+                            <?php if ( has_post_thumbnail() ): ?>
+                                <?php the_post_thumbnail( 'indotech-card', [
+                                    'class'   => 'blog-img',
+                                    'loading' => 'lazy',
+                                    'alt'     => get_the_title(),
+                                ] ); ?>
+                            <?php else: ?>
+                                <div class="blog-img-placeholder">
+                                    <span class="blog-placeholder-label">Tidak Ada Gambar</span>
+                                </div>
                             <?php endif; ?>
-                            <?php if ($rp_cat) : ?>
-                                <span class="blog-category" style="position: absolute; top: 12px; left: 12px; background: var(--cobalt); color: var(--white); font-size: 10px; font-weight: 700; padding: 4px 11px; border-radius: 99px; text-transform: uppercase;"><?php echo $rp_cat; ?></span>
+
+                            <!-- Pill category badge -->
+                            <?php
+                            $cats = get_the_category();
+                            if ( $cats ):
+                            ?>
+                            <span class="blog-category"><?php echo esc_html( $cats[0]->name ); ?></span>
                             <?php endif; ?>
                         </a>
-                        <div class="blog-body" style="padding: 20px; display: flex; flex-direction: column; flex: 1;">
-                            <div class="blog-meta" style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 8px;">
-                                <time datetime="<?php echo get_the_date('Y-m-d', $rp->ID); ?>"><?php echo get_the_date('d M Y', $rp->ID); ?></time>
+
+                        <!-- Body -->
+                        <div class="blog-body">
+                            <div class="blog-meta">
+                                <time datetime="<?php echo esc_attr( get_the_date('c') ); ?>">
+                                    <?php echo esc_html( get_the_date('d M Y') ); ?>
+                                </time>
+                                <span class="blog-meta-sep">&middot;</span>
+                                <span><?php echo esc_html( get_the_author() ); ?></span>
                             </div>
-                            <h3 class="blog-title" style="font-size: 16px; font-weight: 700; margin-bottom: 12px; line-height: 1.3;"><a href="<?php echo get_permalink($rp->ID); ?>"><?php echo esc_html($rp->post_title); ?></a></h3>
-                            <a href="<?php echo get_permalink($rp->ID); ?>" class="blog-read-more" style="font-size: 12px; font-weight: 700; color: var(--cobalt); margin-top: auto;">Baca Selengkapnya &rarr;</a>
+
+                            <h3 class="blog-title">
+                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                            </h3>
+
+                            <p class="blog-excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 15, '...' ) ); ?></p>
+
+                            <a href="<?php the_permalink(); ?>" class="blog-read-more">
+                                Baca Selengkapnya &rarr;
+                            </a>
                         </div>
                     </article>
-                <?php endforeach; ?>
+                <?php 
+                endforeach; 
+                wp_reset_postdata(); 
+                ?>
             </div>
         </div>
     </section>
 <?php endif; ?>
 
 <?php endwhile; ?>
+
+<!-- Lightbox Modal for Post Images -->
+<div id="post-gallery-lightbox" class="post-lightbox">
+    <button class="lightbox-close" aria-label="Tutup Galeri">&times;</button>
+    <button class="lightbox-prev" aria-label="Gambar Sebelumnya">&lsaquo;</button>
+    <div class="lightbox-content">
+        <img id="post-lightbox-img" src="" alt="Artikel Detail">
+    </div>
+    <button class="lightbox-next" aria-label="Gambar Berikutnya">&rsaquo;</button>
+    <div class="lightbox-counter"><span id="post-lightbox-current">1</span> / <span id="post-lightbox-total">1</span></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const contentImages = document.querySelectorAll('.post-body img, .post-featured-img img');
+    if (!contentImages.length) return;
+
+    const images = Array.from(contentImages).map(img => {
+        // Fallback to src if thumbnail/srcset path is used
+        return img.src;
+    });
+
+    let currentIndex = 0;
+
+    // Lightbox Modal selectors
+    const lightbox = document.getElementById('post-gallery-lightbox');
+    const lightboxImg = document.getElementById('post-lightbox-img');
+    const lightboxClose = lightbox ? lightbox.querySelector('.lightbox-close') : null;
+    const lightboxPrev = lightbox ? lightbox.querySelector('.lightbox-prev') : null;
+    const lightboxNext = lightbox ? lightbox.querySelector('.lightbox-next') : null;
+    const lightboxCurrent = document.getElementById('post-lightbox-current');
+    const lightboxTotal = document.getElementById('post-lightbox-total');
+
+    if (lightboxTotal) {
+        lightboxTotal.textContent = images.length;
+    }
+
+    // Hide prev/next buttons if only 1 image exists
+    if (images.length <= 1) {
+        if (lightboxPrev) lightboxPrev.style.display = 'none';
+        if (lightboxNext) lightboxNext.style.display = 'none';
+    }
+
+    function updateLightboxImage() {
+        if (lightboxImg) {
+            lightboxImg.src = images[currentIndex];
+        }
+        if (lightboxCurrent) {
+            lightboxCurrent.textContent = currentIndex + 1;
+        }
+    }
+
+    function openLightbox(index) {
+        if (!lightbox) return;
+        currentIndex = index;
+        updateLightboxImage();
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        if (!lightbox) return;
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function showNext() {
+        if (images.length <= 1) return;
+        currentIndex = (currentIndex + 1) % images.length;
+        updateLightboxImage();
+    }
+
+    function showPrev() {
+        if (images.length <= 1) return;
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateLightboxImage();
+    }
+
+    // Attach click events to post body images
+    contentImages.forEach((img, idx) => {
+        img.addEventListener('click', function(e) {
+            e.preventDefault();
+            openLightbox(idx);
+        });
+    });
+
+    if (lightboxClose) {
+        lightboxClose.addEventListener('click', closeLightbox);
+    }
+    if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', showPrev);
+    }
+    if (lightboxNext) {
+        lightboxNext.addEventListener('click', showNext);
+    }
+
+    // Close on clicking overlay (outside content image)
+    if (lightbox) {
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+                closeLightbox();
+            }
+        });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (images.length > 1) {
+            if (e.key === 'ArrowRight') showNext();
+            if (e.key === 'ArrowLeft') showPrev();
+        }
+    });
+});
+</script>
 
 <?php get_footer(); ?>

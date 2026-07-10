@@ -20,7 +20,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
             <div class="sh-right">
                 <p class="section-desc">Tidak menemukan jawaban yang Anda cari? Hubungi tim penjualan atau kemitraan kami langsung melalui WhatsApp.</p>
                 <a href="https://wa.me/<?php echo esc_attr( $wa_num ); ?>?text=<?php echo $wa_msg; ?>"
-                   class="btn btn-outline" target="_blank" rel="noopener">
+                   class="btn btn-whatsapp" target="_blank" rel="noopener">
                     Tanya via WhatsApp
                 </a>
             </div>

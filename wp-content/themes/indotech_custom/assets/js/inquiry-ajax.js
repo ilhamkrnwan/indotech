@@ -21,25 +21,46 @@
       const email = ($form.find('[name="email"]').val() || $form.find('[name="contact_email"]').val() || '').trim();
       const phone = ($form.find('[name="phone"]').val() || $form.find('[name="contact_phone"]').val() || '').trim();
       const message = ($form.find('[name="message"]').val() || $form.find('[name="contact_message"]').val() || '').trim();
-      
+      const formType = $form.attr('data-form-type') || '';
+      const isKemitraan = formType === 'kemitraan';
+      const isBrand = $form.find('[name="brand_title"]').length > 0;
+      const isBypass = isKemitraan || isBrand;
+
+      // If Kemitraan or Brand and name is empty, bypass validation and AJAX database submit, directly open WhatsApp
+      if (isBypass && !name) {
+        const formWaNum = $form.find('[name="whatsapp_number"]').val();
+        const waNum = formWaNum ? formWaNum.replace(/[^0-9]/g, '') : (indotechData.whatsapp || '6285600061005');
+        
+        let defaultText = "Halo indotech.id, saya tertarik untuk mendaftar sebagai mitra. Mohon informasi lebih lanjut.";
+        if (isBrand) {
+          const brandTitle = $form.find('[name="brand_title"]').val() || '';
+          defaultText = `Halo indotech.id, saya tertarik untuk bermitra/maklon dengan brand ${brandTitle}. Mohon informasi lebih lanjut.`;
+        }
+        
+        const waUrl = 'https://wa.me/' + waNum + '?text=' + encodeURIComponent(defaultText);
+        window.open(waUrl, '_blank');
+        $form[0].reset();
+        return;
+      }
+
       const hasEmailField = $form.find('[name="email"]').length > 0 || $form.find('[name="contact_email"]').length > 0;
       const hasPhoneField = $form.find('[name="phone"]').length > 0 || $form.find('[name="contact_phone"]').length > 0;
 
-      // Validate name (always required)
-      if (!name) {
+      // Validate name (always required except for Kemitraan and Brand)
+      if (!isBypass && !name) {
         showResponse('Nama lengkap wajib diisi.', false);
         return;
       }
 
-      // Validate email (only if field exists in form)
-      if (hasEmailField && !email) {
+      // Validate email (only if field exists in form and not Kemitraan/Brand)
+      if (!isBypass && hasEmailField && !email) {
         showResponse('Alamat email wajib diisi.', false);
         return;
       }
 
-      // Validate phone (only if field exists and is required in form)
+      // Validate phone (only if field exists, is required, and not Kemitraan/Brand)
       const $phoneField = $form.find('[name="phone"], [name="contact_phone"]');
-      if (hasPhoneField && $phoneField.prop('required') && !phone) {
+      if (!isBypass && hasPhoneField && $phoneField.prop('required') && !phone) {
         showResponse('Nomor WhatsApp / Telepon wajib diisi.', false);
         return;
       }
@@ -74,7 +95,8 @@
             const $brandTitleField = $form.find('[name="brand_title"]');
             const $subjectField = $form.find('[name="subject"]');
             const $partnerTypeField = $form.find('[name="partner_type"]');
-            const waNum = indotechData.whatsapp || '6285600061005';
+            const formWaNum = $form.find('[name="whatsapp_number"]').val();
+            const waNum = formWaNum ? formWaNum.replace(/[^0-9]/g, '') : (indotechData.whatsapp || '6285600061005');
             
             let redirectText = '';
 
@@ -124,27 +146,22 @@
               }
               redirectText += `Terima kasih.`;
 
-            } else if ($partnerTypeField.length) {
+            } else if ($partnerTypeField.length || formType === 'kemitraan') {
               // Kemitraan page form WhatsApp redirect
-              const partnerType = $form.find('[name="partner_type"] option:selected').text() || '-';
-              const companyName = $form.find('[name="company_name"]').val() || '-';
-              const partnerCity = $form.find('[name="partner_city"]').val() || '-';
-              const nameText = name || '-';
-              const emailText = email || '-';
-              const phoneText = phone || '-';
+              const partnerType = $form.find('[name="partner_type"] option:selected').val() ? $form.find('[name="partner_type"] option:selected').text() : '';
+              const partnerCity = $form.find('[name="partner_city"]').val() || '';
+              const nameText = name || '';
+              const emailText = email || '';
               
-              redirectText = `Halo indotech.id, saya *${nameText}*\n\n`;
-              redirectText += `Saya ingin mendaftar sebagai mitra *${partnerType}*:\n\n`;
-              redirectText += `Berikut data pendaftaran saya:\n`;
-              redirectText += `• *Nama*: ${nameText}\n`;
-              redirectText += `• *Perusahaan / Toko*: ${companyName}\n`;
-              redirectText += `• *Email*: ${emailText}\n`;
-              redirectText += `• *WhatsApp*: ${phoneText}\n`;
-              redirectText += `• *Kota*: ${partnerCity}\n\n`;
+              redirectText = `Halo indotech.id, saya ingin bertanya/mendaftar kemitraan:\n\n`;
+              if (nameText) redirectText += `• *Nama*: ${nameText}\n`;
+              if (emailText) redirectText += `• *Email*: ${emailText}\n`;
+              if (partnerCity) redirectText += `• *Kota/Kabupaten*: ${partnerCity}\n`;
+              if (partnerType) redirectText += `• *Tipe Mitra*: ${partnerType}\n`;
               if (message) {
-                redirectText += `*Pesan/Bisnis:*\n"${message}"\n\n`;
+                redirectText += `\n*Pesan/Bisnis:*\n"${message}"\n`;
               }
-              redirectText += `Terima kasih.`;
+              redirectText += `\nTerima kasih.`;
             }
 
             if (redirectText) {

@@ -82,7 +82,7 @@ $brands = [
         'tagline'  => 'Pembersih Mesin Kopi Espresso',
         'desc'     => 'Pembersih khusus mesin kopi profesional berstandar food grade untuk menjaga rasa dan kebersihan.',
         'initials' => 'PK',
-        'logo'     => get_template_directory_uri() . '/assets/images/prokopi.png',
+        'logo'     => get_template_directory_uri() . '/assets/images/prokopi-lurus.png',
         'accent'   => '#0057FF',
         'bg'       => '#F5F7FB',
         'tag'      => 'Coffee Maintenance',
@@ -93,7 +93,7 @@ $brands = [
 /* Cek apakah ada Brand CPT yang dipublikasikan */
 $brand_query = new WP_Query([
     'post_type'      => 'brand',
-    'posts_per_page' => -1,
+    'posts_per_page' => 6,
     'post_status'    => 'publish',
     'orderby'        => 'menu_order',
     'order'          => 'ASC',
@@ -141,7 +141,7 @@ $use_cpt = $brand_query->have_posts();
                         <?php 
                         $local_logo = indotech_get_brand_logo_url(get_the_title());
                         if ( has_post_thumbnail() ):
-                            the_post_thumbnail( 'thumbnail', [ 'class' => 'brand-thumb-img' ] );
+                            the_post_thumbnail( 'large', [ 'class' => 'brand-thumb-img' ] );
                         elseif ( !empty( $local_logo) ): ?>
                             <img src="<?php echo esc_url( $local_logo ); ?>"
                                  alt="<?php echo esc_attr( get_the_title() ); ?> logo"
@@ -161,13 +161,13 @@ $use_cpt = $brand_query->have_posts();
 
                 <div class="brand-card-body">
                     <h3 class="brand-name"><?php the_title(); ?></h3>
-                    <span class="brand-tagline" style="color: <?php echo esc_attr( $b['accent'] ); ?>">
+                    <span class="brand-tagline">
                         <?php echo esc_html( $tl ); ?>
                     </span>
                     <p class="brand-desc"><?php the_excerpt(); ?></p>
                 </div>
 
-                <a href="<?php the_permalink(); ?>" class="brand-cta" style="color: <?php echo esc_attr( $b['accent'] ); ?>">
+                <a href="<?php the_permalink(); ?>" class="brand-cta">
                     Lihat Produk &rarr;
                 </a>
             </div>
@@ -201,13 +201,13 @@ $use_cpt = $brand_query->have_posts();
 
                 <div class="brand-card-body">
                     <h3 class="brand-name"><?php echo esc_html( $b['name'] ); ?></h3>
-                    <span class="brand-tagline" style="color: <?php echo esc_attr( $b['accent'] ); ?>">
+                    <span class="brand-tagline">
                         <?php echo esc_html( $b['tagline'] ); ?>
                     </span>
                     <p class="brand-desc"><?php echo esc_html( $b['desc'] ); ?></p>
                 </div>
 
-                <a href="<?php echo esc_url( $b['url'] ); ?>" class="brand-cta" style="color: <?php echo esc_attr( $b['accent'] ); ?>">
+                <a href="<?php echo esc_url( $b['url'] ); ?>" class="brand-cta">
                     Lihat Produk &rarr;
                 </a>
             </div>

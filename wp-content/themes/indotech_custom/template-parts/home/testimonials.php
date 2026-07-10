@@ -8,60 +8,76 @@
 
 $default_testimonials = [
     [
-        'name'    => 'Budi Santoso',
-        'company' => 'CV Maju Bersama, Jakarta',
+        'name'    => 'H. Rahmat',
+        'company' => 'Cleanique Mart Boyolali',
         'role'    => 'Pemilik',
-        'text'    => 'Sudah 5 tahun bermitra dengan Indotech dan belum pernah kecewa. Produk kualitasnya konsisten, pengiriman tepat waktu, dan harganya sangat kompetitif dibanding supplier lain.',
+        'text'    => 'Bergabung dengan franchise Cleanique Mart Boyolali sangat menguntungkan. Pendampingan manajemennya sangat intensif, suplai produk kebersihan dari Indotech juga lancar dan selalu diminati masyarakat.',
         'rating'  => 5,
-        'avatar'  => 'BS',
+        'avatar'  => 'HR',
+        'image'   => 'mitra-boyolali.webp',
     ],
     [
-        'name'    => 'Sari Dewi',
-        'company' => 'Toko Modern Sejahtera, Surabaya',
+        'name'    => 'Ibu Retno',
+        'company' => 'Cleanique Mart Demak',
+        'role'    => 'Pemilik',
+        'text'    => 'Cleanique Mart Demak menjadi pelopor toko sabun terlengkap di wilayah kami. Kualitas produk detergen, softener, dan pewangi dari Indotech sangat konsisten sehingga pelanggan selalu kembali.',
+        'rating'  => 5,
+        'avatar'  => 'IR',
+        'image'   => 'mitra-demak.webp',
+    ],
+    [
+        'name'    => 'Bapak Hendra',
+        'company' => 'Cleanique Mart Jambi',
+        'role'    => 'Pengelola',
+        'text'    => 'Membuka cabang Cleanique Mart di Jambi mendapat respon luar biasa. Produk dari Indotech memiliki harga grosir B2B yang sangat kompetitif, membantu kami bersaing dengan margin keuntungan yang sehat.',
+        'rating'  => 5,
+        'avatar'  => 'BH',
+        'image'   => 'mitra-jambi.webp',
+    ],
+    [
+        'name'    => 'Ibu Diana',
+        'company' => 'Cleanique Mart Malang',
+        'role'    => 'Pemilik',
+        'text'    => 'Konsep minimarket sabun dan perlengkapan laundry Cleanique Mart Malang sangat disukai konsumen. Penjualan produk eceran maupun curah sangat stabil berkat kualitas dari pabrik Indotech.',
+        'rating'  => 5,
+        'avatar'  => 'ID',
+        'image'   => 'mitra-malang.webp',
+    ],
+    [
+        'name'    => 'Bapak Ahmad',
+        'company' => 'Cleanique Mart Situbondo',
         'role'    => 'Manajer',
-        'text'    => 'Produk Depo Cleanique dari Indotech selalu laris di toko kami. Tim support-nya responsif dan membantu kami dalam strategi display produk. Sangat rekomendasikan!',
+        'text'    => 'Suplai deterjen curah dan bahan kimia pembersih dari Indotech untuk Cleanique Mart Situbondo tidak pernah mengecewakan. Pengiriman ke luar kota selalu aman dan tepat waktu.',
         'rating'  => 5,
-        'avatar'  => 'SD',
+        'avatar'  => 'BA',
+        'image'   => 'mitra-situbondo.webp',
     ],
     [
-        'name'    => 'Ahmad Fauzi',
-        'company' => 'UD Berkah Niaga, Medan',
-        'role'    => 'Direktur',
-        'text'    => 'Bergabung sebagai distributor resmi Indotech adalah keputusan terbaik. Margin keuntungan bagus, produk mudah dijual, dan support dari tim selalu ada saat dibutuhkan.',
-        'rating'  => 5,
-        'avatar'  => 'AF',
-    ],
-    [
-        'name'    => 'Hendra Wijaya',
-        'company' => 'PT Indoclean Solusindo, Bandung',
-        'role'    => 'Direktur Utama',
-        'text'    => 'Kerja sama maklon dengan Indotech sangat memuaskan. Formulasi produk homecare mereka ramah lingkungan dan tim R&D sangat akomodatif terhadap spesifikasi khusus kami.',
-        'rating'  => 5,
-        'avatar'  => 'HW',
-    ],
-    [
-        'name'    => 'Rina Marlina',
-        'company' => 'Orchid Laundry, Yogyakarta',
+        'name'    => 'Ibu Laras',
+        'company' => 'Cleanique Mart Tajem, Maguwoharjo',
         'role'    => 'Pemilik',
-        'text'    => 'Pewangi laundry dari Indotech memiliki daya tahan aroma yang luar biasa. Pelanggan laundry kami sering menanyakan rahasia keharuman pakaian mereka. Sangat menguntungkan!',
+        'text'    => 'Toko kami di Tajem Maguwoharjo melayani banyak pelanggan laundry kiloan. Pewangi premium Orchid Care dan deterjen dari Indotech adalah produk paling laris dan mendapat rating tinggi.',
         'rating'  => 5,
-        'avatar'  => 'RM',
+        'avatar'  => 'IL',
+        'image'   => 'mitra-tajem.webp',
     ],
     [
-        'name'    => 'Yusuf Mansur',
-        'company' => 'Kemitraan Depo Cleanique, Semarang',
-        'role'    => 'Mitra Waralaba',
-        'text'    => 'Konsep depot sabun isi ulang ini sangat diminati ibu rumah tangga. Selain hemat, kualitas sabun pencuci piring dan deterjennya setara dengan merk terkenal.',
+        'name'    => 'Bapak Fahmi',
+        'company' => 'Cleanique Mart Palembang',
+        'role'    => 'Pemilik',
+        'text'    => 'Kemitraan Cleanique Mart Palembang memberikan kemudahan bisnis yang nyata. Formulasi produknya ramah lingkungan dan tim support Indotech sangat sigap membantu promosi lokal kami.',
         'rating'  => 5,
-        'avatar'  => 'YM',
+        'avatar'  => 'BF',
+        'image'   => 'mitra-palembang.webp',
     ],
     [
-        'name'    => 'Elisa Putri',
-        'company' => 'Resto Premium Prokopi, Bali',
-        'role'    => 'Manajer Operasional',
-        'text'    => 'Pembersih mesin kopi Prokopi sangat ampuh menjaga kualitas espresso kami. Aman untuk mesin (food grade) dan harganya jauh lebih hemat dibandingkan produk impor.',
+        'name'    => 'Ibu Susi',
+        'company' => 'Cleanique Mart Temanggung',
+        'role'    => 'Pengelola',
+        'text'    => 'Sejak bermitra dengan Indotech di Temanggung, pasokan bahan pembersih rumah tangga kami selalu aman. Produk curah isi ulangnya sangat membantu warga menghemat belanja bulanan.',
         'rating'  => 5,
-        'avatar'  => 'EP',
+        'avatar'  => 'IS',
+        'image'   => 'mitra-temanggung.webp',
     ],
 ];
 
@@ -80,6 +96,23 @@ if ($use_cpt) {
         $company = get_post_meta(get_the_ID(), 'company', true);
         $role    = get_post_meta(get_the_ID(), 'role', true);
         $avatar  = strtoupper(substr(get_the_title(), 0, 2));
+        
+        $image_url = get_the_post_thumbnail_url(get_the_ID(), 'large') ?: '';
+        if (empty($image_url)) {
+            $title = get_the_title();
+            $mapped_img = '';
+            foreach ($default_testimonials as $dt) {
+                if (stripos($title, $dt['name']) !== false || stripos($company, $dt['company']) !== false) {
+                    $mapped_img = get_template_directory_uri() . '/assets/images/' . $dt['image'];
+                    break;
+                }
+            }
+            if (empty($mapped_img)) {
+                $mapped_img = get_template_directory_uri() . '/assets/images/mitra-malang.webp'; // fallback
+            }
+            $image_url = $mapped_img;
+        }
+
         $testimonials_list[] = [
             'name'    => get_the_title(),
             'company' => $company,
@@ -87,11 +120,15 @@ if ($use_cpt) {
             'text'    => get_the_content(),
             'rating'  => 5,
             'avatar'  => $avatar,
+            'image'   => $image_url,
         ];
     }
     wp_reset_postdata();
 } else {
-    $testimonials_list = $default_testimonials;
+    foreach ($default_testimonials as $t) {
+        $t['image'] = get_template_directory_uri() . '/assets/images/' . $t['image'];
+        $testimonials_list[] = $t;
+    }
 }
 ?>
 
@@ -113,7 +150,7 @@ if ($use_cpt) {
                     <!-- Group 1 -->
                     <div class="testimonials-marquee-group">
                         <?php foreach ($testimonials_list as $t): ?>
-                            <div class="testimonial-card">
+                            <div class="testimonial-card" style="--mitra-bg: url('<?php echo esc_url($t['image']); ?>');">
                                 <div class="testimonial-stars">
                                     <?php for ($i = 0; $i < $t['rating']; $i++): ?>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
@@ -134,7 +171,7 @@ if ($use_cpt) {
                     <!-- Group 2 (Duplicate for seamless infinite scroll loop) -->
                     <div class="testimonials-marquee-group" aria-hidden="true">
                         <?php foreach ($testimonials_list as $t): ?>
-                            <div class="testimonial-card">
+                            <div class="testimonial-card" style="--mitra-bg: url('<?php echo esc_url($t['image']); ?>');">
                                 <div class="testimonial-stars">
                                     <?php for ($i = 0; $i < $t['rating']; $i++): ?>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>

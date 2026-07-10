@@ -27,11 +27,70 @@ get_header();
 <div class="brand-archive-wrapper" style="background: var(--surface); min-height: 100vh;">
 
     <!-- ── Brands Grid ── -->
-    <section class="brand-archive-grid-section" style="padding: 80px 0;">
+    <section class="brand-archive-grid-section" style="padding: 80px 0; background: var(--white);">
         <div class="container">
-            <div class="brands-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 30px;">
+            <div class="brands-grid">
                 
                 <?php
+                $brands_static = [
+                    [
+                        'name'     => 'Cleanique Academy',
+                        'tagline'  => 'Pelatihan & Edukasi Laundry',
+                        'initials' => 'CA',
+                        'logo'     => get_template_directory_uri() . '/assets/images/cleaniqueacademy.webp',
+                        'accent'   => '#0057FF',
+                        'bg'       => '#EEF3FF',
+                    ],
+                    [
+                        'name'     => 'Cleanique Lab',
+                        'tagline'  => 'Produsen Bahan Kimia Laundry',
+                        'initials' => 'CL',
+                        'logo'     => get_template_directory_uri() . '/assets/images/cleaniquelab.webp',
+                        'accent'   => '#0057FF',
+                        'bg'       => '#F5F7FB',
+                    ],
+                    [
+                        'name'     => 'Cleanique Mart',
+                        'tagline'  => 'Kemitraan Toko Kebersihan Modern',
+                        'initials' => 'CM',
+                        'logo'     => get_template_directory_uri() . '/assets/images/cleaniquemart.webp',
+                        'accent'   => '#0057FF',
+                        'bg'       => '#EEF3FF',
+                    ],
+                    [
+                        'name'     => 'Depo Cleanique',
+                        'tagline'  => 'Depot Sabun Isi Ulang',
+                        'initials' => 'DC',
+                        'logo'     => get_template_directory_uri() . '/assets/images/depocleanique.webp',
+                        'accent'   => '#0057FF',
+                        'bg'       => '#F5F7FB',
+                    ],
+                    [
+                        'name'     => 'Malabeez',
+                        'tagline'  => 'Parfum Interior & Linen Premium',
+                        'initials' => 'MB',
+                        'logo'     => get_template_directory_uri() . '/assets/images/malabeez.png',
+                        'accent'   => '#111827',
+                        'bg'       => '#F5F7FB',
+                    ],
+                    [
+                        'name'     => 'Orchid Care',
+                        'tagline'  => 'Pembersih & Pewangi Laundry',
+                        'initials' => 'OC',
+                        'logo'     => get_template_directory_uri() . '/assets/images/orchidcare.png',
+                        'accent'   => '#0057FF',
+                        'bg'       => '#EEF3FF',
+                    ],
+                    [
+                        'name'     => 'Prokopi',
+                        'tagline'  => 'Pembersih Mesin Kopi Espresso',
+                        'initials' => 'PK',
+                        'logo'     => get_template_directory_uri() . '/assets/images/prokopi-lurus.png',
+                        'accent'   => '#0057FF',
+                        'bg'       => '#F5F7FB',
+                    ],
+                ];
+
                 $brand_query = new WP_Query([
                     'post_type'      => 'brand',
                     'posts_per_page' => -1,
@@ -45,52 +104,51 @@ get_header();
                         if (strtolower(trim(get_the_title())) === 'cokusi') {
                             continue;
                         }
-                        $brand_id = get_the_ID();
-                        $accent = carbon_get_post_meta($brand_id, 'brand_accent_color') ?: '#0057FF';
-                        $tagline = carbon_get_post_meta($brand_id, 'brand_tagline');
-                        
-                        // Extract initials
-                        $title = get_the_title();
-                        $words = explode(' ', $title);
-                        $initials = '';
-                        foreach ($words as $w) {
-                            $initials .= strtoupper(substr($w, 0, 1));
+                        $post_title = get_the_title();
+                        $b = null;
+                        foreach ($brands_static as $item) {
+                            if (strcasecmp($item['name'], $post_title) === 0) {
+                                $b = $item;
+                                break;
+                            }
                         }
-                        $initials = substr($initials, 0, 2);
+                        if (!$b) {
+                            $i = $brand_query->current_post;
+                            $b = $brands_static[$i] ?? $brands_static[0];
+                        }
+                        $tl = carbon_get_post_meta(get_the_ID(), 'brand_tagline') ?: $b['tagline'];
                 ?>
 
-                <article class="brand-card" style="--ba: <?php echo esc_attr($accent); ?>; background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 36px 32px; display: flex; flex-direction: column; transition: all var(--trans); position: relative; box-shadow: var(--shadow-sm); overflow: hidden;">
-                    <!-- Cobalt top accent bar -->
-                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--ba);"></div>
-                    
-                    <div class="brand-card-top" style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; width: 100%;">
-                        <!-- Logo / Initials Container -->
-                        <div class="brand-icon-wrap" style="width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 1px solid var(--border); background: var(--surface); color: var(--ba);">
+                <div class="brand-card" style="--ba: <?php echo esc_attr($b['accent']); ?>">
+
+                    <div class="brand-card-top">
+                        <!-- Rounded-square logo area -->
+                        <div class="brand-icon-wrap" style="background: <?php echo esc_attr($b['bg']); ?>; color: <?php echo esc_attr($b['accent']); ?>">
                             <?php 
                             $local_logo = indotech_get_brand_logo_url(get_the_title());
                             if (has_post_thumbnail()) : 
-                                the_post_thumbnail('thumbnail', ['style' => 'width:100%;height:100%;object-fit:cover;border-radius:10px;']);
-                            elseif (!empty($local_logo)) : 
-                                echo '<img src="' . esc_url($local_logo) . '" alt="' . esc_attr(get_the_title()) . ' logo" style="width:100%;height:100%;object-fit:contain;border-radius:10px;padding:4px;">';
-                            else : 
-                                echo esc_html($initials); 
+                                the_post_thumbnail('large', ['class' => 'brand-thumb-img']);
+                            elseif (!empty($local_logo)) : ?>
+                                <img src="<?php echo esc_url($local_logo); ?>" alt="<?php echo esc_attr(get_the_title()); ?> logo" class="brand-thumb-img" loading="lazy">
+                            <?php elseif (!empty($b['logo'])) : ?>
+                                <img src="<?php echo esc_url($b['logo']); ?>" alt="<?php echo esc_attr($b['name']); ?> logo" class="brand-thumb-img" loading="lazy">
+                            <?php else : 
+                                echo esc_html($b['initials']); 
                             endif; 
                             ?>
                         </div>
                     </div>
 
-                    <div class="brand-card-body" style="flex: 1; margin-bottom: 24px;">
-                        <h3 class="brand-name" style="font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.02em;"><?php the_title(); ?></h3>
-                        <?php if ($tagline) : ?>
-                            <span class="brand-tagline" style="font-size: 12px; font-weight: 600; margin-bottom: 12px; display: block; color: var(--ba); text-transform: uppercase; letter-spacing: 0.05em;"><?php echo esc_html($tagline); ?></span>
-                        <?php endif; ?>
-                        <p class="brand-desc" style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.6;"><?php echo wp_trim_words(get_the_excerpt(), 18); ?></p>
+                    <div class="brand-card-body">
+                        <h3 class="brand-name"><?php the_title(); ?></h3>
+                        <span class="brand-tagline"><?php echo esc_html($tl); ?></span>
+                        <p class="brand-desc"><?php the_excerpt(); ?></p>
                     </div>
 
-                    <a href="<?php the_permalink(); ?>" class="brand-cta" style="color: var(--ba); font-weight: 700; font-family: 'Space Grotesk', sans-serif; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; margin-top: auto;">
+                    <a href="<?php the_permalink(); ?>" class="brand-cta">
                         Lihat Produk &rarr;
                     </a>
-                </article>
+                </div>
 
                 <?php 
                     endwhile;

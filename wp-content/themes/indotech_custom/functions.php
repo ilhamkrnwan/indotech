@@ -48,13 +48,13 @@ function indotech_enqueue() {
     );
 
     // Main stylesheet
-    wp_enqueue_style('indotech-main', INDOTECH_URI . '/assets/css/main.css', ['indotech-fonts'], INDOTECH_VERSION);
+    wp_enqueue_style('indotech-main', INDOTECH_URI . '/assets/css/main.css', ['indotech-fonts'], filemtime(get_template_directory() . '/assets/css/main.css'));
 
     // Main JS
-    wp_enqueue_script('indotech-main', INDOTECH_URI . '/assets/js/main.js', [], INDOTECH_VERSION, true);
+    wp_enqueue_script('indotech-main', INDOTECH_URI . '/assets/js/main.js', [], filemtime(get_template_directory() . '/assets/js/main.js'), true);
 
     // Inquiry AJAX JS (depends on jQuery and indotech-main for localized object)
-    wp_enqueue_script('indotech-inquiry', INDOTECH_URI . '/assets/js/inquiry-ajax.js', ['jquery', 'indotech-main'], INDOTECH_VERSION, true);
+    wp_enqueue_script('indotech-inquiry', INDOTECH_URI . '/assets/js/inquiry-ajax.js', ['jquery', 'indotech-main'], filemtime(get_template_directory() . '/assets/js/inquiry-ajax.js'), true);
 
     $whatsapp = indotech_opt( 'whatsapp', '6285600061005' );
     $wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );

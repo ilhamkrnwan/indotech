@@ -77,7 +77,7 @@ if ( ! $posts->have_posts() ) return;
                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                     </h3>
 
-                    <p class="blog-excerpt"><?php the_excerpt(); ?></p>
+                    <p class="blog-excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 15, '...' ) ); ?></p>
 
                     <a href="<?php the_permalink(); ?>" class="blog-read-more">
                         Baca Selengkapnya &rarr;
