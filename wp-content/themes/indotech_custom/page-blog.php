@@ -6,7 +6,13 @@
  * Sections: Hero · Featured Post · Filter Tab Kategori · Grid Artikel · Pagination
  */
 
-$paged    = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+if ( get_query_var('paged') ) {
+    $paged = get_query_var('paged');
+} elseif ( get_query_var('page') ) {
+    $paged = get_query_var('page');
+} else {
+    $paged = 1;
+}
 $per_page = 6;
 
 // Ambil semua kategori yang digunakan di posts
@@ -316,7 +322,7 @@ get_header();
     <!-- Client Script for AJAX Blog Filtering -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const filterBtns = document.querySelectorAll('.filter-btn');
+        const filterBtns = document.querySelectorAll('.filter-panel .filter-btn');
         const grid       = document.getElementById('blog-posts-grid');
         const paginWrap  = document.getElementById('blog-pagination-wrap');
         const searchInput = document.getElementById('blog-search');

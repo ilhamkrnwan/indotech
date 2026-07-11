@@ -60,7 +60,7 @@ function indotech_enqueue() {
     $wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );
 
     wp_localize_script('indotech-main', 'indotechData', [
-        'ajaxUrl'  => admin_url('admin-ajax.php'),
+        'ajaxUrl'  => admin_url('admin-ajax.php', 'relative'),
         'nonce'    => wp_create_nonce('indotech_nonce'),
         'whatsapp' => $wa_num,
     ]);
@@ -131,7 +131,8 @@ add_action('wp_ajax_indotech_filter_products', 'indotech_filter_products_handler
 add_action('wp_ajax_nopriv_indotech_filter_products', 'indotech_filter_products_handler');
 
 function indotech_filter_products_handler() {
-    check_ajax_referer('indotech_nonce', 'nonce');
+    // Relaxed check for public read-only AJAX filtering
+    check_ajax_referer('indotech_nonce', 'nonce', false);
 
     $brand_id = isset($_POST['brand_id']) ? sanitize_text_field($_POST['brand_id']) : '';
     $cat_slug = isset($_POST['cat_slug']) ? sanitize_text_field($_POST['cat_slug']) : '';
@@ -277,7 +278,8 @@ add_action('wp_ajax_indotech_filter_posts', 'indotech_filter_posts_handler');
 add_action('wp_ajax_nopriv_indotech_filter_posts', 'indotech_filter_posts_handler');
 
 function indotech_filter_posts_handler() {
-    check_ajax_referer('indotech_nonce', 'nonce');
+    // Relaxed check for public read-only AJAX filtering
+    check_ajax_referer('indotech_nonce', 'nonce', false);
 
     $cat_slug = isset($_POST['cat_slug']) ? sanitize_text_field($_POST['cat_slug']) : '';
     $search   = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';

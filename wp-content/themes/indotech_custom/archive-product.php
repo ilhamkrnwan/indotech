@@ -6,7 +6,13 @@
 
 get_header();
 
-$paged       = get_query_var('paged') ? get_query_var('paged') : 1;
+if ( get_query_var('paged') ) {
+    $paged = get_query_var('paged');
+} elseif ( get_query_var('page') ) {
+    $paged = get_query_var('page');
+} else {
+    $paged = 1;
+}
 $per_page    = 9;
 $search_init = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
 
@@ -524,7 +530,7 @@ if ($categories === false) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    const filterBtns = document.querySelectorAll('.filter-panel .filter-btn');
     const grid       = document.getElementById('products-grid');
     const paginWrap  = document.getElementById('product-pagination-wrap');
     const searchInput = document.getElementById('product-search');
