@@ -990,6 +990,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Collect Form Data
             const formData = new FormData(gatedForm);
             formData.append('action', 'indotech_submit_inquiry'); // Target existing AJAX endpoint
+            formData.append('nonce', indotechData.nonce);
             
             // Styling Loading State
             if (submitBtn) {

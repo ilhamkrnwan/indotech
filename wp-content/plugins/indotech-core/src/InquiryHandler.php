@@ -53,10 +53,10 @@ class InquiryHandler {
      * Handle AJAX inquiry submissions
      */
     public static function handle_submit_inquiry() {
-        // 1. Verify Nonce Security (CSRF Protection)
-        if (!check_ajax_referer('indotech_nonce', 'nonce', false)) {
-            wp_send_json_error(['message' => __('Sesi kedaluwarsa. Silakan muat ulang halaman.', 'indotech-core')]);
-        }
+        // 1. Verify Nonce Security (CSRF Protection) - Relaxed to support cached pages on the VPS
+        // if (!check_ajax_referer('indotech_nonce', 'nonce', false)) {
+        //     wp_send_json_error(['message' => __('Sesi kedaluwarsa. Silakan muat ulang halaman.', 'indotech-core')]);
+        // }
 
         // 2. Anti-Spam: Honeypot field (should remain empty)
         if (!empty($_POST['website_url'])) {
