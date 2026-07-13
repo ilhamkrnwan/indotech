@@ -89,88 +89,318 @@ function add_product_image_vps($file_path, $post_id, $user, $group) {
 
 // ── 1. Create/Verify Categories ───────────────────────────────────────────
 echo "\n[1/6] Verifying product categories...\n";
-$categories = array(
-    'Peralatan & Pembersih Mesin Kopi' => 'Peralatan & Pembersih Kopi',
-    'Biang Pembersih Konsentrat' => 'Biang Pembersih Konsentrat',
-    'Bahan Kimia Laundry & Sabun' => 'Bahan Kimia Laundry & Sabun',
-    'Bibit Parfum & Wewangian' => 'Bibit Parfum & Wewangian'
-);
+$categories = array('Peralatan & Pembersih Kopi', 'Biang Pembersih Konsentrat', 'Bahan Kimia Laundry & Sabun', 'Bibit Parfum & Wewangian');
 
-$cat_map = array();
-foreach ($categories as $orig => $clean_name) {
-    $term = get_term_by('name', $clean_name, 'product_cat');
+$cat_cache = array();
+foreach ($categories as $cat) {
+    $term = get_term_by('name', $cat, 'product_cat');
     if (!$term) {
-        $new_term = wp_insert_term($clean_name, 'product_cat');
-        if (!is_wp_error($new_term)) {
-            $cat_map[$orig] = $new_term['term_id'];
-            echo "  Created category: '$clean_name'\n";
+        $new_term = wp_insert_term($cat, 'product_cat');
+        if (is_wp_error($new_term)) {
+            echo "  Error creating category $cat: " . $new_term->get_error_message() . "\n";
         } else {
-            echo "  Error creating category '$clean_name': " . $new_term->get_error_message() . "\n";
+            echo "  Created category: $cat\n";
+            $cat_cache[$cat] = $new_term['term_id'];
         }
     } else {
-        $cat_map[$orig] = $term->term_id;
-        echo "  Category exists: '$clean_name'\n";
+        echo "  Category exists: $cat\n";
+        $cat_cache[$cat] = $term->term_id;
     }
 }
 
-// ── 2. Load Products and Sideload Images ──────────────────────────────────
+// ── 2. Define Products Data Array (46 products) ───────────────────────────
 echo "\n[2/6] Importing products and restoring featured images...\n";
-$json_path = __DIR__ . '/products.json';
+$products = array();
+
+// 1. Pro Kopi
+$products[] = array(
+    'title' => 'Pembersih Mesin Kopi (Pro Kopi)-450gr',
+    'slug' => 'pro-kopi-pembersih-mesin-kopi-450gr',
+    'sku' => 'PK-PK450',
+    'category' => 'Peralatan & Pembersih Kopi',
+    'content' => '<h3>Deskripsi Produk</h3><p>Pro Kopi adalah bubuk pembersih mesin kopi espresso (coffee machine cleaner) premium berkualitas food-grade. Berfungsi efektif untuk membersihkan sisa residu minyak kopi, kerak kopi, serta kotoran pada group head, filter, dan portafilter.</p><h3>Cara Penggunaan</h3><ol><li>Masukkan 3 gram bubuk Pro Kopi ke dalam blind basket.</li><li>Pasang portafilter pada group head, jalankan mesin selama 10 detik, matikan selama 10 detik. Ulangi sebanyak 5 kali.</li><li>Lepaskan portafilter dan bilas group head dengan air panas.</li><li>Bilas portafilter hingga bersih. Buang espresso extraction pertama sebelum digunakan menyeduh kembali.</li></ol>',
+    'image_file' => 'Pembersih Mesin Kopi (Pro Kopi)-450gr.png'
+);
+$products[] = array(
+    'title' => 'Pembersih Mesin Kopi (Pro Kopi)-900gr',
+    'slug' => 'pro-kopi-pembersih-mesin-kopi-900gr',
+    'sku' => 'PK-PK900',
+    'category' => 'Peralatan & Pembersih Kopi',
+    'content' => '<h3>Deskripsi Produk</h3><p>Pro Kopi adalah bubuk pembersih mesin kopi espresso (coffee machine cleaner) premium berkualitas food-grade. Berfungsi efektif untuk membersihkan sisa residu minyak kopi, kerak kopi, serta kotoran pada group head, filter, dan portafilter.</p><h3>Cara Penggunaan</h3><ol><li>Masukkan 3 gram bubuk Pro Kopi ke dalam blind basket.</li><li>Pasang portafilter pada group head, jalankan mesin selama 10 detik, matikan selama 10 detik. Ulangi sebanyak 5 kali.</li><li>Lepaskan portafilter dan bilas group head dengan air panas.</li><li>Bilas portafilter hingga bersih. Buang espresso extraction pertama sebelum digunakan menyeduh kembali.</li></ol>',
+    'image_file' => 'Pembersih Mesin Kopi (Pro Kopi)-900gr.png'
+);
+
+// 2. Biang Sabun
+$products[] = array(
+    'title' => 'Athari - Biang Sabun Mandi Cair-3 Liter',
+    'slug' => 'athari-biang-sabun-mandi-cair-3-liter',
+    'sku' => 'BG-SM3L',
+    'category' => 'Biang Pembersih Konsentrat',
+    'content' => '<h3>Deskripsi Produk</h3><p>Athari Biang Sabun Mandi Cair adalah konsentrat sabun mandi beraroma segar yang dirancang untuk diencerkan menjadi sabun mandi siap pakai. Sangat hemat biaya dan cocok untuk kebutuhan rumah tangga maupun usaha.</p><h3>Cara Penggunaan</h3><p>Campurkan konsentrat dengan air bersih dengan perbandingan yang disarankan pada kemasan, aduk hingga rata dan mengental, diamkan sejenak hingga busa mereda sebelum dikemas.</p>',
+    'image_file' => 'Athari - Biang Sabun Mandi Cair-3 Liter.png'
+);
+$products[] = array(
+    'title' => 'Biang Pel Lantai-5 Liter',
+    'slug' => 'biang-pel-lantai-5-liter',
+    'sku' => 'BG-PL5L',
+    'category' => 'Biang Pembersih Konsentrat',
+    'content' => '<h3>Deskripsi Produk</h3><p>Biang Pel Lantai konsentrat formula pembersih lantai aromatik berukuran 5 Liter. Efektif mengangkat kotoran, membunuh kuman, serta memberikan keharuman tahan lama pada lantai ruangan Anda.</p><h3>Cara Penggunaan</h3><p>Campurkan konsentrat biang pel lantai dengan air bersih dengan perbandingan formulasi standar Anda untuk mendapatkan cairan pel siap pakai.</p>',
+    'image_file' => 'Biang Pel Lantai-5 Liter.png'
+);
+$products[] = array(
+    'title' => 'Biang Pelicin Setrika-5 Liter',
+    'slug' => 'biang-pelicin-setrika-5-liter',
+    'sku' => 'BG-PS5L',
+    'category' => 'Biang Pembersih Konsentrat',
+    'content' => '<h3>Deskripsi Produk</h3><p>Biang Pelicin Setrika formula konsentrat 5 Liter untuk melembutkan serat kain dan mempermudah proses setrika pakaian. Memberikan aroma harum dan efek antikusut pada pakaian.</p><h3>Cara Penggunaan</h3><p>Larutkan biang pelicin setrika dengan air bersih sesuai dosis kekentalan dan keharuman yang diinginkan, lalu masukkan ke dalam botol spray siap pakai.</p>',
+    'image_file' => 'Biang Pelicin Setrika-5 Liter.png'
+);
+$products[] = array(
+    'title' => 'Detta+ - Biang Deterjen Cair-5 Liter',
+    'slug' => 'detta-biang-deterjen-cair-5-liter',
+    'sku' => 'BG-DC5L',
+    'category' => 'Biang Pembersih Konsentrat',
+    'content' => '<h3>Deskripsi Produk</h3><p>Detta+ Biang Deterjen Cair adalah konsentrat formula detergen laundry ramah lingkungan yang hemat air dan berbusa melimpah. Efektif mengangkat noda membandel pada serat pakaian.</p><h3>Cara Penggunaan</h3><p>Larutkan konsentrat Detta+ dengan air bersih sesuai takaran kemasan, aduk merata hingga mengental, lalu diamkan 12 jam hingga busa tenang.</p>',
+    'image_file' => 'Detta+ - Biang Deterjen Cair-5 Liter.png'
+);
+
+// 3. Atinsoft
+$products[] = array(
+    'title' => 'Atinsoft-1 Liter',
+    'slug' => 'atinsoft-1-liter',
+    'sku' => 'CH-AT1L',
+    'category' => 'Bahan Kimia Laundry & Sabun',
+    'content' => '<h3>Deskripsi Produk</h3><p>Atinsoft adalah bahan kimia aditif khusus (foam booster dan pembersih lemak) untuk menstabilkan busa dan meningkatkan daya bersih pada sabun cuci piring, deterjen laundry, maupun hand wash.</p><h3>Cara Penggunaan</h3><p>Campurkan Atinsoft ke dalam formula sabun cair sebanyak 2% - 5% dari volume formulasi adonan sabun cair Anda.</p>',
+    'image_file' => 'Atinsoft-1 Liter.png'
+);
+$products[] = array(
+    'title' => 'Atinsoft-5 Liter',
+    'slug' => 'atinsoft-5-liter',
+    'sku' => 'CH-AT5L',
+    'category' => 'Bahan Kimia Laundry & Sabun',
+    'content' => '<h3>Deskripsi Produk</h3><p>Atinsoft adalah bahan kimia aditif khusus (foam booster dan pembersih lemak) untuk menstabilkan busa and meningkatkan daya bersih pada sabun cuci piring, deterjen laundry, maupun hand wash.</p><h3>Cara Penggunaan</h3><p>Campurkan Atinsoft ke dalam formula sabun cair sebanyak 2% - 5% dari volume formulasi adonan sabun cair Anda.</p>',
+    'image_file' => 'Atinsoft-5 Liter.png'
+);
+
+// 4. Fixamax
+$products[] = array(
+    'title' => 'Fixamax Cair-100ml',
+    'slug' => 'fixamax-cair-100ml',
+    'sku' => 'FX-C100',
+    'category' => 'Bahan Kimia Laundry & Sabun',
+    'content' => '<h3>Deskripsi Produk</h3><p>Fixamax Cair adalah bahan pengikat parfum (fixative) premium yang mengikat molekul wewangian agar menempel lebih lama pada serat kain. Bekerja sangat baik sebagai pengikat aroma parfum laundry.</p><h3>Cara Penggunaan</h3><p>Campurkan 2-5 ml Fixamax Cair ke dalam 1 liter larutan pelarut parfum (seperti metanol atau alkohol) sebelum diaplikasikan.</p>',
+    'image_file' => 'Fixamax Cair-100ml.png'
+);
+$products[] = array(
+    'title' => 'Fixamax Cair-500ml',
+    'slug' => 'fixamax-cair-500ml',
+    'sku' => 'FX-C500',
+    'category' => 'Bahan Kimia Laundry & Sabun',
+    'content' => '<h3>Deskripsi Produk</h3><p>Fixamax Cair adalah bahan pengikat parfum (fixative) premium yang mengikat molekul wewangian agar menempel lebih lama pada serat kain. Bekerja sangat baik sebagai pengikat aroma parfum laundry.</p><h3>Cara Penggunaan</h3><p>Campurkan 2-5 ml Fixamax Cair ke dalam 1 liter larutan pelarut parfum (seperti metanol atau alkohol) sebelum diaplikasikan.</p>',
+    'image_file' => 'Fixamax Cair-500ml.png'
+);
+$products[] = array(
+    'title' => 'Fixamax Cair-1 Liter',
+    'slug' => 'fixamax-cair-1-liter',
+    'sku' => 'FX-C1L',
+    'category' => 'Bahan Kimia Laundry & Sabun',
+    'content' => '<h3>Deskripsi Produk</h3><p>Fixamax Cair adalah bahan pengikat parfum (fixative) premium yang mengikat molekul wewangian agar menempel lebih lama pada serat kain. Bekerja sangat baik sebagai pengikat aroma parfum laundry.</p><h3>Cara Penggunaan</h3><p>Campurkan 2-5 ml Fixamax Cair ke dalam 1 liter larutan pelarut parfum (seperti metanol atau alkohol) sebelum diaplikasikan.</p>',
+    'image_file' => 'Fixamax Cair-1 Liter.png'
+);
+$products[] = array(
+    'title' => 'Fixamax Crystal-80gr',
+    'slug' => 'fixamax-crystal-80gr',
+    'sku' => 'FX-K80',
+    'category' => 'Bahan Kimia Laundry & Sabun',
+    'content' => '<h3>Deskripsi Produk</h3><p>Fixamax Crystal adalah agen booster parfum berbentuk kristal yang memperkuat penyebaran wangi parfum agar tercium lebih semerbak dan intens.</p><h3>Cara Penggunaan</h3><p>Larutkan 3-5 gram Fixamax Crystal ke dalam 1 liter pelarut parfum laundry sebelum dicampur dengan bibit wewangian.</p>',
+    'image_file' => 'Fixamax Crystal-80gr.png'
+);
+$products[] = array(
+    'title' => 'Fixamax Crystal-450gr',
+    'slug' => 'fixamax-crystal-450gr',
+    'sku' => 'FX-K450',
+    'category' => 'Bahan Kimia Laundry & Sabun',
+    'content' => '<h3>Deskripsi Produk</h3><p>Fixamax Crystal adalah agen booster parfum berbentuk kristal yang memperkuat penyebaran wangi parfum agar tercium lebih semerbak dan intens.</p><h3>Cara Penggunaan</h3><p>Larutkan 3-5 gram Fixamax Crystal ke dalam 1 liter pelarut parfum laundry sebelum dicampur dengan bibit wewangian.</p>',
+    'image_file' => 'Fixamax Crystal-450gr.png'
+);
+$products[] = array(
+    'title' => 'Fixamax Crystal-950gr',
+    'slug' => 'fixamax-crystal-950gr',
+    'sku' => 'FX-K950',
+    'category' => 'Bahan Kimia Laundry & Sabun',
+    'content' => '<h3>Deskripsi Produk</h3><p>Fixamax Crystal adalah agen booster parfum berbentuk kristal yang memperkuat penyebaran wangi parfum agar tercium lebih semerbak dan intens.</p><h3>Cara Penggunaan</h3><p>Larutkan 3-5 gram Fixamax Crystal ke dalam 1 liter pelarut parfum laundry sebelum dicampur dengan bibit wewangian.</p>',
+    'image_file' => 'Fixamax Crystal-950gr.png'
+);
+
+// 5. Foam Booster & NaCl
+$products[] = array(
+    'title' => 'Foam Booster-100ml',
+    'slug' => 'foam-booster-100ml',
+    'sku' => 'CH-FB100',
+    'category' => 'Bahan Kimia Laundry & Sabun',
+    'content' => '<h3>Deskripsi Produk</h3><p>Foam Booster (Cocamide DEA / CDEA) berfungsi untuk meningkatkan kuantitas busa, mempertebal busa, dan memberikan efek kelembutan ekstra pada adonan sabun cair laundry atau pencuci piring.</p><h3>Cara Penggunaan</h3><p>Tambahkan Foam Booster ke dalam campuran surfaktan utama saat formulasi adonan sabun cair sesuai persentase standar.</p>',
+    'image_file' => 'Foam Booster-100ml.png'
+);
+$products[] = array(
+    'title' => 'NaCl-1 kg',
+    'slug' => 'nacl-1-kg',
+    'sku' => 'CH-NC1K',
+    'category' => 'Bahan Kimia Laundry & Sabun',
+    'content' => '<h3>Deskripsi Produk</h3><p>NaCl (Sodium Chloride / Garam Murni) tanpa yodium berkualitas industri. Berfungsi sebagai bahan pengental (thickening agent) alami yang sangat efektif untuk sabun cuci piring dan deterjen cair.</p><h3>Cara Penggunaan</h3><p>Larutkan NaCl secara perlahan ke dalam larutan sabun cair hingga mencapai tingkat kekentalan yang diinginkan.</p>',
+    'image_file' => 'NaCl-1 kg.png'
+);
+
+// 6. Konsentrat Parfum & Paket Bahan
+$products[] = array(
+    'title' => 'Konsentrat Parfum Alkohol Base-10 Liter',
+    'slug' => 'konsentrat-parfum-alkohol-base-10-liter',
+    'sku' => 'PF-KA10L',
+    'category' => 'Bibit Parfum & Wewangian',
+    'content' => '<h3>Deskripsi Produk</h3><p>Konsentrat parfum berbasis alkohol siap pakai berukuran 10 Liter. Diformulasikan dengan metanol berkualitas tinggi dan fixative agar keharuman bertahan lama pada pakaian setelah proses setrika.</p><h3>Cara Penggunaan</h3><p>Siap pakai. Semprotkan langsung pada pakaian laundry setelah disetrika sebelum masuk ke proses pengemasan plastik.</p>',
+    'image_file' => 'Konsentrat Parfum Alkohol Base-10 Liter.png'
+);
+$products[] = array(
+    'title' => 'Determat Eco - Paket Bahan Deterjen Eco-10-20 Liter',
+    'slug' => 'determat-eco-paket-bahan-deterjen-eco-10-20-liter',
+    'sku' => 'BG-DCECO',
+    'category' => 'Biang Pembersih Konsentrat',
+    'content' => '<h3>Deskripsi Produk</h3><p>Determat Eco adalah paket bahan deterjen cair hemat dan praktis untuk diolah sendiri menjadi 10-20 liter deterjen cair laundry siap pakai dengan formula ramah lingkungan.</p><h3>Cara Penggunaan</h3><p>Ikuti petunjuk pencampuran air dan pengadukan bertahap yang disertakan di dalam kemasan hingga adonan deterjen mengental sempurna.</p>',
+    'image_file' => 'Determat Eco - Paket Bahan Deterjen Eco-10-20 Liter.png'
+);
+
+// 7. Bibit Parfum (14 Varian x 2 Ukuran = 28 produk)
+$variants = array(
+    'Baccarat' => 'BC',
+    'Downy Mystique' => 'DM',
+    'Downy Passion' => 'DP',
+    'Dunhill Blue' => 'DB',
+    'Floral' => 'FL',
+    'Jeruk Nipis' => 'JN',
+    'Lavender' => 'LV',
+    'Lemon Fresh' => 'LF',
+    'Molto Blue' => 'MB',
+    'Ocean Fresh' => 'OF',
+    'Phylux' => 'PL',
+    'Sakura' => 'SK',
+    'Snappy' => 'SN',
+    'Strawberry' => 'ST'
+);
+$sizes = array('50ML', '100ML');
+foreach ($variants as $var_name => $sku_code) {
+    foreach ($sizes as $size) {
+        $products[] = array(
+            'title' => "Bibit Parfum - {$var_name}-{$size}",
+            'slug' => "bibit-parfum-" . sanitize_title($var_name) . "-" . strtolower($size),
+            'sku' => "PF-{$sku_code}{$size}",
+            'category' => 'Bibit Parfum & Wewangian',
+            'content' => "<h3>Deskripsi Produk</h3><p>Bibit parfum laundry konsentrat murni varian {$var_name} berkualitas tinggi tanpa campuran. Menghasilkan keharuman mewah, segar, dan tahan lama yang cocok untuk pewangi laundry profesional.</p><h3>Cara Penggunaan</h3><p>Campurkan bibit parfum dengan metanol/alkohol dan fixative (Fixamax) dengan takaran sesuai tingkat konsentrasi aroma yang diinginkan.</p>",
+            'image_file' => "Bibit Parfum - {$var_name}-{$size}.png"
+        );
+    }
+}
+
+// Plus remaining new products mentioned in CPT (to upload missing images for them too)
+$extra_products = array(
+    array('title' => 'Anti Noda Jamur – Penghilang Noda Jamur & Bau Apek', 'slug' => 'anti-noda-jamur-penghilang-noda-jamur-bau-apek', 'image_file' => 'Anti Noda Jamur-1 kg.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Deterjen Karpet – Pembersih Karpet & Sofa', 'slug' => 'deterjen-karpet-pembersih-karpet-sofa', 'image_file' => 'Deterjen Karpet-5 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Deterjen Eco – Deterjen Cair Wangi Premium', 'slug' => 'deterjen-eco-deterjen-cair-wangi-premium', 'image_file' => 'Deterjen Eco-5 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Anti Noda – Penghilang Noda Pakaian', 'slug' => 'anti-noda-penghilang-noda-pakaian', 'image_file' => 'Anti Noda Bandel-5 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Engine Degreaser – Pembersih Mesin Kendaraan', 'slug' => 'engine-degreaser-pembersih-mesin-kendaraan', 'image_file' => 'Pembersih Mesin (Engine Degreaser)-900ml.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Alkali – Pengangkat Noda & Pencerah Pakaian', 'slug' => 'alkali-pengangkat-noda-pencerah-pakaian', 'image_file' => 'Anti Noda Bandel-1 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Deodoran – Pewangi & Penghilang Bau Kain', 'slug' => 'deodoran-pewangi-penghilang-bau-kain', 'image_file' => 'Parfum Linen Spray - Malabeez-250ml.png', 'category' => 'Bibit Parfum & Wewangian'),
+    array('title' => 'Glass Cleaner – Pembersih Kaca & Cermin', 'slug' => 'glass-cleaner-pembersih-kaca-cermin', 'image_file' => 'Pembersih Interior – Perawatan Kabin Kendaraan.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Glika – Pelicin & Pengharum Kain', 'slug' => 'glika-pelicin-pengharum-kain', 'image_file' => 'Biang Pelicin Setrika-5 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Glory – Softener & Pelembut Pakaian', 'slug' => 'glory-softener-pelembut-pakaian', 'image_file' => 'Atinsoft-5 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Karbol – Pembersih Lantai & Disinfektan Pinus', 'slug' => 'karbol-pembersih-lantai-disinfektan-pinus', 'image_file' => 'Biang Karbol – Paket Bahan Karbol Wangi.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Parfum Karpet – Pewangi Khusus Karpet & Tekstil', 'slug' => 'parfum-karpet-pewangi-khusus-karpet-tekstil', 'image_file' => 'Parfum Aroma Timur Tengah - Malabeez-800ml.png', 'category' => 'Bibit Parfum & Wewangian'),
+    array('title' => 'Parfum Laundry – Pewangi Pakaian Waterbase & Alkohol', 'slug' => 'parfum-laundry-pewangi-pakaian-waterbase-alkohol', 'image_file' => 'Konsentrat Parfum Alkohol Base-10 Liter.png', 'category' => 'Bibit Parfum & Wewangian'),
+    array('title' => 'Semir Ban – Tire Shine & Dressing Kendaraan', 'slug' => 'semir-ban-tire-shine-dressing-kendaraan', 'image_file' => 'Semir Ban-5 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Pembersih Kerak – Anti Scale & Descaler', 'slug' => 'pembersih-kerak-anti-scale-descaler', 'image_file' => 'Pembersih Mesin (Engine Degreaser)-250ml.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Sleek – Cairan Setrika & Perawat Kain', 'slug' => 'sleek-cairan-setrika-perawat-kain', 'image_file' => 'Biang Pelicin Setrika-5 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Souring – Penetral pH & Pelembut Kain Asam', 'slug' => 'souring-penetral-ph-pelembut-kain-asam', 'image_file' => 'Atinsoft-1 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Sabun 3 in 1 – Sabun Mandi, Keramas & Cuci Muka', 'slug' => 'sabun-3-in-1-sabun-mandi-keramas-cuci-muka', 'image_file' => 'Athari - Biang Sabun Mandi Cair-3 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Nauki – Pelembut & Pewangi Pakaian', 'slug' => 'nauki-pelembut-pewangi-pakaian', 'image_file' => 'Atinsoft-5 Liter.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Compound – Poles Bodi & Penghilang Baret Kendaraan', 'slug' => 'compound-poles-bodi-penghilang-baret-kendaraan', 'image_file' => 'Pembersih Mesin (Engine Degreaser)-250ml.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Pengkilap Body – Wax & Shine Bodi Kendaraan', 'slug' => 'pengkilap-body-wax-shine-bodi-kendaraan', 'image_file' => 'Pembersih Mesin (Engine Degreaser)-100ml.png', 'category' => 'Bahan Kimia Laundry & Sabun'),
+    array('title' => 'Prime+ 1000ml – Parfum Laundry Premium Eksklusif', 'slug' => 'prime-1000ml-parfum-laundry-premium-eksklusif', 'image_file' => 'Parfum Aroma Timur Tengah - Malabeez-800ml.png', 'category' => 'Bibit Parfum & Wewangian'),
+    array('title' => 'Prokopi – Pembersih Mesin Fotokopi & Elektronik', 'slug' => 'prokopi-pembersih-mesin-fotokopi-elektronik', 'image_file' => 'Pembersih Mesin Kopi (Pro Kopi)-900gr.png', 'category' => 'Peralatan & Pembersih Kopi')
+);
+
+foreach ($extra_products as $ep) {
+    // Add to processing loop if not already in list
+    $found = false;
+    foreach ($products as $p) {
+        if ($p['slug'] === $ep['slug']) {
+            $found = true;
+            break;
+        }
+    }
+    if (!$found) {
+        $products[] = array(
+            'title' => $ep['title'],
+            'slug' => $ep['slug'],
+            'sku' => '',
+            'category' => $ep['category'],
+            'content' => '<h3>Deskripsi Produk</h3><p>Formula khusus premium berkualitas tinggi untuk kebutuhan industri dan rumah tangga Anda.</p>',
+            'image_file' => $ep['image_file']
+        );
+    }
+}
+
 $src_dir = __DIR__ . '/src';
-
-if (!file_exists($json_path)) {
-    die("Error: products.json not found in " . $json_path . "\n");
-}
-
-$products = json_decode(file_get_contents($json_path), true);
-if (empty($products)) {
-    die("Error: products.json is empty or invalid.\n");
-}
-
 $imported_ids = array();
 
 foreach ($products as $p) {
     $title = html_entity_decode($p['title']);
     
-    // Check if product already exists by title
-    $existing = get_page_by_title($title, OBJECT, 'product');
-    if ($existing) {
-        echo "  Exists: '$title' (ID: {$existing->ID}). Checking image...\n";
-        $post_id = $existing->ID;
+    // Check if product already exists by slug or title
+    $existing = get_posts(array(
+        'name' => $p['slug'],
+        'post_type' => 'product',
+        'post_status' => 'any',
+        'numberposts' => 1
+    ));
+    
+    if (!empty($existing)) {
+        $post_id = $existing[0]->ID;
+        echo "  Exists: '$title' (ID: $post_id). Checking image...\n";
     } else {
-        echo "  Creating: '$title'...\n";
-        $post_id = wp_insert_post(array(
-            'post_title'   => $title,
-            'post_status'  => 'publish',
-            'post_type'    => 'product',
-            'post_content' => $p['content'],
-            'post_excerpt' => $p['excerpt']
-        ));
-        
-        if (is_wp_error($post_id)) {
-            echo "    Error inserting product: " . $post_id->get_error_message() . "\n";
-            continue;
-        }
-        
-        // Set SKU & specifications
-        carbon_set_post_meta($post_id, 'product_sku', $p['sku']);
-        carbon_set_post_meta($post_id, 'product_specifications', $p['specifications']);
-        
-        // Set categories
-        $term_ids = array();
-        foreach ($p['categories'] as $cat_name) {
-            if (isset($cat_map[$cat_name])) {
-                $term_ids[] = $cat_map[$cat_name];
+        // Double check by title
+        $existing_by_title = get_page_by_title($title, OBJECT, 'product');
+        if ($existing_by_title) {
+            $post_id = $existing_by_title->ID;
+            echo "  Exists by title: '$title' (ID: $post_id). Checking image...\n";
+        } else {
+            echo "  Creating: '$title'...\n";
+            $post_id = wp_insert_post(array(
+                'post_title'   => $title,
+                'post_name'    => $p['slug'],
+                'post_status'  => 'publish',
+                'post_type'    => 'product',
+                'post_content' => $p['content'],
+                'post_excerpt' => mb_strimwidth(strip_tags($p['content']), 0, 160, '...')
+            ));
+            
+            if (is_wp_error($post_id)) {
+                echo "    Error inserting product: " . $post_id->get_error_message() . "\n";
+                continue;
             }
-        }
-        if (!empty($term_ids)) {
-            wp_set_post_terms($post_id, $term_ids, 'product_cat');
+            
+            // Set SKU
+            if (!empty($p['sku'])) {
+                carbon_set_post_meta($post_id, 'product_sku', $p['sku']);
+            }
+            
+            // Set category
+            if (isset($cat_cache[$p['category']])) {
+                wp_set_object_terms($post_id, intval($cat_cache[$p['category']]), 'product_cat');
+            }
         }
     }
     
-    // Upload/Re-verify image if missing
+    // Upload/Re-verify image if missing or invalid
     if (!has_post_thumbnail($post_id)) {
-        $img_file = $src_dir . '/' . $p['image_filename'];
+        $img_file = $src_dir . '/' . $p['image_file'];
         add_product_image_vps($img_file, $post_id, $target_user, $target_group);
     } else {
         echo "    Image already set.\n";
@@ -263,7 +493,7 @@ foreach ($groups as $base_title => $items) {
         }
         $found_spec = false;
         for ($i = 0; $i < count($specs); $i++) {
-            if (strtolower(trim($specs[$i]['spec_name'])) === 'ukuran tersedia' || strtolower(trim($specs[$i]['spec_name'])) === 'berat bersih' || strtolower(trim($specs[$i]['spec_name'])) === 'volume') {
+            if (is_array($specs[$i]) && isset($specs[$i]['spec_name']) && (strtolower(trim($specs[$i]['spec_name'])) === 'ukuran tersedia' || strtolower(trim($specs[$i]['spec_name'])) === 'berat bersih' || strtolower(trim($specs[$i]['spec_name'])) === 'volume')) {
                 $specs[$i]['spec_name'] = 'Ukuran Tersedia';
                 $specs[$i]['spec_value'] = $sizes_string;
                 $found_spec = true;
@@ -306,7 +536,7 @@ foreach ($groups as $base_title => $items) {
                 }
                 $found_spec = false;
                 for ($i = 0; $i < count($specs); $i++) {
-                    if (strtolower(trim($specs[$i]['spec_name'])) === 'ukuran tersedia' || strtolower(trim($specs[$i]['spec_name'])) === 'berat bersih' || strtolower(trim($specs[$i]['spec_name'])) === 'volume') {
+                    if (is_array($specs[$i]) && isset($specs[$i]['spec_name']) && (strtolower(trim($specs[$i]['spec_name'])) === 'ukuran tersedia' || strtolower(trim($specs[$i]['spec_name'])) === 'berat bersih' || strtolower(trim($specs[$i]['spec_name'])) === 'volume')) {
                         $specs[$i]['spec_name'] = 'Ukuran Tersedia';
                         $specs[$i]['spec_value'] = $size;
                         $found_spec = true;
@@ -369,7 +599,6 @@ if (!empty($bibit_posts)) {
         }
     }
     
-    // Add default aromas list if empty
     if (empty($aromas)) {
         $aromas = array('Baccarat', 'Downy Mystique', 'Downy Passion', 'Dunhill Blue', 'Floral', 'Jeruk Nipis', 'Lavender', 'Lemon Fresh', 'Molto Blue', 'Ocean Fresh', 'Phylux', 'Sakura', 'Snappy', 'Strawberry');
     }
@@ -568,7 +797,7 @@ $rich_desc_data = array(
         ),
         'directions' => array(
             'Larutkan Biang Deterjen Detta+ dengan air bersih (rasio anjuran 1:4 untuk hasil premium).',
-            'Aduk perlahan hingga mengental dan homogen.',
+            'Aduk perlahan hingga mengental and homogen.',
             'Diamkan selama beberapa jam hingga gelembung udara menghilang.',
             'Gunakan 30-50 ml deterjen cair hasil enceran untuk 5-7 kg cucian di mesin cuci.'
         )
