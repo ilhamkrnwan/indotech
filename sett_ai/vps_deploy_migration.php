@@ -4,8 +4,8 @@
  * B2B Products Migration & Restructuring Deployment Script for VPS
  * 
  * Instructions:
- * 1. Upload this file and the 'sett_ai' folder to your VPS public_html directory.
- * 2. Run this script in SSH terminal: php sett_ai/vps_deploy_migration.php
+ * 1. Push changes to GitHub and pull on VPS.
+ * 2. Run: php sett_ai/vps_deploy_migration.php
  */
 
 define('WP_USE_THEMES', false);
@@ -19,7 +19,73 @@ require_once ABSPATH . 'wp-admin/includes/image.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/media.php';
 
-echo "=== PT Indotech Berkah Abadi - Starting VPS Deployment & Migration ===\n";
+echo "=== PT Indotech Berkah Abadi - Starting VPS Deployment & Migration (Fixed Image Import) ===\n";
+
+$target_user = 'indot3349';
+$target_group = 'indot3349';
+
+function add_product_image_vps($file_path, $post_id, $user, $group) {
+    if (!file_exists($file_path)) {
+        echo "    [Image Warning] File not found: $file_path\n";
+        return false;
+    }
+    
+    $wp_upload_dir = wp_upload_dir();
+    $filename = basename($file_path);
+    
+    if (!empty($wp_upload_dir['error'])) {
+        echo "    [Image Error] Upload directory error: " . $wp_upload_dir['error'] . "\n";
+        return false;
+    }
+    
+    $new_file_path = $wp_upload_dir['path'] . '/' . $filename;
+    
+    // Copy file
+    if (copy($file_path, $new_file_path)) {
+        // Fix permissions and ownership immediately
+        @chown($new_file_path, $user);
+        @chgrp($new_file_path, $group);
+        @chmod($new_file_path, 0644);
+        
+        $file_type = wp_check_filetype($filename, null);
+        
+        $attachment = array(
+            'post_mime_type' => $file_type['type'],
+            'post_title'     => sanitize_file_name(pathinfo($filename, PATHINFO_FILENAME)),
+            'post_content'   => '',
+            'post_status'    => 'inherit'
+        );
+        
+        $attach_id = wp_insert_attachment($attachment, $new_file_path, $post_id);
+        
+        if (!is_wp_error($attach_id)) {
+            $attach_data = wp_generate_attachment_metadata($attach_id, $new_file_path);
+            wp_update_attachment_metadata($attach_id, $attach_data);
+            
+            // Fix permissions for generated thumbnails/sizes
+            if (!empty($attach_data['sizes'])) {
+                foreach ($attach_data['sizes'] as $size_info) {
+                    $thumb_path = $wp_upload_dir['path'] . '/' . $size_info['file'];
+                    if (file_exists($thumb_path)) {
+                        @chown($thumb_path, $user);
+                        @chgrp($thumb_path, $group);
+                        @chmod($thumb_path, 0644);
+                    }
+                }
+            }
+            
+            set_post_thumbnail($post_id, $attach_id);
+            echo "    [Image Success] Image attached as ID: $attach_id (Permissions corrected)\n";
+            return $attach_id;
+        } else {
+            echo "    [Image Error] Failed to insert attachment: " . $attach_id->get_error_message() . "\n";
+            return false;
+        }
+    } else {
+        echo "    [Image Error] Failed to copy $filename to uploads directory\n";
+        return false;
+    }
+}
 
 // ── 1. Create/Verify Categories ───────────────────────────────────────────
 echo "\n[1/6] Verifying product categories...\n";
@@ -48,7 +114,7 @@ foreach ($categories as $orig => $clean_name) {
 }
 
 // ── 2. Load Products and Sideload Images ──────────────────────────────────
-echo "\n[2/6] Importing new products and sideloading images...\n";
+echo "\n[2/6] Importing products and restoring featured images...\n";
 $json_path = __DIR__ . '/products.json';
 $src_dir = __DIR__ . '/src';
 
@@ -69,63 +135,45 @@ foreach ($products as $p) {
     // Check if product already exists by title
     $existing = get_page_by_title($title, OBJECT, 'product');
     if ($existing) {
-        echo "  Skipped: '$title' (Already exists with ID: {$existing->ID})\n";
-        $imported_ids[] = $existing->ID;
-        continue;
-    }
-    
-    echo "  Processing: '$title'...\n";
-    
-    // Create post
-    $post_id = wp_insert_post(array(
-        'post_title'   => $title,
-        'post_status'  => 'publish',
-        'post_type'    => 'product',
-        'post_content' => $p['content'],
-        'post_excerpt' => $p['excerpt']
-    ));
-    
-    if (is_wp_error($post_id)) {
-        echo "    Error inserting product: " . $post_id->get_error_message() . "\n";
-        continue;
-    }
-    
-    // Set SKU & specifications
-    carbon_set_post_meta($post_id, 'product_sku', $p['sku']);
-    carbon_set_post_meta($post_id, 'product_specifications', $p['specifications']);
-    
-    // Set categories
-    $term_ids = array();
-    foreach ($p['categories'] as $cat_name) {
-        if (isset($cat_map[$cat_name])) {
-            $term_ids[] = $cat_map[$cat_name];
-        }
-    }
-    if (!empty($term_ids)) {
-        wp_set_post_terms($post_id, $term_ids, 'product_cat');
-    }
-    
-    // Sideload Image
-    $img_file = $src_dir . '/' . $p['image_filename'];
-    if (file_exists($img_file)) {
-        // Prepare file array
-        $file_array = array(
-            'name'     => basename($img_file),
-            'tmp_name' => $img_file
-        );
-        
-        // Disable post thumbnail hook during sideload to avoid deleting source file
-        // Sideload copies the file to wp-content/uploads/
-        $attach_id = media_handle_sideload($file_array, $post_id);
-        
-        if (!is_wp_error($attach_id)) {
-            set_post_thumbnail($post_id, $attach_id);
-            echo "    [Image Sideloaded] Attachment ID: $attach_id\n";
-        } else {
-            echo "    [Image Error] Failed to sideload: " . $attach_id->get_error_message() . "\n";
-        }
+        echo "  Exists: '$title' (ID: {$existing->ID}). Checking image...\n";
+        $post_id = $existing->ID;
     } else {
-        echo "    [Image Warning] File not found: " . $p['image_filename'] . "\n";
+        echo "  Creating: '$title'...\n";
+        $post_id = wp_insert_post(array(
+            'post_title'   => $title,
+            'post_status'  => 'publish',
+            'post_type'    => 'product',
+            'post_content' => $p['content'],
+            'post_excerpt' => $p['excerpt']
+        ));
+        
+        if (is_wp_error($post_id)) {
+            echo "    Error inserting product: " . $post_id->get_error_message() . "\n";
+            continue;
+        }
+        
+        // Set SKU & specifications
+        carbon_set_post_meta($post_id, 'product_sku', $p['sku']);
+        carbon_set_post_meta($post_id, 'product_specifications', $p['specifications']);
+        
+        // Set categories
+        $term_ids = array();
+        foreach ($p['categories'] as $cat_name) {
+            if (isset($cat_map[$cat_name])) {
+                $term_ids[] = $cat_map[$cat_name];
+            }
+        }
+        if (!empty($term_ids)) {
+            wp_set_post_terms($post_id, $term_ids, 'product_cat');
+        }
+    }
+    
+    // Upload/Re-verify image if missing
+    if (!has_post_thumbnail($post_id)) {
+        $img_file = $src_dir . '/' . $p['image_filename'];
+        add_product_image_vps($img_file, $post_id, $target_user, $target_group);
+    } else {
+        echo "    Image already set.\n";
     }
     
     $imported_ids[] = $post_id;
@@ -273,7 +321,7 @@ foreach ($groups as $base_title => $items) {
                 }
                 carbon_set_post_meta($parent_id, 'product_specifications', $specs);
             }
-            echo "  Cleaned title for single product: '$original_title' -> '$base_title'\n";
+            echo "  Cleaned title: '$original_title' -> '$base_title'\n";
         }
     }
 }
@@ -292,7 +340,7 @@ while ($q->have_posts()) {
     $q->the_post();
     $id = get_the_ID();
     $title = get_the_title();
-    if (strpos($title, 'Bibit Parfum') === 0) {
+    if (strpos($title, 'Bibit Parfum') === 0 || $title === 'Bibit Parfum & Wewangian') {
         $bibit_posts[] = array(
             'id' => $id,
             'title' => $title,
@@ -316,7 +364,14 @@ if (!empty($bibit_posts)) {
             $gallery_ids[] = intval($post['thumbnail']);
         }
         $aroma = trim(preg_replace('/^Bibit Parfum\s*(\-|–)\s*/i', '', $post['title']));
-        $aromas[] = $aroma;
+        if ($aroma && $aroma !== 'Bibit Parfum & Wewangian') {
+            $aromas[] = $aroma;
+        }
+    }
+    
+    // Add default aromas list if empty
+    if (empty($aromas)) {
+        $aromas = array('Baccarat', 'Downy Mystique', 'Downy Passion', 'Dunhill Blue', 'Floral', 'Jeruk Nipis', 'Lavender', 'Lemon Fresh', 'Molto Blue', 'Ocean Fresh', 'Phylux', 'Sakura', 'Snappy', 'Strawberry');
     }
     
     $gallery_ids = array_unique(array_filter($gallery_ids));
@@ -375,7 +430,9 @@ if (!empty($bibit_posts)) {
     
     // Delete child duplicates
     for ($i = 1; $i < count($bibit_posts); $i++) {
-        wp_delete_post($bibit_posts[$i]['id'], true);
+        if ($bibit_posts[$i]['id'] !== $parent_id) {
+            wp_delete_post($bibit_posts[$i]['id'], true);
+        }
     }
     echo "  Successfully consolidated Bibit Parfum.\n";
 }
