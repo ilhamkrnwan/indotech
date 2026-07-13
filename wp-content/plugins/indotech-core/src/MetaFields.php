@@ -104,6 +104,8 @@ class MetaFields {
                         ]
                     ])
                     ->set_help_text(__('Pilih produk yang direkomendasikan untuk aplikasi layanan B2B ini', 'indotech-core')),
+                Field::make('media_gallery', 'app_gallery', __('Galeri Foto Aplikasi', 'indotech-core'))
+                    ->set_help_text(__('Galeri foto pendukung untuk aplikasi layanan ini', 'indotech-core')),
             ]);
 
         // ── 5. Media Library Attachment Meta Fields ───────────────────────────────

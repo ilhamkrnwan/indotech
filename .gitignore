@@ -42,6 +42,9 @@ wp-content/plugins/indotech-core/**/.DS_Store
 # ── Speedrun docs & planning ─────────────────────────────────
 !speedrun/
 
+# ── sett_ai assets & migration scripts ───────────────────────
+!sett_ai/
+
 # ─────────────────────────────────────────────────────────────
 # TIDAK di-push: wp-config.php, .env, uploads, core WP, dsb.
 # ─────────────────────────────────────────────────────────────
