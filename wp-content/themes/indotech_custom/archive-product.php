@@ -5,6 +5,7 @@
  */
 
 get_header();
+echo '<main id="main-content">';
 
 if ( get_query_var('paged') ) {
     $paged = get_query_var('paged');
@@ -619,5 +620,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <?php
+echo '</main>';
 get_footer();
 

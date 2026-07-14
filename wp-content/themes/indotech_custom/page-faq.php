@@ -83,6 +83,17 @@ $faq_categories = [
         ]
     ]
 ];
+
+// FAQPage schema (GEO): ratakan semua Q&A jadi satu daftar untuk mesin AI.
+$faq_flat = [];
+foreach ( $faq_categories as $cat ) {
+	foreach ( $cat['items'] as $item ) {
+		$faq_flat[] = $item;
+	}
+}
+if ( function_exists( 'indotech_render_faq_schema' ) ) {
+	indotech_render_faq_schema( $faq_flat );
+}
 ?>
 
 <style>

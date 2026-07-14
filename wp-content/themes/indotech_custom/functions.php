@@ -21,11 +21,6 @@ function indotech_setup() {
         'flex-width'  => true,
         'flex-height' => true,
     ]);
-    add_theme_support('woocommerce');
-    add_theme_support('wc-product-gallery-zoom');
-    add_theme_support('wc-product-gallery-lightbox');
-    add_theme_support('wc-product-gallery-slider');
-
     register_nav_menus([
         'primary' => __('Primary Navigation', 'indotech'),
         'footer'  => __('Footer Navigation', 'indotech'),
@@ -125,6 +120,7 @@ add_filter('excerpt_more', 'indotech_excerpt_more');
 // ── Include Partials ──────────────────────────────────────────────────────────
 require_once INDOTECH_DIR . '/inc/customizer.php';
 require_once INDOTECH_DIR . '/inc/helpers.php';
+require_once INDOTECH_DIR . '/inc/seo.php';
 
 // ── AJAX Product Filtering ───────────────────────────────────────────────────
 add_action('wp_ajax_indotech_filter_products', 'indotech_filter_products_handler');

@@ -5,6 +5,7 @@
  */
 
 get_header();
+echo '<main id="main-content">';
 ?>
 
     <section class="inner-page-hero" id="applications-hero">
@@ -181,4 +182,5 @@ get_header();
 </div>
 
 <?php
+echo '</main>';
 get_footer();

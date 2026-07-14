@@ -5,6 +5,7 @@
  */
 
 get_header();
+echo '<main id="main-content">';
 ?>
 
 <style>
@@ -382,35 +383,42 @@ while (have_posts()) : the_post();
     }
 ?>
 
-<!-- JSON-LD B2B Product Schema Markup -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org/",
-  "@type": "Product",
-  "name": "<?php echo esc_js(get_the_title()); ?>",
-  "sku": "<?php echo esc_js($sku); ?>",
-  "image": "<?php echo esc_js(get_the_post_thumbnail_url(get_the_ID(), 'large')); ?>",
-  "description": "<?php echo esc_js(wp_strip_all_tags(get_the_excerpt())); ?>",
-  "brand": {
-    "@type": "Brand",
-    "name": "<?php echo esc_js($brand_title); ?>"
-  },
-  "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "IDR",
-    "lowPrice": "0",
-    "highPrice": "0",
-    "offerCount": "1",
-    "url": "<?php echo esc_js(get_permalink()); ?>",
-    "availability": "https://schema.org/InStock"
-  },
-  "manufacturer": {
-    "@type": "Organization",
-    "name": "PT Indotech Berkah Abadi",
-    "url": "https://indotech.id"
-  }
+<?php
+/*
+ * JSON-LD Product schema (B2B). Tanpa harga publik — model "hubungi untuk
+ * penawaran", jadi blok `offers` dihilangkan agar tidak memicu warning
+ * "missing price" di Google. manufacturer di-link ke entitas Organization
+ * (@id #organization dari inc/seo.php) untuk memperkuat graf entitas (GEO).
+ */
+$product_terms    = get_the_terms( $product_id, 'product_cat' );
+$product_category = ( ! empty( $product_terms ) && ! is_wp_error( $product_terms ) ) ? $product_terms[0]->name : '';
+$product_image    = get_the_post_thumbnail_url( $product_id, 'large' );
+
+$product_schema = [
+	'@context'     => 'https://schema.org',
+	'@type'        => 'Product',
+	'name'         => wp_strip_all_tags( get_the_title() ),
+	'description'  => wp_strip_all_tags( get_the_excerpt() ),
+	'url'          => get_permalink(),
+	'manufacturer' => [ '@id' => home_url( '/#organization' ) ],
+];
+if ( $sku ) {
+	$product_schema['sku'] = $sku;
 }
-</script>
+if ( $product_image ) {
+	$product_schema['image'] = $product_image;
+}
+if ( $brand_title ) {
+	$product_schema['brand'] = [ '@type' => 'Brand', 'name' => $brand_title ];
+}
+if ( $product_category ) {
+	$product_schema['category'] = $product_category;
+}
+
+if ( function_exists( 'indotech_print_jsonld' ) ) {
+	indotech_print_jsonld( $product_schema );
+}
+?>
 
 <div class="product-detail-wrapper" style="--brand-accent: <?php echo esc_attr($brand_accent); ?>; background: var(--surface); min-height: 100vh; padding-top: 120px; padding-bottom: 80px;">
     <div class="container">
@@ -867,5 +875,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <?php
 endwhile;
 
+echo '</main>';
 get_footer();
 

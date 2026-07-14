@@ -5,6 +5,7 @@
  */
 
 get_header();
+echo '<main id="main-content">';
 
 while (have_posts()) : the_post();
     $brand_id = get_the_ID();
@@ -896,5 +897,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <?php
+echo '</main>';
 get_footer();
 

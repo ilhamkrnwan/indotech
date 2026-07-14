@@ -5,6 +5,7 @@
  */
 
 get_header();
+echo '<main id="main-content">';
 
 while (have_posts()) : the_post();
     $industry_id = get_the_ID();
@@ -140,4 +141,5 @@ while (have_posts()) : the_post();
 <?php
 endwhile;
 
+echo '</main>';
 get_footer();
