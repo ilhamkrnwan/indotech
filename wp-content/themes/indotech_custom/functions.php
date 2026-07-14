@@ -60,6 +60,40 @@ function indotech_enqueue() {
         'whatsapp' => $wa_num,
     ]);
 
+    // Lacak semua klik tombol WhatsApp → kirim event GA4 (via Google Site Kit).
+    // Satu delegated listener menangkap SEMUA link wa.me di seluruh situs
+    // (header, footer, floating, hero, produk, FAQ). Tandai `whatsapp_click`
+    // sebagai Key Event di GA4 untuk mengukur lead.
+    $wa_tracker = <<<'JS'
+(function () {
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest(
+      'a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href*="whatsapp://"], a[href^="https://web.whatsapp.com"]'
+    );
+    if (!a) return;
+
+    var href   = a.href || '';
+    var label  = (a.getAttribute('aria-label') || a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80);
+    var numMatch = href.match(/(?:wa\.me\/|phone=|send\?phone=)(\d+)/);
+    var waNumber = numMatch ? numMatch[1] : '';
+
+    var payload = {
+      link_url:      href,
+      link_text:     label,
+      wa_number:     waNumber,
+      page_location: window.location.href
+    };
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'whatsapp_click', payload);
+    } else if (Array.isArray(window.dataLayer)) {
+      window.dataLayer.push(Object.assign({ event: 'whatsapp_click' }, payload));
+    }
+  }, true);
+})();
+JS;
+    wp_add_inline_script('indotech-main', $wa_tracker);
+
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
     }
