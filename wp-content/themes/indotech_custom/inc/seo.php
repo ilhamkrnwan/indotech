@@ -21,6 +21,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Deteksi plugin SEO penuh (Yoast / Rank Math / AIOSEO / SEOPress).
+ *
+ * Bila salah satu aktif, plugin itu sudah mencetak meta description, Open Graph,
+ * Twitter Card, Organization, WebSite, Breadcrumb, dan Article. Modul ini harus
+ * MENGALAH untuk bagian tersebut agar tidak terjadi duplikasi tag & tabrakan
+ * @id JSON-LD. Yang tetap dicetak modul ini: FAQPage, robots AI, preconnect —
+ * karena tidak dicakup plugin SEO standar.
+ *
+ * @return bool
+ */
+function indotech_seo_plugin_active() {
+	return defined( 'WPSEO_VERSION' )        // Yoast SEO
+		|| class_exists( 'RankMath' )        // Rank Math
+		|| defined( 'AIOSEO_VERSION' )       // All in One SEO
+		|| defined( 'SEOPRESS_VERSION' );    // SEOPress
+}
+
+/**
  * Data entitas perusahaan — sumber tunggal untuk seluruh schema.
  *
  * @return array
@@ -126,6 +144,9 @@ function indotech_social_image() {
  * Cetak meta description + Open Graph + Twitter Card.
  */
 function indotech_output_meta_tags() {
+	if ( indotech_seo_plugin_active() ) {
+		return; // Plugin SEO sudah mencetak meta/OG/Twitter.
+	}
 	$org   = indotech_org_data();
 	$desc  = indotech_meta_description();
 	$image = indotech_social_image();
@@ -170,6 +191,9 @@ add_action( 'wp_head', 'indotech_output_meta_tags', 5 );
  * Ini adalah inti GEO — entitas perusahaan yang bisa dikutip AI.
  */
 function indotech_output_org_schema() {
+	if ( indotech_seo_plugin_active() ) {
+		return; // Plugin SEO sudah mencetak Organization + WebSite (@id sama → hindari tabrakan).
+	}
 	$org      = indotech_org_data();
 	$org_id   = home_url( '/#organization' );
 	$site_id  = home_url( '/#website' );
@@ -247,8 +271,8 @@ add_action( 'wp_head', 'indotech_output_org_schema', 6 );
  * BreadcrumbList untuk halaman non-home. Bantu AI & Google memahami hierarki.
  */
 function indotech_output_breadcrumb_schema() {
-	if ( is_front_page() ) {
-		return;
+	if ( indotech_seo_plugin_active() || is_front_page() ) {
+		return; // Plugin SEO sudah mencetak BreadcrumbList.
 	}
 
 	$items = [ [ 'name' => 'Beranda', 'url' => home_url( '/' ) ] ];
@@ -296,8 +320,8 @@ add_action( 'wp_head', 'indotech_output_breadcrumb_schema', 7 );
  * Article schema untuk single blog post — bantu AI kutip konten editorial.
  */
 function indotech_output_article_schema() {
-	if ( ! is_singular( 'post' ) ) {
-		return;
+	if ( indotech_seo_plugin_active() || ! is_singular( 'post' ) ) {
+		return; // Plugin SEO sudah mencetak Article.
 	}
 
 	$org   = indotech_org_data();
