@@ -758,7 +758,7 @@ if ( function_exists( 'indotech_print_jsonld' ) ) {
                         <?php if (!empty($aromas)) : ?>
                             <div>
                                 <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;">Pilih Aroma *</label>
-                                <div style="display: flex; flex-wrap: wrap; gap: 8px; max-height: 150px; overflow-y: auto; padding: 4px; border: 1px solid var(--border); border-radius: 8px;">
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                                     <?php foreach ($aromas as $idx => $aroma) : ?>
                                         <label class="badge-radio-label">
                                             <input type="radio" name="product_aroma" value="<?php echo esc_attr($aroma); ?>" <?php echo $idx === 0 ? 'checked' : ''; ?>>
