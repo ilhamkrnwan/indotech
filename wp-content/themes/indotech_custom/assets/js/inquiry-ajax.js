@@ -20,7 +20,19 @@
       const name = ($form.find('[name="full_name"]').val() || $form.find('[name="contact_name"]').val() || '').trim();
       const email = ($form.find('[name="email"]').val() || $form.find('[name="contact_email"]').val() || '').trim();
       const phone = ($form.find('[name="phone"]').val() || $form.find('[name="contact_phone"]').val() || '').trim();
-      const message = ($form.find('[name="message"]').val() || $form.find('[name="contact_message"]').val() || '').trim();
+      
+      let message = ($form.find('[name="message"]').val() || $form.find('[name="contact_message"]').val() || '').trim();
+      const address = ($form.find('[name="address"]').val() || '').trim();
+      const productSize = $form.find('[name="product_size"]:checked').val() || '';
+      const productAroma = $form.find('[name="product_aroma"]:checked').val() || '';
+      
+      if (address) {
+        message = '';
+        if (productSize) message += `Ukuran: ${productSize}\n`;
+        if (productAroma) message += `Aroma: ${productAroma}\n`;
+        message += `Alamat: ${address}`;
+      }
+      
       const formType = $form.attr('data-form-type') || '';
       const isKemitraan = formType === 'kemitraan';
       const isBrand = $form.find('[name="brand_title"]').length > 0;
@@ -104,16 +116,14 @@
               // Product detail form WhatsApp redirect
               const productTitle = $productTitleField.val();
               const nameText = name || '-';
-              const emailText = email || '-';
               
               redirectText = `Halo indotech.id, saya *${nameText}*\n\n`;
-              redirectText += `• *Nama*: ${nameText}\n`;
-              redirectText += `• *Email*: ${emailText}\n`;
-              redirectText += `• *Ingin bertanya tentang*: ${productTitle}\n\n`;
-              if (message) {
-                redirectText += `*Pesan:*\n"${message}"\n\n`;
-              }
-              redirectText += `Terima kasih.`;
+              redirectText += `Saya tertarik untuk memesan/tanya mengenai produk berikut:\n\n`;
+              redirectText += `• *Produk*: ${productTitle}\n`;
+              if (productSize) redirectText += `• *Ukuran*: ${productSize}\n`;
+              if (productAroma) redirectText += `• *Aroma*: ${productAroma}\n`;
+              if (address) redirectText += `• *Alamat Kirim*: ${address}\n`;
+              redirectText += `\nMohon informasi ketersediaan stok dan ongkos kirimnya. Terima kasih.`;
               
             } else if ($brandTitleField.length) {
               // Brand detail form WhatsApp redirect

@@ -357,6 +357,36 @@ echo '<main id="main-content">';
 .product-description li {
     margin-bottom: 8px;
 }
+
+/* Badge Radio Styles */
+.badge-radio-label {
+    cursor: pointer;
+    user-select: none;
+}
+.badge-radio-label input[type="radio"] {
+    display: none;
+}
+.badge-radio-label .badge-radio-span {
+    display: inline-block;
+    padding: 10px 18px;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 30px;
+    border: 2px solid var(--border);
+    background: var(--white);
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+.badge-radio-label input[type="radio"]:checked + .badge-radio-span {
+    border-color: var(--brand-accent) !important;
+    background: var(--brand-accent) !important;
+    color: var(--white) !important;
+    box-shadow: 0 4px 12px rgba(0, 87, 255, 0.15);
+}
+.badge-radio-label:hover .badge-radio-span {
+    border-color: var(--brand-accent);
+    color: var(--ink);
+}
 </style>
 
 <?php
@@ -679,8 +709,8 @@ if ( function_exists( 'indotech_print_jsonld' ) ) {
             <!-- ── RIGHT COLUMN: STICKY B2B INQUIRY FORM ── -->
             <aside style="position: sticky; top: calc(var(--header-h) + 20px); z-index: 10;">
                 <div class="product-inquiry-box" style="background: var(--white); border: 1px solid var(--brand-accent); border-radius: 16px; padding: 40px; box-shadow: var(--shadow-md);">
-                    <h3 style="font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.02em;">Permintaan Penawaran B2B</h3>
-                    <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px;">Hubungi tim penjualan B2B kami untuk konsultasi formula, harga grosir, atau kemitraan maklon.</p>
+                    <h3 style="font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.02em;">Tanya Detail Produk</h3>
+                    <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px;">Pilih spesifikasi produk yang diinginkan dan tanyakan langsung ke admin kami via WhatsApp.</p>
 
                     <!-- Inquiry Form -->
                     <form id="indotech-inquiry-form" method="POST" style="display: flex; flex-direction: column; gap: 16px;">
@@ -695,18 +725,57 @@ if ( function_exists( 'indotech_print_jsonld' ) ) {
                             <input type="text" name="full_name" placeholder="Masukkan nama Anda" required style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: inherit; font-size: 14px;">
                         </div>
 
-                        <div>
-                            <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">Email Bisnis *</label>
-                            <input type="email" name="email" placeholder="nama@perusahaan.com" required style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: inherit; font-size: 14px;">
-                        </div>
+                        <?php
+                        $sizes = array();
+                        $aromas = array();
+                        if (is_array($specs)) {
+                            foreach ($specs as $spec) {
+                                if (empty($spec['spec_name'])) continue;
+                                $name_lower = strtolower(trim($spec['spec_name']));
+                                if ($name_lower === 'ukuran tersedia' || $name_lower === 'ukuran') {
+                                    $sizes = array_map('trim', explode(',', $spec['spec_value']));
+                                } elseif ($name_lower === 'aroma tersedia' || $name_lower === 'aroma' || $name_lower === 'varian') {
+                                    $aromas = array_map('trim', explode(',', $spec['spec_value']));
+                                }
+                            }
+                        }
+                        ?>
+
+                        <?php if (!empty($sizes)) : ?>
+                            <div>
+                                <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;">Pilih Ukuran *</label>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <?php foreach ($sizes as $idx => $size) : ?>
+                                        <label class="badge-radio-label">
+                                            <input type="radio" name="product_size" value="<?php echo esc_attr($size); ?>" <?php echo $idx === 0 ? 'checked' : ''; ?>>
+                                            <span class="badge-radio-span"><?php echo esc_html($size); ?></span>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($aromas)) : ?>
+                            <div>
+                                <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;">Pilih Aroma *</label>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; max-height: 150px; overflow-y: auto; padding: 4px; border: 1px solid var(--border); border-radius: 8px;">
+                                    <?php foreach ($aromas as $idx => $aroma) : ?>
+                                        <label class="badge-radio-label">
+                                            <input type="radio" name="product_aroma" value="<?php echo esc_attr($aroma); ?>" <?php echo $idx === 0 ? 'checked' : ''; ?>>
+                                            <span class="badge-radio-span"><?php echo esc_html($aroma); ?></span>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
 
                         <div>
-                            <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">Pesan Kustom / Spesifikasi</label>
-                            <textarea name="message" placeholder="Tuliskan spesifikasi khusus, aroma, atau detail kemasan yang diinginkan..." rows="3" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: inherit; font-size: 14px; resize: vertical;"></textarea>
+                            <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">Alamat Lengkap *</label>
+                            <textarea name="address" placeholder="Tuliskan alamat pengiriman lengkap Anda..." rows="3" required style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: inherit; font-size: 14px; resize: vertical;"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; background: var(--brand-accent); border-color: var(--brand-accent); padding: 14px;">
-                            Kirim Penawaran &rarr;
+                            Tanya via WhatsApp &rarr;
                         </button>
                     </form>
 
