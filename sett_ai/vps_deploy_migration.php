@@ -160,7 +160,7 @@ $products[] = array(
     'slug' => 'detta-biang-deterjen-cair-5-liter',
     'sku' => 'BG-DC5L',
     'category' => 'Biang Pembersih Konsentrat',
-    'content' => '<h3>Deskripsi Produk</h3><p>Detta+ Biang Deterjen Cair adalah konsentrat formula detergen laundry ramah lingkungan yang hemat air dan berbusa melimpah. Efektif mengangkat noda membandel pada serat pakaian.</p><h3>Cara Penggunaan</h3><p>Larutkan konsentrat Detta+ dengan air bersih sesuai takaran kemasan, aduk merata hingga mengental, lalu diamkan 12 jam hingga busa tenang.</p>',
+    'content' => '<h3>Deskripsi Produk</h3><p>Detta+ adalah Biang Deterjen Cair berformula ramah lingkungan yang hemat air dan berbusa melimpah. Efektif mengangkat noda membandel pada serat pakaian.</p><h3>Cara Penggunaan</h3><p>Larutkan konsentrat Detta+ dengan air bersih sesuai takaran kemasan, aduk merata hingga mengental, lalu diamkan 12 jam hingga busa tenang.</p>',
     'image_file' => 'Detta+ - Biang Deterjen Cair-5 Liter.png'
 );
 
@@ -238,7 +238,7 @@ $products[] = array(
     'slug' => 'foam-booster-100ml',
     'sku' => 'CH-FB100',
     'category' => 'Bahan Kimia Laundry & Sabun',
-    'content' => '<h3>Deskripsi Produk</h3><p>Foam Booster (Cocamide DEA / CDEA) berfungsi untuk meningkatkan kuantitas busa, mempertebal busa, dan memberikan efek kelembutan ekstra pada adonan sabun cair laundry atau pencuci piring.</p><h3>Cara Penggunaan</h3><p>Tambahkan Foam Booster ke dalam campuran surfaktan utama saat formulasi adonan sabun cair sesuai persentase standar.</p>',
+    'content' => '<h3>Deskripsi Produk</h3><p>Foam Booster (cocamidopropyl betaine / CAPB) berfungsi untuk meningkatkan kuantitas busa, mempertebal busa, dan memberikan efek kelembutan ekstra pada adonan sabun cair laundry atau pencuci piring.</p><h3>Cara Penggunaan</h3><p>Tambahkan Foam Booster ke dalam campuran surfaktan utama saat formulasi adonan sabun cair sesuai persentase standar.</p>',
     'image_file' => 'Foam Booster-100ml.png'
 );
 $products[] = array(
@@ -246,7 +246,7 @@ $products[] = array(
     'slug' => 'nacl-1-kg',
     'sku' => 'CH-NC1K',
     'category' => 'Bahan Kimia Laundry & Sabun',
-    'content' => '<h3>Deskripsi Produk</h3><p>NaCl (Sodium Chloride / Garam Murni) tanpa yodium berkualitas industri. Berfungsi sebagai bahan pengental (thickening agent) alami yang sangat efektif untuk sabun cuci piring dan deterjen cair.</p><h3>Cara Penggunaan</h3><p>Larutkan NaCl secara perlahan ke dalam larutan sabun cair hingga mencapai tingkat kekentalan yang diinginkan.</p>',
+    'content' => '<h3>Deskripsi Produk</h3><p>NaCl (Sodium Chloride / Garam Murni) tanpa yodium berkualitas industri. Berfungsi sebagai bahan pengental (thickening agent) alami yang sangat efektif ketika dicampurkan dengan surfaktan untuk sabun cuci piring dan deterjen cair.</p><h3>Cara Penggunaan</h3><p>Larutkan NaCl secara perlahan ke dalam larutan sabun cair hingga mencapai tingkat kekentalan yang diinginkan.</p>',
     'image_file' => 'NaCl-1 kg.png'
 );
 
@@ -256,7 +256,7 @@ $products[] = array(
     'slug' => 'konsentrat-parfum-alkohol-base-10-liter',
     'sku' => 'PF-KA10L',
     'category' => 'Bibit Parfum & Wewangian',
-    'content' => '<h3>Deskripsi Produk</h3><p>Konsentrat parfum berbasis alkohol siap pakai berukuran 10 Liter. Diformulasikan dengan metanol berkualitas tinggi dan fixative agar keharuman bertahan lama pada pakaian setelah proses setrika.</p><h3>Cara Penggunaan</h3><p>Siap pakai. Semprotkan langsung pada pakaian laundry setelah disetrika sebelum masuk ke proses pengemasan plastik.</p>',
+    'content' => '<h3>Deskripsi Produk</h3><p>Konsentrat parfum berbasis alkohol siap pakai berukuran 10 Liter. Diformulasikan dengan alkohol berkualitas tinggi dan fixative agar keharuman bertahan lama pada pakaian setelah proses setrika.</p><h3>Cara Penggunaan</h3><p>Siap pakai. Semprotkan langsung pada pakaian laundry setelah disetrika sebelum masuk ke proses pengemasan plastik.</p>',
     'image_file' => 'Konsentrat Parfum Alkohol Base-10 Liter.png'
 );
 $products[] = array(
@@ -610,7 +610,7 @@ if (!empty($bibit_posts)) {
     $unified_title = "Bibit Parfum & Wewangian";
     $unified_slug = "bibit-parfum";
     
-    $description = "<p><strong>Bibit Parfum &amp; Wewangian Premium</strong> merupakan konsentrat parfum murni berkualitas tinggi yang dirancang khusus untuk industri laundry, perawatan rumah tangga (homecare), kosmetik, maupun penggunaan pribadi. Formula konsentrat murni ini menghasilkan keharuman yang kuat, elegan, dan tahan lama.</p>\n";
+    $description = "<p>Bibit Parfum &amp; Wewangian Premium merupakan konsentrat parfum murni berkualitas tinggi yang dirancang khusus untuk industri laundry, perawatan rumah tangga (homecare), kosmetik, maupun penggunaan pribadi. Formula konsentrat murni ini menghasilkan keharuman yang kuat, elegan, dan tahan lama.</p>\n";
     $description .= "<h3>Varian Aroma Tersedia &amp; Karakteristik:</h3>\n<ul>\n";
     
     $scent_details = array(
@@ -714,9 +714,7 @@ $rich_desc_data = array(
             'Perlindungan Mesin: Memperpanjang umur elemen pemanas dan pompa mesin espresso dari korosi mineral.'
         ),
         'ingredients' => array(
-            'Sodium Carbonate (Detergent Builder)',
-            'Sodium Percarbonate (Oxygen Bleach Active)',
-            'Chelating Agents & Anti-Corrosion Stabilizer'
+            'Hydrogen Peroxide'
         ),
         'directions' => array(
             'Masukkan 1 sendok teh (3-5 gram) bubuk Pro Kopi ke dalam portafilter yang dipasangi blind basket.',
@@ -734,10 +732,10 @@ $rich_desc_data = array(
             'Pelembap Ekstra (Moisturizer): Menjaga kelembapan alami kulit sehingga kulit tidak kering setelah mandi.'
         ),
         'ingredients' => array(
-            'Sodium Lauryl Ether Sulfate (SLES) premium',
-            'Cocoamidopropyl Betaine (mild surfactant)',
-            'Glycerin (moisturizer agent) & Fragrance',
-            'Aqua & Preservative'
+            'Active surfactant agents',
+            'Foam Stabilizer',
+            'Fragrance',
+            'Colorant Powder packet'
         ),
         'directions' => array(
             'Siapkan wadah bersih berukuran minimal 5-10 Liter.',
@@ -754,9 +752,7 @@ $rich_desc_data = array(
             'Aroma Pinus Aromatik: Memberikan keharuman pinus segar yang tahan lama dan menghilangkan bau tidak sedap.'
         ),
         'ingredients' => array(
-            'Concentrated Anionic Surfactant',
-            'Pine Extract & Benzalkonium Chloride (Disinfectant)',
-            'Viscosity Builder & Colorant'
+            'Total surfaktan 2,9%'
         ),
         'directions' => array(
             'Campurkan 1 bagian Biang Pel Lantai dengan 4 bagian air bersih.',
@@ -772,9 +768,8 @@ $rich_desc_data = array(
             'Formula Anti-Apek: Mencegah timbulnya bau apek akibat kelembapan saat pakaian disetrika.'
         ),
         'ingredients' => array(
-            'Silicone Emulsion Active (Fabric Glider)',
-            'Premium Fragrance compound',
-            'Anti-Bacterial agent & Aqua'
+            'Fragrance 2.5%',
+            'Anti Fungi Agent 0.8%'
         ),
         'directions' => array(
             'Campurkan 1 bagian Biang Pelicin Setrika dengan 5-10 bagian air bersih (sesuaikan dengan kekuatan aroma yang diinginkan).',
@@ -784,20 +779,19 @@ $rich_desc_data = array(
         )
     ),
     'Detta+ – Biang Deterjen Cair' => array(
+        'description' => 'Detta+ adalah Biang Deterjen Cair berformula ramah lingkungan yang hemat air dan berbusa melimpah. Efektif mengangkat noda membandel pada serat pakaian.',
         'features' => array(
             'Daya Bersih Extra (Heavy Duty): Menghilangkan kotoran minyak, lumpur, dan noda makanan dengan cepat.',
             'Anti-Redeposition Agent: Mencegah kotoran yang telah lepas menempel kembali ke serat kain selama proses pencucian.',
             'Optical Brightener (OBA): Menjaga pakaian putih tetap cemerlang dan warna pakaian tetap cerah tanpa memudarkannya.'
         ),
         'ingredients' => array(
-            'Linear Alkylbenzene Sulfonate (LAS) active',
-            'Sodium Lauryl Ether Sulfate (SLES)',
-            'Anti-Redeposition Agent & Optical Brightener',
-            'Fragrance & Colorant packet'
+            'Active surfactant agents',
+            'Fragrance'
         ),
         'directions' => array(
             'Larutkan Biang Deterjen Detta+ dengan air bersih (rasio anjuran 1:4 untuk hasil premium).',
-            'Aduk perlahan hingga mengental and homogen.',
+            'Aduk perlahan hingga mengental dan homogen.',
             'Diamkan selama beberapa jam hingga gelembung udara menghilang.',
             'Gunakan 30-50 ml deterjen cair hasil enceran untuk 5-7 kg cucian di mesin cuci.'
         )
@@ -809,9 +803,8 @@ $rich_desc_data = array(
             'Kompatibilitas Luas: Mudah larut dan bercampur dengan berbagai jenis surfaktan anionik maupun non-ionik.'
         ),
         'ingredients' => array(
-            'Cocamide DEA (CDEA) surfactant booster',
-            'Fabric conditioning agents',
-            'Aqueous stabilizer'
+            'Linear Alkyl Benzene Sulfonate',
+            'Natrium Hidroksida'
         ),
         'directions' => array(
             'Tambahkan Atinsoft pada fase pencampuran surfaktan saat memformulasi deterjen cair atau sabun mandi.',
@@ -826,8 +819,8 @@ $rich_desc_data = array(
             'Tanpa Residu: Cairan bening jernih yang tidak meninggalkan noda kuning atau bercak berminyak pada pakaian putih.'
         ),
         'ingredients' => array(
-            'PPG-20 Methyl Glucose Ether (Fixative Active)',
-            'Solvent stabilizer & odor neutralizer'
+            'Difenil keton',
+            'Dipropylene Glycol (DPG)'
         ),
         'directions' => array(
             'Tambahkan Fixamax Cair ke dalam campuran bibit parfum sebelum dicampur dengan metanol/alkohol.',
@@ -842,8 +835,7 @@ $rich_desc_data = array(
             'Penguat Aroma (Odor Intensifier): Memperkuat aroma top-note dan middle-note pada bibit parfum agar lebih harum saat pertama kali disemprot.'
         ),
         'ingredients' => array(
-            'Dipropylene Glycol (DPG) crystal compound',
-            'Fragrance binder & long-lasting active crystal'
+            'Difenil keton'
         ),
         'directions' => array(
             'Larutkan Fixamax Crystal ke dalam sedikit pelarut hangat atau bibit parfum murni.',
@@ -852,28 +844,29 @@ $rich_desc_data = array(
         )
     ),
     'Foam Booster' => array(
+        'description' => 'Foam Booster (cocamidopropyl betaine / CAPB) berfungsi untuk meningkatkan kuantitas busa, mempertebal busa, dan memberikan efek kelembutan ekstra pada adonan sabun cair laundry atau pencuci piring.',
         'features' => array(
-            'Premium Cocamide DEA: Konsentrat murni kelapa kelapa sawit yang sangat efektif menstabilkan busa agar tidak cepat kempes.',
-            'Viscosity Builder: Membantu meningkatkan kekentalan sabun cair, deterjen, dan shampoo mobil secara alami.',
-            'Mild Conditioner: Memberikan efek lembut dan tidak membuat kulit kering atau kasar saat terkena sabun.'
+            'Foam & Lather Booster: Meningkatkan kuantitas dan stabilitas busa secara signifikan pada sabun laundry dan pencuci piring.',
+            'Mild Surfactant: Lembut di tangan dan mengurangi potensi iritasi dari bahan pembersih utama.',
+            'Viscosity Builder: Membantu meningkatkan kekentalan sabun cair secara alami ketika dikombinasikan dengan garam.'
         ),
         'ingredients' => array(
-            '100% Pure Cocamide DEA / CDEA'
+            'Cocamidopropyl Betaine (CAPB)'
         ),
         'directions' => array(
-            'Campurkan Foam Booster ke dalam bahan aktif utama (SLES/Texapon) sebelum ditambahkan air.',
-            'Gunakan dosis 1% hingga 4% dari total berat formula sabun cair.',
-            'Aduk merata hingga campuran mengental secara alami.'
+            'Tambahkan Foam Booster ke dalam adonan sabun cair laundry atau pencuci piring saat pencampuran surfaktan utama.',
+            'Aduk perlahan hingga tercampur secara homogen untuk meningkatkan kuantitas busa sabun cair.'
         )
     ),
     'NaCl' => array(
+        'description' => 'NaCl (Sodium Chloride / Garam Murni) tanpa yodium berkualitas industri. Berfungsi sebagai bahan pengental (thickening agent) alami yang sangat efektif ketika dicampurkan dengan surfaktan untuk sabun cuci piring dan deterjen cair.',
         'features' => array(
             'Kristal Murni Food Grade: Garam murni berkualitas tinggi tanpa kandungan yodium untuk kekentalan sabun yang stabil.',
             'Viscosity Modifier Alami: Agen pengental paling efektif untuk surfaktan jenis Sodium Lauryl Ether Sulfate (SLES).',
             'Pembersih Alami: Membantu melarutkan kotoran organik dan menyeimbangkan tegangan permukaan air.'
         ),
         'ingredients' => array(
-            'Sodium Chloride (NaCl) 99% Pure Crystal'
+            'Sodium Chloride (NaCl)'
         ),
         'directions' => array(
             'Larutkan NaCl dalam sedikit air sebelum dimasukkan ke dalam campuran sabun cair.',
@@ -882,14 +875,15 @@ $rich_desc_data = array(
         )
     ),
     'Konsentrat Parfum Alkohol Base' => array(
+        'description' => 'Konsentrat parfum berbasis alkohol siap pakai berukuran 10 Liter. Diformulasikan dengan alkohol berkualitas tinggi dan fixative agar keharuman bertahan lama pada pakaian setelah proses setrika.',
         'features' => array(
             'Formula Siap Pakai: Pelarut parfum laundry kelas profesional dengan campuran fixative dan stabilizer aktif.',
             'Cepat Kering: Menguap seketika setelah disemprot tanpa membuat kain menjadi basah atau berjamur.',
             'Aroma Menyebar Sempurna: Membantu menyebarkan aroma parfum laundry secara merata ke seluruh permukaan serat kain.'
         ),
         'ingredients' => array(
-            'Denatured Ethanol (Perfume Grade)',
-            'Fragrance solubilizer & fixative stabilizer'
+            'Fragrance solubilizer',
+            'Fixative stabilizer'
         ),
         'directions' => array(
             'Campurkan 10% hingga 20% bibit parfum murni ke dalam cairan Konsentrat Parfum ini.',
@@ -904,9 +898,9 @@ $rich_desc_data = array(
             'Ramah Lingkungan: Menggunakan surfaktan biodegradable yang mudah terurai dan aman bagi ekosistem air.'
         ),
         'ingredients' => array(
-            'SLES Paste (Active Cleaning Agent)',
-            'Foam Stabilizer & Thickener builder',
-            'Fragrance & Colorant Powder packet'
+            'Active surfactant agents',
+            'Fragrance',
+            'Colorant Powder packet'
         ),
         'directions' => array(
             'Siapkan wadah bersih ukuran 15-20 Liter.',
@@ -914,6 +908,449 @@ $rich_desc_data = array(
             'Masukkan bahan pengental dan foam booster, aduk hingga larut merata.',
             'Tambahkan pewangi dan pewarna yang telah dilarutkan terlebih dahulu.',
             'Tambahkan sisa air hingga volume mencapai 10-15 Liter, diamkan selama 12 jam hingga busa mereda sepenuhnya sebelum dikemas.'
+        )
+    ),
+    'Hand Wash – Sabun Cuci Tangan Cair' => array(
+        'description' => 'Hand Wash – Sabun Cuci Tangan Cair adalah produk kebersihan dan perawatan berkualitas premium dari Indotech untuk menjaga kebersihan tangan Anda setelah beraktivitas.',
+        'features' => array(
+            'Antibakteri Efektif: Melindungi tangan dari kuman, bakteri, dan kotoran setelah beraktivitas.',
+            'Formula Lembut di Kulit: Mengandung pelembap agar kulit tangan tidak kering atau kasar meskipun sering digunakan.',
+            'Aroma Segar Premium: Memberikan keharuman mewah yang tahan lama di tangan Anda.'
+        ),
+        'ingredients' => array(
+            'Total Surfaktan 9%'
+        ),
+        'directions' => array(
+            'Basahi tangan dengan air bersih mengalir.',
+            'Tuangkan cairan Hand Wash secukupnya pada telapak tangan.',
+            'Gosok seluruh bagian tangan, termasuk sela-sela jari dan punggung tangan selama minimal 20 detik.',
+            'Bilas dengan air bersih hingga kesat dan keringkan.'
+        )
+    ),
+    'Engine Degreaser – Pembersih Mesin Kendaraan' => array(
+        'description' => 'Engine Degreaser – Pembersih Mesin Kendaraan adalah produk kebersihan dan perawatan berkualitas premium dari Indotech untuk membersihkan mesin kendaraaan Anda supaya terlihat seperti baru kembali.',
+        'features' => array(
+            'Formula Pembersih Berat (Heavy Duty): Meluruhkan kerak oli, gemuk/grease, jelaga, dan kotoran jalanan membandel di ruang mesin.',
+            'Aman untuk Komponen Logam: Tidak merusak besi, aluminium, maupun blok mesin kendaraan.',
+            'Mudah Diaplikasikan: Cukup disemprotkan dan dibilas untuk melarutkan kotoran dengan cepat.'
+        ),
+        'ingredients' => array(
+            'Active surfactant agents',
+            'Fragrance',
+            'Monoethanolamine',
+            'Sodium Metasilicate',
+            'Oxalic Acid'
+        ),
+        'directions' => array(
+            'Pastikan kondisi mesin kendaraan dalam keadaan dingin.',
+            'Semprotkan cairan Engine Degreaser pada area mesin yang kotor dan berminyak.',
+            'Diamkan selama 2-5 menit agar formula melunakkan kerak kotoran.',
+            'Gosok perlahan dengan kuas detailing jika diperlukan, lalu bilas dengan air bersih hingga bersih.'
+        )
+    ),
+    'Deterjen Karpet – Pembersih Karpet & Sofa' => array(
+        'description' => 'Deterjen Karpet – Pembersih Karpet & Sofa adalah produk kebersihan dan perawatan berkualitas premium dari Indotech untuk membersihkan karpet Anda dari kotoran dan debu yang menempel di karpet.',
+        'features' => array(
+            'Formula Busa Aktif: Penetrasi cepat ke serat kain karpet tebal untuk mengangkat debu dan noda.',
+            'Pencerah Serat Kain: Mengembalikan kesegaran warna karpet dan sofa agar terlihat bersih cemerlang.',
+            'Anti-Bacterial Active: Menghilangkan kuman, tungau, dan bau apek lembap pada karpet.'
+        ),
+        'ingredients' => array(
+            'Total Surfaktan 10%'
+        ),
+        'directions' => array(
+            'Sedot debu pada karpet atau sofa terlebih dahulu.',
+            'Larutkan Deterjen Karpet dengan air hangat sesuai kebutuhan pencucian.',
+            'Sikat permukaan karpet perlahan dengan busa melimpah hasil campuran deterjen.',
+            'Keringkan karpet dengan vacuum extractor atau jemur di tempat berangin.'
+        )
+    ),
+    'Deterjen Eco – Deterjen Cair Wangi Premium' => array(
+        'description' => 'Deterjen Eco – Deterjen Cair Wangi Premium adalah produk kebersihan dan perawatan berkualitas premium dari Indotech untuk membersihkan pakaian Anda dari noda, keringat, debu, dan kotoran yang menempel.',
+        'features' => array(
+            'Formula Pembersih Ramah Lingkungan: Surfaktan biodegradable yang efektif namun aman bagi ekosistem.',
+            'Keharuman Premium Tahan Lama: Mengandung parfum berkualitas yang melekat erat di serat kain.',
+            'Optical Brightener: Menjaga warna pakaian tetap cemerlang dan putih tetap bersih bersinar.'
+        ),
+        'ingredients' => array(
+            'Total Surfaktan 6%'
+        ),
+        'directions' => array(
+            'Pisahkan pakaian putih dan berwarna.',
+            'Gunakan 30-50 ml deterjen untuk mesin cuci kapasitas 5-7 kg (atau larutkan untuk mencuci manual).',
+            'Cuci dan bilas pakaian seperti biasa hingga bersih.'
+        )
+    ),
+    'Anti Noda Jamur – Penghilang Noda Jamur & Bau Apek' => array(
+        'description' => 'Anti Noda Jamur – Penghilang Noda Jamur & Bau Apek adalah produk kebersihan dan perawatan berkualitas premium dari Indotech untuk menunjang aktivitas kebersihan harian Anda.',
+        'features' => array(
+            'Heavy Duty Mold Remover: Sangat efektif melarutkan noda bintik hitam jamur pada serat kain.',
+            'Anti-Bacterial & Odor Eliminator: Menghilangkan bau apek membandel akibat kelembapan.',
+            'Multisurface Action: Cocok untuk pakaian, sprei, handuk, mukena, dan perlengkapan tidur lainnya.'
+        ),
+        'ingredients' => array(
+            'Total surfaktan 16%'
+        ),
+        'directions' => array(
+            'Oleskan atau semprotkan cairan pada bagian kain yang terkena noda jamur.',
+            'Sikat perlahan menggunakan sikat halus atau biarkan bereaksi selama 5-10 menit.',
+            'Cuci pakaian dengan deterjen biasa dan bilas hingga bersih.'
+        )
+    ),
+    'Souring – Penetral pH & Pelembut Kain Asam' => array(
+        'features' => array(
+            'Penetral pH Serat Kain: Menetralisir residu alkali dari deterjen utama agar serat kain tidak kaku.',
+            'Mencegah Kerusakan Serat: Menjaga warna tetap cerah dan mencegah pelapukan serat kain akibat sisa kimia.',
+            'Pelembut Alami: Membantu melembutkan pakaian secara alami setelah proses pencucian.'
+        ),
+        'ingredients' => array(
+            'Citric acid',
+            'Aqua'
+        ),
+        'directions' => array(
+            'Tambahkan cairan Souring pada bilasan terakhir proses pencucian.',
+            'Gunakan takaran 20-30 ml untuk kapasitas mesin cuci 5-7 kg.',
+            'Bilas pakaian hingga bersih dan keringkan seperti biasa.'
+        )
+    ),
+    'Prokopi – Pembersih Mesin Fotokopi & Elektronik' => array(
+        'features' => array(
+            'Formula Pembersih Cepat Kering: Efektif membersihkan kotoran dan tinta pada mesin fotokopi dan printer.',
+            'Perlindungan Anti-Statik: Mencegah debu menempel kembali pada permukaan elektronik pasca pembersihan.',
+            'Aman untuk Komponen Plastik: Tidak merusak panel plastik maupun sasis luar mesin elektronik.'
+        ),
+        'ingredients' => array(
+            'Active surfactant agents',
+            'Fragrance',
+            'Monoethanolamine',
+            'Sodium Metasilicate',
+            'Oxalic Acid'
+        ),
+        'directions' => array(
+            'Semprotkan cairan Prokopi pada lap microfiber bersih.',
+            'Usapkan secara merata pada permukaan luar mesin fotokopi atau printer yang ingin dibersihkan.',
+            'Lap kembali dengan bagian kain yang kering hingga bersih mengkilap.'
+        )
+    ),
+    'Pembersih Bahan Kulit – Leather Cleaner & Conditioner' => array(
+        'features' => array(
+            'Pembersih Alami Ekstrak Lerak: Membersihkan noda debu dan kotoran pada kulit tanpa merusak pori-porinya.',
+            'Kondisioner Serat Kulit: Menjaga kelembapan alami kulit agar tidak pecah-pecah atau kusam.',
+            'Aplikasi Serbaguna: Aman digunakan untuk tas kulit, sepatu kulit, jaket kulit, maupun jok mobil.'
+        ),
+        'ingredients' => array(
+            'Lerak',
+            'Distilled water'
+        ),
+        'directions' => array(
+            'Kocok produk terlebih dahulu sebelum digunakan.',
+            'Tuangkan cairan secukupnya pada spons aplikator atau kain lembut.',
+            'Gosok permukaan kulit secara perlahan dengan gerakan memutar.',
+            'Lap sisa busa dan kotoran dengan kain kering, lalu angin-anginkan.'
+        )
+    ),
+    'Parfum Helm – Pewangi Khusus Helm' => array(
+        'features' => array(
+            'Pewangi Khusus Padding Helm: Menghilangkan bau keringat, apek, dan debu di dalam helm.',
+            'Cepat Kering & Bebas Lembap: Formula berbasis air yang menguap dengan cepat tanpa membuat padding basah.',
+            'Aroma Segar Tahan Lama: Memberikan keharuman maskulin yang segar sepanjang perjalanan.'
+        ),
+        'ingredients' => array(
+            'Fragrance solubilizer',
+            'Fixative stabilizer',
+            'Aqua'
+        ),
+        'directions' => array(
+            'Semprotkan Parfum Helm secukupnya ke bagian dalam helm.',
+            'Biarkan mengering selama 3-5 menit sebelum helm digunakan kembali.'
+        )
+    ),
+    'Oxy Bleach – Pemutih Kain Berbasis Oksigen' => array(
+        'features' => array(
+            'Oxygen Active Bleach: Melarutkan noda membandel pada pakaian putih maupun berwarna tanpa memudarkan warna.',
+            'Aman untuk Serat Pakaian: Tidak merusak rajutan serat kain dan tidak menyebabkan kekuningan.',
+            'Formula Ramah Lingkungan: Mudah terurai dan aman bagi lingkungan sekitar.'
+        ),
+        'ingredients' => array(
+            'Hydrogen Peroxide'
+        ),
+        'directions' => array(
+            'Larutkan Oxy Bleach dengan deterjen dalam air hangat.',
+            'Rendam pakaian yang bernoda selama 15-30 menit sebelum dicuci.',
+            'Cuci and bilas pakaian seperti biasa hingga bersih.'
+        )
+    ),
+    'Nauki – Pelembut & Pewangi Pakaian' => array(
+        'features' => array(
+            'Softener Alami Ekstrak Lerak: Melembutkan serat pakaian secara alami tanpa residu kimia buatan.',
+            'Aroma Mewah Tahan Lama: Menghasilkan keharuman bunga yang menenangkan dan bertahan lama.',
+            'Ramah Lingkungan & Lembut di Kulit: Aman untuk mencuci pakaian bayi dan orang berkulit sensitif.'
+        ),
+        'ingredients' => array(
+            'Lerak',
+            'Distilled water'
+        ),
+        'directions' => array(
+            'Tambahkan cairan Nauki pada bilasan terakhir proses pencucian pakaian.',
+            'Gunakan takaran 30-50 ml untuk cucian 5-7 kg.',
+            'Aduk rata, rendam pakaian selama 5-10 menit, lalu peras dan jemur.'
+        )
+    ),
+    'Mizuny – Softener Kain Aroma Segar' => array(
+        'features' => array(
+            'Softener Konsentrat Tinggi: Melembutkan pakaian secara optimal dengan dosis penggunaan yang sangat hemat.',
+            'Aroma Segar Semerbak: Memberikan keharuman fresh yang menyegarkan pakaian sepanjang hari.',
+            'Perlindungan Serat Kain: Mengurangi kerutan pasca cuci dan mempermudah proses penyetrikaan.'
+        ),
+        'ingredients' => array(
+            'Total Surfaktan 18%'
+        ),
+        'directions' => array(
+            'Tambahkan Mizuny pada bilasan akhir pencucian.',
+            'Gunakan 20-30 ml untuk kapasitas mesin cuci 5-7 kg.',
+            'Rendam sejenak lalu peras pakaian dan jemur.'
+        )
+    ),
+    'Malabeez – Parfum Laundry Oriental Premium' => array(
+        'features' => array(
+            'Aroma Khas Timur Tengah: Keharuman oriental mewah berbasis micro parfum yang harum semerbak.',
+            'Formula Bebas Bercak: Tidak meninggalkan noda kuning atau bercak minyak pada serat kain.',
+            'Keharuman Tahan Lama: Wangi menempel erat di pakaian hingga berhari-hari di dalam lemari.'
+        ),
+        'ingredients' => array(
+            'Micro parfum',
+            'Parfum',
+            'Aqua'
+        ),
+        'directions' => array(
+            'Semprotkan cairan Malabeez langsung ke pakaian setelah proses penyetrikaan.',
+            'Lakukan pengemasan plastik laundry segera untuk hasil aroma maksimal.'
+        )
+    ),
+    'Glory – Softener & Pelembut Pakaian' => array(
+        'features' => array(
+            'Cationic Softener Formula: Melunakkan serat kain secara efektif sehingga nyaman saat dikenakan.',
+            'Fragrance Microcapsules: Mengandung kombinasi micro-parfum untuk pelepasan keharuman secara bertahap.',
+            'Anti-Static Agent: Mencegah timbulnya listrik statis pada pakaian sintetis pasca pengeringan.'
+        ),
+        'ingredients' => array(
+            'Surfaktan 3.6%',
+            'Micro parfum 0.6%',
+            'Parfum 0.3%'
+        ),
+        'directions' => array(
+            'Campurkan 1 bagian Glory dengan formulasi pelarut air sesuai standar kebutuhan Anda.',
+            'Gunakan pada bilasan cucian terakhir untuk melembutkan serat kain.'
+        )
+    ),
+    'Glika – Pelicin & Pengharum Kain' => array(
+        'features' => array(
+            'Anti-Kusut Instan: Memudahkan setrika meluncur di atas pakaian dengan licin dan cepat.',
+            'Formula Anti-Jamur (Anti-Fungi): Mencegah timbulnya jamur dan bau apek akibat kelembapan setrika.',
+            'Wangi Segar Premium: Pakaian tetap wangi sepanjang hari selama beraktivitas.'
+        ),
+        'ingredients' => array(
+            'Fragrance 0.6%',
+            'Anti Fungi Agent 0.1%'
+        ),
+        'directions' => array(
+            'Masukkan cairan Glika ke dalam botol spray setrika.',
+            'Semprotkan merata pada bagian pakaian yang akan disetrika.'
+        )
+    ),
+    'Crystal Cleaner – Pembersih Kristal Serbaguna' => array(
+        'features' => array(
+            'Pembersih Serbaguna Kuat: Melarutkan noda kerak air, noda kuning, dan minyak membandel di berbagai permukaan.',
+            'Oxygen Active Action: Formula kristal aktif berbasis hidrogen peroksida yang aman bagi permukaan keramik dan logam.',
+            'Mudah Dibilas: Bersih berkilau tanpa meninggalkan residu sabun yang licin.'
+        ),
+        'ingredients' => array(
+            'Hydrogen Peroxide'
+        ),
+        'directions' => array(
+            'Taburkan atau larutkan Crystal Cleaner pada permukaan yang basah.',
+            'Biarkan bereaksi selama 5-10 menit, lalu sikat perlahan.',
+            'Bilas dengan air bersih hingga bersih mengkilap.'
+        )
+    ),
+    'Alkali – Pengangkat Noda & Pencerah Pakaian' => array(
+        'features' => array(
+            'Detergent Builder Booster: Meningkatkan daya pembersih deterjen utama dalam meluruhkan noda minyak dan lemak.',
+            'Pencerah Warna Pakaian: Mencegah warna pakaian memudar dan membuat pakaian putih tampak cemerlang.',
+            'pH Modifier: Menjaga stabilitas alkalinity air pencucian untuk performa detergen optimal.'
+        ),
+        'ingredients' => array(
+            'Sodium hydroxide',
+            'Aqua'
+        ),
+        'directions' => array(
+            'Tambahkan Alkali bersamaan dengan deterjen utama pada tangki pencucian mesin cuci.',
+            'Dosis penggunaan berkisar antara 5-15 ml per kilogram cucian kering.'
+        )
+    ),
+    'Semir Ban – Tire Shine & Dressing Kendaraan' => array(
+        'features' => array(
+            'High-Gloss Shine: Mengembalikan warna hitam pekat ban dengan kilap basah (wet-look) yang memukau.',
+            'Tire Protection Active: Mengandung polimer khusus untuk mencegah ban retak-retak akibat paparan cuaca.',
+            'Water Repellent Effect: Lapisan anti-air yang melindungi ban dari kotoran lumpur dan debu jalanan.'
+        ),
+        'ingredients' => array(
+            'Surfaktan',
+            'Dimethyl Polysiloxane Polymer 10%'
+        ),
+        'directions' => array(
+            'Pastikan permukaan ban kendaraan dalam keadaan bersih dan kering.',
+            'Oleskan cairan Semir Ban secara merata menggunakan spons aplikator pada dinding samping ban.',
+            'Biarkan mengering secara alami hingga menghasilkan kilap hitam pekat.'
+        )
+    ),
+    'Pengusir Tikus – Rodent Repellent Kendaraan' => array(
+        'features' => array(
+            'Effective Rodent Repellent: Mencegah tikus dan hewan pengerat bersarang di dalam ruang mesin kendaraan.',
+            'Aman untuk Kabel & Sensor: Tidak merusak kabel kelistrikan, karet selang, maupun komponen sensitif mesin.',
+            'Perlindungan Tahan Lama: Memberikan bau repellent yang mengusir hama secara konstan.'
+        ),
+        'ingredients' => array(
+            'Cationic Surfactant',
+            'Fragrance',
+            'Solubilizer'
+        ),
+        'directions' => array(
+            'Bersihkan ruang mesin kendaraan dari sisa kotoran tikus terlebih dahulu.',
+            'Semprotkan cairan Pengusir Tikus pada kabel, selang, dan sasis mesin.',
+            'Ulangi penyemprotan setiap 1-2 minggu sekali untuk proteksi maksimal.'
+        )
+    ),
+    'Pengkilap Body – Wax & Shine Bodi Kendaraan' => array(
+        'features' => array(
+            'Instant Shine & Protect: Memberikan kilau berkilau (glossy) pada permukaan cat bodi mobil/motor.',
+            'Hydrophobic Layer: Menghasilkan efek daun talas (water beading) untuk menangkal noda air hujan.',
+            'UV Protection: Melindungi cat dari kusam akibat paparan sinar matahari.'
+        ),
+        'ingredients' => array(
+            'Dimethyl Polysiloxane Polymer',
+            'Solubilizer'
+        ),
+        'directions' => array(
+            'Cuci dan keringkan kendaraan terlebih dahulu.',
+            'Semprotkan atau oleskan cairan Pengkilap Body pada permukaan panel kendaraan.',
+            'Lap dan buff secara memutar menggunakan kain microfiber bersih hingga mengkilap.'
+        )
+    ),
+    'Penghitam Body – Restorer Eksterior Kendaraan' => array(
+        'features' => array(
+            'Trim Restorer Premium: Mengembalikan warna hitam alami pada bagian bumper dan trim plastik yang pudar.',
+            'Long Lasting Protection: Lapisan tahan air yang tidak luntur meskipun dicuci berulang kali.',
+            'Mencegah Penuaan Plastik: Melindungi plastik dari retak dan kusam akibat paparan sinar UV.'
+        ),
+        'ingredients' => array(
+            'Pigmen hitam',
+            'Dimethyl Polysiloxane Polymer',
+            'Solubilizer'
+        ),
+        'directions' => array(
+            'Bersihkan permukaan trim plastik eksterior kendaraan dari debu dan kotoran.',
+            'Tuangkan cairan Penghitam Body pada spons aplikator.',
+            'Usapkan secara merata pada permukaan plastik dan biarkan meresap.'
+        )
+    ),
+    'Pembersih Kaca Mobil – Glass Cleaner Kendaraan' => array(
+        'features' => array(
+            'Streak-Free Shine: Membersihkan kaca mobil secara sempurna tanpa meninggalkan bercak garis pasca lap.',
+            'Melarutkan Water Spot: Efektif menghilangkan noda jamur kaca (water spot) ringan dan minyak jalanan.',
+            'Slick Coating Action: Memberikan efek licin pada kaca agar air dan debu tidak mudah menempel.'
+        ),
+        'ingredients' => array(
+            'Amodimethicone',
+            'Solven',
+            'Hydrogen fluoride'
+        ),
+        'directions' => array(
+            'Semprotkan cairan Pembersih Kaca Mobil secara merata pada kaca kendaraan.',
+            'Lap bersih menggunakan kain microfiber khusus kaca dengan gerakan satu arah.',
+            'Pastikan tidak ada residu cairan tertinggal.'
+        )
+    ),
+    'Compound – Poles Bodi & Penghilang Baret Kendaraan' => array(
+        'features' => array(
+            'Scratch & Swirl Remover: Menghilangkan baret halus dan goresan swirl marks pada pernis cat kendaraan.',
+            'Safe for Clear Coat: Tidak mengikis lapisan cat secara berlebihan, aman untuk cat metallic.',
+            'Pre-Wax Treatment: Menghaluskan permukaan cat sebelum masuk ke proses pengkilapan bodi.'
+        ),
+        'ingredients' => array(
+            'Aqua',
+            'Mineral Oil',
+            'Silicone Emulsion',
+            'Talc'
+        ),
+        'directions' => array(
+            'Bersihkan bodi kendaraan dan pastikan dalam kondisi dingin di bawah naungan.',
+            'Oleskan Compound secukupnya pada area baret bodi kendaraan.',
+            'Gosok dengan gerakan memutar menggunakan spons pad poles atau mesin polisher.',
+            'Lap bersih sisa residu dengan kain microfiber.'
+        )
+    ),
+    'Determat Eco – Paket Bahan Detergen Cair Ekonomis' => array(
+        'features' => array(
+            'Paket Pembuatan Detergen Ekonomis: Bahan lengkap untuk diolah sendiri menjadi deterjen laundry cair hemat biaya.',
+            'Busa Melimpah & Wangi: Menghasilkan deterjen cair yang memiliki daya cuci bersih dan keharuman segar.',
+            'Sangat Hemat Produksi: Pilihan ideal untuk pengusaha laundry kiloan skala pemula.'
+        ),
+        'ingredients' => array(
+            'Active surfactant agents',
+            'Fragrance',
+            'Colorant Powder packet'
+        ),
+        'directions' => array(
+            'Larutkan pasta aktif ke dalam wadah berisi air bersih secara perlahan.',
+            'Tambahkan formulasi pewangi dan pewarna yang telah disediakan.',
+            'Aduk secara konstan hingga mengental sempurna dan siap dikemas.'
+        )
+    ),
+    'Detta Plus – Paket Bahan Sabun Cuci Piring' => array(
+        'features' => array(
+            'Paket Bahan Sabun Ekonomis: Paket lengkap untuk membuat sabun cuci piring cair siap pakai dengan biaya rendah.',
+            'Melarutkan Lemak Cepat: Menghasilkan sabun cuci piring yang efektif membersihkan sisa lemak makanan.',
+            'Busa Melimpah: Busa tebal dan stabil untuk kenyamanan saat mencuci peralatan dapur.'
+        ),
+        'ingredients' => array(
+            'Active surfactant agents',
+            'Fragrance'
+        ),
+        'directions' => array(
+            'Larutkan paket bahan sabun ke dalam air bersih bertahap sesuai petunjuk kemasan.',
+            'Aduk hingga mengental sempurna, diamkan beberapa jam hingga busa tenang, lalu siap digunakan.'
+        )
+    ),
+    'Biang Karbol – Paket Bahan Karbol Wangi' => array(
+        'features' => array(
+            'Paket Bahan Pembersih Pinus: Satu paket bahan untuk diolah menjadi karbol lantai disinfektan konsentrat.',
+            'Desinfektan Kuat: Efektif mensterilkan lantai rumah sakit, hotel, kandang, maupun toilet.',
+            'Aroma Pinus Alami: Menghilangkan bau busuk membandel dengan keharuman pinus cemara yang menyegarkan.'
+        ),
+        'ingredients' => array(
+            'Pine oil 17%',
+            'Benzalkonium chloride 1%'
+        ),
+        'directions' => array(
+            'Larutkan bahan biang karbol ke dalam air bersih sesuai instruksi.',
+            'Aduk perlahan hingga tercampur merata dan larutan berubah warna susu cemara siap pakai.'
+        )
+    ),
+    'Arai – Paket Bahan Sabun Cuci Tangan' => array(
+        'features' => array(
+            'Paket Bahan Hand Wash Ekonomis: Sangat mudah diolah menjadi sabun cuci tangan cair premium berbusa melimpah.',
+            'Pelembab Lembut di Kulit: Menghasilkan hand wash yang ramah di tangan tanpa menimbulkan iritasi kulit.',
+            'Aroma Segar & Menyenangkan: Menghilangkan bau tidak sedap pada tangan setelah beraktivitas atau makan.'
+        ),
+        'ingredients' => array(
+            'Active surfactant agents',
+            'Fragrance',
+            'Colorant Powder packet'
+        ),
+        'directions' => array(
+            'Campurkan adonan biang dengan air bersih hangat perlahan dalam wadah bersih.',
+            'Aduk hingga homogen dan mengental alami, lalu diamkan 12 jam sebelum dikemas.'
         )
     )
 );
@@ -955,7 +1392,9 @@ while ($q->have_posts()) {
     if ($matched_key && isset($rich_desc_data[$matched_key])) {
         $data = $rich_desc_data[$matched_key];
         
-        if (preg_match('/<p>(.*?)<\/p>/is', $content, $m)) {
+        if (isset($data['description'])) {
+            $desc_text = $data['description'];
+        } elseif (preg_match('/<p>(.*?)<\/p>/is', $content, $m)) {
             $desc_text = trim($m[1]);
         } else {
             $desc_text = strip_tags($content);
@@ -1021,10 +1460,35 @@ while ($q->have_posts()) {
     
     wp_update_post(array('ID' => $id, 'post_content' => $new_content));
     wp_update_post(array('ID' => $id, 'post_excerpt' => mb_strimwidth(strip_tags($desc_text), 0, 160, '...')));
+    
+    // Update Carbon Fields specifications table with Bahan Aktif
+    if (!empty($ingredients_list)) {
+        $ingredients_string = implode(', ', $ingredients_list);
+        $specs = carbon_get_post_meta($id, 'product_specifications');
+        if (!is_array($specs)) {
+            $specs = array();
+        }
+        $found_active_ingredient = false;
+        for ($i = 0; $i < count($specs); $i++) {
+            if (is_array($specs[$i]) && isset($specs[$i]['spec_name']) && (strtolower(trim($specs[$i]['spec_name'])) === 'bahan aktif' || strtolower(trim($specs[$i]['spec_name'])) === 'komposisi' || strtolower(trim($specs[$i]['spec_name'])) === 'kandungan')) {
+                $specs[$i]['spec_name'] = 'Bahan Aktif';
+                $specs[$i]['spec_value'] = $ingredients_string;
+                $found_active_ingredient = true;
+                break;
+            }
+        }
+        if (!$found_active_ingredient) {
+            $specs[] = array(
+                'spec_name' => 'Bahan Aktif',
+                'spec_value' => $ingredients_string
+            );
+        }
+        carbon_set_post_meta($id, 'product_specifications', $specs);
+    }
+    
     $desc_updated_count++;
 }
 wp_reset_postdata();
 echo "  Upgraded HTML descriptions for $desc_updated_count products.\n";
 
 echo "\n=== Migration & Restructuring Deployment Completed Successfully! ===\n";
-?>
