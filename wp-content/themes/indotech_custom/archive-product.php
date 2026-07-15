@@ -447,12 +447,9 @@ if ($categories === false) {
                                 <?php endif; ?>
                             </div>
                             <div style="flex: 1; display: flex; flex-direction: column;">
-                                <?php if ($sku) : ?>
+                                <?php if ($b_title) : ?>
                                     <div class="brand-product-card-sku-wrap">
-                                        <span><?php echo esc_html($sku); ?></span>
-                                        <?php if ($b_title) : ?>
-                                            <span style="opacity: 0.7; font-weight: 600; text-transform: none;"><?php echo esc_html($b_title); ?></span>
-                                        <?php endif; ?>
+                                        <span style="font-weight: 600; text-transform: none;"><?php echo esc_html($b_title); ?></span>
                                     </div>
                                 <?php endif; ?>
                                 <h3 class="brand-product-card-title"><?php the_title(); ?></h3>

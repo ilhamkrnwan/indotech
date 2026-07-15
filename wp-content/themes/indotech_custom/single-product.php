@@ -682,12 +682,9 @@ if ( function_exists( 'indotech_print_jsonld' ) ) {
                                         <?php endif; ?>
                                     </div>
                                     <div style="flex: 1; display: flex; flex-direction: column;">
-                                        <?php if ($rp_sku) : ?>
+                                        <?php if ($rp_b_title) : ?>
                                             <div class="brand-product-card-sku-wrap" style="font-size: 10px; margin-bottom: 8px;">
-                                                <span><?php echo esc_html($rp_sku); ?></span>
-                                                <?php if ($rp_b_title) : ?>
-                                                    <span style="opacity: 0.7; font-weight: 600; text-transform: none;"><?php echo esc_html($rp_b_title); ?></span>
-                                                <?php endif; ?>
+                                                <span style="font-weight: 600; text-transform: none;"><?php echo esc_html($rp_b_title); ?></span>
                                             </div>
                                         <?php endif; ?>
                                         <h4 class="brand-product-card-title" style="font-size: 16px; margin-bottom: 8px; min-height: 42px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"><?php echo esc_html(get_the_title($rp_id)); ?></h4>
