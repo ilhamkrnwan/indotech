@@ -44,6 +44,17 @@ wp-content/plugins/indotech-core/**/.DS_Store
 
 # ── sett_ai assets & migration scripts ───────────────────────
 !sett_ai/
+sett_ai/db_products_current.json
+sett_ai/product_summary.txt
+sett_ai/product_summary_utf8.txt
+sett_ai/mismatches.txt
+sett_ai/mismatches_utf8.txt
+sett_ai/inspect_products.php
+sett_ai/check_compositions.php
+sett_ai/analyze_current_data.php
+sett_ai/verify_changes.php
+sett_ai/clean_db.php
+
 
 # ─────────────────────────────────────────────────────────────
 # TIDAK di-push: wp-config.php, .env, uploads, core WP, dsb.
