@@ -517,11 +517,7 @@ if ( function_exists( 'indotech_print_jsonld' ) ) {
 
                         <!-- Brand & Title metadata -->
                         <div>
-                            <?php if ($sku) : ?>
-                                <span style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; background: var(--surface); border-radius: 4px; border: 1px solid var(--border); margin-bottom: 12px; color: var(--text-secondary);">
-                                    SKU: <?php echo esc_html($sku); ?>
-                                </span>
-                            <?php endif; ?>
+
                             
                             <h1 style="font-size: clamp(24px, 4vw, 36px); margin-bottom: 12px; letter-spacing: -0.03em; line-height: 1.2; font-weight: 700; color: var(--ink);"><?php the_title(); ?></h1>
                             
