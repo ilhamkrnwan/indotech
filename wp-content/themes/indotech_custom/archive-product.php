@@ -7,15 +7,20 @@
 get_header();
 echo '<main id="main-content">';
 
-if ( get_query_var('paged') ) {
-    $paged = get_query_var('paged');
+if ( isset($_GET['paged']) && absint($_GET['paged']) > 0 ) {
+    $paged = absint($_GET['paged']);
+} elseif ( isset($_GET['page']) && absint($_GET['page']) > 0 ) {
+    $paged = absint($_GET['page']);
+} elseif ( get_query_var('paged') ) {
+    $paged = absint(get_query_var('paged'));
 } elseif ( get_query_var('page') ) {
-    $paged = get_query_var('page');
+    $paged = absint(get_query_var('page'));
 } else {
     $paged = 1;
 }
 $per_page    = 9;
 $search_init = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
+$cat_init    = isset($_GET['kategori']) ? sanitize_text_field($_GET['kategori']) : (isset($_GET['cat']) ? sanitize_text_field($_GET['cat']) : '');
 
 // Fetch all product categories for the filter (cached using Transient API)
 $categories = get_transient('indotech_filter_categories');
@@ -393,13 +398,13 @@ if ($categories === false) {
                     <span class="filter-group-title">Kategori Produk</span>
                     <ul class="filter-list">
                         <li>
-                            <button class="filter-btn active" data-filter-type="cat" data-filter-val="">
+                            <button class="filter-btn <?php echo empty($cat_init) ? 'active' : ''; ?>" data-filter-type="cat" data-filter-val="">
                                 Semua Kategori
                             </button>
                         </li>
                         <?php foreach ($categories as $cat) : ?>
                             <li>
-                                <button class="filter-btn" data-filter-type="cat" data-filter-val="<?php echo esc_attr($cat->slug); ?>">
+                                <button class="filter-btn <?php echo ($cat_init === $cat->slug) ? 'active' : ''; ?>" data-filter-type="cat" data-filter-val="<?php echo esc_attr($cat->slug); ?>">
                                     <?php echo esc_html($cat->name); ?>
                                 </button>
                             </li>
@@ -421,6 +426,15 @@ if ($categories === false) {
                     ];
                     if (!empty($search_init)) {
                         $query_args['s'] = $search_init;
+                    }
+                    if (!empty($cat_init)) {
+                        $query_args['tax_query'] = [
+                            [
+                                'taxonomy' => 'product_cat',
+                                'field'    => 'slug',
+                                'terms'    => $cat_init
+                            ]
+                        ];
                     }
                     $product_query = new WP_Query($query_args);
 
@@ -455,7 +469,7 @@ if ($categories === false) {
                                 <h3 class="brand-product-card-title"><?php the_title(); ?></h3>
                                 <p class="brand-product-card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 12); ?></p>
                                 <a href="<?php the_permalink(); ?>" class="btn btn-outline">
-                                    Lihat Produk &rarr;
+                                    Lihat Produk &rsaquo;
                                 </a>
                             </div>
                         </article>
@@ -473,52 +487,14 @@ if ($categories === false) {
 
                 <!-- Pagination -->
                 <?php
-                $total_pages = $product_query->max_num_pages;
-                $base_url    = get_permalink();
+                $total_pages  = $product_query->max_num_pages;
+                $base_url     = strtok(get_permalink(), '?');
+                $query_params = [];
+                if (!empty($cat_init))    $query_params['kategori'] = $cat_init;
+                if (!empty($search_init)) $query_params['s'] = $search_init;
                 ?>
                 <div id="product-pagination-wrap">
-                <?php if ($total_pages > 1) : ?>
-                    <nav class="product-pagination" aria-label="Navigasi halaman produk">
-                         <?php if ($paged > 1) : ?>
-                             <a href="<?php echo esc_url(add_query_arg('paged', $paged - 1, $base_url)); ?>" class="page-btn ajax-page-btn" data-page="<?php echo $paged - 1; ?>" aria-label="Halaman sebelumnya">
-                                 &lsaquo; Sebelumnya
-                             </a>
-                         <?php endif; ?>
- 
-                         <?php
-                         // Show numbered pages — max 5 window
-                         $start = max(1, $paged - 2);
-                         $end   = min($total_pages, $paged + 2);
-                         if ($start > 1) :
-                         ?>
-                             <a href="<?php echo esc_url(add_query_arg('paged', 1, $base_url)); ?>" class="page-btn ajax-page-btn" data-page="1">1</a>
-                             <?php if ($start > 2) : ?><span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span><?php endif; ?>
-                         <?php endif; ?>
- 
-                         <?php for ($i = $start; $i <= $end; $i++) : ?>
-                             <a
-                                 href="<?php echo esc_url(add_query_arg('paged', $i, $base_url)); ?>"
-                                 class="page-btn ajax-page-btn <?php echo $i === $paged ? 'active' : ''; ?>"
-                                 data-page="<?php echo $i; ?>"
-                                 <?php echo $i === $paged ? 'aria-current="page"' : ''; ?>
-                             >
-                                 <?php echo $i; ?>
-                             </a>
-                         <?php endfor; ?>
- 
-                         <?php if ($end < $total_pages) : ?>
-                             <?php if ($end < $total_pages - 1) : ?><span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span><?php endif; ?>
-                             <a href="<?php echo esc_url(add_query_arg('paged', $total_pages, $base_url)); ?>" class="page-btn ajax-page-btn" data-page="<?php echo $total_pages; ?>"><?php echo $total_pages; ?></a>
-                         <?php endif; ?>
- 
-                         <?php if ($paged < $total_pages) : ?>
-                             <a href="<?php echo esc_url(add_query_arg('paged', $paged + 1, $base_url)); ?>" class="page-btn ajax-page-btn" data-page="<?php echo $paged + 1; ?>" aria-label="Halaman berikutnya">
-                                 Berikutnya &rsaquo;
-                             </a>
-                         <?php endif; ?>
-                     </nav>
-                     <p class="product-pagination-info">Halaman <?php echo $paged; ?> dari <?php echo $total_pages; ?></p>
-                <?php endif; ?>
+                    <?php echo indotech_get_pagination_html($paged, $total_pages, $base_url, $query_params, 'Navigasi halaman produk'); ?>
                 </div>
             </div>
 
@@ -528,28 +504,62 @@ if ($categories === false) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const filterBtns = document.querySelectorAll('.filter-panel .filter-btn');
-    const grid       = document.getElementById('products-grid');
-    const paginWrap  = document.getElementById('product-pagination-wrap');
+    const filterBtns  = document.querySelectorAll('.filter-panel .filter-btn');
+    const grid        = document.getElementById('products-grid');
+    const paginWrap   = document.getElementById('product-pagination-wrap');
     const searchInput = document.getElementById('product-search');
-    if (!grid || !filterBtns.length) return;
+    if (!grid) return;
 
     let activeBrand   = '';
-    let activeCat     = '';
-    let activePage    = 1;
+    let activeCat     = "<?php echo esc_js($cat_init); ?>";
+    let activePage    = <?php echo (int)$paged; ?>;
     let searchQuery   = searchInput ? searchInput.value : '';
     let searchTimeout = null;
 
-    function doFetch() {
+    function updateURL() {
+        const url = new URL(window.location.href);
+        
+        if (activePage > 1) {
+            url.searchParams.set('paged', activePage);
+        } else {
+            url.searchParams.delete('paged');
+        }
+        
+        if (activeCat) {
+            url.searchParams.set('kategori', activeCat);
+        } else {
+            url.searchParams.delete('kategori');
+            url.searchParams.delete('cat');
+        }
+        
+        if (searchQuery) {
+            url.searchParams.set('s', searchQuery);
+        } else {
+            url.searchParams.delete('s');
+        }
+        
+        history.pushState({
+            page: activePage,
+            cat: activeCat,
+            search: searchQuery
+        }, '', url.toString());
+    }
+
+    function doFetch(pushUrl = true) {
         grid.classList.add('products-loading');
 
+        if (pushUrl) {
+            updateURL();
+        }
+
         const formData = new FormData();
-        formData.append('action',   'indotech_filter_products');
-        formData.append('brand_id', activeBrand);
-        formData.append('cat_slug', activeCat);
-        formData.append('search',   searchQuery);
-        formData.append('page',     activePage);
-        formData.append('nonce',    indotechData.nonce);
+        formData.append('action',      'indotech_filter_products');
+        formData.append('brand_id',    activeBrand);
+        formData.append('cat_slug',    activeCat);
+        formData.append('search',      searchQuery);
+        formData.append('page',        activePage);
+        formData.append('current_url', window.location.href);
+        formData.append('nonce',       indotechData.nonce);
 
         fetch(indotechData.ajaxUrl, { method: 'POST', body: formData })
             .then(res => res.json())
@@ -573,13 +583,34 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!paginWrap) return;
         paginWrap.querySelectorAll('.ajax-page-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
+                if (e.metaKey || e.ctrlKey || e.shiftKey) return;
                 e.preventDefault();
-                activePage = parseInt(this.dataset.page);
-                doFetch();
+                activePage = parseInt(this.dataset.page) || 1;
+                doFetch(true);
                 grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
     }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        activePage  = parseInt(urlParams.get('paged')) || 1;
+        activeCat   = urlParams.get('kategori') || urlParams.get('cat') || '';
+        searchQuery = urlParams.get('s') || '';
+
+        if (searchInput) searchInput.value = searchQuery;
+
+        filterBtns.forEach(btn => {
+            const val = btn.dataset.filterVal;
+            if (val === activeCat) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        doFetch(false);
+    });
 
     if (searchInput) {
         searchInput.addEventListener('input', function() {
@@ -588,7 +619,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
-                doFetch();
+                doFetch(true);
             }, 400);
         });
     }
@@ -607,8 +638,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (type === 'brand') activeBrand = val;
             else if (type === 'cat') activeCat = val;
 
-            activePage = 1; // reset to first page on filter change
-            doFetch();
+            activePage = 1;
+            doFetch(true);
         });
     });
 

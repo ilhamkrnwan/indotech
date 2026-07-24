@@ -252,52 +252,75 @@ function indotech_filter_products_handler() {
 
     $html = ob_get_clean();
 
-    // Generate updated pagination HTML
+    // Generate updated pagination HTML using router URL helper
     $total_pages = $product_query->max_num_pages;
-    $pagination_html = '';
-    
-    if ($total_pages > 1) {
-        $pagination_html .= '<nav class="product-pagination" aria-label="Navigasi halaman produk">';
-        
-        if ($paged > 1) {
-            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . ($paged - 1) . '" aria-label="Halaman sebelumnya">&lsaquo; Sebelumnya</a>';
-        }
-        
-        $start = max(1, $paged - 2);
-        $end   = min($total_pages, $paged + 2);
-        
-        if ($start > 1) {
-            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="1">1</a>';
-            if ($start > 2) {
-                $pagination_html .= '<span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span>';
-            }
-        }
-        
-        for ($i = $start; $i <= $end; $i++) {
-            $active_class = $i === $paged ? 'active' : '';
-            $aria_current = $i === $paged ? ' aria-current="page"' : '';
-            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn ' . $active_class . '" data-page="' . $i . '"' . $aria_current . '>' . $i . '</a>';
-        }
-        
-        if ($end < $total_pages) {
-            if ($end < $total_pages - 1) {
-                $pagination_html .= '<span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span>';
-            }
-            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . $total_pages . '">' . $total_pages . '</a>';
-        }
-        
-        if ($paged < $total_pages) {
-            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . ($paged + 1) . '" aria-label="Halaman berikutnya">Berikutnya &rsaquo;</a>';
-        }
-        
-        $pagination_html .= '</nav>';
-        $pagination_html .= '<p class="product-pagination-info">Halaman ' . $paged . ' dari ' . $total_pages . '</p>';
-    }
+    $base_url    = isset($_POST['current_url']) ? esc_url_raw($_POST['current_url']) : home_url('/produk/');
+    $base_url    = strtok($base_url, '?');
+
+    $query_params = [];
+    if (!empty($cat_slug)) $query_params['kategori'] = $cat_slug;
+    if (!empty($search))   $query_params['s'] = $search;
+
+    $pagination_html = indotech_get_pagination_html($paged, $total_pages, $base_url, $query_params, 'Navigasi halaman produk');
 
     wp_send_json_success([
         'html'       => $html,
         'pagination' => $pagination_html
     ]);
+}
+
+// ── Helper Function for Clean Pagination HTML with Router URLs ─────────────────
+function indotech_get_pagination_html($paged, $total_pages, $base_url, $query_params = [], $aria_label = 'Navigasi halaman') {
+    if ($total_pages <= 1) return '';
+
+    $html = '<nav class="product-pagination" aria-label="' . esc_attr($aria_label) . '">';
+
+    $build_url = function($page_num) use ($base_url, $query_params) {
+        $params = $query_params;
+        if ($page_num > 1) {
+            $params['paged'] = $page_num;
+        } else {
+            unset($params['paged']);
+        }
+        $filtered_params = array_filter($params, function($v) { return $v !== '' && $v !== null; });
+        return add_query_arg($filtered_params, $base_url);
+    };
+
+    if ($paged > 1) {
+        $html .= '<a href="' . esc_url($build_url($paged - 1)) . '" class="page-btn ajax-page-btn" data-page="' . ($paged - 1) . '" aria-label="Halaman sebelumnya">&lsaquo; Sebelumnya</a>';
+    }
+
+    $start = max(1, $paged - 2);
+    $end   = min($total_pages, $paged + 2);
+
+    if ($start > 1) {
+        $html .= '<a href="' . esc_url($build_url(1)) . '" class="page-btn ajax-page-btn" data-page="1">1</a>';
+        if ($start > 2) {
+            $html .= '<span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span>';
+        }
+    }
+
+    for ($i = $start; $i <= $end; $i++) {
+        $active_class = $i === $paged ? 'active' : '';
+        $aria_current = $i === $paged ? ' aria-current="page"' : '';
+        $html .= '<a href="' . esc_url($build_url($i)) . '" class="page-btn ajax-page-btn ' . $active_class . '" data-page="' . $i . '"' . $aria_current . '>' . $i . '</a>';
+    }
+
+    if ($end < $total_pages) {
+        if ($end < $total_pages - 1) {
+            $html .= '<span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span>';
+        }
+        $html .= '<a href="' . esc_url($build_url($total_pages)) . '" class="page-btn ajax-page-btn" data-page="' . $total_pages . '">' . $total_pages . '</a>';
+    }
+
+    if ($paged < $total_pages) {
+        $html .= '<a href="' . esc_url($build_url($paged + 1)) . '" class="page-btn ajax-page-btn" data-page="' . ($paged + 1) . '" aria-label="Halaman berikutnya">Berikutnya &rsaquo;</a>';
+    }
+
+    $html .= '</nav>';
+    $html .= '<p class="product-pagination-info">Halaman ' . $paged . ' dari ' . $total_pages . '</p>';
+
+    return $html;
 }
 
 // ── AJAX Blog Post Filtering ──────────────────────────────────────────────────
@@ -397,47 +420,17 @@ function indotech_filter_posts_handler() {
     endif;
     $html = ob_get_clean();
 
-    // Generate updated pagination HTML
+    // Generate updated pagination HTML using router URL helper
     $total_pages = $blog_query->max_num_pages;
-    $pagination_html = '';
+    $base_url    = isset($_POST['current_url']) ? esc_url_raw($_POST['current_url']) : home_url('/blog/');
+    $base_url    = strtok($base_url, '?');
 
-    if ($total_pages > 1) {
-        $pagination_html .= '<nav class="product-pagination" aria-label="Navigasi halaman blog">';
-        
-        if ($paged > 1) {
-            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . ($paged - 1) . '" aria-label="Halaman sebelumnya">&lsaquo; Sebelumnya</a>';
-        }
-        
-        $start = max(1, $paged - 2);
-        $end   = min($total_pages, $paged + 2);
-        
-        if ($start > 1) {
-            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="1">1</a>';
-            if ($start > 2) {
-                $pagination_html .= '<span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span>';
-            }
-        }
-        
-        for ($i = $start; $i <= $end; $i++) {
-            $active_class = $i === $paged ? 'active' : '';
-            $aria_current = $i === $paged ? ' aria-current="page"' : '';
-            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn ' . $active_class . '" data-page="' . $i . '"' . $aria_current . '>' . $i . '</a>';
-        }
-        
-        if ($end < $total_pages) {
-            if ($end < $total_pages - 1) {
-                $pagination_html .= '<span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span>';
-            }
-            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . $total_pages . '">' . $total_pages . '</a>';
-        }
-        
-        if ($paged < $total_pages) {
-            $pagination_html .= '<a href="#" class="page-btn ajax-page-btn" data-page="' . ($paged + 1) . '" aria-label="Halaman berikutnya">Berikutnya &rsaquo;</a>';
-        }
-        
-        $pagination_html .= '</nav>';
-        $pagination_html .= '<p class="product-pagination-info">Halaman ' . $paged . ' dari ' . $total_pages . '</p>';
-    }
+    $query_params = [];
+    if (!empty($cat_slug))          $query_params['kategori'] = $cat_slug;
+    if (!empty($search))            $query_params['s'] = $search;
+    if (!empty($sort_by) && $sort_by !== 'newest') $query_params['sort_by'] = $sort_by;
+
+    $pagination_html = indotech_get_pagination_html($paged, $total_pages, $base_url, $query_params, 'Navigasi halaman blog');
 
     wp_send_json_success([
         'html'       => $html,

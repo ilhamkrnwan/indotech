@@ -6,10 +6,14 @@
  * Sections: Hero · Featured Post · Filter Tab Kategori · Grid Artikel · Pagination
  */
 
-if ( get_query_var('paged') ) {
-    $paged = get_query_var('paged');
+if ( isset($_GET['paged']) && absint($_GET['paged']) > 0 ) {
+    $paged = absint($_GET['paged']);
+} elseif ( isset($_GET['page']) && absint($_GET['page']) > 0 ) {
+    $paged = absint($_GET['page']);
+} elseif ( get_query_var('paged') ) {
+    $paged = absint(get_query_var('paged'));
 } elseif ( get_query_var('page') ) {
-    $paged = get_query_var('page');
+    $paged = absint(get_query_var('page'));
 } else {
     $paged = 1;
 }
@@ -22,8 +26,10 @@ $categories = get_categories( [
     'hide_empty' => true,
 ] );
 
-// Aktif kategori dari query string
-$active_cat = isset( $_GET['kategori'] ) ? sanitize_text_field( $_GET['kategori'] ) : '';
+// Aktif filter dari query string
+$active_cat  = isset( $_GET['kategori'] ) ? sanitize_text_field( $_GET['kategori'] ) : (isset($_GET['cat']) ? sanitize_text_field($_GET['cat']) : '');
+$search_init = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
+$sort_init   = isset( $_GET['sort_by'] ) ? sanitize_text_field( $_GET['sort_by'] ) : 'newest';
 
 // Query args
 $blog_args = [
@@ -34,6 +40,24 @@ $blog_args = [
 ];
 if ( $active_cat ) {
     $blog_args['category_name'] = $active_cat;
+}
+if ( $search_init ) {
+    $blog_args['s'] = $search_init;
+}
+switch ($sort_init) {
+    case 'oldest':
+        $blog_args['orderby'] = 'date';
+        $blog_args['order']   = 'ASC';
+        break;
+    case 'title_asc':
+        $blog_args['orderby'] = 'title';
+        $blog_args['order']   = 'ASC';
+        break;
+    case 'newest':
+    default:
+        $blog_args['orderby'] = 'date';
+        $blog_args['order']   = 'DESC';
+        break;
 }
 
 // Featured post — sticky atau post terbaru
@@ -58,8 +82,8 @@ if ( $featured_query->have_posts() ) {
     wp_reset_postdata();
 }
 
-// Exclude featured dari grid
-if ( $featured_id && $paged === 1 && ! $active_cat ) {
+// Exclude featured dari grid jika di halaman 1 tanpa filter
+if ( $featured_id && $paged === 1 && ! $active_cat && ! $search_init && $sort_init === 'newest' ) {
     $blog_args['post__not_in'] = [ $featured_id ];
 }
 
@@ -147,28 +171,13 @@ get_header();
          FILTER KATEGORI, SORTING, SEARCH + GRID ARTIKEL
     ════════════════════════════════════════════════════════ -->
     <section class="blog-section section-padding" id="blog-grid">
-        <div class="container">
-
-            <div class="blog-section-header" style="margin-bottom: 40px;">
-                <div class="blog-section-left">
-                    <span class="section-tag section-tag--dark">Semua Artikel</span>
-                    <h2 class="section-title" style="margin-top:12px;">Artikel Terbaru</h2>
-                </div>
-            </div>
-
-            <!-- ── Layout Grid: Filters on Left (or Top) & Blog Grid on Right ── -->
-            <div class="blog-archive-container">
-                
-                <!-- Filter Panel -->
-                <aside class="filter-panel">
-                    <h3 class="filter-panel-title">Filter Artikel</h3>
-                    <!-- Search & Sort Row -->
+                       <!-- Search & Sort Row -->
                     <div class="blog-search-sort-row">
                         <!-- Search Input -->
                         <div class="blog-search-group" style="margin-bottom: 24px;">
                             <span class="filter-group-title">Cari Artikel</span>
                             <div style="position: relative; display: flex; align-items: center;">
-                                <input type="text" id="blog-search" placeholder="Masukkan kata kunci..." value=""
+                                <input type="text" id="blog-search" placeholder="Masukkan kata kunci..." value="<?php echo esc_attr($search_init); ?>"
                                        style="width: 100%; padding: 10px 36px 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13.5px; font-family: inherit; transition: border-color var(--trans);" />
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
                                      style="position: absolute; right: 12px; color: var(--text-muted); pointer-events: none;">
@@ -182,9 +191,9 @@ get_header();
                             <span class="filter-group-title">Urutkan Artikel</span>
                             <div style="position: relative; display: flex; align-items: center;">
                                 <select id="blog-sort" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13.5px; font-family: inherit; transition: border-color var(--trans); background: var(--white); cursor: pointer; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
-                                    <option value="newest">Terbaru (Default)</option>
-                                    <option value="oldest">Terlama</option>
-                                    <option value="title_asc">Judul (A-Z)</option>
+                                    <option value="newest" <?php selected($sort_init, 'newest'); ?>>Terbaru (Default)</option>
+                                    <option value="oldest" <?php selected($sort_init, 'oldest'); ?>>Terlama</option>
+                                    <option value="title_asc" <?php selected($sort_init, 'title_asc'); ?>>Judul (A-Z)</option>
                                 </select>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" 
                                      style="position: absolute; right: 12px; color: var(--text-muted); pointer-events: none;">
@@ -199,13 +208,13 @@ get_header();
                         <span class="filter-group-title">Kategori Artikel</span>
                         <ul class="filter-list">
                             <li>
-                                <button class="filter-btn active" data-filter-type="cat" data-filter-val="">
+                                <button class="filter-btn <?php echo empty($active_cat) ? 'active' : ''; ?>" data-filter-type="cat" data-filter-val="">
                                     Semua Kategori
                                 </button>
                             </li>
                             <?php foreach ($categories as $cat) : ?>
                                 <li>
-                                    <button class="filter-btn" data-filter-type="cat" data-filter-val="<?php echo esc_attr($cat->slug); ?>">
+                                    <button class="filter-btn <?php echo ($active_cat === $cat->slug) ? 'active' : ''; ?>" data-filter-type="cat" data-filter-val="<?php echo esc_attr($cat->slug); ?>">
                                         <?php echo esc_html($cat->name); ?>
                                     </button>
                                 </li>
@@ -267,50 +276,15 @@ get_header();
                     <!-- Pagination -->
                     <div id="blog-pagination-wrap">
                         <?php
-                        $total_pages = $blog_query->max_num_pages;
-                        $base_url    = get_permalink();
-                        if ($total_pages > 1) :
+                        $total_pages  = $blog_query->max_num_pages;
+                        $base_url     = strtok(get_permalink(), '?');
+                        $query_params = [];
+                        if (!empty($active_cat))                    $query_params['kategori'] = $active_cat;
+                        if (!empty($search_init))                   $query_params['s'] = $search_init;
+                        if (!empty($sort_init) && $sort_init !== 'newest') $query_params['sort_by'] = $sort_init;
+
+                        echo indotech_get_pagination_html($paged, $total_pages, $base_url, $query_params, 'Navigasi halaman blog');
                         ?>
-                            <nav class="product-pagination" aria-label="Navigasi halaman blog">
-                                 <?php if ($paged > 1) : ?>
-                                     <a href="#" class="page-btn ajax-page-btn" data-page="<?php echo $paged - 1; ?>" aria-label="Halaman sebelumnya">
-                                         &lsaquo; Sebelumnya
-                                     </a>
-                                 <?php endif; ?>
-          
-                                 <?php
-                                 $start = max(1, $paged - 2);
-                                 $end   = min($total_pages, $paged + 2);
-                                 if ($start > 1) :
-                                 ?>
-                                     <a href="#" class="page-btn ajax-page-btn" data-page="1">1</a>
-                                     <?php if ($start > 2) : ?><span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span><?php endif; ?>
-                                 <?php endif; ?>
-          
-                                 <?php for ($i = $start; $i <= $end; $i++) : ?>
-                                     <a
-                                         href="#"
-                                         class="page-btn ajax-page-btn <?php echo $i === $paged ? 'active' : ''; ?>"
-                                         data-page="<?php echo $i; ?>"
-                                         <?php echo $i === $paged ? 'aria-current="page"' : ''; ?>
-                                     >
-                                         <?php echo $i; ?>
-                                     </a>
-                                 <?php endfor; ?>
-          
-                                 <?php if ($end < $total_pages) : ?>
-                                     <?php if ($end < $total_pages - 1) : ?><span class="page-btn" style="border:none;background:none;pointer-events:none;">…</span><?php endif; ?>
-                                     <a href="#" class="page-btn ajax-page-btn" data-page="<?php echo $total_pages; ?>"><?php echo $total_pages; ?></a>
-                                 <?php endif; ?>
-          
-                                 <?php if ($paged < $total_pages) : ?>
-                                     <a href="#" class="page-btn ajax-page-btn" data-page="<?php echo $paged + 1; ?>" aria-label="Halaman berikutnya">
-                                         Berikutnya &rsaquo;
-                                     </a>
-                                 <?php endif; ?>
-                             </nav>
-                             <p class="product-pagination-info">Halaman <?php echo $paged; ?> dari <?php echo $total_pages; ?></p>
-                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -322,22 +296,62 @@ get_header();
     <!-- Client Script for AJAX Blog Filtering -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const filterBtns = document.querySelectorAll('.filter-panel .filter-btn');
-        const grid       = document.getElementById('blog-posts-grid');
-        const paginWrap  = document.getElementById('blog-pagination-wrap');
+        const filterBtns  = document.querySelectorAll('.filter-panel .filter-btn');
+        const grid        = document.getElementById('blog-posts-grid');
+        const paginWrap   = document.getElementById('blog-pagination-wrap');
         const searchInput = document.getElementById('blog-search');
         const sortSelect  = document.getElementById('blog-sort');
         const featuredSection = document.getElementById('blog-featured');
         if (!grid) return;
 
-        let activeCat     = '';
-        let activePage    = 1;
-        let activeSort    = sortSelect ? sortSelect.value : 'newest';
-        let searchQuery   = searchInput ? searchInput.value : '';
+        let activeCat     = "<?php echo esc_js($active_cat); ?>";
+        let activePage    = <?php echo (int)$paged; ?>;
+        let activeSort    = sortSelect ? sortSelect.value : "<?php echo esc_js($sort_init); ?>";
+        let searchQuery   = searchInput ? searchInput.value : "<?php echo esc_js($search_init); ?>";
         let searchTimeout = null;
 
-        function doFetch() {
+        function updateURL() {
+            const url = new URL(window.location.href);
+            
+            if (activePage > 1) {
+                url.searchParams.set('paged', activePage);
+            } else {
+                url.searchParams.delete('paged');
+            }
+            
+            if (activeCat) {
+                url.searchParams.set('kategori', activeCat);
+            } else {
+                url.searchParams.delete('kategori');
+                url.searchParams.delete('cat');
+            }
+            
+            if (searchQuery) {
+                url.searchParams.set('s', searchQuery);
+            } else {
+                url.searchParams.delete('s');
+            }
+
+            if (activeSort && activeSort !== 'newest') {
+                url.searchParams.set('sort_by', activeSort);
+            } else {
+                url.searchParams.delete('sort_by');
+            }
+            
+            history.pushState({
+                page: activePage,
+                cat: activeCat,
+                search: searchQuery,
+                sort: activeSort
+            }, '', url.toString());
+        }
+
+        function doFetch(pushUrl = true) {
             grid.classList.add('products-loading');
+
+            if (pushUrl) {
+                updateURL();
+            }
 
             // Hide/Show Featured section based on state
             if (featuredSection) {
@@ -349,12 +363,13 @@ get_header();
             }
 
             const formData = new FormData();
-            formData.append('action',   'indotech_filter_posts');
-            formData.append('cat_slug', activeCat);
-            formData.append('search',   searchQuery);
-            formData.append('sort_by',  activeSort);
-            formData.append('page',     activePage);
-            formData.append('nonce',    indotechData.nonce);
+            formData.append('action',      'indotech_filter_posts');
+            formData.append('cat_slug',    activeCat);
+            formData.append('search',      searchQuery);
+            formData.append('sort_by',     activeSort);
+            formData.append('page',        activePage);
+            formData.append('current_url', window.location.href);
+            formData.append('nonce',       indotechData.nonce);
 
             fetch(indotechData.ajaxUrl, { method: 'POST', body: formData })
                 .then(res => res.json())
@@ -381,9 +396,10 @@ get_header();
             if (!paginWrap) return;
             paginWrap.querySelectorAll('.ajax-page-btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
                     e.preventDefault();
-                    activePage = parseInt(this.dataset.page);
-                    doFetch();
+                    activePage = parseInt(this.dataset.page) || 1;
+                    doFetch(true);
                     grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
             });
@@ -410,10 +426,32 @@ get_header();
                         }
                     });
 
-                    doFetch();
+                    doFetch(true);
                 });
             }
         }
+
+        window.addEventListener('popstate', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            activePage  = parseInt(urlParams.get('paged')) || 1;
+            activeCat   = urlParams.get('kategori') || urlParams.get('cat') || '';
+            searchQuery = urlParams.get('s') || '';
+            activeSort  = urlParams.get('sort_by') || 'newest';
+
+            if (searchInput) searchInput.value = searchQuery;
+            if (sortSelect) sortSelect.value = activeSort;
+
+            filterBtns.forEach(btn => {
+                const val = btn.dataset.filterVal;
+                if (val === activeCat) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            doFetch(false);
+        });
 
         if (searchInput) {
             searchInput.addEventListener('input', function() {
@@ -422,7 +460,7 @@ get_header();
 
                 clearTimeout(searchTimeout);
                 searchTimeout = setTimeout(() => {
-                    doFetch();
+                    doFetch(true);
                 }, 400);
             });
         }
@@ -431,25 +469,9 @@ get_header();
             sortSelect.addEventListener('change', function() {
                 activeSort = this.value;
                 activePage = 1;
-                doFetch();
+                doFetch(true);
             });
         }
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-
-                const val  = this.dataset.filterVal;
-
-                const siblings = this.closest('ul').querySelectorAll('.filter-btn');
-                siblings.forEach(s => s.classList.remove('active'));
-                this.classList.add('active');
-
-                activeCat = val;
-                activePage = 1;
-                doFetch();
-            });
-        });
 
         bindPaginationClicks();
         bindResetButton();
