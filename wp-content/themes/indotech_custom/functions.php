@@ -156,6 +156,27 @@ require_once INDOTECH_DIR . '/inc/customizer.php';
 require_once INDOTECH_DIR . '/inc/helpers.php';
 require_once INDOTECH_DIR . '/inc/seo.php';
 
+// ── Fix: Prevent WordPress 404 on static page pagination ─────────────────────
+// WordPress's main query on a static "Page" does not support the `paged` param,
+// so navigating to /blog/?paged=2 causes a 404. These hooks prevent that for
+// pages that use custom WP_Query pagination (Blog, Products, Downloads, etc.).
+add_filter('pre_handle_404', function ($preempt, $wp_query) {
+    if (is_page() && (get_query_var('paged') > 1 || isset($_GET['paged']))) {
+        // Tell WordPress this is NOT a 404
+        $wp_query->is_404 = false;
+        status_header(200);
+        return true;  // preempt the 404 handling
+    }
+    return $preempt;
+}, 10, 2);
+
+add_filter('redirect_canonical', function ($redirect_url, $requested_url) {
+    if (is_page() && (get_query_var('paged') > 1 || isset($_GET['paged']))) {
+        return false; // don't redirect — let the page template handle it
+    }
+    return $redirect_url;
+}, 10, 2);
+
 // ── AJAX Product Filtering ───────────────────────────────────────────────────
 add_action('wp_ajax_indotech_filter_products', 'indotech_filter_products_handler');
 add_action('wp_ajax_nopriv_indotech_filter_products', 'indotech_filter_products_handler');
@@ -377,7 +398,7 @@ function indotech_filter_posts_handler() {
             $post_cats = get_the_category();
             $cat_lbl   = $post_cats ? esc_html($post_cats[0]->name) : '';
             ?>
-            <article class="blog-card reveal" role="listitem" id="post-<?php the_ID(); ?>">
+            <article class="blog-card reveal visible" role="listitem" id="post-<?php the_ID(); ?>">
                 <a href="<?php the_permalink(); ?>" class="blog-thumb" aria-label="Baca: <?php the_title_attribute(); ?>">
                     <?php if ($thumb) : ?>
                         <img src="<?php echo esc_url($thumb); ?>" alt="<?php the_title_attribute(); ?>" class="blog-img" loading="lazy">
