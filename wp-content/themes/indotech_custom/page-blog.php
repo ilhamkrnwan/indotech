@@ -171,7 +171,22 @@ get_header();
          FILTER KATEGORI, SORTING, SEARCH + GRID ARTIKEL
     ════════════════════════════════════════════════════════ -->
     <section class="blog-section section-padding" id="blog-grid">
-                       <!-- Search & Sort Row -->
+        <div class="container">
+
+            <div class="blog-section-header" style="margin-bottom: 40px;">
+                <div class="blog-section-left">
+                    <span class="section-tag section-tag--dark">Semua Artikel</span>
+                    <h2 class="section-title" style="margin-top:12px;">Artikel Terbaru</h2>
+                </div>
+            </div>
+
+            <!-- ── Layout Grid: Filters on Left (or Top) & Blog Grid on Right ── -->
+            <div class="blog-archive-container">
+                
+                <!-- Filter Panel -->
+                <aside class="filter-panel">
+                    <h3 class="filter-panel-title">Filter Artikel</h3>
+                    <!-- Search & Sort Row -->
                     <div class="blog-search-sort-row">
                         <!-- Search Input -->
                         <div class="blog-search-group" style="margin-bottom: 24px;">
