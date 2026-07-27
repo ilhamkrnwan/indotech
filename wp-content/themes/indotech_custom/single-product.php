@@ -388,43 +388,55 @@ echo '<main id="main-content">';
     color: var(--ink);
 }
 
-/* Product Description Formatting & Headings */
+/* Product Description Rich Typography & Headings (Override Tailwind Preflight) */
 .product-description {
-    color: var(--text-secondary);
-    line-height: 1.8;
-    font-size: 15px;
+    color: #475569 !important;
+    line-height: 1.8 !important;
+    font-size: 15px !important;
 }
 .product-description h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-top: 28px;
-    margin-bottom: 12px;
-    letter-spacing: -0.01em;
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    margin-top: 32px !important;
+    margin-bottom: 14px !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.3 !important;
+    display: block !important;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
 }
 .product-description p {
-    margin-bottom: 16px;
-    color: var(--text-secondary);
-    line-height: 1.8;
+    margin-bottom: 18px !important;
+    color: #475569 !important;
+    line-height: 1.8 !important;
+    font-size: 15px !important;
 }
 .product-description ul {
-    list-style-type: disc;
-    padding-left: 24px;
-    margin-bottom: 24px;
+    list-style-type: disc !important;
+    padding-left: 28px !important;
+    margin-top: 10px !important;
+    margin-bottom: 24px !important;
+    display: block !important;
 }
 .product-description ol {
-    list-style-type: decimal;
-    padding-left: 24px;
-    margin-bottom: 24px;
+    list-style-type: decimal !important;
+    padding-left: 28px !important;
+    margin-top: 10px !important;
+    margin-bottom: 24px !important;
+    display: block !important;
 }
 .product-description li {
-    margin-bottom: 8px;
-    line-height: 1.7;
-    color: var(--text-secondary);
+    margin-bottom: 10px !important;
+    line-height: 1.7 !important;
+    color: #334155 !important;
+    font-size: 15px !important;
+    display: list-item !important;
 }
-.product-description strong, .product-description b {
-    font-weight: 700;
-    color: var(--ink);
+.product-description strong, 
+.product-description b {
+    font-weight: 700 !important;
+    color: #0f172a !important;
 }
 </style>
 
