@@ -387,6 +387,45 @@ echo '<main id="main-content">';
     border-color: var(--brand-accent);
     color: var(--ink);
 }
+
+/* Product Description Formatting & Headings */
+.product-description {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 15px;
+}
+.product-description h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 28px;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+}
+.product-description p {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+.product-description ul {
+    list-style-type: disc;
+    padding-left: 24px;
+    margin-bottom: 24px;
+}
+.product-description ol {
+    list-style-type: decimal;
+    padding-left: 24px;
+    margin-bottom: 24px;
+}
+.product-description li {
+    margin-bottom: 8px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+.product-description strong, .product-description b {
+    font-weight: 700;
+    color: var(--ink);
+}
 </style>
 
 <?php

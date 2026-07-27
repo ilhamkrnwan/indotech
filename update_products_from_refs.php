@@ -1,6 +1,6 @@
 <?php
 /**
- * Script Update & Restorasi Produk Indotech dengan Struktur HTML Lengkap
+ * Script Update & Restorasi Produk Indotech dengan Format Bold & Heading Presisi
  * Jalankan via CLI: php update_products_from_refs.php
  */
 
@@ -36,7 +36,25 @@ if (file_exists($backup_file)) {
 }
 
 /**
- * Helper untuk menyusun ulang HTML post_content dengan section terstruktur
+ * Helper untuk memformat teks li dengan label tebal (bold) jika mengandung titik dua (:)
+ */
+function format_li_item($text) {
+    $clean_text = trim(strip_tags($text, '<strong><b><i><em>'));
+    $clean_text = preg_replace('/^<\s*(?:strong|b)\s*>(.*?)<\s*\/\s*(?:strong|b)\s*>\s*:?/i', '$1:', $clean_text);
+    
+    if (strpos($clean_text, ':') !== false) {
+        $parts = explode(':', $clean_text, 2);
+        $title = trim($parts[0]);
+        $val = trim($parts[1]);
+        if (!empty($title) && !empty($val)) {
+            return "<strong>" . esc_html($title) . ":</strong> " . esc_html($val);
+        }
+    }
+    return esc_html($clean_text);
+}
+
+/**
+ * Helper untuk menyusun ulang HTML post_content dengan section terstruktur dan bolding
  */
 function build_structured_content(
     $orig_content,
@@ -61,6 +79,9 @@ function build_structured_content(
         $clean = preg_replace('/<ol.*?>.*?<\/ol>/is', '', $clean);
         $desc_text = trim(strip_tags($clean));
     }
+
+    // Hapus pengulangan kata "Deskripsi Produk" di dalam paragraf
+    $desc_text = preg_replace('/^(?:Deskripsi\s+Produk\s*)+/i', '', trim($desc_text));
 
     // 2. Dapatkan Fitur & Keunggulan
     $features_list = array();
@@ -144,7 +165,6 @@ function build_structured_content(
     if (!empty($remove_direction_index) && !empty($directions_list)) {
         $filtered_dir = array();
         foreach ($directions_list as $d_idx => $d_val) {
-            // 1-based index
             if (($d_idx + 1) != $remove_direction_index) {
                 $filtered_dir[] = $d_val;
             }
@@ -179,7 +199,7 @@ function build_structured_content(
     if (!empty($features_list)) {
         $html .= "<h3>Fitur &amp; Keunggulan</h3>\n<ul>\n";
         foreach ($features_list as $f) {
-            $html .= "  <li>" . esc_html($f) . "</li>\n";
+            $html .= "  <li>" . format_li_item($f) . "</li>\n";
         }
         $html .= "</ul>\n\n";
     }
@@ -458,7 +478,7 @@ $product_rules = array(
     // 17. Sabun Cuci Piring – Dish Soap Anti Lemak
     array(
         'search' => 'Sabun Cuci Piring',
-        'remove_features' => array(2), // Hapus poin no 2
+        'remove_features' => array(2),
         'new_ingredients' => array('Active surfactant agents', 'Foam booster', 'Fragrance segar jeruk/lemon'),
         'specs' => array(
             'Ukuran Tersedia' => 'Default, 1,5 liter, 5 liter',
