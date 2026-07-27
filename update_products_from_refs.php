@@ -434,7 +434,7 @@ $product_rules = array(
         ),
         'specs' => array(
             'Ukuran Tersedia' => 'Paket bahan biang (hasil 3 liter)',
-            'Aroma Tersedia' => 'Dunhill blue dan Baccarat',
+            'Aroma Tersedia' => 'Dunhill Blue, Baccarat',
             'Bentuk Fisik' => 'pasta (biang)',
             'Kemasan' => 'box karton segel',
             'Bahan Aktif' => 'Active surfactant agents, Foam Stabilizer, Fragrance'
@@ -658,8 +658,8 @@ $product_rules = array(
         'new_features' => array('Aman untuk semua jenis lantai: Memberikan kebersihan pada semua jenis lantai dan tidak ada bekasnya'),
         'new_ingredients' => array('Pine Oil murni', 'Citrunella', 'Surfaktan emulsifier', 'Disinfektan aktif pembunuh kuman'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 1,5 liter, 5 liter',
-            'Aroma' => 'Pinus Cemara dan sereh',
+            'Ukuran Tersedia' => '1.5 Liter, 5 Liter',
+            'Aroma Tersedia' => 'Pinus Cemara, Sereh',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Botol dan Jrigen',
             'Fungsi' => 'Disinfektan & Pembersih Lantai'
@@ -797,32 +797,29 @@ foreach ($product_rules as $rule) {
 
     // Update Meta Carbon Fields Spesifikasi Teknis
     if (!empty($rule['specs']) && is_array($rule['specs'])) {
-        $existing_specs = get_post_meta($post_id, '_product_specifications', true);
-        if (!is_array($existing_specs)) {
-            $existing_specs = array();
-        }
-
-        $spec_map = array();
-        foreach ($existing_specs as $item) {
-            if (isset($item['spec_name']) && isset($item['spec_value'])) {
-                $spec_map[$item['spec_name']] = $item['spec_value'];
-            }
-        }
-
-        foreach ($rule['specs'] as $sk => $sv) {
-            $spec_map[$sk] = $sv;
-        }
-
         $new_specs = array();
-        foreach ($spec_map as $sk => $sv) {
+        foreach ($rule['specs'] as $sk => $sv) {
             $new_specs[] = array(
-                '_type'      => 'product_specifications',
                 'spec_name'  => $sk,
                 'spec_value' => $sv,
             );
         }
 
-        update_post_meta($post_id, '_product_specifications', $new_specs);
+        if (function_exists('carbon_set_post_meta')) {
+            carbon_set_post_meta($post_id, 'product_specifications', $new_specs);
+        } else {
+            global $wpdb;
+            $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->postmeta} WHERE post_id = %d AND (meta_key = '_product_specifications' OR meta_key LIKE '_product_specifications|%%')", $post_id));
+            $formatted = array();
+            foreach ($new_specs as $ns) {
+                $formatted[] = array(
+                    '_type'      => '_',
+                    'spec_name'  => $ns['spec_name'],
+                    'spec_value' => $ns['spec_value'],
+                );
+            }
+            update_post_meta($post_id, '_product_specifications', $formatted);
+        }
     }
 
     $success_count++;
