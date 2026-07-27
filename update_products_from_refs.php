@@ -1,6 +1,6 @@
 <?php
 /**
- * Script Update & Restorasi Produk Indotech dengan Format Bold & Heading Presisi
+ * Script Update & Restorasi Produk Indotech dengan Template HTML Lengkap untuk Semua Produk
  * Jalankan via CLI: php update_products_from_refs.php
  */
 
@@ -16,6 +16,14 @@ if (!file_exists($wp_load)) {
 }
 
 require_once $wp_load;
+
+// Nonaktifkan filter kses dan set user admin agar HTML tidak difilter/dibersihkan oleh WP
+if (function_exists('kses_remove_filters')) {
+    kses_remove_filters();
+}
+if (function_exists('wp_set_current_user')) {
+    wp_set_current_user(1);
+}
 
 echo "=== Memulai Restorasi & Update Struktur HTML Produk Berdasarkan REFERENCES.MD ===\n";
 
@@ -36,7 +44,7 @@ if (file_exists($backup_file)) {
 }
 
 /**
- * Helper untuk memformat teks li dengan label tebal (bold) jika mengandung titik dua (:)
+ * Helper untuk memformat item list <li> dengan label tebal (bold) jika mengandung titik dua (:)
  */
 function format_li_item($text) {
     $clean_text = trim(strip_tags($text, '<strong><b><i><em>'));
@@ -54,137 +62,144 @@ function format_li_item($text) {
 }
 
 /**
- * Helper untuk menyusun ulang HTML post_content dengan section terstruktur dan bolding
+ * Helper untuk mengekstrak baris/item dari blok teks
  */
-function build_structured_content(
-    $orig_content,
-    $new_desc = null,
-    $new_features = null,
-    $remove_features = null,
-    $new_ingredients = null,
-    $remove_ingredients = null,
-    $new_directions = null,
-    $remove_direction_index = null,
-    $directions_title = 'Cara Penggunaan'
-) {
-    // 1. Dapatkan Deskripsi
-    $desc_text = '';
-    if (!empty($new_desc)) {
-        $desc_text = $new_desc;
-    } elseif (preg_match('/<h3>Deskripsi Produk<\/h3>\s*<p>(.*?)<\/p>/is', $orig_content, $m)) {
-        $desc_text = trim(strip_tags($m[1]));
-    } else {
-        $clean = preg_replace('/<h3>.*?<\/h3>/i', '', $orig_content);
-        $clean = preg_replace('/<ul.*?>.*?<\/ul>/is', '', $clean);
-        $clean = preg_replace('/<ol.*?>.*?<\/ol>/is', '', $clean);
-        $desc_text = trim(strip_tags($clean));
-    }
-
-    // Hapus pengulangan kata "Deskripsi Produk" di dalam paragraf
-    $desc_text = preg_replace('/^(?:Deskripsi\s+Produk\s*)+/i', '', trim($desc_text));
-
-    // 2. Dapatkan Fitur & Keunggulan
-    $features_list = array();
-    if (!empty($new_features) && is_array($new_features)) {
-        $features_list = $new_features;
-    } elseif (preg_match('/<h3>Fitur (?:&amp;|&) Keunggulan<\/h3>\s*<ul.*?>(.*?)<\/ul>/is', $orig_content, $m)) {
-        preg_match_all('/<li>(.*?)<\/li>/is', $m[1], $lis);
+function extract_items_from_block($text_block) {
+    $items = array();
+    if (strpos($text_block, '<li>') !== false) {
+        preg_match_all('/<li>(.*?)<\/li>/is', $text_block, $lis);
         if (!empty($lis[1])) {
             foreach ($lis[1] as $li) {
-                $features_list[] = trim(strip_tags($li));
-            }
-        }
-    }
-
-    // Filter remove_features
-    if (!empty($remove_features) && is_array($remove_features) && !empty($features_list)) {
-        $filtered = array();
-        foreach ($features_list as $f_idx => $f_val) {
-            $should_remove = false;
-            foreach ($remove_features as $rf) {
-                if (is_numeric($rf) && ($f_idx + 1) == $rf) {
-                    $should_remove = true;
-                    break;
-                } elseif (is_string($rf) && stripos($f_val, $rf) !== false) {
-                    $should_remove = true;
-                    break;
+                $item = trim(strip_tags($li));
+                if (!empty($item)) {
+                    $items[] = $item;
                 }
             }
-            if (!$should_remove) {
-                $filtered[] = $f_val;
-            }
-        }
-        $features_list = $filtered;
-    }
-
-    // 3. Dapatkan Komposisi Bahan
-    $ingredients_list = array();
-    if (!empty($new_ingredients) && is_array($new_ingredients)) {
-        $ingredients_list = $new_ingredients;
-    } elseif (preg_match('/<h3>Komposisi Bahan<\/h3>\s*<ul.*?>(.*?)<\/ul>/is', $orig_content, $m)) {
-        preg_match_all('/<li>(.*?)<\/li>/is', $m[1], $lis);
-        if (!empty($lis[1])) {
-            foreach ($lis[1] as $li) {
-                $ingredients_list[] = trim(strip_tags($li));
-            }
+            return array_values(array_filter($items));
         }
     }
 
-    // Filter remove_ingredients
-    if (!empty($remove_ingredients) && is_array($remove_ingredients) && !empty($ingredients_list)) {
-        $filtered_ing = array();
-        foreach ($ingredients_list as $ing_val) {
-            $should_remove = false;
-            foreach ($remove_ingredients as $ri) {
-                if (stripos($ing_val, $ri) !== false) {
-                    $should_remove = true;
-                    break;
-                }
-            }
-            if (!$should_remove) {
-                $filtered_ing[] = $ing_val;
-            }
-        }
-        $ingredients_list = $filtered_ing;
-    }
-
-    // 4. Dapatkan Cara Penggunaan / Pengolahan
-    $directions_list = array();
-    if (!empty($new_directions) && is_array($new_directions)) {
-        $directions_list = $new_directions;
-    } elseif (preg_match('/<h3>Cara (?:Penggunaan|Pengolahan)<\/h3>\s*<ol.*?>(.*?)<\/ol>/is', $orig_content, $m)) {
-        preg_match_all('/<li>(.*?)<\/li>/is', $m[1], $lis);
-        if (!empty($lis[1])) {
-            foreach ($lis[1] as $li) {
-                $directions_list[] = trim(strip_tags($li));
-            }
+    $lines = explode("\n", $text_block);
+    foreach ($lines as $line) {
+        $clean = trim(strip_tags($line));
+        $clean = preg_replace('/^(?:\d+[\.\)]\s*|[-*\x{2022}]\s*)/u', '', $clean);
+        if (!empty($clean)) {
+            $items[] = $clean;
         }
     }
+    return array_values(array_filter($items));
+}
 
-    // Filter remove_direction_index
-    if (!empty($remove_direction_index) && !empty($directions_list)) {
-        $filtered_dir = array();
-        foreach ($directions_list as $d_idx => $d_val) {
-            if (($d_idx + 1) != $remove_direction_index) {
-                $filtered_dir[] = $d_val;
+/**
+ * Robust Parser: mengekstrak section dari HTML maupun Teks Polos
+ */
+function parse_any_product_content($content) {
+    $result = array(
+        'desc' => '',
+        'features' => array(),
+        'ingredients' => array(),
+        'directions' => array(),
+        'safety' => array(),
+        'directions_title' => 'Cara Penggunaan'
+    );
+
+    $content = str_replace(array("\r\n", "\r"), "\n", $content);
+    $content = preg_replace('/<h3[^>]*>\s*(.*?)\s*<\/h3>/i', "\n\n===$1===\n\n", $content);
+    $content = str_replace('###', '', $content);
+
+    $plain_keywords = array(
+        'desc'        => '/^(?:Deskripsi(?:\s+Produk)?)$/i',
+        'features'    => '/^(?:Fitur\s*(?:&amp;|&|\b)\s*Keunggulan)$/i',
+        'ingredients' => '/^(?:Komposisi(?:\s+Bahan)?)$/i',
+        'directions'  => '/^(?:Cara\s+(Penggunaan|Pengolahan))$/i',
+        'safety'      => '/^(?:Petunjuk\s+Keamanan(?:\s*(?:&amp;|&|\b)\s*Penyimpanan)?)$/i',
+    );
+
+    $lines = explode("\n", $content);
+    $new_lines = array();
+    foreach ($lines as $line) {
+        $trimmed = trim(strip_tags($line));
+        $is_header = false;
+
+        foreach ($plain_keywords as $key => $pattern) {
+            if (preg_match($pattern, $trimmed, $m)) {
+                $new_lines[] = "===" . $trimmed . "===";
+                $is_header = true;
+                break;
             }
         }
-        $directions_list = $filtered_dir;
+        if (!$is_header) {
+            $new_lines[] = $line;
+        }
     }
 
-    // 5. Dapatkan Petunjuk Keamanan & Penyimpanan
-    $safety_list = array();
-    if (preg_match('/<h3>Petunjuk Keamanan (?:&amp;|&) Penyimpanan<\/h3>\s*<ul.*?>(.*?)<\/ul>/is', $orig_content, $m)) {
-        preg_match_all('/<li>(.*?)<\/li>/is', $m[1], $lis);
-        if (!empty($lis[1])) {
-            foreach ($lis[1] as $li) {
-                $safety_list[] = trim(strip_tags($li));
+    $full_text = implode("\n", $new_lines);
+    $blocks = preg_split('/\n(?====\s*)/', $full_text);
+
+    foreach ($blocks as $block) {
+        $block = trim($block);
+        if (empty($block)) continue;
+
+        if (preg_match('/^===\s*(Deskripsi(?:\s+Produk)?)\s*===\n*(.*)$/is', $block, $m)) {
+            $result['desc'] = trim(strip_tags($m[2]));
+        } elseif (preg_match('/^===\s*(Fitur\s*(?:&amp;|&|\b)\s*Keunggulan)\s*===\n*(.*)$/is', $block, $m)) {
+            $result['features'] = extract_items_from_block($m[2]);
+        } elseif (preg_match('/^===\s*(Komposisi(?:\s+Bahan)?)\s*===\n*(.*)$/is', $block, $m)) {
+            $result['ingredients'] = extract_items_from_block($m[2]);
+        } elseif (preg_match('/^===\s*(Cara\s+(Penggunaan|Pengolahan))\s*===\n*(.*)$/is', $block, $m)) {
+            if (stristr($m[1], 'Pengolahan')) {
+                $result['directions_title'] = 'Cara Pengolahan';
+            }
+            $result['directions'] = extract_items_from_block($m[3]);
+        } elseif (preg_match('/^===\s*(Petunjuk\s+Keamanan(?:\s*(?:&amp;|&|\b)\s*Penyimpanan)?)\s*===\n*(.*)$/is', $block, $m)) {
+            $result['safety'] = extract_items_from_block($m[2]);
+        } else {
+            $clean_block = trim(strip_tags(preg_replace('/===.*?===/', '', $block)));
+            if (!empty($clean_block) && empty($result['desc'])) {
+                $result['desc'] = $clean_block;
             }
         }
     }
 
-    if (empty($safety_list)) {
-        $safety_list = array(
+    $result['desc'] = trim(preg_replace('/^(?:===.*?===|\s*Deskripsi\s*Produk\s*|Deskripsi\s*)+/i', '', $result['desc']));
+
+    return $result;
+}
+
+/**
+ * Helper untuk merakit kembali HTML terstruktur yang bersih
+ */
+function render_clean_html($desc, $features, $ingredients, $directions, $safety, $directions_title = 'Cara Penggunaan') {
+    $clean_desc = trim(preg_replace('/^(?:Deskripsi\s+Produk\s*|Deskripsi\s*)+/i', '', trim($desc)));
+
+    $html = "<h3>Deskripsi Produk</h3>\n<p>" . esc_html($clean_desc) . "</p>\n\n";
+
+    if (!empty($features)) {
+        $html .= "<h3>Fitur &amp; Keunggulan</h3>\n<ul>\n";
+        foreach ($features as $f) {
+            $html .= "  <li>" . format_li_item($f) . "</li>\n";
+        }
+        $html .= "</ul>\n\n";
+    }
+
+    if (!empty($ingredients)) {
+        $html .= "<h3>Komposisi Bahan</h3>\n<ul>\n";
+        foreach ($ingredients as $i) {
+            $html .= "  <li>" . esc_html($i) . "</li>\n";
+        }
+        $html .= "</ul>\n\n";
+    }
+
+    if (!empty($directions)) {
+        $html .= "<h3>" . esc_html($directions_title) . "</h3>\n<ol>\n";
+        foreach ($directions as $d) {
+            $html .= "  <li>" . esc_html($d) . "</li>\n";
+        }
+        $html .= "</ol>\n\n";
+    }
+
+    if (empty($safety)) {
+        $safety = array(
             'Simpan di wadah tertutup rapat pada suhu ruangan (20–30°C).',
             'Hindari paparan sinar matahari langsung dan area lembap.',
             'Jauhkan dari jangkauan anak-anak dan hewan peliharaan.',
@@ -193,40 +208,11 @@ function build_structured_content(
         );
     }
 
-    // Rakit HTML kembali
-    $html = "<h3>Deskripsi Produk</h3>\n<p>" . esc_html($desc_text) . "</p>\n\n";
-
-    if (!empty($features_list)) {
-        $html .= "<h3>Fitur &amp; Keunggulan</h3>\n<ul>\n";
-        foreach ($features_list as $f) {
-            $html .= "  <li>" . format_li_item($f) . "</li>\n";
-        }
-        $html .= "</ul>\n\n";
+    $html .= "<h3>Petunjuk Keamanan &amp; Penyimpanan</h3>\n<ul>\n";
+    foreach ($safety as $s) {
+        $html .= "  <li>" . esc_html($s) . "</li>\n";
     }
-
-    if (!empty($ingredients_list)) {
-        $html .= "<h3>Komposisi Bahan</h3>\n<ul>\n";
-        foreach ($ingredients_list as $i) {
-            $html .= "  <li>" . esc_html($i) . "</li>\n";
-        }
-        $html .= "</ul>\n\n";
-    }
-
-    if (!empty($directions_list)) {
-        $html .= "<h3>" . esc_html($directions_title) . "</h3>\n<ol>\n";
-        foreach ($directions_list as $d) {
-            $html .= "  <li>" . esc_html($d) . "</li>\n";
-        }
-        $html .= "</ol>\n\n";
-    }
-
-    if (!empty($safety_list)) {
-        $html .= "<h3>Petunjuk Keamanan &amp; Penyimpanan</h3>\n<ul>\n";
-        foreach ($safety_list as $s) {
-            $html .= "  <li>" . esc_html($s) . "</li>\n";
-        }
-        $html .= "</ul>\n";
-    }
+    $html .= "</ul>\n";
 
     return $html;
 }
@@ -237,6 +223,17 @@ $product_rules = array(
     array(
         'search' => 'Softsense',
         'new_desc' => 'Softsense adalah paket bahan softener pelembut pakaian konsentrat premium berukuran lebih besar. Dirancang khusus untuk efisiensi tinggi bagi pengusaha laundry maupun kebutuhan rumah tangga besar, satu kemasan Softsense dapat menghasilkan hingga 15 liter pelembut pakaian siap pakai berkualitas tinggi dengan keharuman microcapsule yang mewah.',
+        'new_features' => array(
+            'Formula Konsentrat Premium: Menghasilkan hingga 15 liter pelembut pakaian dari satu kemasan.',
+            'Teknologi Microcapsule: Mengunci wangi mewah di serat pakaian.',
+            'Hemat & Efisien: Cocok untuk usaha laundry maupun rumah tangga besar.'
+        ),
+        'new_ingredients' => array('Softener active paste', 'Microcapsule fragrance', 'Aqua', 'Stabilizer'),
+        'new_directions' => array(
+            'Siapkan wadah besar ukuran 15-20 Liter dan air bersih 14 Liter.',
+            'Larutkan bahan Softsense secara bertahap sambil diaduk hingga larut sempurna.',
+            'Diamkan larutan selama 12-24 jam hingga busa mereda sebelum digunakan atau dikemas.'
+        ),
         'specs' => array('Bentuk Fisik' => 'Paket bahan softener', 'Kemasan' => 'Box Karton Segel')
     ),
 
@@ -245,7 +242,24 @@ $product_rules = array(
         'search' => 'Softa',
         'transform_desc' => function($desc) {
             return str_replace(array('paket bahan', 'bahan '), array('paket', ''), $desc);
-        }
+        },
+        'new_features' => array(
+            'Sangat Hemat (Hasil 5 Liter): Menghasilkan 5 liter pelembut pakaian siap pakai dari satu box pasta.',
+            'Keharuman Micro-capsule: Mengunci aroma wewangian di serat pakaian yang akan aktif mengeluarkan keharuman saat terjadi gesekan.',
+            'Pelembut Serat Pakaian: Membuat pakaian lebih halus, mudah disetrika, dan mencegah efek kaku pada kain.',
+            'Aman di Kulit: Ramah lingkungan dan tidak menimbulkan iritasi kulit (teruji aman).'
+        ),
+        'new_ingredients' => array(
+            'Softener active agent (pasta)',
+            'Fragrance compound',
+            'Microcapsule fragrance',
+            'Pewarna'
+        ),
+        'new_directions' => array(
+            'Siapkan wadah bersih ukuran minimal 5-6 Liter dan air bersih sebanyak 4.5 Liter.',
+            'Masukkan pasta Softa ke dalam wadah, tuangkan air bersih secara bertahap sambil diaduk secara konstan hingga pasta larut fully.',
+            'Diamkan selama 12 jam hingga formula stabil dan busa menghilang sepenuhnya sebelum dikemas.'
+        )
     ),
 
     // 3. Octa
@@ -255,8 +269,17 @@ $product_rules = array(
         'transform_desc' => function($desc) {
             return str_replace('paket bahan', 'paket biang', $desc);
         },
-        'remove_ingredients' => array('texapon', 'sles'),
-        'remove_direction_index' => 3
+        'new_features' => array(
+            'Formula Biang Pasta: Hemat dan sangat mudah diolah menjadi 5 liter sabun cuci piring.',
+            'Pengangkat Lemak Membandel: Efektif membersihkan noda minyak pada peralatan dapur.',
+            'Busa Melimpah: Busa tebal dan lembut di tangan.'
+        ),
+        'new_ingredients' => array('Active surfactant paste', 'Foam booster', 'Fragrance Lime', 'Pewarna'),
+        'new_directions' => array(
+            'Siapkan wadah minimal 5 Liter dan air bersih sebanyak 4.5 Liter.',
+            'Aduk biang pasta Octa dengan air bersih secara bertahap hingga larut sempurna.'
+        ),
+        'specs' => array('Komposisi' => 'Surfactant, Fragrance, Colorant')
     ),
 
     // 4. Oclean
@@ -264,6 +287,11 @@ $product_rules = array(
         'search' => 'Oclean',
         'new_title' => 'Oclean - Paket Bahan Sabun Cuci Piring 15 liter',
         'new_desc' => 'Oclean adalah paket bahan sabun cuci piring dengan formula khusus pembersih lemak (anti-grease) yang sangat efektif mengangkat kotoran, minyak, dan lemak membandel pada peralatan makan dan masak. Dirancang khusus untuk efisiensi tinggi bagi kebutuhan rumah tangga, pengusaha warung makan maupun restoran besar, satu kemasan oclean dapat menghasilkan hingga 15 liter sabun cuci piring. Aroma jeruk nipis yang segar membantu menghilangkan bau amis secara instan.',
+        'new_features' => array(
+            'Hasil Melimpah 15 Liter: Sangat hemat untuk kebutuhan restoran, warung makan, dan laundry.',
+            'Formula Anti-Grease: Mengangkat minyak dan lemak membandel seketika.',
+            'Aroma Jeruk Nipis Segar: Menghilangkan bau amis secara instan.'
+        ),
         'new_ingredients' => array('Active surfactant paste', 'Foam booster', 'Fragrance Lime', 'Pewarna'),
         'new_directions' => array(
             'Siapkan wadah besar ukuran minimal 15-20 Liter dan siapkan air bersih sebanyak 9-14 Liter dan garam 1 kg',
@@ -283,6 +311,12 @@ $product_rules = array(
         'search' => 'Essenz',
         'new_title' => 'Essenz - Paket bahan parfum waterbase',
         'new_desc' => 'EssenZ adalah formula paket bahan parfum berbasis air (waterbase) premium yang dirancang khusus untuk memberikan keharuman tahan lama pada pakaian tanpa meninggalkan noda kuning atau bercak minyak. Dilengkapi dengan teknologi micro-capsule aktif yang melepaskan aroma wangi secara perlahan saat pakaian mengalami gesekan, sehingga pakaian tetap wangi sepanjang hari.',
+        'new_features' => array(
+            'Formula Waterbase Premium: Bebas bercak minyak dan aman untuk semua kain.',
+            'Micro-capsule Fragrance: Keharuman tahan lama bertahap.',
+            'Paket Hemat 8L & 15L: Hasil melimpah dan ekonomis.'
+        ),
+        'new_ingredients' => array('Aqua', 'Microcapsule fragrance', 'Solubilizer', 'Preservative'),
         'new_directions' => array(
             'Siapkan wadah besar ukuran minimal 10 Liter dan siapkan air bersih sebanyak 9-14 Liter',
             'Larutkan bahan-bahan essenz sesuai dengan petunjuk yang sudah diberikan',
@@ -669,39 +703,83 @@ foreach ($product_rules as $rule) {
         $orig_content = $backup_products['title_' . strtolower(trim($post->post_title))]['post_content'];
     }
 
+    // Ekstrak section awal dari konten (HTML/Teks Polos)
+    $parsed = parse_any_product_content($orig_content);
+
     // Ambil param update
     $new_title = isset($rule['new_title']) ? $rule['new_title'] : null;
-    $new_desc = isset($rule['new_desc']) ? $rule['new_desc'] : null;
+    $new_desc = isset($rule['new_desc']) ? $rule['new_desc'] : $parsed['desc'];
 
     if (isset($rule['transform_desc']) && is_callable($rule['transform_desc'])) {
-        $current_desc = '';
-        if (preg_match('/<h3>Deskripsi Produk<\/h3>\s*<p>(.*?)<\/p>/is', $orig_content, $m)) {
-            $current_desc = trim(strip_tags($m[1]));
-        } else {
-            $clean = preg_replace('/<h3>.*?<\/h3>/i', '', $orig_content);
-            $current_desc = trim(strip_tags($clean));
-        }
-        $new_desc = $rule['transform_desc']($current_desc);
+        $new_desc = $rule['transform_desc']($parsed['desc']);
     }
 
-    $new_features = isset($rule['new_features']) ? $rule['new_features'] : null;
+    $features = isset($rule['new_features']) ? $rule['new_features'] : $parsed['features'];
     $remove_features = isset($rule['remove_features']) ? $rule['remove_features'] : null;
-    $new_ingredients = isset($rule['new_ingredients']) ? $rule['new_ingredients'] : null;
-    $remove_ingredients = isset($rule['remove_ingredients']) ? $rule['remove_ingredients'] : null;
-    $new_directions = isset($rule['new_directions']) ? $rule['new_directions'] : null;
-    $remove_direction_index = isset($rule['remove_direction_index']) ? $rule['remove_direction_index'] : null;
-    $directions_title = isset($rule['directions_title']) ? $rule['directions_title'] : 'Cara Penggunaan';
 
-    // Rakit ulang HTML terstruktur yang lengkap
-    $final_html = build_structured_content(
-        $orig_content,
+    if (!empty($remove_features) && is_array($remove_features) && !empty($features)) {
+        $filtered = array();
+        foreach ($features as $f_idx => $f_val) {
+            $should_remove = false;
+            foreach ($remove_features as $rf) {
+                if (is_numeric($rf) && ($f_idx + 1) == $rf) {
+                    $should_remove = true;
+                    break;
+                } elseif (is_string($rf) && stripos($f_val, $rf) !== false) {
+                    $should_remove = true;
+                    break;
+                }
+            }
+            if (!$should_remove) {
+                $filtered[] = $f_val;
+            }
+        }
+        $features = array_values($filtered);
+    }
+
+    $ingredients = isset($rule['new_ingredients']) ? $rule['new_ingredients'] : $parsed['ingredients'];
+    $remove_ingredients = isset($rule['remove_ingredients']) ? $rule['remove_ingredients'] : null;
+
+    if (!empty($remove_ingredients) && is_array($remove_ingredients) && !empty($ingredients)) {
+        $filtered_ing = array();
+        foreach ($ingredients as $ing_val) {
+            $should_remove = false;
+            foreach ($remove_ingredients as $ri) {
+                if (stripos($ing_val, $ri) !== false) {
+                    $should_remove = true;
+                    break;
+                }
+            }
+            if (!$should_remove) {
+                $filtered_ing[] = $ing_val;
+            }
+        }
+        $ingredients = array_values($filtered_ing);
+    }
+
+    $directions = isset($rule['new_directions']) ? $rule['new_directions'] : $parsed['directions'];
+    $remove_direction_index = isset($rule['remove_direction_index']) ? $rule['remove_direction_index'] : null;
+
+    if (!empty($remove_direction_index) && !empty($directions)) {
+        $filtered_dir = array();
+        foreach ($directions as $d_idx => $d_val) {
+            if (($d_idx + 1) != $remove_direction_index) {
+                $filtered_dir[] = $d_val;
+            }
+        }
+        $directions = array_values($filtered_dir);
+    }
+
+    $directions_title = isset($rule['directions_title']) ? $rule['directions_title'] : $parsed['directions_title'];
+    $safety = !empty($parsed['safety']) ? $parsed['safety'] : array();
+
+    // Rakit ulang HTML terstruktur yang bersih dan rapi
+    $final_html = render_clean_html(
         $new_desc,
-        $new_features,
-        $remove_features,
-        $new_ingredients,
-        $remove_ingredients,
-        $new_directions,
-        $remove_direction_index,
+        $features,
+        $ingredients,
+        $directions,
+        $safety,
         $directions_title
     );
 
