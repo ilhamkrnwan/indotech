@@ -14,6 +14,10 @@
 !README.md
 !update.md
 !Update.md
+!REFERENCES.MD
+!export_vps_products.php
+!import_vps_products.php
+!update_products_from_refs.php
 
 # ── Tema Custom: indotech_custom ──────────────────────────────
 # Buka jalur level per level (wajib di setiap level folder)
