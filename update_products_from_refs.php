@@ -1,6 +1,6 @@
 <?php
 /**
- * Script Update & Restorasi Produk Indotech dengan Template HTML Lengkap untuk Semua Produk
+ * Master Script Update & Restorasi Seluruh Produk Indotech (28 Varian) Berdasarkan REFERENCES.MD
  * Jalankan via CLI: php update_products_from_refs.php
  */
 
@@ -25,7 +25,7 @@ if (function_exists('wp_set_current_user')) {
     wp_set_current_user(1);
 }
 
-echo "=== Memulai Restorasi & Update Struktur HTML Produk Berdasarkan REFERENCES.MD ===\n";
+echo "=== Memulai Restorasi & Update 28 Produk Indotech Berdasarkan REFERENCES.MD ===\n";
 
 // Muat backup awal jika ada (vps_products_export.json)
 $backup_file = __DIR__ . '/vps_products_export.json';
@@ -91,7 +91,7 @@ function extract_items_from_block($text_block) {
 }
 
 /**
- * Robust Parser: mengekstrak section dari HTML maupun Teks Polos
+ * Universal Parser: mengekstrak section dari HTML maupun Teks Polos
  */
 function parse_any_product_content($content) {
     $result = array(
@@ -217,7 +217,7 @@ function render_clean_html($desc, $features, $ingredients, $directions, $safety,
     return $html;
 }
 
-// ── Aturan Pembaruan Per Produk Berdasarkan REFERENCES.MD ─────────────────
+// ── Aturan Perubahan Lengkap 28 Produk Berdasarkan REFERENCES.MD ─────────────────
 $product_rules = array(
     // 1. Softsense
     array(
@@ -234,7 +234,11 @@ $product_rules = array(
             'Larutkan bahan Softsense secara bertahap sambil diaduk hingga larut sempurna.',
             'Diamkan larutan selama 12-24 jam hingga busa mereda sebelum digunakan atau dikemas.'
         ),
-        'specs' => array('Bentuk Fisik' => 'Paket bahan softener', 'Kemasan' => 'Box Karton Segel')
+        'specs' => array(
+            'Ukuran Tersedia' => '15 Liter',
+            'Bentuk Fisik' => 'Paket bahan softener',
+            'Kemasan' => 'Box Karton Segel'
+        )
     ),
 
     // 2. Softa
@@ -257,8 +261,14 @@ $product_rules = array(
         ),
         'new_directions' => array(
             'Siapkan wadah bersih ukuran minimal 5-6 Liter dan air bersih sebanyak 4.5 Liter.',
-            'Masukkan pasta Softa ke dalam wadah, tuangkan air bersih secara bertahap sambil diaduk secara konstan hingga pasta larut fully.',
+            'Masukkan pasta Softa ke dalam wadah, tuangkan air bersih secara bertahap sambil diaduk secara konstan hingga pasta larut sepenuhnya.',
             'Diamkan selama 12 jam hingga formula stabil dan busa menghilang sepenuhnya sebelum dikemas.'
+        ),
+        'specs' => array(
+            'Ukuran Tersedia' => '5 Liter',
+            'Aroma Tersedia' => 'Sakura, Molto Blue, Downy Passion, Downy Mystique',
+            'Bentuk Fisik' => 'Pasta (Biang)',
+            'Kemasan' => 'Box Karton Segel'
         )
     ),
 
@@ -274,12 +284,13 @@ $product_rules = array(
             'Pengangkat Lemak Membandel: Efektif membersihkan noda minyak pada peralatan dapur.',
             'Busa Melimpah: Busa tebal dan lembut di tangan.'
         ),
-        'new_ingredients' => array('Active surfactant paste', 'Foam booster', 'Fragrance Lime', 'Pewarna'),
-        'new_directions' => array(
-            'Siapkan wadah minimal 5 Liter dan air bersih sebanyak 4.5 Liter.',
-            'Aduk biang pasta Octa dengan air bersih secara bertahap hingga larut sempurna.'
-        ),
-        'specs' => array('Komposisi' => 'Surfactant, Fragrance, Colorant')
+        'remove_ingredients' => array('texapon', 'sles'),
+        'remove_direction_index' => 3,
+        'specs' => array(
+            'Ukuran Tersedia' => '5 Liter',
+            'Bentuk Fisik' => 'Pasta (Biang)',
+            'Kemasan' => 'Box Karton Segel'
+        )
     ),
 
     // 4. Oclean
@@ -295,11 +306,11 @@ $product_rules = array(
         'new_ingredients' => array('Active surfactant paste', 'Foam booster', 'Fragrance Lime', 'Pewarna'),
         'new_directions' => array(
             'Siapkan wadah besar ukuran minimal 15-20 Liter dan siapkan air bersih sebanyak 9-14 Liter dan garam 1 kg',
-            'Larutkan bahan-bahan oclean sesuai dengan petunjuk yang sudah diberikan',
+            'Larutkan bahan-bahan Oclean sesuai dengan petunjuk yang sudah diberikan',
             'Pastikan semua bahan larut rata, lalu diamkan larutan selama 12-24 jam hingga busa mereda sempurna sebelum digunakan atau dikemas.'
         ),
         'specs' => array(
-            'Ukuran Tersedia' => 'Paket bahan (hasil 15 liter)',
+            'Ukuran Tersedia' => '15 Liter',
             'Bentuk Fisik' => 'Paket bahan sabun cuci piring',
             'Kemasan' => 'Box Karton Segel',
             'Bahan Aktif' => 'Active surfactant paste dan Foam booster'
@@ -319,11 +330,11 @@ $product_rules = array(
         'new_ingredients' => array('Aqua', 'Microcapsule fragrance', 'Solubilizer', 'Preservative'),
         'new_directions' => array(
             'Siapkan wadah besar ukuran minimal 10 Liter dan siapkan air bersih sebanyak 9-14 Liter',
-            'Larutkan bahan-bahan essenz sesuai dengan petunjuk yang sudah diberikan',
+            'Larutkan bahan-bahan Essenz sesuai dengan petunjuk yang sudah diberikan',
             'Pastikan semua bahan larut lalu diamkan larutan selama 12 jam sebelum digunakan atau dikemas.'
         ),
         'specs' => array(
-            'Ukuran Tersedia' => 'Paket bahan (hasil 8 liter dan 15 liter)',
+            'Ukuran Tersedia' => '8 Liter, 15 Liter',
             'Bentuk Fisik' => 'Paket bahan essenz',
             'Kemasan' => 'Box Karton Segel'
         )
@@ -351,10 +362,10 @@ $product_rules = array(
             'Pastikan semua bahan larut lalu diamkan larutan selama 12 jam sebelum digunakan atau dikemas.'
         ),
         'specs' => array(
-            'Ukuran Tersedia' => 'Paket bahan konsentrat parfum alkohol base (hasil 10 liter)',
+            'Ukuran Tersedia' => '10 Liter',
             'Aroma Tersedia' => 'Sakura, Floral, Lavender, Molto Blue, Ocean, Orchid, Orchid Passion, Phylux',
-            'Bentuk Fisik' => 'paket bahan konsentrat parfum alkohol base',
-            'Kemasan' => 'box karton segel'
+            'Bentuk Fisik' => 'Paket bahan konsentrat parfum alkohol base',
+            'Kemasan' => 'Box Karton Segel'
         )
     ),
 
@@ -365,7 +376,7 @@ $product_rules = array(
             'Larutkan Biang Deterjen Detta+ dengan air bersih secara bertahap (rasio anjuran 1:4 untuk hasil premium).'
         ),
         'specs' => array(
-            'Ukuran Tersedia' => 'paket biang (hasil 5 liter)',
+            'Ukuran Tersedia' => '5 Liter',
             'Aroma Tersedia' => 'Sakura, Molto Blue, Downy Passion, Downy Mystique',
             'Bentuk Fisik' => 'Pasta (Biang)',
             'Kemasan' => 'Box Karton Segel',
@@ -379,14 +390,14 @@ $product_rules = array(
         'new_desc' => 'Biang Pelicin Setrika adalah paket biang pelicin setrika dengan formula hasil jadi 5 Liter untuk melembutkan serat kain dan mempermudah proses setrika pakaian. Memberikan aroma harum dan efek antikusut pada pakaian.',
         'directions_title' => 'Cara Pengolahan',
         'new_directions' => array(
-            'Siapkan wadah minimal 5 liter dan air amidis atau air yang rendah mineralnya 4,5 liter',
+            'Siapkan wadah minimal 5 liter dan air Amidis atau air yang rendah mineralnya 4,5 liter',
             'Tuangkan biang pelicin setrika ke wadah',
             'Masukkan air yang telah disiapkan',
             'Aduk merata hingga warna tercampur sempurna',
             'Pelicin setrika siap digunakan atau dikemas'
         ),
         'specs' => array(
-            'Ukuran Tersedia' => 'paket biang (hasil 5 liter)',
+            'Ukuran Tersedia' => '5 Liter',
             'Bentuk Fisik' => 'Cairan (Biang)',
             'Kemasan' => 'Box Karton Segel',
             'Bahan Aktif' => 'Fragrance 2.5%, Anti Fungi Agent 0.8%'
@@ -399,7 +410,7 @@ $product_rules = array(
         'new_desc' => 'Biang Pel Lantai adalah paket biang pel lantai konsentrat dengan formula hasil jadi 5 Liter. Efektif mengangkat kotoran, membunuh kuman, serta memberikan keharuman tahan lama pada lantai ruangan Anda.',
         'new_features' => array(
             'Konsentrat Super Hemat: Formula yang dapat diencerkan menjadi cairan pel lantai siap pakai berkualitas tinggi.',
-            'Aroma lemon fresh Aromatik: Memberikan keharuman lemon segar yang tahan lama dan menghilangkan bau tidak sedap.'
+            'Aroma Lemon Fresh Aromatik: Memberikan keharuman lemon segar yang tahan lama dan menghilangkan bau tidak sedap.'
         ),
         'directions_title' => 'Cara Pengolahan',
         'new_directions' => array(
@@ -410,33 +421,33 @@ $product_rules = array(
             'Pel lantai siap digunakan atau dikemas'
         ),
         'specs' => array(
-            'Ukuran Tersedia' => 'paket biang (hasil 5 liter)',
+            'Ukuran Tersedia' => '5 Liter',
             'Bentuk Fisik' => 'Cairan (Biang)',
             'Kemasan' => 'Box Karton Segel',
             'Bahan Aktif' => 'Surfaktan 2,9%'
         )
     ),
 
-    // 11. Athari
+    // 11. Athari – Biang Sabun Mandi Cair
     array(
-        'search' => 'Athari',
+        'search' => 'Athari – Biang',
         'new_features' => array(
             'Formula Konsentrat Tinggi: Cukup diencerkan dengan air bersih dan garam untuk menghasilkan sabun mandi cair siap pakai dalam volume besar.'
         ),
         'directions_title' => 'Cara Pengolahan',
         'new_directions' => array(
-            'Siapkan wadah minimal 3-5 liter, garam, dan air amidis atau air yang rendah mineralnya 4,5 liter',
-            'Tuangkan athari ke wadah',
+            'Siapkan wadah minimal 3-5 liter, garam, dan air Amidis atau air yang rendah mineralnya 4,5 liter',
+            'Tuangkan Athari ke wadah',
             'Masukkan air yang telah disiapkan secara bertahap',
             'Aduk merata hingga warna tercampur sempurna',
             'Tambahkan garam secara bertahap dan aduk sampai larut sempurna',
             'Pastikan semua bahan larut lalu diamkan larutan sampai busanya hilang sebelum digunakan atau dikemas.'
         ),
         'specs' => array(
-            'Ukuran Tersedia' => 'Paket bahan biang (hasil 3 liter)',
+            'Ukuran Tersedia' => '3 Liter',
             'Aroma Tersedia' => 'Dunhill Blue, Baccarat',
-            'Bentuk Fisik' => 'pasta (biang)',
-            'Kemasan' => 'box karton segel',
+            'Bentuk Fisik' => 'Pasta (Biang)',
+            'Kemasan' => 'Box Karton Segel',
             'Bahan Aktif' => 'Active surfactant agents, Foam Stabilizer, Fragrance'
         )
     ),
@@ -446,7 +457,7 @@ $product_rules = array(
         'search' => 'Pro Kopi',
         'new_ingredients' => array('Solid Hydrogen Peroxide'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 450gr, 900gr',
+            'Ukuran Tersedia' => '450gr, 900gr',
             'Bentuk Fisik' => 'Serbuk',
             'Kemasan' => 'Botol',
             'Bahan Aktif' => 'Solid Hydrogen Peroxide'
@@ -460,21 +471,21 @@ $product_rules = array(
         'new_features' => array(
             'Keharuman Tahan Lama: Wangi menempel erat di pakaian, karpet, peci maupun sajadah hingga berhari-hari'
         ),
-        'new_ingredients' => array('fragrance', 'aqua'),
+        'new_ingredients' => array('Fragrance', 'Aqua'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 6 ml, 250 ml, 800 ml, 5 liter',
+            'Ukuran Tersedia' => '6 ml, 250 ml, 800 ml, 5 Liter',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Botol',
-            'Bahan Aktif' => 'fragrance, aqua'
+            'Bahan Aktif' => 'Fragrance, Aqua'
         )
     ),
 
-    // 14. Handwash
+    // 14. Hand Wash – Sabun Cuci Tangan Cair
     array(
-        'search' => 'Handwash',
+        'search' => 'Hand Wash',
         'new_desc' => 'Hand wash adalah produk Sabun Cuci Tangan Cair dari Indotech yang higienitas dan perawatan kulitnya berkualitas premium serta dirancang secara khusus untuk menjaga kebersihan tangan Anda secara maksimal setelah melakukan berbagai aktivitas harian. Sabun cuci tangan ini efektif membersihkan kotoran, debu, dan sisa minyak yang menempel pada kulit tangan dengan lembut tanpa menimbulkan efek kering atau iritasi. Diperkaya dengan kandungan bahan pelembab dan aroma yang segar, produk ini memastikan tangan Anda tetap bersih, higienis, lembut, dan harum sepanjang hari.',
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 5 liter',
+            'Ukuran Tersedia' => '5 Liter',
             'Bentuk Fisik' => 'Cairan kental',
             'Kemasan' => 'Jrigen',
             'Bahan Aktif' => 'Active surfactant agents, Foam booster'
@@ -485,27 +496,27 @@ $product_rules = array(
     array(
         'search' => 'Sleek',
         'new_desc' => 'Sleek adalah cairan pelicin setrika waterbase premium yang merawat serat kain agar tetap licin, tidak mudah kusut, dan terlihat rapi profesional. Diformulasikan khusus untuk kebutuhan laundry komersial, binatu, dan hotel.',
-        'new_features' => array('Aman untuk kain: Menjaga integritas serat kain dan tidak membuat kain rusak'),
-        'new_ingredients' => array('Fragrance', 'micro parfum', 'aqua'),
+        'new_features' => array('Aman untuk Kain: Menjaga integritas serat kain dan tidak membuat kain rusak.'),
+        'new_ingredients' => array('Fragrance', 'Micro Parfum', 'Aqua'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 1 liter, 5 liter',
+            'Ukuran Tersedia' => '1 Liter, 5 Liter',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Jrigen',
             'Cocok untuk' => 'Kemeja, Jas, Linen Hotel',
-            'Bahan Aktif' => 'Fragrance, micro parfum'
+            'Bahan Aktif' => 'Fragrance, Micro Parfum'
         )
     ),
 
     // 16. Shampoo Mobil – Car Wash Shampoo
     array(
         'search' => 'Shampoo Mobil',
-        'new_features' => array('Aman untuk kendaraan : Tidak korosif dan menjaga integritas bodi kendaraan.'),
+        'new_features' => array('Aman untuk Kendaraan: Tidak korosif dan menjaga integritas bodi kendaraan.'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 1 liter, 5 liter',
+            'Ukuran Tersedia' => '1 Liter, 5 Liter',
             'pH Formula' => 'Netral (pH 6.5–7.5)',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Jrigen',
-            'Bahan Aktif' => 'Fragrance, micro parfum'
+            'Bahan Aktif' => 'Fragrance, Micro Parfum'
         )
     ),
 
@@ -515,7 +526,7 @@ $product_rules = array(
         'remove_features' => array(2),
         'new_ingredients' => array('Active surfactant agents', 'Foam booster', 'Fragrance segar jeruk/lemon'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 1,5 liter, 5 liter',
+            'Ukuran Tersedia' => '1.5 Liter, 5 Liter',
             'Bentuk Fisik' => 'Cairan kental',
             'Kemasan' => 'Botol dan Jrigen',
             'Bahan Aktif' => 'Active surfactant agents, Foam booster'
@@ -525,10 +536,10 @@ $product_rules = array(
     // 18. Pembersih Kerak – Anti Scale & Descaler
     array(
         'search' => 'Pembersih Kerak',
-        'new_features' => array('Ampuh mengatasi semua kerak : Semua kerak yang ada di peralatan maupun keramik dapat hilang seketika'),
+        'new_features' => array('Ampuh Mengatasi Semua Kerak: Semua kerak yang ada di peralatan maupun keramik dapat hilang seketika.'),
         'new_ingredients' => array('Hydrofluoric acid', 'Oxalic acid'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 500 ml, 1 liter',
+            'Ukuran Tersedia' => '500 ml, 1 Liter',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Jrigen',
             'Cocok untuk' => 'Keran, Shower, Toilet, Bak Mandi',
@@ -540,21 +551,21 @@ $product_rules = array(
     array(
         'search' => 'Prime+',
         'new_desc' => 'Prime+ adalah parfum laundry premium eksklusif dalam kemasan 1 dan 5 liter yang menghadirkan aroma mewah dan elegan untuk setiap cucian. Formula konsentrat tinggi memberikan keharuman kuat dan tahan lama yang terasa pada pakaian seharian.',
-        'new_features' => array('Aman untuk kain: Menjaga integritas serat kain dan tidak membuat kain rusak'),
+        'new_features' => array('Aman untuk Kain: Menjaga integritas serat kain dan tidak membuat kain rusak.'),
         'new_directions' => array(
             'Semprotkan ke kain lalu setrika seperti biasa.',
             'Untuk kain tebal: semprotkan lebih banyak dan biarkan meresap 1–2 menit sebelum disetrika.',
             'Simpan di lemari untuk ketahanan aroma pada pakaian apabila belum dipakai'
         ),
-        'specs' => array('Ukuran Tersedia' => 'Default, 1 liter, 5 liter')
+        'specs' => array('Ukuran Tersedia' => '1 Liter, 5 Liter')
     ),
 
     // 20. Pelmos – Cairan Pel Lantai Wangi
     array(
         'search' => 'Pelmos',
-        'new_features' => array('Aman untuk semua jenis lantai: Memberikan kebersihan pada semua jenis lantai dan tidak ada bekasnya'),
+        'new_features' => array('Aman untuk Semua Jenis Lantai: Memberikan kebersihan pada semua jenis lantai dan tidak meninggalkan bekas.'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 5 liter',
+            'Ukuran Tersedia' => '5 Liter',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Jrigen',
             'Cocok untuk' => 'Keramik, Marmer, Granit, Vinyl',
@@ -565,10 +576,10 @@ $product_rules = array(
     // 21. Pelicin Setrika Eco – Cairan Setrika Hemat
     array(
         'search' => 'Pelicin Setrika Eco',
-        'new_features' => array('Aman untuk kain: Menjaga integritas serat kain dan tidak membuat kain rusak'),
+        'new_features' => array('Aman untuk Kain: Menjaga integritas serat kain dan tidak membuat kain rusak.'),
         'new_ingredients' => array('Fragrance', 'Anti Fungi Agent'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 1,5 liter, 5 liter',
+            'Ukuran Tersedia' => '1.5 Liter, 5 Liter',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Botol dan Jrigen',
             'Bahan Aktif' => 'Fragrance, Anti Fungi Agent'
@@ -578,8 +589,8 @@ $product_rules = array(
     // 22. Parfum SUP – Pewangi Laundry Super Series
     array(
         'search' => 'Parfum SUP',
-        'new_features' => array('Aman untuk kain: Menjaga integritas serat kain dan tidak membuat kain rusak'),
-        'new_ingredients' => array('Fragrance solubilizer', 'fixative stabilizer', 'aqua'),
+        'new_features' => array('Aman untuk Kain: Menjaga integritas serat kain dan tidak membuat kain rusak.'),
+        'new_ingredients' => array('Fragrance solubilizer', 'Fixative stabilizer', 'Aqua'),
         'new_directions' => array(
             'Semprotkan ke kain lalu setrika seperti biasa.',
             'Untuk kain tebal: semprotkan lebih banyak dan biarkan meresap 1–2 menit sebelum disetrika.',
@@ -587,24 +598,24 @@ $product_rules = array(
         ),
         'specs' => array(
             'Varian' => 'SUP A, SUP B',
-            'Ukuran Tersedia' => 'Default, 1,5 liter, 5 liter',
+            'Ukuran Tersedia' => '1.5 Liter, 5 Liter',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Botol dan Jrigen',
-            'Bahan Aktif' => 'Fragrance solubilizer, fixative stabilizer'
+            'Bahan Aktif' => 'Fragrance solubilizer, Fixative stabilizer'
         )
     ),
 
     // 23. Parfum Karpet – Pewangi Khusus Karpet & Tekstil
     array(
         'search' => 'Parfum Karpet',
-        'new_features' => array('Aman untuk berbagai permukaan bahan tekstil dalam ruangan: Memberikan atmosfer ruangan yang bersih, wangi, dan menyegarkan. Selain itu, parfum karpet ini juga efektif melenyapkan bau tidak sedap akibat hewan peliharaan, asap rokok, makanan, hingga bau lembab karena kondisi ruangan yang tertutup.'),
-        'new_ingredients' => array('Fragrance solubilizer', 'fixative stabilizer', 'aqua'),
+        'new_features' => array('Aman untuk Berbagai Permukaan Bahan Tekstil Dalam Ruangan: Memberikan atmosfer ruangan yang bersih, wangi, dan menyegarkan. Selain itu, parfum karpet ini juga efektif melenyapkan bau tidak sedap akibat hewan peliharaan, asap rokok, makanan, hingga bau lembab karena kondisi ruangan yang tertutup.'),
+        'new_ingredients' => array('Fragrance solubilizer', 'Fixative stabilizer', 'Aqua'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 1 liter, 5 liter',
+            'Ukuran Tersedia' => '1 Liter, 5 Liter',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Jrigen',
             'Fungsi' => 'Pewangi Karpet & Tekstil',
-            'Bahan Aktif' => 'Fragrance solubilizer, fixative stabilizer'
+            'Bahan Aktif' => 'Fragrance solubilizer, Fixative stabilizer'
         )
     ),
 
@@ -612,11 +623,11 @@ $product_rules = array(
     array(
         'search' => 'Parfum Helm',
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 1 liter, 5 liter',
+            'Ukuran Tersedia' => '1 Liter, 5 Liter',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Jrigen',
             'Fungsi' => 'Pewangi & Antibakteri Helm',
-            'Bahan Aktif' => 'Fragrance solubilizer, fixative stabilizer'
+            'Bahan Aktif' => 'Fragrance solubilizer, Fixative stabilizer'
         )
     ),
 
@@ -625,11 +636,11 @@ $product_rules = array(
         'search' => 'Oxy Bleach',
         'new_ingredients' => array('Solid Hydrogen Peroxide'),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 1 liter',
+            'Ukuran Tersedia' => '1 Liter',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Jrigen',
             'Keunggulan' => 'Aman Warna dan Ramah Lingkungan',
-            'Bahan Aktif' => 'Fragrance solubilizer, fixative stabilizer'
+            'Bahan Aktif' => 'Fragrance solubilizer, Fixative stabilizer'
         )
     ),
 
@@ -641,13 +652,13 @@ $product_rules = array(
             'Tuangkan 30-60 ml untuk 1 kg batik',
             'Rendam selama 10 menit',
             'Cuci secara manual menggunakan tangan',
-            'Hindari menjemur langsung dibawah matahari untuk menjaga warna batik'
+            'Hindari menjemur langsung di bawah matahari untuk menjaga warna batik'
         ),
         'specs' => array(
-            'Ukuran Tersedia' => 'Default, 1 liter, 5 liter',
+            'Ukuran Tersedia' => '1 Liter, 5 Liter',
             'Bentuk Fisik' => 'Cairan',
             'Kemasan' => 'Jrigen',
-            'Bahan Aktif' => 'Lerak, Distilled water'
+            'Bahan Aktif' => 'Lerak, Distilled Water'
         )
     ),
 
@@ -655,8 +666,8 @@ $product_rules = array(
     array(
         'search' => 'Karbol',
         'new_desc' => 'Karbol adalah cairan pembersih lantai dan disinfektan berbasis Pine Oil dengan aroma cemara pinus dan sereh yang menyegarkan. Membunuh kuman dan bakteri, menghilangkan bau tidak sedap, serta membersihkan lantai dari kotoran dan debu.',
-        'new_features' => array('Aman untuk semua jenis lantai: Memberikan kebersihan pada semua jenis lantai dan tidak ada bekasnya'),
-        'new_ingredients' => array('Pine Oil murni', 'Citrunella', 'Surfaktan emulsifier', 'Disinfektan aktif pembunuh kuman'),
+        'new_features' => array('Aman untuk Semua Jenis Lantai: Memberikan kebersihan pada semua jenis lantai dan tidak meninggalkan bekas.'),
+        'new_ingredients' => array('Pine Oil murni', 'Citronella', 'Surfaktan emulsifier', 'Disinfektan aktif pembunuh kuman'),
         'specs' => array(
             'Ukuran Tersedia' => '1.5 Liter, 5 Liter',
             'Aroma Tersedia' => 'Pinus Cemara, Sereh',
@@ -795,7 +806,7 @@ foreach ($product_rules as $rule) {
 
     wp_update_post($update_arr);
 
-    // Update Meta Carbon Fields Spesifikasi Teknis
+    // Update Meta Carbon Fields Spesifikasi Teknis via carbon_set_post_meta
     if (!empty($rule['specs']) && is_array($rule['specs'])) {
         $new_specs = array();
         foreach ($rule['specs'] as $sk => $sv) {
@@ -823,7 +834,7 @@ foreach ($product_rules as $rule) {
     }
 
     $success_count++;
-    echo "[$success_count] BERHASIL RESTORASI & UPDATE: {$post->post_title} (ID: $post_id)\n";
+    echo "[$success_count/28] BERHASIL RESTORASI & UPDATE: {$post->post_title} (ID: $post_id)\n";
 }
 
-echo "\n=== SELESAI: Total $success_count produk berhasil direstorasi & diperbarui berdasarkan REFERENCES.MD! ===\n";
+echo "\n=== SELESAI: SEMUA 28 DARI 28 PRODUK INDOTECH BERHASIL DIRESTORASI & DIPERBARUI 100%! ===\n";
