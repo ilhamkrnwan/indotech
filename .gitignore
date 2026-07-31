@@ -18,6 +18,9 @@
 !export_vps_products.php
 !import_vps_products.php
 !update_products_from_refs.php
+!REFERENCES-PHASE-2.md
+!update_phase1_products.php
+!update_phase2_products.php
 
 # ── Tema Custom: indotech_custom ──────────────────────────────
 # Buka jalur level per level (wajib di setiap level folder)
