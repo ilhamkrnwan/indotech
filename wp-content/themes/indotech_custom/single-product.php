@@ -772,14 +772,18 @@ if ( function_exists( 'indotech_print_jsonld' ) ) {
                         <?php
                         $sizes = array();
                         $aromas = array();
+                        $aroma_label = 'Pilih Aroma';
                         if (is_array($specs)) {
                             foreach ($specs as $spec) {
                                 if (empty($spec['spec_name'])) continue;
                                 $name_lower = strtolower(trim($spec['spec_name']));
                                 if ($name_lower === 'ukuran tersedia' || $name_lower === 'ukuran') {
                                     $sizes = array_map('trim', explode(',', $spec['spec_value']));
-                                } elseif ($name_lower === 'aroma tersedia' || $name_lower === 'aroma' || $name_lower === 'varian') {
+                                } elseif ($name_lower === 'aroma tersedia' || $name_lower === 'aroma' || $name_lower === 'varian' || $name_lower === 'varian tersedia') {
                                     $aromas = array_map('trim', explode(',', $spec['spec_value']));
+                                    if ($name_lower === 'varian' || $name_lower === 'varian tersedia') {
+                                        $aroma_label = 'Pilih Varian';
+                                    }
                                 }
                             }
                         }
@@ -801,11 +805,11 @@ if ( function_exists( 'indotech_print_jsonld' ) ) {
 
                         <?php if (!empty($aromas)) : ?>
                             <div>
-                                <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;">Pilih Aroma *</label>
+                                <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;"><?php echo esc_html($aroma_label); ?> *</label>
                                 <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                                     <?php foreach ($aromas as $idx => $aroma) : ?>
                                         <label class="badge-radio-label">
-                                            <input type="radio" name="product_aroma" value="<?php echo esc_attr($aroma); ?>" <?php echo $idx === 0 ? 'checked' : ''; ?>>
+                                            <input type="radio" name="product_aroma" data-label="<?php echo esc_attr($aroma_label); ?>" value="<?php echo esc_attr($aroma); ?>" <?php echo $idx === 0 ? 'checked' : ''; ?>>
                                             <span class="badge-radio-span"><?php echo esc_html($aroma); ?></span>
                                         </label>
                                     <?php endforeach; ?>

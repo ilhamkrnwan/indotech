@@ -22,14 +22,15 @@
       const phone = ($form.find('[name="phone"]').val() || $form.find('[name="contact_phone"]').val() || '').trim();
       
       let message = ($form.find('[name="message"]').val() || $form.find('[name="contact_message"]').val() || '').trim();
-      const address = ($form.find('[name="address"]').val() || '').trim();
-      const productSize = $form.find('[name="product_size"]:checked').val() || '';
-      const productAroma = $form.find('[name="product_aroma"]:checked').val() || '';
+      const $checkedAroma = $form.find('[name="product_aroma"]:checked');
+      const productAroma = $checkedAroma.val() || '';
+      const aromaLabelAttr = $checkedAroma.attr('data-label') || 'Pilih Aroma';
+      const aromaLabelName = aromaLabelAttr.replace(/^Pilih\s+/i, '').trim(); // "Varian" or "Aroma"
       
       if (address) {
         message = '';
         if (productSize) message += `Ukuran: ${productSize}\n`;
-        if (productAroma) message += `Aroma: ${productAroma}\n`;
+        if (productAroma) message += `${aromaLabelName}: ${productAroma}\n`;
         message += `Alamat: ${address}`;
       }
       
@@ -121,7 +122,7 @@
               redirectText += `Saya tertarik untuk memesan/tanya mengenai produk berikut:\n\n`;
               redirectText += `• *Produk*: ${productTitle}\n`;
               if (productSize) redirectText += `• *Ukuran*: ${productSize}\n`;
-              if (productAroma) redirectText += `• *Aroma*: ${productAroma}\n`;
+              if (productAroma) redirectText += `• *${aromaLabelName}*: ${productAroma}\n`;
               if (address) redirectText += `• *Alamat Kirim*: ${address}\n`;
               redirectText += `\nMohon informasi ketersediaan stok dan ongkos kirimnya. Terima kasih.`;
               
