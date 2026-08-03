@@ -12,6 +12,9 @@
 // Konfigurasi Kunci Keamanan untuk Akses via Web (Ubah sesuai kebutuhan)
 define('SECRET_KEY', 'indotech_export_key_2026');
 
+// Cek Mode Eksekusi (CLI atau Web)
+$is_cli = (php_sapi_name() === 'cli');
+
 // Batas jumlah data terbaru (default 10, bisa dicustom via URL ?limit=20 atau CLI --limit=20)
 $latest_limit = 10;
 if (isset($_GET['limit']) && is_numeric($_GET['limit'])) {
@@ -25,9 +28,6 @@ if (isset($_GET['limit']) && is_numeric($_GET['limit'])) {
     }
 }
 define('LATEST_LIMIT', $latest_limit);
-
-// Cek Mode Eksekusi (CLI atau Web)
-$is_cli = (php_sapi_name() === 'cli');
 
 if (!$is_cli) {
     // Keamanan jika diakses via HTTP Web
