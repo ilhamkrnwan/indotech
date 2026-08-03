@@ -24,7 +24,7 @@
       let message = ($form.find('[name="message"]').val() || $form.find('[name="contact_message"]').val() || '').trim();
       const $checkedAroma = $form.find('[name="product_aroma"]:checked');
       const productAroma = $checkedAroma.val() || '';
-      const aromaLabelAttr = $checkedAroma.attr('data-label') || 'Pilih Aroma';
+      const aromaLabelAttr = $checkedAroma.attr('data-label') || 'Pilih Varian';
       const aromaLabelName = aromaLabelAttr.replace(/^Pilih\s+/i, '').trim(); // "Varian" or "Aroma"
       
       if (address) {

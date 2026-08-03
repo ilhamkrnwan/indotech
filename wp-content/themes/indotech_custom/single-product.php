@@ -772,7 +772,7 @@ if ( function_exists( 'indotech_print_jsonld' ) ) {
                         <?php
                         $sizes = array();
                         $aromas = array();
-                        $aroma_label = 'Pilih Aroma';
+                        $aroma_label = 'Pilih Varian';
                         if (is_array($specs)) {
                             foreach ($specs as $spec) {
                                 if (empty($spec['spec_name'])) continue;
