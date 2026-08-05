@@ -26,6 +26,8 @@
 !REFERENCES-PHASE-4.md
 !update_phase4_products.php
 !export_data.php
+!insert_new_products.php
+
 
 # ── Tema Custom: indotech_custom ──────────────────────────────
 # Buka jalur level per level (wajib di setiap level folder)
