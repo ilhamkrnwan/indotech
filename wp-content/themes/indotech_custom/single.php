@@ -81,7 +81,6 @@
 .post-body .baca-juga-box {
     background: linear-gradient(135deg, #EEF4FF 0%, #F8FAFC 100%) !important;
     border: 1px solid #BFDBFE !important;
-    border-left: 4px solid #0057FF !important;
     border-radius: 10px !important;
     padding: 14px 18px !important;
     margin: 24px 0 !important;
@@ -414,18 +413,12 @@ if ($related_query->post_count < 3) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // ── Auto-format "Baca juga:" paragraphs into prominent callout boxes ──
+    // ── Auto-format "Baca juga:" paragraphs into clean callout boxes ──
     const bodyPs = document.querySelectorAll('.post-body p');
     bodyPs.forEach(p => {
         const text = p.textContent || p.innerText;
         if (/baca\s*juga\s*:/i.test(text) || (p.querySelector('strong, b') && /baca\s*juga/i.test(p.querySelector('strong, b').textContent))) {
             p.classList.add('baca-juga-box');
-            if (!p.querySelector('.baca-juga-icon')) {
-                const iconSpan = document.createElement('span');
-                iconSpan.className = 'baca-juga-icon';
-                iconSpan.innerHTML = '📌 ';
-                p.prepend(iconSpan);
-            }
         }
     });
 
