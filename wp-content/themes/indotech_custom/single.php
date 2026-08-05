@@ -1,11 +1,51 @@
 <?php get_header(); ?>
 
 <style>
+/* ── Post Body High Contrast Typography ───────────────────── */
+.post-body {
+    color: #1E293B !important; /* Dark solid text (slate-800) instead of faint 60% opacity */
+    opacity: 1 !important;
+    font-size: 16px !important;
+    line-height: 1.85 !important;
+}
+
+.post-body p {
+    color: #1E293B !important;
+    opacity: 1 !important;
+    margin-bottom: 22px !important;
+    font-size: 16px !important;
+    line-height: 1.85 !important;
+}
+
+.post-body strong, .post-body b {
+    color: #0A0F1E !important;
+    font-weight: 700 !important;
+}
+
+.post-body h1, .post-body h2, .post-body h3, .post-body h4, .post-body h5, .post-body h6 {
+    color: #0A0F1E !important;
+    font-weight: 700 !important;
+    margin-top: 36px !important;
+    margin-bottom: 16px !important;
+    line-height: 1.3 !important;
+}
+
+.post-body h2 {
+    font-size: 22px !important;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+}
+
+.post-body h3 {
+    font-size: 19px !important;
+}
+
 .post-body ol,
 .post-body ul {
+    color: #1E293B !important;
     padding-left: 24px;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 .post-body ol {
     list-style-type: decimal;
@@ -14,8 +54,69 @@
     list-style-type: disc;
 }
 .post-body li {
+    color: #1E293B !important;
     margin-bottom: 8px;
 }
+
+/* ── Post Body Link Styling ──────────────────────────────── */
+.post-body a {
+    color: #0057FF !important;
+    font-weight: 600 !important;
+    text-decoration: underline !important;
+    text-decoration-color: rgba(0, 87, 255, 0.4) !important;
+    text-underline-offset: 3px !important;
+    transition: all 0.2s ease !important;
+    padding: 1px 3px !important;
+    border-radius: 3px !important;
+}
+
+.post-body a:hover {
+    color: #003ECC !important;
+    text-decoration-color: #003ECC !important;
+    background-color: rgba(0, 87, 255, 0.08) !important;
+}
+
+/* ── "Baca Juga" Callout Box Styling ─────────────────────── */
+.post-body p.baca-juga-box,
+.post-body .baca-juga-box {
+    background: linear-gradient(135deg, #EEF4FF 0%, #F8FAFC 100%) !important;
+    border: 1px solid #BFDBFE !important;
+    border-left: 4px solid #0057FF !important;
+    border-radius: 10px !important;
+    padding: 14px 18px !important;
+    margin: 24px 0 !important;
+    font-size: 15.5px !important;
+    line-height: 1.6 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    box-shadow: 0 2px 8px rgba(0, 87, 255, 0.05) !important;
+}
+
+.post-body p.baca-juga-box strong,
+.post-body p.baca-juga-box b,
+.post-body .baca-juga-label {
+    color: #0057FF !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.post-body p.baca-juga-box a {
+    color: #0A0F1E !important;
+    font-weight: 600 !important;
+    text-decoration: underline !important;
+    text-decoration-color: #0057FF !important;
+    transition: color 0.2s ease !important;
+}
+
+.post-body p.baca-juga-box a:hover {
+    color: #0057FF !important;
+    background: transparent !important;
+}
+
 
 /* Lightbox Modal Style for Blog Content Images */
 .post-lightbox {
@@ -157,9 +258,38 @@
                 <?php the_post_thumbnail('large', ['style' => 'width:100%;height:auto;object-fit:cover;']); ?>
             </figure>
         <?php endif; ?>
-        <div class="post-body" style="color: var(--text-secondary); line-height: 1.8; font-size: 15px;">
+        <div class="post-body">
             <?php the_content(); ?>
         </div>
+
+        <!-- Editorial Verification & Approval Card -->
+        <div class="article-approval-card" style="background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%); border: 1px solid #E2E8F0; border-radius: 12px; padding: 22px 26px; margin-top: 40px; margin-bottom: 24px; box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);">
+            <div style="display: flex; align-items: flex-start; gap: 16px;">
+                <div style="width: 44px; height: 44px; min-width: 44px; border-radius: 50%; background: #D1FAE5; display: flex; align-items: center; justify-content: center; color: #059669; font-size: 22px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px;">
+                        <h4 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0; font-family: 'Space Grotesk', sans-serif;">Artikel Terverifikasi & Disetujui Redaksi</h4>
+                        <span style="font-size: 11px; font-weight: 700; background: #10B981; color: #FFFFFF; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;">Terverifikasi</span>
+                    </div>
+                    <p style="font-size: 13.5px; color: #334155; margin: 0; line-height: 1.6;">
+                        Konten artikel ini telah ditinjau dan disetujui oleh <strong>Tim Redaksi & Tim Ahli Formulasi PT Indotech Berkah Abadi</strong> untuk memastikan keakuratan informasi teknis, standar kebersihan, serta keamanan penggunaan produk.
+                    </p>
+                    <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 12px; font-size: 12px; color: #64748B; border-top: 1px dashed #CBD5E1; padding-top: 10px;">
+                        <span><strong style="color: #1E293B;">Peninjau:</strong> Tim Redaksi Indotech</span>
+                        <span>•</span>
+                        <span><strong style="color: #1E293B;">Penerbit:</strong> PT Indotech Berkah Abadi</span>
+                        <span>•</span>
+                        <span><strong style="color: #1E293B;">Terakhir Diperbarui:</strong> <?php echo get_the_modified_date('d M Y'); ?></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </main>
 
@@ -284,7 +414,23 @@ if ($related_query->post_count < 3) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // ── Auto-format "Baca juga:" paragraphs into prominent callout boxes ──
+    const bodyPs = document.querySelectorAll('.post-body p');
+    bodyPs.forEach(p => {
+        const text = p.textContent || p.innerText;
+        if (/baca\s*juga\s*:/i.test(text) || (p.querySelector('strong, b') && /baca\s*juga/i.test(p.querySelector('strong, b').textContent))) {
+            p.classList.add('baca-juga-box');
+            if (!p.querySelector('.baca-juga-icon')) {
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'baca-juga-icon';
+                iconSpan.innerHTML = '📌 ';
+                p.prepend(iconSpan);
+            }
+        }
+    });
+
     const contentImages = document.querySelectorAll('.post-body img, .post-featured-img img');
+
     if (!contentImages.length) return;
 
     const images = Array.from(contentImages).map(img => {
