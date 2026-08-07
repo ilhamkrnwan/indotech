@@ -34,22 +34,16 @@ add_action('after_setup_theme', 'indotech_setup');
 
 // ── Enqueue Assets ───────────────────────────────────────────────────────────
 function indotech_enqueue() {
-    // Google Fonts
-    wp_enqueue_style(
-        'indotech-fonts',
-        'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap',
-        [],
-        null
-    );
-
     // Main stylesheet
-    wp_enqueue_style('indotech-main', INDOTECH_URI . '/assets/css/main.css', ['indotech-fonts'], filemtime(get_template_directory() . '/assets/css/main.css'));
+    wp_enqueue_style('indotech-main', INDOTECH_URI . '/assets/css/main.css', [], filemtime(get_template_directory() . '/assets/css/main.css'));
 
     // Main JS
     wp_enqueue_script('indotech-main', INDOTECH_URI . '/assets/js/main.js', [], filemtime(get_template_directory() . '/assets/js/main.js'), true);
 
-    // Inquiry AJAX JS (depends on jQuery and indotech-main for localized object)
-    wp_enqueue_script('indotech-inquiry', INDOTECH_URI . '/assets/js/inquiry-ajax.js', ['jquery', 'indotech-main'], filemtime(get_template_directory() . '/assets/js/inquiry-ajax.js'), true);
+    // Inquiry AJAX JS — Enqueue only on pages with inquiry/contact forms
+    if (is_page(['kontak', 'kemitraan']) || is_singular(['product', 'brand'])) {
+        wp_enqueue_script('indotech-inquiry', INDOTECH_URI . '/assets/js/inquiry-ajax.js', ['jquery', 'indotech-main'], filemtime(get_template_directory() . '/assets/js/inquiry-ajax.js'), true);
+    }
 
     $whatsapp = indotech_opt( 'whatsapp', '6285600061005' );
     $wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );
@@ -99,6 +93,24 @@ JS;
     }
 }
 add_action('wp_enqueue_scripts', 'indotech_enqueue');
+
+// ── Defer Non-Critical JavaScript & Remove jQuery Migrate ────────────────────
+add_filter('script_loader_tag', function($tag, $handle) {
+    if (is_admin()) return $tag;
+    if (in_array($handle, ['indotech-main', 'indotech-inquiry', 'comment-reply'], true)) {
+        return str_replace(' src=', ' defer src=', $tag);
+    }
+    return $tag;
+}, 10, 2);
+
+add_action('wp_default_scripts', function($scripts) {
+    if (!is_admin() && isset($scripts->registered['jquery'])) {
+        $script = $scripts->registered['jquery'];
+        if ($script->deps) {
+            $script->deps = array_diff($script->deps, ['jquery-migrate']);
+        }
+    }
+});
 
 // ── Register Sidebars ─────────────────────────────────────────────────────────
 function indotech_widgets_init() {
