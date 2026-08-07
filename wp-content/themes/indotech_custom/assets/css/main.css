@@ -2981,6 +2981,8 @@ table td {
   .blog-card {
     display: flex !important;
     flex-direction: row !important;
+    height: 105px !important;
+    max-height: 105px !important;
     border-radius: var(--radius-md) !important;
     border: 1px solid var(--border) !important;
     overflow: hidden !important;
@@ -2988,13 +2990,11 @@ table td {
   }
 
   .blog-thumb {
-    width: 95px !important;
-    height: auto !important;
-    align-self: stretch !important;
+    width: 100px !important;
+    height: 100% !important;
     flex-shrink: 0 !important;
     border-radius: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
+    display: block !important;
     overflow: hidden !important;
     position: relative !important;
   }
@@ -3003,7 +3003,6 @@ table td {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
-    flex: 1 1 auto !important;
   }
 
   /* Smaller blog category badge on mobile card thumbnail */
@@ -3016,11 +3015,12 @@ table td {
   }
 
   .blog-body {
-    padding: 10px 12px !important;
+    padding: 8px 10px !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: space-between !important;
     flex: 1 !important;
+    overflow: hidden !important;
   }
 
   .blog-meta {

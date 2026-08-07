@@ -222,7 +222,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
        id="indotech-scroll-up" 
        class="floating-btn scroll-btn" 
        aria-label="Kembali ke atas"
-       style="background-color: #0057FF; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease; text-decoration: none; opacity: 0; pointer-events: none; transform: translateY(10px); margin-bottom: 8px;">
+       style="background-color: #0057FF; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease; text-decoration: none; opacity: 0; pointer-events: none; transform: translateY(10px);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
