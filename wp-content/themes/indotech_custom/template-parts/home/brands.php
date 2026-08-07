@@ -60,7 +60,7 @@ $brands = [
         'tagline'  => 'Parfum Interior & Linen Premium',
         'desc'     => 'Pengharum interior dan linen eksklusif dengan wewangian mewah tahan lama untuk hunian dan bisnis.',
         'initials' => 'MB',
-        'logo'     => get_template_directory_uri() . '/assets/images/malabeez.png',
+        'logo'     => get_template_directory_uri() . '/assets/images/malabeez.webp',
         'accent'   => '#111827',
         'bg'       => '#F5F7FB',
         'tag'      => 'Pengharum Premium',
@@ -71,7 +71,7 @@ $brands = [
         'tagline'  => 'Pembersih & Pewangi Laundry',
         'desc'     => 'Formula pembersih dan pewangi laundry kualitas profesional untuk hasil laundry terbaik.',
         'initials' => 'OC',
-        'logo'     => get_template_directory_uri() . '/assets/images/orchidcare.png',
+        'logo'     => get_template_directory_uri() . '/assets/images/orchidcare.webp',
         'accent'   => '#0057FF',
         'bg'       => '#EEF3FF',
         'tag'      => 'Chemical Laundry',
@@ -82,7 +82,7 @@ $brands = [
         'tagline'  => 'Pembersih Mesin Kopi Espresso',
         'desc'     => 'Pembersih khusus mesin kopi profesional berstandar food grade untuk menjaga rasa dan kebersihan.',
         'initials' => 'PK',
-        'logo'     => get_template_directory_uri() . '/assets/images/prokopi-lurus.png',
+        'logo'     => get_template_directory_uri() . '/assets/images/prokopi-lurus.webp',
         'accent'   => '#0057FF',
         'bg'       => '#F5F7FB',
         'tag'      => 'Coffee Maintenance',
@@ -141,17 +141,23 @@ $use_cpt = $brand_query->have_posts();
                         <?php 
                         $local_logo = indotech_get_brand_logo_url(get_the_title());
                         if ( has_post_thumbnail() ):
-                            the_post_thumbnail( 'large', [ 'class' => 'brand-thumb-img' ] );
+                            the_post_thumbnail( 'large', [ 'class' => 'brand-thumb-img', 'width' => '133', 'height' => '45', 'loading' => 'lazy', 'decoding' => 'async' ] );
                         elseif ( !empty( $local_logo) ): ?>
                             <img src="<?php echo esc_url( $local_logo ); ?>"
                                  alt="<?php echo esc_attr( get_the_title() ); ?> logo"
                                  class="brand-thumb-img"
-                                 loading="lazy">
+                                 width="133"
+                                 height="45"
+                                 loading="lazy"
+                                 decoding="async">
                         <?php elseif ( !empty( $b['logo'] ) ): ?>
                             <img src="<?php echo esc_url( $b['logo'] ); ?>"
                                  alt="<?php echo esc_attr( $b['name'] ); ?> logo"
                                  class="brand-thumb-img"
-                                 loading="lazy">
+                                 width="133"
+                                 height="45"
+                                 loading="lazy"
+                                 decoding="async">
                         <?php else:
                             /* PLACEHOLDER: Tampilkan inisial brand jika logo belum di-upload */
                             echo esc_html( $b['initials'] );

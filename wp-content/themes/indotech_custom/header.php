@@ -42,6 +42,8 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                              width="180"
                              height="58"
                              loading="eager"
+                             fetchpriority="high"
+                             decoding="async"
                         >
                     <?php else: ?>
                         <!-- PLACEHOLDER: Logo Indotech belum tersedia — menampilkan wordmark teks -->

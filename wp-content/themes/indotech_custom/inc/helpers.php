@@ -37,9 +37,9 @@ if (!function_exists('indotech_get_brand_logo_url')) {
             'cleanique lab'     => 'cleaniquelab.webp',
             'cleanique mart'    => 'cleaniquemart.webp',
             'depo cleanique'    => 'depocleanique.webp',
-            'malabeez'          => 'malabeez.png',
-            'orchid care'       => 'orchidcare.png',
-            'prokopi'           => 'prokopi.png',
+            'malabeez'          => 'malabeez.webp',
+            'orchid care'       => 'orchidcare.webp',
+            'prokopi'           => 'prokopi.webp',
         ];
         
         $key = strtolower(trim($brand_title));
