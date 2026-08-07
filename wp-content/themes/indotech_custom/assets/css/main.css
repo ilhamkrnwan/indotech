@@ -3051,6 +3051,30 @@ table td {
   .blog-read-more {
     font-size: 11px !important;
   }
+
+  /* ── Fix Floating Buttons & Card Alignment on Mobile ── */
+  .indotech-floating-actions {
+    bottom: 16px !important;
+    right: 16px !important;
+    gap: 8px !important;
+  }
+
+  .indotech-floating-actions .floating-btn {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .indotech-floating-actions .floating-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  /* Berikan ruang aman (safe padding) di bagian bawah grid artikel pada layar mobile */
+  .blog-grid,
+  .blog-archive-container,
+  .brand-products-grid {
+    padding-bottom: 24px !important;
+  }
 }
 
 
