@@ -3052,23 +3052,6 @@ table td {
     font-size: 11px !important;
   }
 
-  /* ── Fix Floating Buttons & Card Alignment on Mobile ── */
-  .indotech-floating-actions {
-    bottom: 16px !important;
-    right: 16px !important;
-    gap: 8px !important;
-  }
-
-  .indotech-floating-actions .floating-btn {
-    width: 42px !important;
-    height: 42px !important;
-  }
-
-  .indotech-floating-actions .floating-btn svg {
-    width: 20px !important;
-    height: 20px !important;
-  }
-
   /* Berikan ruang aman (safe padding) di bagian bawah grid artikel pada layar mobile */
   .blog-grid,
   .blog-archive-container,
@@ -3076,5 +3059,46 @@ table td {
     padding-bottom: 24px !important;
   }
 }
+
+/* ── Global Floating Actions & Mobile Positioning ── */
+.indotech-floating-actions {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 16px !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  align-items: flex-end !important;
+}
+
+.indotech-floating-actions .floating-btn {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+.indotech-floating-actions .floating-btn svg {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+@media (max-width: 768px) {
+  .indotech-floating-actions {
+    bottom: 16px !important;
+    right: 14px !important;
+    gap: 8px !important;
+  }
+  .indotech-floating-actions .floating-btn {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .indotech-floating-actions .floating-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
 
 
