@@ -108,7 +108,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
 
             <!-- ── Kolom Navigasi ────────────────────────────── -->
             <div class="footer-col">
-                <h4 class="footer-heading">Navigasi</h4>
+                <h3 class="footer-heading">Navigasi</h3>
                 <ul class="footer-links">
                     <li><a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a></li>
                     <li><a href="<?php echo esc_url( home_url('/tentang-kami') ); ?>">Tentang Kami</a></li>
@@ -121,7 +121,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
 
             <!-- ── Kolom Brand Kami ──────────────────────────── -->
             <div class="footer-col">
-                <h4 class="footer-heading">Brand Kami</h4>
+                <h3 class="footer-heading">Brand Kami</h3>
                 <ul class="footer-links footer-brand-list">
                     <?php
                     $brands_query = new WP_Query([
@@ -161,7 +161,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
 
             <!-- ── Kolom Kontak ──────────────────────────────── -->
             <div class="footer-col">
-                <h4 class="footer-heading">Hubungi Kami</h4>
+                <h3 class="footer-heading">Hubungi Kami</h3>
                 <ul class="footer-contact-list">
 
                     <li class="footer-contact-item">

@@ -410,15 +410,4 @@ function indotech_robots_txt_ai( $output, $public ) {
 }
 add_filter( 'robots_txt', 'indotech_robots_txt_ai', 10, 2 );
 
-/**
- * Preconnect ke Google Fonts — hemat ~100-300ms waktu muat font.
- * ponytail: satu hook kecil, bukan plugin performa.
- */
-function indotech_resource_hints( $hints, $relation ) {
-	if ( 'preconnect' === $relation ) {
-		$hints[] = [ 'href' => 'https://fonts.googleapis.com' ];
-		$hints[] = [ 'href' => 'https://fonts.gstatic.com', 'crossorigin' => '' ];
-	}
-	return $hints;
-}
-add_filter( 'wp_resource_hints', 'indotech_resource_hints', 10, 2 );
+

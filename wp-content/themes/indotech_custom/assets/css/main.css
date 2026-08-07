@@ -379,8 +379,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   color: var(--white);
   padding: 8px 18px;
   border-radius: var(--radius-sm);
-  border: 1.5px solid #25D366;
-  background: #25D366;
+  border: 1.5px solid #1da851;
+  background: #1da851;
   transition: all var(--trans);
   white-space: nowrap;
 }
