@@ -3068,6 +3068,15 @@ table td {
   flex-direction: column !important;
   gap: 10px !important;
   align-items: flex-end !important;
+  pointer-events: none !important;
+}
+
+.wa-floating-row {
+  pointer-events: none !important;
+}
+
+.indotech-floating-actions #indotech-wa-trigger {
+  pointer-events: auto !important;
 }
 
 .indotech-floating-actions .floating-btn {

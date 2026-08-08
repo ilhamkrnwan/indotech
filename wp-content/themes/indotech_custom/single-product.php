@@ -438,6 +438,70 @@ echo '<main id="main-content">';
     font-weight: 700 !important;
     color: #0f172a !important;
 }
+
+/* ── Share Buttons & Tooltips ───────────────────────── */
+.share-btn {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-decoration: none !important;
+    border: none !important;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.share-btn:hover {
+    transform: translateY(-3px) scale(1.08) !important;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Tooltip Popup */
+.share-btn[data-tooltip]::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #0F172A;
+    color: #FFFFFF;
+    font-size: 11.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    z-index: 10;
+}
+
+/* Tooltip Arrow */
+.share-btn[data-tooltip]::after {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    border-width: 5px 5px 0 5px;
+    border-style: solid;
+    border-color: #0F172A transparent transparent transparent;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+.share-btn[data-tooltip]:hover::before,
+.share-btn[data-tooltip]:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
 </style>
 
 <?php
@@ -516,84 +580,95 @@ if ( function_exists( 'indotech_print_jsonld' ) ) {
             <!-- ── LEFT COLUMN: Product Info, Specs, & Downloads ── -->
             <div>
                 <!-- Main Header Info Card -->
-                <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 40px; margin-bottom: 30px; box-shadow: var(--shadow-xs);">
+                <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 36px 40px; margin-bottom: 30px; box-shadow: var(--shadow-xs);">
                     
-                    <div class="product-header-block">
+                    <!-- Title & Brand Header Block (Above Image) -->
+                    <div style="margin-bottom: 24px;">
+                        <h1 style="font-size: clamp(24px, 4vw, 34px); margin-bottom: 12px; letter-spacing: -0.03em; line-height: 1.25; font-weight: 700; color: var(--ink);"><?php the_title(); ?></h1>
                         
-                        <!-- Visual Gallery (Large view + Thumbs) -->
-                        <div>
-                            <div class="product-main-image-wrap">
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <?php the_post_thumbnail('large'); ?>
-                                <?php else : ?>
-                                    <span style="font-weight:700; color:var(--text-muted); font-size:16px;">TIDAK ADA GAMBAR</span>
-                                <?php endif; ?>
-                            </div>
-                            
-                            <!-- Gallery Thumbs Grid -->
-                            <?php 
-                            $prod_gallery = carbon_get_post_meta($product_id, 'product_gallery');
-                            
-                            // Collect all images starting with featured image
-                            $all_images = [];
-                            $featured_url = get_the_post_thumbnail_url($product_id, 'large');
-                            if ($featured_url) {
-                                $all_images[] = $featured_url;
-                            }
-                            if (!empty($prod_gallery)) {
-                                foreach ($prod_gallery as $img_id) {
-                                    $g_url = wp_get_attachment_image_url($img_id, 'large');
-                                    if ($g_url && !in_array($g_url, $all_images)) {
-                                        $all_images[] = $g_url;
-                                    }
-                                }
-                            }
-                            
-                            if (count($all_images) > 1) : 
-                            ?>
-                                <div class="product-thumbnails-grid">
-                                    <?php foreach ($all_images as $idx => $img_url) : ?>
-                                        <div class="product-thumb-item <?php echo $idx === 0 ? 'active' : ''; ?>" data-index="<?php echo $idx; ?>">
-                                            <img src="<?php echo esc_url($img_url); ?>" alt="Gallery Image <?php echo $idx + 1; ?>">
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endif; ?>
-                            
-                            <!-- JSON-encoded data for JS Lightbox -->
-                            <script id="product-gallery-data" type="application/json">
-                            <?php echo json_encode($all_images); ?>
-                            </script>
-                        </div>
-
-                        <!-- Brand & Title metadata -->
-                        <div>
-
-                            
-                            <h1 style="font-size: clamp(24px, 4vw, 36px); margin-bottom: 12px; letter-spacing: -0.03em; line-height: 1.2; font-weight: 700; color: var(--ink);"><?php the_title(); ?></h1>
-                            
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid var(--border);">
                             <?php if ($brand_id) : ?>
-                                <div style="display: flex; align-items: center; gap: 8px; margin-top: 14px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
                                     <span style="font-size: 14px; color: var(--text-secondary);">Brand:</span>
                                     <a href="<?php echo esc_url($brand_url); ?>" style="color: var(--brand-accent); font-weight: 600; font-size: 14px; text-decoration: none; border-bottom: 1px solid transparent; transition: border var(--trans);" onmouseover="this.style.borderBottomColor='var(--brand-accent)'" onmouseout="this.style.borderBottomColor='transparent'">
                                         <?php echo esc_html($brand_title); ?>
                                     </a>
                                 </div>
+                            <?php else: ?>
+                                <div></div>
                             <?php endif; ?>
 
-                            <div style="margin-top: 20px;">
-                                <a href="https://wa.me/6285559474797?text=<?php echo rawurlencode('Halo Indotech, saya tertarik untuk membeli/tanya produk secara retail untuk: ' . get_the_title()); ?>" 
-                                   target="_blank" 
-                                   rel="noopener" 
-                                   style="display: inline-flex; align-items: center; gap: 8px; background-color: #25D366; color: #ffffff; border: 1.5px solid #25D366; font-size: 13.5px; font-weight: 700; padding: 10px 20px; border-radius: 8px; text-decoration: none; box-shadow: var(--shadow-sm); transition: all var(--trans);" 
-                                   onmouseover="this.style.transform='translateY(-2px)'; this.style.backgroundColor='#20ba5a'; this.style.borderColor='#20ba5a';" 
-                                   onmouseout="this.style.transform='translateY(0)'; this.style.backgroundColor='#25D366'; this.style.borderColor='#25D366';">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink: 0; display: block;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                                    Tanya Produk
+                            <!-- Social Share Buttons -->
+                            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                <span style="font-size: 12.5px; font-weight: 600; color: var(--text-secondary); margin-right: 4px;">Bagikan:</span>
+                                <!-- WhatsApp Share -->
+                                <a href="https://api.whatsapp.com/send?text=<?php echo urlencode(get_the_title() . ' ' . get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="share-btn share-wa" data-tooltip="WhatsApp" aria-label="Bagikan via WhatsApp" style="background: #25D366; color: #FFF;">
+                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                                 </a>
+                                <!-- Facebook Share -->
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="share-btn share-fb" data-tooltip="Facebook" aria-label="Bagikan via Facebook" style="background: #1877F2; color: #FFF;">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.7 5H18V0h-3.808C10.592 0 9 1.583 9 4.615V8z"/></svg>
+                                </a>
+                                <!-- LinkedIn Share -->
+                                <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="share-btn share-li" data-tooltip="LinkedIn" aria-label="Bagikan via LinkedIn" style="background: #0A66C2; color: #FFF;">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.262-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                </a>
+                                <!-- Twitter/X Share -->
+                                <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener noreferrer" class="share-btn share-tw" data-tooltip="X (Twitter)" aria-label="Bagikan via X" style="background: #000; color: #FFF;">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                </a>
+                                <!-- Copy Link Button -->
+                                <button id="copy-product-link" class="share-btn share-copy" data-tooltip="Salin Link" aria-label="Salin Tautan Produk" style="background: #64748B; color: #FFF;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                                </button>
                             </div>
                         </div>
+                    </div>
 
+                    <!-- Visual Gallery (Large view + Thumbs) -->
+                    <div>
+                        <div class="product-main-image-wrap" style="height: 380px;">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <?php the_post_thumbnail('large'); ?>
+                            <?php else : ?>
+                                <span style="font-weight:700; color:var(--text-muted); font-size:16px;">TIDAK ADA GAMBAR</span>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Gallery Thumbs Grid -->
+                        <?php 
+                        $prod_gallery = carbon_get_post_meta($product_id, 'product_gallery');
+                        
+                        // Collect all images starting with featured image
+                        $all_images = [];
+                        $featured_url = get_the_post_thumbnail_url($product_id, 'large');
+                        if ($featured_url) {
+                            $all_images[] = $featured_url;
+                        }
+                        if (!empty($prod_gallery)) {
+                            foreach ($prod_gallery as $img_id) {
+                                $g_url = wp_get_attachment_image_url($img_id, 'large');
+                                if ($g_url && !in_array($g_url, $all_images)) {
+                                    $all_images[] = $g_url;
+                                }
+                            }
+                        }
+                        
+                        if (count($all_images) > 1) : 
+                        ?>
+                            <div class="product-thumbnails-grid">
+                                <?php foreach ($all_images as $idx => $img_url) : ?>
+                                    <div class="product-thumb-item <?php echo $idx === 0 ? 'active' : ''; ?>" data-index="<?php echo $idx; ?>">
+                                        <img src="<?php echo esc_url($img_url); ?>" alt="Gallery Image <?php echo $idx + 1; ?>">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <!-- JSON-encoded data for JS Lightbox -->
+                        <script id="product-gallery-data" type="application/json">
+                        <?php echo json_encode($all_images); ?>
+                        </script>
                     </div>
 
                     <hr style="border: 0; border-top: 1px solid var(--border); margin: 30px 0;">
@@ -975,17 +1050,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-        if (!lightbox || !lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape') {
-            closeLightbox();
-        } else if (e.key === 'ArrowRight') {
-            showNext();
-        } else if (e.key === 'ArrowLeft') {
-            showPrev();
-        }
-    });
+    // Copy Product Link Handler
+    const copyProdBtn = document.getElementById('copy-product-link');
+    if (copyProdBtn) {
+        copyProdBtn.addEventListener('click', function() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(function() {
+                copyProdBtn.setAttribute('data-tooltip', 'Link Tersalin!');
+                copyProdBtn.style.background = '#10B981';
+                setTimeout(() => {
+                    copyProdBtn.setAttribute('data-tooltip', 'Salin Link');
+                    copyProdBtn.style.background = '#64748B';
+                }, 2500);
+            }).catch(function() {
+                alert('Gagal menyalin tautan');
+            });
+        });
+    }
 });
 </script>
 

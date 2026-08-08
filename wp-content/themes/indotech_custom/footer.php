@@ -360,14 +360,21 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
+.indotech-floating-actions {
+    pointer-events: none !important;
+}
+.indotech-floating-actions #indotech-wa-trigger {
+    pointer-events: auto !important;
+}
 .wa-floating-row {
     display: flex;
     flex-direction: row-reverse; /* Trigger on the right, cards to the left */
     align-items: center;
     gap: 10px;
+    pointer-events: none !important;
 }
 .wa-floating-card {
-    display: flex;
+    display: none !important;
     align-items: center;
     justify-content: center;
     gap: 6px;
@@ -384,8 +391,9 @@ document.addEventListener('DOMContentLoaded', function() {
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 .wa-floating-card.active {
-    opacity: 1;
-    pointer-events: auto;
+    display: flex !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
     transform: translateX(0) scale(1);
 }
 .wa-floating-card:hover {
