@@ -392,8 +392,14 @@ get_header();
 
             <article class="blog-featured-card reveal">
                 <a href="<?php echo esc_url( $feat_url ); ?>" class="blog-featured-thumb" aria-hidden="true" tabindex="-1">
-                    <?php if ( $feat_thumb ) : ?>
-                        <img src="<?php echo esc_url( $feat_thumb ); ?>" alt="<?php echo esc_attr( $feat_title ); ?>" class="blog-featured-img" loading="lazy">
+                    <?php if ( has_post_thumbnail( $featured_id ) ) : ?>
+                        <?php echo wp_get_attachment_image( get_post_thumbnail_id( $featured_id ), 'indotech-card', false, [
+                            'class'         => 'blog-featured-img',
+                            'loading'       => 'eager',
+                            'fetchpriority' => 'high',
+                            'decoding'      => 'async',
+                            'sizes'         => '(max-width: 768px) 100vw, 600px',
+                        ] ); ?>
                     <?php else : ?>
                         <div class="blog-img-placeholder">
                             <span class="blog-placeholder-label">Indotech Blog</span>
@@ -506,8 +512,13 @@ get_header();
                             ?>
                             <article class="blog-card reveal" role="listitem" id="post-<?php the_ID(); ?>">
                                 <a href="<?php the_permalink(); ?>" class="blog-thumb" aria-label="Baca: <?php the_title_attribute(); ?>">
-                                    <?php if ( $thumb ) : ?>
-                                        <img src="<?php echo esc_url( $thumb ); ?>" alt="<?php the_title_attribute(); ?>" class="blog-img" loading="lazy">
+                                    <?php if ( has_post_thumbnail() ) : ?>
+                                        <?php echo wp_get_attachment_image( get_post_thumbnail_id(), 'indotech-card', false, [
+                                            'class'    => 'blog-img',
+                                            'loading'  => 'lazy',
+                                            'decoding' => 'async',
+                                            'sizes'    => '(max-width: 575px) 100vw, (max-width: 991px) 50vw, 380px',
+                                        ] ); ?>
                                     <?php else : ?>
                                         <div class="blog-img-placeholder"><span class="blog-placeholder-label">Indotech</span></div>
                                     <?php endif; ?>

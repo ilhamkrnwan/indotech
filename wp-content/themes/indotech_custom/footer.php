@@ -111,11 +111,11 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                 <h3 class="footer-heading">Navigasi</h3>
                 <ul class="footer-links">
                     <li><a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a></li>
-                    <li><a href="<?php echo esc_url( home_url('/tentang-kami') ); ?>">Tentang Kami</a></li>
-                    <li><a href="<?php echo esc_url( home_url('/produk') ); ?>">Produk</a></li>
-                    <li><a href="<?php echo esc_url( home_url('/kemitraan') ); ?>">Kemitraan</a></li>
-                    <li><a href="<?php echo esc_url( home_url('/blog') ); ?>">Blog</a></li>
-                    <li><a href="<?php echo esc_url( home_url('/kontak') ); ?>">Kontak</a></li>
+                    <li><a href="<?php echo esc_url( home_url('/tentang-kami/') ); ?>">Tentang Kami</a></li>
+                    <li><a href="<?php echo esc_url( home_url('/produk/') ); ?>">Produk</a></li>
+                    <li><a href="<?php echo esc_url( home_url('/kemitraan/') ); ?>">Kemitraan</a></li>
+                    <li><a href="<?php echo esc_url( home_url('/blog/') ); ?>">Blog</a></li>
+                    <li><a href="<?php echo esc_url( home_url('/kontak/') ); ?>">Kontak</a></li>
                 </ul>
             </div>
 
@@ -206,9 +206,9 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                 &copy; <?php echo esc_html( date('Y') ); ?> PT Indotech Berkah Abadi. Hak cipta dilindungi undang-undang.
             </p>
             <div class="footer-legal">
-                <a href="<?php echo esc_url( home_url('/privacy-policy') ); ?>">Kebijakan Privasi</a>
-                <a href="<?php echo esc_url( home_url('/syarat-ketentuan') ); ?>">Syarat & Ketentuan</a>
-                <a href="<?php echo esc_url( home_url('/cookie-policy') ); ?>">Kebijakan Cookie</a>
+                <a href="<?php echo esc_url( home_url('/privacy-policy/') ); ?>">Kebijakan Privasi</a>
+                <a href="<?php echo esc_url( home_url('/syarat-ketentuan/') ); ?>">Syarat & Ketentuan</a>
+                <a href="<?php echo esc_url( home_url('/cookie-policy/') ); ?>">Kebijakan Cookie</a>
             </div>
         </div>
     </div>

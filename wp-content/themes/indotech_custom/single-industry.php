@@ -126,7 +126,7 @@ while (have_posts()) : the_post();
                         <div style="width: 50px; height: 50px; background: var(--cobalt-pale); border-radius: 50%; color: var(--cobalt); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 20px; font-weight: 700;">?</div>
                         <h3 style="font-size: 18px; margin-bottom: 8px; letter-spacing: -0.01em;">Butuh Solusi Kustom?</h3>
                         <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px;">PT Indotech Berkah Abadi menyediakan konsultasi formula kimia, sabun laundry, dan maklon kustom untuk memenuhi spesifikasi industri Anda.</p>
-                        <a href="<?php echo esc_url(home_url('/kontak')); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        <a href="<?php echo esc_url(home_url('/kontak/')); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">
                             Hubungi Kami
                         </a>
                     </div>

@@ -12,7 +12,7 @@
   font-style: normal;
   font-weight: 300 700;
   font-display: swap;
-  src: url('/wp-content/uploads/fonts/Inter-VariableFont_wght.woff2') format('woff2');
+  src: url('../fonts/Inter-VariableFont_wght.woff2') format('woff2');
 }
 
 @font-face {
@@ -20,7 +20,7 @@
   font-style: normal;
   font-weight: 300 700;
   font-display: swap;
-  src: url('/wp-content/uploads/fonts/SpaceGrotesk-VariableFont_wght.woff2') format('woff2');
+  src: url('../fonts/SpaceGrotesk-VariableFont_wght.woff2') format('woff2');
 }
 
 /* ── Variables ──────────────────────────────────────────── */

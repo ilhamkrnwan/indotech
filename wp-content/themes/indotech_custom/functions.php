@@ -88,16 +88,54 @@ function indotech_enqueue() {
 JS;
     wp_add_inline_script('indotech-main', $wa_tracker);
 
-    if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply');
+    // Dequeue comment-reply since comments are not used on theme single templates
+    wp_dequeue_script('comment-reply');
+
+    // Conditionally dequeue WooCommerce styles & scripts on non-shop pages
+    if (class_exists('WooCommerce') && !is_woocommerce() && !is_cart() && !is_checkout() && !is_account_page() && !is_singular('product')) {
+        wp_dequeue_style('woocommerce-general');
+        wp_dequeue_style('woocommerce-layout');
+        wp_dequeue_style('woocommerce-smallscreen');
+        wp_dequeue_style('woocommerce_frontend_styles');
+        wp_dequeue_style('wc-blocks-vendors-style');
+        wp_dequeue_style('wc-blocks-style');
+        wp_dequeue_script('wc-cart-fragments');
+        wp_dequeue_script('woocommerce');
+        wp_dequeue_script('wc-add-to-cart');
     }
 }
-add_action('wp_enqueue_scripts', 'indotech_enqueue');
+add_action('wp_enqueue_scripts', 'indotech_enqueue', 99);
+
+// ── Disable WordPress Emojis ──────────────────────────────────────────────────
+add_action('init', function() {
+    if (is_admin()) return;
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('admin_print_scripts', 'print_emoji_detection_script');
+    remove_action('wp_print_styles', 'print_emoji_styles');
+    remove_action('admin_print_styles', 'print_emoji_styles');
+    remove_filter('the_content_feed', 'wp_staticize_emoji');
+    remove_filter('comment_text_rss', 'wp_staticize_emoji');
+    remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+    add_filter('tiny_mce_plugins', function($plugins) {
+        return is_array($plugins) ? array_diff($plugins, ['wpemoji']) : [];
+    });
+    add_filter('wp_resource_hints', function($urls, $relation_type) {
+        if ('dns-prefetch' === $relation_type) {
+            $emoji_svg_url = 'https://s.w.org/images/core/emoji/';
+            foreach ($urls as $key => $url) {
+                if (is_string($url) && strpos($url, $emoji_svg_url) !== false) {
+                    unset($urls[$key]);
+                }
+            }
+        }
+        return $urls;
+    }, 10, 2);
+});
 
 // ── Defer Non-Critical JavaScript & Remove jQuery Migrate ────────────────────
 add_filter('script_loader_tag', function($tag, $handle) {
     if (is_admin()) return $tag;
-    if (in_array($handle, ['indotech-main', 'indotech-inquiry', 'comment-reply'], true)) {
+    if (in_array($handle, ['indotech-main', 'indotech-inquiry', 'google_gtagjs-js'], true)) {
         return str_replace(' src=', ' defer src=', $tag);
     }
     return $tag;
@@ -406,14 +444,18 @@ function indotech_filter_posts_handler() {
     ob_start();
     if ($blog_query->have_posts()) :
         while ($blog_query->have_posts()) : $blog_query->the_post();
-            $thumb     = get_the_post_thumbnail_url(null, 'medium_large');
             $post_cats = get_the_category();
             $cat_lbl   = $post_cats ? esc_html($post_cats[0]->name) : '';
             ?>
             <article class="blog-card reveal visible" role="listitem" id="post-<?php the_ID(); ?>">
                 <a href="<?php the_permalink(); ?>" class="blog-thumb" aria-label="Baca: <?php the_title_attribute(); ?>">
-                    <?php if ($thumb) : ?>
-                        <img src="<?php echo esc_url($thumb); ?>" alt="<?php the_title_attribute(); ?>" class="blog-img" loading="lazy">
+                    <?php if (has_post_thumbnail()) : ?>
+                        <?php echo wp_get_attachment_image(get_post_thumbnail_id(), 'indotech-card', false, [
+                            'class'    => 'blog-img',
+                            'loading'  => 'lazy',
+                            'decoding' => 'async',
+                            'sizes'    => '(max-width: 575px) 100vw, (max-width: 991px) 50vw, 380px',
+                        ]); ?>
                     <?php else : ?>
                         <div class="blog-img-placeholder"><span class="blog-placeholder-label">Indotech</span></div>
                     <?php endif; ?>

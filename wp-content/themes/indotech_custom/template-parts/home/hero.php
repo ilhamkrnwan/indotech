@@ -2,9 +2,9 @@
 $headline = indotech_opt('hero_headline', 'Supplier Produk Homecare<br><em>B2B Terpercaya</em>');
 $subtitle = indotech_opt('hero_sub', 'PT Indotech Berkah Abadi menyediakan produk homecare, laundry, dan pewangi berkualitas untuk mitra bisnis di seluruh Indonesia. Grosir, distribusi, dan kemitraan B2B dengan harga kompetitif.');
 $cta1     = indotech_opt('hero_cta1', 'Jadi Mitra Kami');
-$cta1_url = indotech_opt('hero_cta1_url', home_url('/kemitraan'));
+$cta1_url = indotech_opt('hero_cta1_url', home_url('/kemitraan/'));
 $cta2     = indotech_opt('hero_cta2', 'Lihat Produk');
-$cta2_url = indotech_opt('hero_cta2_url', home_url('/produk'));
+$cta2_url = indotech_opt('hero_cta2_url', home_url('/produk/'));
 $whatsapp = preg_replace('/[^0-9]/', '', indotech_opt('whatsapp', '6285600061005'));
 ?>
 

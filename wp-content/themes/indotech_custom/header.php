@@ -64,16 +64,16 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                 'fallback_cb'    => function() {
                     $items = [
                         '/'             => 'Beranda',
-                        '/tentang-kami' => 'Tentang Kami',
-                        '/produk'       => 'Produk',
-                        '/kemitraan'    => 'Kemitraan',
-                        '/blog'         => 'Blog',
-                        '/kontak'       => 'Kontak',
+                        '/tentang-kami/' => 'Tentang Kami',
+                        '/produk/'       => 'Produk',
+                        '/kemitraan/'    => 'Kemitraan',
+                        '/blog/'         => 'Blog',
+                        '/kontak/'       => 'Kontak',
                     ];
                     echo '<ul class="nav-menu">';
                     foreach ( $items as $path => $label ) {
                         $url    = esc_url( home_url( $path ) );
-                        $active = ( untrailingslashit( $_SERVER['REQUEST_URI'] ) === $path ) ? ' class="current-menu-item"' : '';
+                        $active = ( untrailingslashit( $_SERVER['REQUEST_URI'] ) === untrailingslashit( $path ) ) ? ' class="current-menu-item"' : '';
                         echo "<li{$active}><a href=\"{$url}\">{$label}</a></li>";
                     }
                     echo '</ul>';
@@ -125,7 +125,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                 <span>WhatsApp</span>
             </a>
 
-            <a href="<?php echo esc_url( home_url('/kontak') ); ?>" class="btn btn-primary">
+            <a href="<?php echo esc_url( home_url('/kontak/') ); ?>" class="btn btn-primary">
                 Hubungi Kami
             </a>
 

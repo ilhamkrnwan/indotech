@@ -125,7 +125,7 @@ $last_updated = get_the_modified_date( 'd F Y' );
                             Jika Anda memiliki pertanyaan mengenai <?php echo esc_html( strtolower( $page_title ) ); ?> ini, silakan hubungi kami:
                         </p>
                         <div class="legal-contact-strip">
-                            <a href="<?php echo esc_url( home_url('/kontak') ); ?>" class="btn btn-primary">
+                            <a href="<?php echo esc_url( home_url('/kontak/') ); ?>" class="btn btn-primary">
                                 Hubungi Kami
                             </a>
                             <a href="mailto:<?php echo esc_attr( indotech_opt('email', 'indotechberkahabadi@gmail.com') ); ?>" class="btn btn-outline">

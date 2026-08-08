@@ -25,7 +25,7 @@ if ( ! $posts->have_posts() ) return;
                 <div class="section-tag">Blog &amp; Wawasan</div>
                 <h2 class="section-title">Artikel &amp; <em>Tips Bisnis</em></h2>
             </div>
-            <a href="<?php echo esc_url( home_url('/blog') ); ?>" class="btn btn-outline blog-section-cta">
+            <a href="<?php echo esc_url( home_url('/blog/') ); ?>" class="btn btn-outline blog-section-cta">
                 Semua Artikel &rarr;
             </a>
         </div>

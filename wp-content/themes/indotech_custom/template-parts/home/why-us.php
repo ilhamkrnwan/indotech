@@ -39,10 +39,10 @@ $reasons = [
                 </ul>
 
                 <div class="why-actions">
-                    <a href="<?php echo esc_url( home_url('/tentang-kami') ); ?>" class="btn btn-primary">
+                    <a href="<?php echo esc_url( home_url('/tentang-kami/') ); ?>" class="btn btn-primary">
                         Tentang PT Indotech &rarr;
                     </a>
-                    <a href="<?php echo esc_url( home_url('/kemitraan') ); ?>" class="btn btn-outline">
+                    <a href="<?php echo esc_url( home_url('/kemitraan/') ); ?>" class="btn btn-outline">
                         Program Kemitraan
                     </a>
                 </div>

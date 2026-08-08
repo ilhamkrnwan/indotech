@@ -310,7 +310,7 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a>
             <span aria-hidden="true">/</span>
-            <a href="<?php echo esc_url( home_url('/blog') ); ?>">Blog</a>
+            <a href="<?php echo esc_url( home_url('/blog/') ); ?>">Blog</a>
             <span aria-hidden="true">/</span>
             <span aria-current="page"><?php the_title(); ?></span>
         </nav>
