@@ -12,27 +12,6 @@
 # 2. Whitelist file penting di root
 !.gitignore
 !README.md
-!update.md
-!Update.md
-!REFERENCES.MD
-!export_vps_products.php
-!import_vps_products.php
-!update_products_from_refs.php
-!REFERENCES-PHASE-2.md
-!update_phase1_products.php
-!update_phase2_products.php
-!REFERENCES-PHASE-3.md
-!update_phase3_products.php
-!REFERENCES-PHASE-4.md
-!update_phase4_products.php
-!export_data.php
-!insert_new_products.php
-!slug_post.txt
-!generate_slug_post.php
-!post_artikel.json
-!convert_json_to_txt.php
-!produk.json
-!product.txt
 
 
 # ── Tema Custom: indotech_custom ──────────────────────────────
