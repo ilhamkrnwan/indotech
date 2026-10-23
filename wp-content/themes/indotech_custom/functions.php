@@ -132,6 +132,10 @@ add_action('init', function() {
     }, 10, 2);
 });
 
+// ── Disable Language Switcher on wp-login.php ────────────────────────────────
+// Mencegah WordPress memanggil translations_api() ke wordpress.org di halaman login
+add_filter('login_display_language_dropdown', '__return_false');
+
 // ── Defer Non-Critical JavaScript & Remove jQuery Migrate ────────────────────
 add_filter('script_loader_tag', function($tag, $handle) {
     if (is_admin()) return $tag;

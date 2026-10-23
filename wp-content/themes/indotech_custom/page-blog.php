@@ -19,12 +19,18 @@ if ( isset($_GET['paged']) && absint($_GET['paged']) > 0 ) {
 }
 $per_page = 6;
 
-// Ambil semua kategori yang digunakan di posts
+// Ambil semua kategori yang digunakan di posts (kecualikan Uncategorized & numerik)
 $categories = get_categories( [
     'orderby'    => 'count',
     'order'      => 'DESC',
     'hide_empty' => true,
+    'exclude'    => [1, 20],
 ] );
+if (!empty($categories)) {
+    $categories = array_filter($categories, function($cat) {
+        return !is_numeric($cat->name) && !in_array(strtolower($cat->slug), ['uncategorized', 'tak-berkategori']);
+    });
+}
 
 // Aktif filter dari query string
 $active_cat  = isset( $_GET['kategori'] ) ? sanitize_text_field( $_GET['kategori'] ) : (isset($_GET['cat']) ? sanitize_text_field($_GET['cat']) : '');

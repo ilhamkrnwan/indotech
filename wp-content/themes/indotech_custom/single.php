@@ -1028,12 +1028,18 @@ $wa_num   = preg_replace('/[^0-9]/', '', $whatsapp);
         'order'          => 'DESC'
     ]);
 
-    // All categories with count
+    // All categories with count (exclude Uncategorized & numeric junk)
     $all_categories = get_categories([
         'orderby'    => 'count',
         'order'      => 'DESC',
-        'hide_empty' => true
+        'hide_empty' => true,
+        'exclude'    => [1, 20]
     ]);
+    if (!empty($all_categories)) {
+        $all_categories = array_filter($all_categories, function($cat) {
+            return !is_numeric($cat->name) && !in_array(strtolower($cat->slug), ['uncategorized', 'tak-berkategori']);
+        });
+    }
 ?>
 
 <!-- ── Inner Hero Section ─────────────────────────────────────────── -->
