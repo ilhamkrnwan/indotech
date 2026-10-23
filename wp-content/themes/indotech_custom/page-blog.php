@@ -137,6 +137,9 @@ get_header();
     margin: 0;
 }
 .blog-archive-container .filter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     text-align: left;
     font-family: inherit;
     font-size: 13.5px;
@@ -158,6 +161,19 @@ get_header();
     font-weight: 700;
     color: var(--cobalt, #0057ff);
     background: var(--cobalt-pale, #eef3ff);
+}
+.blog-archive-container .filter-count {
+    font-size: 11.5px;
+    font-weight: 600;
+    background: #E2E8F0;
+    color: #475569;
+    padding: 2px 7px;
+    border-radius: 12px;
+    transition: all var(--trans, 0.2s ease);
+}
+.blog-archive-container .filter-btn.active .filter-count {
+    background: var(--cobalt, #0057ff);
+    color: var(--white, #ffffff);
 }
 
 /* Articles Grid inside 1fr container */
@@ -485,19 +501,34 @@ get_header();
                         <ul class="filter-list">
                             <li>
                                 <button class="filter-btn <?php echo empty($active_cat) ? 'active' : ''; ?>" data-filter-type="cat" data-filter-val="">
-                                    Semua Kategori
+                                    <span>Semua Kategori</span>
                                 </button>
                             </li>
                             <?php foreach ($categories as $cat) : ?>
                                 <li>
                                     <button class="filter-btn <?php echo ($active_cat === $cat->slug) ? 'active' : ''; ?>" data-filter-type="cat" data-filter-val="<?php echo esc_attr($cat->slug); ?>">
-                                        <?php echo esc_html($cat->name); ?>
+                                        <span><?php echo esc_html($cat->name); ?></span>
+                                        <span class="filter-count"><?php echo (int)$cat->count; ?></span>
                                     </button>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
                     <?php endif; ?>
+
+                    <!-- WhatsApp Consultation CTA Widget in Filter Panel -->
+                    <?php 
+                    $blog_wa = preg_replace('/[^0-9]/', '', indotech_opt('whatsapp', '6285600061005')); 
+                    ?>
+                    <div style="margin-top: 28px; padding: 20px; background: linear-gradient(135deg, #0A0F1E 0%, #1E293B 100%); border-radius: 12px; color: #FFFFFF;">
+                        <span style="font-size: 10px; font-weight: 700; background: rgba(37, 211, 102, 0.2); color: #4ADE80; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 8px;">Konsultasi B2B</span>
+                        <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 14.5px; font-weight: 700; color: #FFFFFF; margin: 0 0 6px; line-height: 1.35;">Butuh Formulasi Khusus?</h4>
+                        <p style="font-size: 12px; color: #94A3B8; margin: 0 0 14px; line-height: 1.5;">Tim teknis Indotech siap membantu pemilihan bahan baku &amp; sampel produk Anda.</p>
+                        <a href="https://wa.me/<?php echo esc_attr($blog_wa); ?>?text=<?php echo urlencode('Halo Indotech, saya membaca blog Indotech dan ingin berkonsultasi seputar bahan baku kimia dan formulasi.'); ?>" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; justify-content: center; gap: 6px; background: #25D366; color: #FFFFFF; font-size: 12px; font-weight: 700; padding: 9px 12px; border-radius: 6px; text-decoration: none; box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                            Konsultasi WhatsApp
+                        </a>
+                    </div>
                 </aside>
 
                 <!-- Articles View Grid -->
@@ -509,6 +540,8 @@ get_header();
                                 $thumb     = get_the_post_thumbnail_url( null, 'medium_large' );
                                 $post_cats = get_the_category();
                                 $cat_lbl   = $post_cats ? esc_html( $post_cats[0]->name ) : '';
+                                $card_words = str_word_count(strip_tags(get_the_content()));
+                                $card_reading_time = max(1, ceil($card_words / 200));
                             ?>
                             <article class="blog-card reveal" role="listitem" id="post-<?php the_ID(); ?>">
                                 <a href="<?php the_permalink(); ?>" class="blog-thumb" aria-label="Baca: <?php the_title_attribute(); ?>">
@@ -531,6 +564,11 @@ get_header();
                                         <time datetime="<?php echo get_the_date('Y-m-d'); ?>"><?php echo get_the_date('d M Y'); ?></time>
                                         <span class="blog-meta-sep" aria-hidden="true">·</span>
                                         <span><?php the_author(); ?></span>
+                                        <span class="blog-meta-sep" aria-hidden="true">·</span>
+                                        <span style="display:inline-flex; align-items:center; gap:3px;">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                            <?php echo $card_reading_time; ?> mnt baca
+                                        </span>
                                     </div>
                                     <h3 class="blog-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                                     <p class="blog-excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 22, '...' ) ); ?></p>

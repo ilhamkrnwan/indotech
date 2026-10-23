@@ -446,6 +446,8 @@ function indotech_filter_posts_handler() {
         while ($blog_query->have_posts()) : $blog_query->the_post();
             $post_cats = get_the_category();
             $cat_lbl   = $post_cats ? esc_html($post_cats[0]->name) : '';
+            $card_words = str_word_count(strip_tags(get_the_content()));
+            $card_reading_time = max(1, ceil($card_words / 200));
             ?>
             <article class="blog-card reveal visible" role="listitem" id="post-<?php the_ID(); ?>">
                 <a href="<?php the_permalink(); ?>" class="blog-thumb" aria-label="Baca: <?php the_title_attribute(); ?>">
@@ -468,6 +470,11 @@ function indotech_filter_posts_handler() {
                         <time datetime="<?php echo get_the_date('Y-m-d'); ?>"><?php echo get_the_date('d M Y'); ?></time>
                         <span class="blog-meta-sep" aria-hidden="true">·</span>
                         <span><?php the_author(); ?></span>
+                        <span class="blog-meta-sep" aria-hidden="true">·</span>
+                        <span style="display:inline-flex; align-items:center; gap:3px;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <?php echo $card_reading_time; ?> mnt baca
+                        </span>
                     </div>
                     <h3 class="blog-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                     <p class="blog-excerpt"><?php echo esc_html(wp_trim_words(get_the_excerpt(), 22, '...')); ?></p>
