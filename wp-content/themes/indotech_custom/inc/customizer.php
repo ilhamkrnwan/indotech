@@ -58,6 +58,44 @@ function indotech_customizer($wp_customize) {
         'section'  => 'indotech_testimonials',
         'settings' => 'indotech_testi_hover_bg',
     ]));
+
+    // ── Section: Video Profil Perusahaan ──────────────────────────────────────
+    $wp_customize->add_section('indotech_company_video', [
+        'title'       => __('Video Profil Perusahaan', 'indotech'),
+        'description' => __('Tautan video perkenalan untuk modal Video Profil di beranda (mendukung URL YouTube, Vimeo, atau berkas MP4 langsung).', 'indotech'),
+        'priority'    => 45,
+    ]);
+
+    $wp_customize->add_setting('indotech_video_url', [
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ]);
+    $wp_customize->add_control('indotech_video_url', [
+        'label'       => __('URL Video Profil (YouTube / Vimeo / MP4)', 'indotech'),
+        'description' => __('Kosongkan untuk menampilkan preview storyboard interaktif 4 babak.', 'indotech'),
+        'section'     => 'indotech_company_video',
+        'type'        => 'url',
+    ]);
+
+    $wp_customize->add_setting('indotech_video_title', [
+        'default'           => 'Profil PT Indotech Berkah Abadi — Ekosistem Manufaktur B2B',
+        'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    $wp_customize->add_control('indotech_video_title', [
+        'label'   => __('Judul Modal Video Profil', 'indotech'),
+        'section' => 'indotech_company_video',
+        'type'    => 'text',
+    ]);
+
+    $wp_customize->add_setting('indotech_video_duration', [
+        'default'           => '01:05',
+        'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    $wp_customize->add_control('indotech_video_duration', [
+        'label'   => __('Durasi Video (cth. 01:05)', 'indotech'),
+        'section' => 'indotech_company_video',
+        'type'    => 'text',
+    ]);
 }
 add_action('customize_register', 'indotech_customizer');
 

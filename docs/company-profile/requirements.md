@@ -1,46 +1,41 @@
-# Requirement redesain company profile
+# Requirement & Arsitektur Halaman Redesain Company Profile
 
-## Tujuan dan cakupan
+Dokumen ini merumuskan kebutuhan fungsional, non-fungsional, struktur seluruh halaman situs, dan spesifikasi beranda Fase 1 untuk PT Indotech Berkah Abadi berdasarkan referensi tata letak [Manufy](https://dribbble.com/shots/25142818-Manufacturing-Company-Profile) dan ekosistem bisnis B2B Indotech.
 
-Calon pelanggan dapat mengenali PT Indotech Berkah Abadi, menemukan solusi yang relevan, dan menghubungi tim melalui “Diskusikan Kebutuhan B2B”. Iterasi pertama menerapkan sistem desain baru pada beranda WordPress dan mendokumentasikan struktur untuk halaman lain. CTA beranda membuka bagian formulir permintaan penawaran pada halaman Kontak yang ada.
+## 1. Tujuan & Cakupan Fase
 
-## Struktur situs
+- **Tujuan**: Memberikan kesan modern, kreatif, dan kredibel layaknya perusahaan manufaktur B2B terkemuka melalui komposisi editorial arsitektural, fotografi produk/fasilitas beraturan, serta akses video perkenalan perusahaan — tanpa menghilangkan satu pun pilar bisnis B2B Indotech.
+- **Cakupan Fase 1 (Implementasi Sekarang)**: Penerapan total sistem desain baru, token warna, tipografi lokal `Onest` + `Inter`, aset background image baru, modul Video Profil berbasis Customizer, serta perombakan penuh beranda (`front-page.php`, header & footer beranda).
+- **Cakupan Fase 2 (Rollout Terencana)**: Penyelarasan halaman dalam (`/tentang-kami/`, `/produk/`, `/kemitraan/`, `/kontak/`, `/blog/`, `/faq/`, dan arsip brand/industri) mengikuti `DESIGN.md` baru serta penambahan topik Maklon & Pelatihan di formulir `/kontak/`.
 
-| Halaman | Konten yang diperlukan | Aksi utama | Lingkup |
+## 2. Struktur Halaman Situs (Information Architecture)
+
+| Rute / Halaman | Peran & Konten Wajib | Aksi Utama (CTA) | Status Implementasi |
 | --- | --- | --- | --- |
-| Beranda `/` | Proposisi B2B, media editorial, profil dan video, empat solusi, portofolio brand, wawasan, dan kontak. | Diskusikan Kebutuhan B2B | Implementasi pertama |
-| Tentang Kami `/tentang-kami/` | Identitas, sejarah terverifikasi, visi/misi, tim/fasilitas, profil video, dan bukti legal relevan. | Diskusikan kebutuhan atau lihat solusi | Spesifikasi lanjutan |
-| Solusi B2B | Empat jalur berdasarkan kebutuhan, audiens, cakupan, proses, dokumen, dan CTA terkait. Industri dan aplikasi menjadi konteks penggunaan pada solusi yang relevan. | Pilih solusi atau konsultasi | Bagian beranda pada fase pertama. URL khusus dapat diputuskan setelah isi tiap solusi siap. |
-| Produk `/produk/` dan detail | Kategori, pencarian, filter, spesifikasi, ukuran, dokumen resmi yang berlaku, dan jalur penawaran. | Lihat produk atau minta penawaran | Spesifikasi lanjutan dengan URL katalog yang ada |
-| Brand `/brands/{slug}/` | Peran brand, cakupan produk/layanan, dan hubungan dengan PT Indotech Berkah Abadi. | Jelajahi brand atau situs resminya | Ringkasan di beranda, detail memakai rute yang ada |
-| Kemitraan `/kemitraan/` | Tipe program, manfaat dan persyaratan yang disetujui, alur, FAQ, dan kontak. | Ajukan kemitraan | Spesifikasi lanjutan |
-| Blog dan FAQ `/blog/`, `/faq/` | Artikel industri dan kumpulan jawaban terawat. FAQ ditautkan ketika halaman sudah terbit. | Buka artikel atau jawaban | Ringkasan di beranda, halaman tersendiri berikutnya |
-| Kontak `/kontak/` | Formulir, empat pilihan konsultasi yang jelas, kontak resmi, alamat, jam operasional yang konsisten, dan konfirmasi. | Kirim kebutuhan | Formulir saat ini dipakai oleh CTA beranda. Penyelarasan pilihan dan routing didesain pada fase lanjutan. |
-| Legal, dokumen, daftar harga | Kebijakan, katalog PDF, lembar data dan dokumen yang masih berlaku. Tampilkan jenis, versi, tanggal, dan ruang lingkup. | Baca atau unduh | Spesifikasi lanjutan sesuai ketersediaan dokumen |
+| **Beranda** `/` | 7 blok editorial B2B: Hero + Interactive Process Stage `01–04`, Tentang Kami + Video Profil & KPI, Blok Gelap 4 Solusi B2B, Ekosistem 7 Brand, Kisah Mitra Asimetris, Wawasan & FAQ, Orbital CTA & Footer Kartu Putih. | `Konsultasi B2B` & `Lihat Katalog` | **Fase 1 (Aktif)** |
+| **Tentang Kami** `/tentang-kami/` | Sejarah sejak 2011, visi/misi, fasilitas R&D Sleman, video profil resmi, dan daftar izin edar Kemenkes RI PKRT & Halal yang terverifikasi. | `Konsultasi B2B` | Fase 2 (template ada) |
+| **Solusi B2B** `/#solusi-b2b` (atau halaman khusus) | Penjabaran 4 pilar: Pasokan & Distribusi, Maklon & Formulasi (`cleaniquelab.com`), Kemitraan Usaha (`/kemitraan/`), dan Pelatihan (`cleaniqueacademy.com`), terhubung ke CPT `industry` & `application`. | `Pilih Jalur Solusi` | Ringkasan di Beranda Fase 1; landing page terpisah di Fase 2 |
+| **Produk & Katalog** `/produk/` & `/products/{slug}/` | Katalog interaktif dengan filter kategori (`product_cat`), brand, pencarian AJAX, spesifikasi kemasan, dan tombol minta penawaran. | `Minta Penawaran` / `Lihat Detail` | Template & AJAX aktif |
+| **Profil Brand** `/brands/{slug}/` | Profil masing-masing dari 7 brand (`Orchid Care`, `Cleanique Lab`, `Cleanique Mart`, `Depo Cleanique`, `Cleanique Academy`, `Malabeez`, `Prokopi`) beserta produk terkait. | `Jelajahi Produk Brand` / Situs Resmi | Template aktif + diringkas di Beranda |
+| **Kemitraan** `/kemitraan/` | Skema Distributor, Agen, Toko Cleanique Mart, dan Depo Cleanique, alur pendaftaran 4 langkah, serta formulir pengajuan mitra. | `Ajukan Kemitraan` | Template aktif |
+| **Blog & Edukasi** `/blog/` | Artikel industri kebersihan, formulasi, tips laundry, dan artikel SEO terkait maklon. | `Baca Artikel` | Template aktif |
+| **FAQ B2B** `/faq/` | Daftar tanya-jawab komprehensif terkait pemesanan, legalitas PKRT/Halal, pengiriman luar Jawa, maklon, dan pelatihan. | `Tanya via WhatsApp` | Terintegrasi ringkas di Beranda + halaman `/faq/` |
+| **Kontak & Penawaran** `/kontak/#form-kontak` | Formulir permintaan penawaran, informasi alamat Sleman, peta lokasi, dan jalur WhatsApp 3 divisi CS (Keagenan, Retail, Pelatihan). | `Kirim Penawaran` | Target CTA Beranda; perluasan subjek Maklon & Pelatihan di Fase 2 |
+| **Legal, Download & Pricelist** `/privacy-policy/`, `/syarat-ketentuan/`, `/cookie-policy/`, `/download-center/`, `/daftar-harga/` | Dokumen legalitas situs, kebijakan privasi/cookie, katalog PDF, dan halaman daftar harga. | `Baca / Unduh` | Halaman aktif terpisah |
 
-## Urutan beranda
+## 3. Spesifikasi 7 Blok Beranda Fase 1
 
-1. Header dengan logo resmi, menu aktif sesuai WordPress, dan Kontak B2B. Hero menjawab bidang usaha dan menampilkan satu CTA konsultasi, packshot Cleanique Lab, dan akses katalog.
-2. “Kenali Indotech” memuat ringkasan perusahaan, poster, dan tautan profil. Saat video resmi siap, kontrol pemutaran tampil pada bagian ini.
-3. “Apa kebutuhan bisnis Anda?” memperlihatkan pasokan dan distribusi, maklon dan formulasi, kemitraan usaha, serta pelatihan dan edukasi. Setiap jalur mempunyai tujuan yang spesifik.
-4. “Ekosistem brand” memuat Orchid Care, Cleanique Lab, Cleanique Academy, Cleanique Mart, Depo Cleanique, Malabeez, dan Prokopi. Profil WordPress yang terbit didahulukan. Brand dengan situs afiliasi memakai situs resmi sebagai tautan cadangan. Prokopi memakai katalog bila profilnya belum terbit.
-5. “Jejak kemitraan” menampilkan tiga foto gerai Cleanique Mart yang sudah dipublikasikan dan mengarahkan pembaca ke halaman kemitraan.
-6. “Wawasan & bantuan” menghubungkan pembaca ke artikel dan FAQ yang tersedia. Daftar artikel menampilkan maksimal tiga entri terbit di luar kategori bawaan WordPress. Tim editorial mengelola kualitas dan status publikasi konten melalui WordPress.
-7. CTA penutup menuju formulir yang sama. Footer memberikan identitas dan kanal kontak resmi.
+1. **Header Arsitektural**: Logo Indotech di kiri, navigasi terpisah titik (`•`) di tengah, dan dual CTA di kanan (`Katalog` outline + `Konsultasi B2B` Cobalt solid), plus drawer mobile yang fokus-aman.
+2. **Hero Editorial + Interactive Process Stage**: Judul display `Onest` dua baris kontras (*"Formulasi Masa Depan"*) dengan badge miring Signal Lime `PT Indotech`, copy nilai B2B + pill CTA `Konsultasi B2B`, dan kontainer foto `16:9` bersudut tumpul yang memuat **tab proses interaktif `01`–`04`** serta **kartu putih L-shape** yang dinamis.
+3. **Tentang Kami, Video Profil & KPI**: Judul dua warna + strip 4 ikon kapabilitas interaktif + poster laboratorium `4:5` yang menjorok (*overlap*) ke tepi blok gelap di bawahnya dengan tombol **Play Video Profil** (membuka Lightbox Modal YouTube/MP4 Customizer atau Storyboard interaktif) + 4 angka KPI (`15+ Tahun`, `500+ Mitra B2B`, `1.000+ SKU`, `34 Provinsi`) dan pill legalitas `Kemenkes RI PKRT` & `Halal`.
+4. **Blok Gelap Solusi B2B & Ekosistem 7 Brand**: Kontainer Deep Obsidian-Navy (`#0B1220`) menampilkan 4 kartu solusi dalam grid `2×2` dengan aksen ikon gelap & tautan Signal Lime (`#A3E635`), dilanjutkan direktori arsitektural **7 Brand Portofolio** (termasuk Prokopi, mengecualikan Cokusi).
+5. **Kisah Mitra & Jejak Kemitraan**: Showcase asimetris 3 kartu bergaya *Customer Stories* menggunakan foto nyata gerai Cleanique Mart (`mitra-*.webp`), mendukung tombol navigasi `<` `>` serta modal detail testimoni mitra.
+6. **Wawasan Industri & FAQ B2B**: 3 artikel terbit terbaru (di luar kategori bawaan *Tak Berkategori*) berdampingan dengan 5 FAQ inti dan JSON-LD `FAQPage`.
+7. **Orbital CTA & Footer Kartu Putih**: Bagian ajakan akhir dengan cincin orbit putus-putus + 2 foto editorial (`cta-collab-b2b`, `cta-logistics-b2b`) + trust indicator `★ 15+ Tahun · PKRT & Halal`, diikuti footer kartu putih membulat berisi formulir cepat WA B2B, detail 3 CS WhatsApp, legal links, dan watermark `[INDOTECH]`.
 
-Tempatkan bukti kualitas dan studi kasus antara solusi dan CTA penutup setelah tersedia materi yang disetujui. Minta persetujuan pemakaian untuk foto partner atau testimoni. Kelola izin edar berdasarkan produk dan sertifikasi berdasarkan pemegang serta ruang lingkup dokumen. Catat sumber, tanggal, dan definisi untuk metrik publik.
+## 4. Kriteria Penerimaan & Kualitas
 
-## Kriteria penerimaan
-
-- Tata letak dapat digunakan pada 320, 390, 768, 1024, dan 1440 px. Judul utuh, menu bisa dibuka dan ditutup dengan keyboard, fokus terlihat, konten dapat dibaca sejak render pertama, serta tautan utama menuju target yang valid.
-- Satu H1, struktur heading berurutan, landmark yang jelas, dan gambar dekoratif tanpa teks alternatif redundan. Gunakan 4,5:1 untuk teks normal, 3:1 untuk teks besar serta kontras indikator kontrol yang relevan, dan target kontrol utama 44 px secara internal. Evaluasi manual melengkapi pemindaian otomatis. [WCAG 2.2](https://www.w3.org/TR/WCAG22/).
-- Target performa setelah rollout pada persentil ke-75 adalah LCP ≤2,5 detik, INP ≤200 ms, dan CLS ≤0,1, dinilai terpisah untuk mobile dan desktop. Pakai kompresi, media responsif, pemuatan tertunda untuk poster di bawah hero, dan ruang media yang tetap. [Panduan Web Vitals](https://web.dev/articles/vitals).
-- Gunakan CMS dan template yang ada untuk URL publik, artikel, brand, dan formulir. Cek canonical, schema, sitemap, serta regresi fungsi katalog dan detail dalam staging sebelum rollout.
-- Saat produksi video, siapkan aset asli yang disetujui, caption Bahasa Indonesia, transkrip, navigasi player melalui keyboard, fallback teks, dan uji dengan koneksi lambat. [Storyboard dan aturan media](media-dan-video.md).
-- Penerimaan alur konsultasi memerlukan pengujian kirim formulir dengan tujuan uji yang disetujui, penanganan kegagalan, dan verifikasi routing setiap topik. Pengukuran konversi menggunakan klik CTA dan pengiriman berhasil tanpa menyertakan isi atau identitas calon pelanggan pada payload analitik.
-
-## Input yang masih dibutuhkan
-
-Video profil resmi dan sumber media perusahaan, daftar klaim beserta dokumen pendukung, studi kasus atau izin penggunaan testimoni, dan pemilik routing lead tiap jenis konsultasi.
-
-Lihat juga [sistem desain](../../DESIGN.md), [audit situs](audit-situs-aktif.md), dan [keputusan struktur beranda](../adr/0001-beranda-berdasarkan-kebutuhan-b2b.md).
+- **Responsivitas**: Nol horizontal overflow (`scrollWidth <= innerWidth`) pada `320px`, `390px`, `768px`, `1024px`, `1280px`, dan `1440px`.
+- **Aksesibilitas (WCAG 2.2 AA)**: Rasio kontras teks normal `>= 4.5:1` dan teks besar `>= 3:1` (Signal Lime `#A3E635` eksklusif di atas `#0B1220`, bukan di latar putih; pill terang memakai `#D9F99D` dengan teks `#0B1220`), navigasi keyboard lengkap (`Tab`, `ArrowLeft`/`ArrowRight` pada tab hero, `Escape` pada menu & modal), hit target `>= 44×44px`, dan dukungan `prefers-reduced-motion`.
+- **Performa**: Font `Onest` dan `Inter` dilayani lokal (WOFF2), gambar menggunakan WebP terkompresi dengan `width`/`height` eksplisit, hero image diberi `fetchpriority="high"`, gambar bawah lipatan memakai `loading="lazy"`, dan video player memakai *lazy embed* hanya saat dibuka.
+- **SEO & Integritas Data**: Tetap mempertahankan meta tag, OpenGraph, `Organization`/`LocalBusiness` schema, dan `FAQPage` schema dari `inc/seo.php` tanpa menyisipkan komentar atau atribut metadata desain internal ke DOM publik.

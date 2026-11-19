@@ -1,94 +1,94 @@
 ---
 name: Indotech
-description: Profil perusahaan B2B dengan komposisi editorial industrial, palet biru, dan fotografi produk.
+description: Profil perusahaan manufaktur dan distribusi B2B dengan arsitektur editorial daylight, palet Indotech Cobalt + Deep Obsidian-Navy + Signal Lime, dan tipografi Onest & Inter.
 colors:
-  primary: "#164ce5"
-  primary-hover: "#123cba"
-  ink: "#101d36"
-  muted: "#4c5b71"
-  paper: "#f6f8fc"
+  cobalt: "#144ee3"
+  cobalt-hover: "#0e3bc0"
+  cobalt-tint: "#e8effd"
+  ink: "#0b1220"
+  ink-elevated: "#162035"
+  slate: "#4b586e"
+  muted-display: "#768299"
+  on-dark: "#c6d1e4"
+  canvas: "#f6f7fa"
   white: "#ffffff"
-  rule: "#d9e0ec"
-  on-dark: "#c4d0e8"
-  signal: "#c5f47b"
+  grid: "#dce3ee"
+  rule-dark: "#28344c"
+  lime: "#d9f99d"
+  lime-bright: "#a3e635"
 typography:
   display:
-    fontFamily: "Space Grotesk, sans-serif"
-    fontSize: "clamp(3rem, 6.8vw, 6rem)"
+    fontFamily: "Onest, Inter, sans-serif"
+    fontSize: "clamp(2.85rem, 6.2vw, 5.5rem)"
     fontWeight: 700
-    lineHeight: 1.01
-    letterSpacing: "-0.04em"
+    lineHeight: 0.96
+    letterSpacing: "-0.035em"
   heading:
-    fontFamily: "Space Grotesk, sans-serif"
-    fontSize: "clamp(2.35rem, 4.6vw, 4.25rem)"
+    fontFamily: "Onest, Inter, sans-serif"
+    fontSize: "clamp(2.15rem, 4.3vw, 3.65rem)"
     fontWeight: 700
     lineHeight: 1.04
-    letterSpacing: "-0.04em"
+    letterSpacing: "-0.035em"
   body:
-    fontFamily: "Inter, sans-serif"
+    fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.65
 rounded:
-  control: "8px"
-  media: "16px"
+  control: "999px"
+  card: "20px"
+  media: "28px"
+  panel: "32px"
 spacing:
-  gutter: "clamp(20px, 4vw, 48px)"
-  section: "clamp(64px, 8vw, 116px)"
+  gutter: "clamp(18px, 3.6vw, 48px)"
+  container: "1320px"
 components:
-  button-primary:
-    backgroundColor: "{colors.primary}"
+  pill-cta:
+    backgroundColor: "{colors.cobalt}"
     textColor: "{colors.white}"
     rounded: "{rounded.control}"
-    padding: "13px 18px"
-  button-primary-hover:
-    backgroundColor: "{colors.primary-hover}"
-  catalog-link:
+    padding: "6px 6px 6px 24px"
+  stage-card:
     backgroundColor: "{colors.white}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.media}"
-    padding: "16px"
-  media-frame:
+    rounded: "{rounded.card}"
+    padding: "20px 22px"
+  solutions-dark:
     backgroundColor: "{colors.ink}"
-    rounded: "{rounded.media}"
+    textColor: "{colors.white}"
+    rounded: "{rounded.panel}"
+  tilt-badge:
+    backgroundColor: "{colors.lime}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.control}"
 ---
 
 ## Overview
 
-Komposisi editorial industrial memperkenalkan Indotech melalui judul besar, fotografi produk, dan navigasi berdasarkan kebutuhan bisnis. Referensi Manufy memberi arah pada susunan judul di atas media, komposisi dua kolom, dan pergantian bidang terang ke gelap. Logo resmi, palet biru, dan konten perusahaan menerjemahkan pola tersebut ke identitas Indotech. Sistem ini pertama kali diterapkan pada beranda WordPress. [Referensi layout Manufy](https://dribbble.com/shots/25142818-Manufacturing-Company-Profile).
+Sistem desain Indotech mengadaptasi tata letak editorial manufaktur dari referensi [Manufy](https://dribbble.com/shots/25142818-Manufacturing-Company-Profile) untuk menerjemahkan posisi PT Indotech Berkah Abadi sebagai produsen, penyedia jasa maklon, distributor B2B, dan akademi formulasi produk kebersihan. Seluruh token fase pertama diisolasi ke `.indotech-company-home` pada beranda WordPress.
 
 ## Colors
 
-- **Primary dan primary-hover** untuk aksi utama, tautan di atas putih, serta penekanan judul.
-- **Ink, paper, dan white** membangun ritme bidang halaman. **Muted** dipakai untuk teks pendukung terang dan **on-dark** untuk teks pendukung di atas ink.
-- **Rule** memisahkan baris tanpa mengurangi ruang baca. **Signal** menggemakan hijau pada logo melalui tautan dan fokus di permukaan gelap.
+- **Cobalt & Cobalt-Hover** (`#144ee3` / `#0e3bc0`) untuk CTA utama (`Konsultasi B2B`), tombol navigasi aktif, penekanan angka KPI `+`, dan tautan di atas kanvas terang.
+- **Canvas, White, & Grid** (`#f6f7fa`, `#ffffff`, `#dce3ee`) membentuk kanvas terang arsitektural dengan lima garis panduan vertikal putus-putus.
+- **Ink & Ink-Elevated** (`#0b1220` / `#162035`) dipakai untuk blok gelap *Layanan B2B Terintegrasi*, foto scrim, dan kontras tipografi utama; **Slate** (`#4b586e`) dan **Muted-Display** (`#768299`, >=3:1 untuk teks display besar) menjaga hierarki teks.
+- **Lime & Lime-Bright** (`#d9f99d` / `#a3e635`) menggemakan aksen hijau logo resmi Indotech: `#d9f99d` dengan tinta `#0b1220` untuk badge miring, tombol play video, dan pill legalitas; `#a3e635` eksklusif sebagai tautan di permukaan gelap `#0b1220`.
 
 ## Typography
 
-Space Grotesk membentuk hierarki judul. Inter dipakai untuk isi, navigasi, dan kontrol. Keduanya dilayani dari aset lokal. H1 memakai dua baris yang terencana di desktop dan membungkus alami di layar sempit. Teks penjelas dijaga sekitar 32–47 karakter per baris pada bagian yang berdampingan dengan foto atau CTA.
+**Onest** (variabel lokal bobot 400–800) dipakai untuk display hero, heading bagian, angka KPI, dan watermark `[INDOTECH]`. **Inter** (variabel lokal) dipakai untuk paragraf isi, label, navigasi, dan kontrol antarmuka.
 
-## Layout
+## Layout & Background Imagery
 
-Lebar konten maksimum 1.280 px. Judul dan ringkasan hero berada di atas panel packshot dengan kartu katalog di kanan. Pada desktop, poster profil 16:9 berada di kiri dan melintasi tepi panel solusi navy. Panel tersebut mengelompokkan empat penawaran dalam kisi dua kolom. Daftar brand diikuti galeri mitra asimetris. Pada ≤768 px, profil disusun satu kolom dan navigasi beralih ke menu mobile. Pada ≤640 px, hero, daftar solusi, dan kontak juga disusun satu kolom. Foto pertama galeri membentang di atas dua foto pendukung.
+Lebar maksimal kontainer adalah `1320px`. Hero menampilkan lockup judul dua warna + badge miring di atas panel foto laboratorium `16:9` (`hero-manufy-stage.webp`) yang menampung tab proses `01–04` dan kartu putih berlekuk L-shape. Bagian *Tentang Kami* menampilkan poster vertikal `4:5` (`about-lab-video.webp`) yang menjorok turun menimpa tepi atas blok solusi obsidian-navy pada desktop (`>960px`), dilengkapi tombol *Play Video Profil* yang membuka modal lightbox Customizer. Bagian berikutnya memuat 7 brand portofolio, etalase kisah mitra asimetris 3 kartu, wawasan & FAQ B2B, CTA orbital konsentris (`cta-collab-b2b.webp` & `cta-logistics-b2b.webp`), dan kartu footer putih. Aturan lengkap background image dan video profil terdokumentasi pada [panduan media dan video](docs/company-profile/media-dan-video.md).
 
-## Elevation & Depth
+## Elevation & Shapes
 
-Hierarki dibangun dari bidang warna, batas tipis, dan kedalaman foto. Header dapat memiliki bayangan ringan saat halaman digulir.
-
-## Shapes
-
-Media dan panel memakai sudut 16 px. Kontrol berbentuk persegi dengan sudut 8 px. Baris brand dan solusi memakai garis pemisah.
-
-## Components
-
-- **CTA utama** berlabel “Diskusikan Kebutuhan B2B” dan menuju formulir kontak. Kartu katalog di dalam hero berfungsi sebagai jalur sekunder.
-- **Tautan aksi** memiliki label spesifik dan ikon panah dekoratif. Tautan pada latar gelap memakai signal sebagai warna teks dan fokus.
-- **Media editorial** menampilkan packshot katalog, foto gerai dengan caption, dan ilustrasi yang ditandai sesuai konteks. Gunakan `picture` ketika crop berbeda antarlayar.
-- **Menu mobile** memakai tombol dengan status terbuka, fokus keyboard, dan Escape untuk menutup. Konten dan CTA utama tampil langsung.
+Sudut besar `28px–32px` membingkai media stage, kartu kisah mitra, panel solusi gelap, dan kartu footer putih; `20px` untuk kartu dalam; `999px` (pill penuh) untuk tombol aksi header/CTA dan badge miring. Kedalaman dibangun melalui tumpukan bidang warna kontras, batas tipis `1px` (`#dce3ee`), dan drop shadow lembut hanya pada kartu mengambang di atas fotografi.
 
 ## Do's and Don'ts
 
-- Gunakan foto nyata yang disetujui untuk fasilitas, tim, partner, produk tertentu, dan sertifikasi.
-- Tandai still life generatif sebagai ilustrasi, dan periksa komposisi pada crop desktop dan mobile.
-- Jaga fokus yang terlihat, target utama minimal 44 px sebagai standar internal, dan rasio kontras WCAG 2.2 AA. [WCAG 2.2](https://www.w3.org/TR/WCAG22/).
-- Letakkan pesan, klaim, dan tautan sebagai HTML. Gunakan transisi singkat untuk perubahan keadaan kontrol.
+- Gunakan hanya klaim legalitas terverifikasi (`Izin Edar Kemenkes RI PKRT` & `Sertifikasi Halal`) dan angka yang sinkron (`15+ Tahun`, `500+ Mitra`, `1.000+ SKU`, `34 Provinsi`, `7 Brand`).
+- Gunakan `#a3e635` hanya di latar gelap `#0b1220`; di latar terang gunakan `#d9f99d` dengan teks gelap `#0b1220`.
+- Jaga *safe-zone* gambar latar bebas objek penting agar tab, tombol play video, dan kartu detail selalu terbaca dengan kontras WCAG 2.2 AA serta target minimal `44×44px`.
+- Jangan menanamkan teks, logo, angka, atau ikon tombol *play* di dalam aset raster gambar.

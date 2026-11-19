@@ -5,12 +5,18 @@
     "ignoreValues": [
       {
         "rule": "overused-font",
-        "value": "space grotesk",
+        "value": "inter",
         "files": [
           "wp-content/themes/indotech_custom/assets/css/company-home.css"
         ],
-        "createdAt": "2026-11-19T02:57:14.368Z",
-        "reason": "Codex: tipografi judul Indotech yang sudah digunakan tema induk dan ditetapkan di DESIGN.md diterapkan pada judul kartu katalog beranda."
+        "createdAt": "2026-11-19T03:40:09.497Z",
+        "reason": "Body UI font Inter dipertahankan dari tema induk sesuai persetujuan Q3, berpasangan dengan Onest sebagai display & heading."
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-11-19T03:40:33.727Z",
+        "reason": "Body UI font Inter dipertahankan dari tema induk sesuai persetujuan Q3, berpasangan dengan Onest sebagai display & heading."
       }
     ]
   }

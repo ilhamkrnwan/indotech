@@ -40,6 +40,8 @@ function indotech_enqueue() {
     if ( is_front_page() ) {
         $company_css = 'assets/css/company-home.css';
         wp_enqueue_style( 'indotech-company-home', get_theme_file_uri( $company_css ), [ 'indotech-main' ], filemtime( get_theme_file_path( $company_css ) ) );
+        $company_js = 'assets/js/company-home.js';
+        wp_enqueue_script( 'indotech-company-home-js', get_theme_file_uri( $company_js ), [], filemtime( get_theme_file_path( $company_js ) ), true );
     }
 
     // Main JS
@@ -144,7 +146,7 @@ add_filter('login_display_language_dropdown', '__return_false');
 // ── Defer Non-Critical JavaScript & Remove jQuery Migrate ────────────────────
 add_filter('script_loader_tag', function($tag, $handle) {
     if (is_admin()) return $tag;
-    if (in_array($handle, ['indotech-main', 'indotech-inquiry', 'google_gtagjs-js'], true)) {
+    if (in_array($handle, ['indotech-main', 'indotech-inquiry', 'indotech-company-home-js', 'google_gtagjs-js'], true)) {
         return str_replace(' src=', ' defer src=', $tag);
     }
     return $tag;

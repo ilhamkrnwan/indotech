@@ -1,33 +1,33 @@
-# Profil perusahaan Indotech
+# Ekosistem B2B PT Indotech Berkah Abadi
 
-Istilah untuk membedakan entitas perusahaan, penawaran bisnis, dan cara calon pelanggan berinteraksi dengan Indotech.
+Kosakata resmi untuk membedakan entitas perusahaan, penawaran bisnis, portofolio merek, dan alur interaksi pelanggan B2B pada profil perusahaan Indotech.
 
-## Istilah
+## Language
 
-### Indotech
+**Indotech**:
+Nama singkat PT Indotech Berkah Abadi, perusahaan manufaktur dan distribusi produk kebersihan B2B yang berbasis di Sleman, Daerah Istimewa Yogyakarta sejak 2011.
+_Avoid_: Indotech Group, pabrik saja
 
-Nama singkat PT Indotech Berkah Abadi, perusahaan yang menaungi portofolio brand dan penawaran B2B dalam profil perusahaan.
+**Solusi B2B**:
+Empat jalur layanan utama Indotech yang dikelompokkan berdasarkan kebutuhan pelanggan bisnis: pasokan dan distribusi, maklon dan formulasi, kemitraan usaha, serta pelatihan dan edukasi.
+_Avoid_: layanan umum, katalog produk
 
-### Solusi B2B
+**Brand Portofolio**:
+Tujuh identitas produk dan lini usaha resmi dalam ekosistem Indotech: Orchid Care, Cleanique Lab, Cleanique Mart, Depo Cleanique, Cleanique Academy, Malabeez, dan Prokopi.
+_Avoid_: anak perusahaan, sub-produk acak
 
-Penawaran Indotech yang dikelompokkan menurut kebutuhan pelanggan bisnis, seperti pasokan, maklon, kemitraan, dan pelatihan.
+**Maklon (Private Label)**:
+Layanan pengembangan formulasi, pendampingan perizinan, dan produksi produk kebersihan atau pewangi atas nama merek milik pelanggan.
+_Avoid_: OEM generik, titip jual
 
-### Brand
+**Kemitraan Usaha**:
+Kerja sama komersial jangka panjang dalam jaringan distribusi melalui skema agen, distributor daerah, toko kebersihan modern Cleanique Mart, atau depo isi ulang Depo Cleanique.
+_Avoid_: franchise semata, reseller lepas
 
-Identitas bisnis atau lini produk dalam portofolio Indotech, seperti Orchid Care dan Cleanique Academy. Satu brand dapat mendukung lebih dari satu jenis kebutuhan.
+**Legalitas PKRT & Halal**:
+Kepatuhan produk pembersih dan perbekalan kesehatan rumah tangga terhadap izin edar resmi Kementerian Kesehatan Republik Indonesia (PKD/PKRT) serta sertifikasi Halal MUI/BPJPH yang terverifikasi per SKU.
+_Avoid_: klaim BPOM umum untuk produk rumah tangga
 
-### Kategori produk
-
-Pengelompokan item katalog berdasarkan jenis atau penggunaan produk, seperti Laundry Care dan Homecare & Surface Cleaner.
-
-### Maklon
-
-Layanan pengembangan atau produksi produk atas nama merek pelanggan, dengan lingkup yang disepakati bersama penyedia layanan.
-
-### Kemitraan usaha
-
-Hubungan komersial melalui program distribusi, penjualan kembali, toko kebersihan, atau depo isi ulang.
-
-### Konsultasi B2B
-
-Tahap awal untuk membahas kebutuhan pengadaan, maklon, kemitraan, atau pelatihan dengan tim Indotech.
+**Konsultasi B2B**:
+Pintu masuk komunikasi komersial terstruktur untuk membahas kebutuhan pengadaan grosir, maklon, kemitraan usaha, atau pelatihan bersama tim Indotech.
+_Avoid_: CS biasa, kontak umum

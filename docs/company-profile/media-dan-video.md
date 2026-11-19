@@ -1,37 +1,83 @@
-# Panduan gambar latar dan video profil
+# Aturan Produksi Background Image & Panduan Video Perkenalan
 
-## Arahan produksi gambar
+Dokumen ini menetapkan standar teknis dan art-direction pembuatan serta penggunaan gambar latar (*background image*) dan modul video perkenalan perusahaan pada sistem desain PT Indotech Berkah Abadi.
 
-| Penempatan | Komposisi | Ekspor dan penerapan |
+## 1. Aturan Membuat & Menggunakan Background Image
+
+Setiap aset foto yang digunakan sebagai latar elemen UI wajib memenuhi 5 pilar aturan berikut agar visual tetap modern, konsisten dengan palet Indotech, dan teks/kontrol di atasnya selalu terbaca (WCAG 2.2 AA).
+
+### A. Matriks Rasio, Resolusi, & Safe-Zone Komposisi
+
+| Penempatan | Aspek Rasio & Dimensi Target | Safe-Zone UI (Wajib Tenang / Bersih) | Aturan Fokus Subjek |
+| --- | --- | --- | --- |
+| **Hero Interactive Stage** (`hero-manufy-stage.webp`) | `16:9` (`1376×768` atau maks `1600×900`, WebP `<= 120 KB`) | **Bawah-kiri 30%** (untuk tab proses `01–04`) dan **bawah-kanan 35%** (untuk kartu putih L-shape) harus berupa permukaan bersih tanpa detail rumit atau wajah. | Subjek manusia & peralatan utama diposisikan di **55% area tengah-atas**, memberi ruang bernapas atas minimal `12%`. |
+| **About Lab & Video Poster** (`about-lab-video.webp`) | `4:5` (`800×1000`, WebP `<= 80 KB`) | **Bawah 20%** harus tenang/minim kontras ekstrem sebagai tempat tombol *Play Video Profil* mengambang. | Subjek utama berada di **2/3 bagian atas** dengan ruang kepala aman saat di-crop di desktop maupun mobile. |
+| **Orbital CTA Kiri & Kanan** (`cta-collab-b2b.webp`, `cta-logistics-b2b.webp`) | `4:3` (`800×600`, WebP `<= 80 KB`) | Seluruh pinggir berjarak aman dari wajah/objek penting karena kartu dipotong dengan `border-radius: 24px`. | Tidak boleh ada teks overlay di atas foto pendukung CTA; foto berfungsi sebagai penyeimbang visual orbit. |
+| **Kisah Mitra / Gerai Nyata** (`mitra-*.webp`) | `4:3` / `1:1` (foto dokumentasi nyata yang disetujui) | **Bawah-kiri 35%** memakai kartu putih solid/semi-buram berbatas jelas agar nama gerai dan peran terbaca tanpa bergantung pada kecerahan papan toko. | Pastikan fasad dan papan nama gerai Cleanique Mart tidak terpotong oleh sudut membulat kartu. |
+
+### B. Aturan Pencahayaan, Warna, & Estetika Industrial-Modern
+
+1. **Pencahayaan Daylight Arsitektural (`5200K–6000K`)**: Gunakan cahaya natural terang yang menonjolkan kebersihan fasilitas produksi, laboratorium kaca, dan lantai epoksi gudang — hindari filter gelap suram, efek neon berlebihan, atau saturasi kuning/oranye berlebih.
+2. **Harmoni Palet Indotech**: Utamakan latar netral terang (baja tahan karat, kaca arsitektural, dinding putih-abu dingin) dengan aksen **Indotech Cobalt (`#144EE3`)** atau **Deep Obsidian-Navy (`#0B1220`)** pada jas lab, rompi operasional, tutup jeriken, atau cairan sampel agar menyatu dengan tema situs.
+3. **Larangan Keras Elemen UI di Dalam Gambar**: Dilarang keras menghasilkan atau menempelkan teks promosi, tipografi judul, logo brand fiktif, stiker sertifikasi, angka statistik, ikon tombol *play*, maupun watermark ke dalam file raster gambar. Semua teks, badge, sertifikasi, dan tombol wajib dirender sebagai HTML/SVG.
+4. **Kejujuran Visual & Kemasan**: Untuk ilustrasi konsep fasilitas/konsultasi, gunakan wadah/jeriken polos tanpa merek (*unbranded*) agar tidak menimbulkan ekspektasi label SKU palsu; untuk foto gerai dan produk spesifik, gunakan dokumentasi foto nyata atau packshot katalog resmi.
+
+### C. Aturan Overlay, Scrim & Keterbacaan Kontras
+
+- Jangan pernah mengandalkan piksel foto mentah untuk menjamin kontras teks putih atau kontrol transparan.
+- **Scrim Gradien Wajib**: Pada Hero Stage dan Video Poster yang menampung elemen interaktif di sisi bawah, pasang overlay CSS pelindung bawah:
+  `linear-gradient(180deg, rgba(11, 18, 32, 0) 42%, rgba(11, 18, 32, 0.72) 100%)`
+  atau bungkus teks dengan kartu solid/blur berlatar stabil (`.ch-stage-card` berlatar `#FFFFFF`, atau `.ch-video-trigger` berlatar `rgba(11, 18, 32, 0.86)` dengan `backdrop-filter: blur(8px)`).
+- Selalu tentukan warna `background-color` fallback (`#0B1220` untuk frame gelap, `#DCE3EE` untuk frame foto terang) agar rasio kontras tetap aman sebelum gambar selesai diunduh.
+
+### D. Aturan Performa & Markup HTML
+
+- Cantumkan atribut `width` dan `height` eksplisit + properti CSS `aspect-ratio` untuk menjaga `CLS = 0`.
+- Hanya gambar LCP di atas lipatan (`hero-manufy-stage.webp`) yang boleh menggunakan `fetchpriority="high"` dan tanpa `loading="lazy"`. Seluruh gambar di blok ke-2 ke bawah wajib menggunakan `loading="lazy"` dan `decoding="async"`.
+- Simpan gambar hasil generate sebagai WebP (kualitas 82–86, tanpa upscaling) beserta file JSON provenance (`<nama>.webp.json`) di `wp-content/themes/indotech_custom/assets/images/company-profile/`.
+
+### E. Template Prompt Generasi Gambar Standar
+
+```text
+[Framing & Aspect Ratio] editorial corporate/industrial photograph of [subjek spesifik di fasilitas/lab/kantor Indonesia].
+[Pencahayaan & Warna]: bright 5500K architectural daylight, clean minimalist steel/glass environment with subtle cobalt-blue (#144EE3) and deep navy (#0B1220) accents.
+[Safe-Zone]: subject positioned in [area fokus], leaving [zona aman dalam %] calm and uncluttered for UI overlays.
+[Hard Exclusions]: Strictly NO text, NO logos, NO printed bottle labels, NO badges, NO UI icons, NO watermarks.
+```
+
+---
+
+## 2. Katalog Aset Background Image Terpasang (Fase 1)
+
+| Berkas | Lokasi & Penempatan | Sumber & Provenance |
 | --- | --- | --- |
-| Hero | Tiga packshot katalog menggunakan latar studio navy. Pertahankan label asli dan ruang di sekeliling kemasan. Kartu katalog berada di kanan pada desktop dan di bawah kelompok produk pada mobile. | Gunakan WebP transparan, pangkas tepi kosong, dan pertahankan rasio setiap kemasan. Target total ≤150 KB untuk aset hero. |
-| Poster profil | Close-up media atau foto proses yang disetujui, dengan titik fokus di tengah agar aman terhadap crop dan caption. | Ekspor 960 × 540 px, WebP maksimal 100 KB. Muat secara lazy dan pertahankan rasio saat belum dimuat. |
-| Galeri mitra | Tiga foto gerai yang telah ditampilkan di Indotech. Pertahankan papan nama dan fasad dalam area fokus. | Gunakan berkas tema WebP. Label kota mengikuti publikasi sumber. |
-| Media berikutnya | Foto asli untuk tim, fasilitas, mitra dan SKU. Gunakan ilustrasi untuk konteks visual umum. | Catat sumber, hak pemakaian, fokus crop, dimensi, dan teks alternatif bila fotonya memuat informasi. |
+| `hero-manufy-stage.webp` | `assets/images/company-profile/` — Latar Hero Interactive Process Stage | Generated editorial visual + sidecar `hero-manufy-stage.webp.json` |
+| `about-lab-video.webp` | `assets/images/company-profile/` — Poster vertikal *overlapping* Tentang Kami & Video | Generated editorial visual + sidecar `about-lab-video.webp.json` |
+| `cta-collab-b2b.webp` | `assets/images/company-profile/` — Foto pendukung kiri-bawah Orbital CTA | Generated editorial visual + sidecar `cta-collab-b2b.webp.json` |
+| `cta-logistics-b2b.webp` | `assets/images/company-profile/` — Foto pendukung kanan-atas Orbital CTA | Generated editorial visual + sidecar `cta-logistics-b2b.webp.json` |
+| `mitra-*.webp` | `assets/images/` — Etalase Kisah Mitra Cleanique Mart | Dokumentasi foto gerai nyata pada repositori Indotech |
 
-- Teks, logo, angka, sertifikasi, dan tombol dipasang sebagai HTML. Hindari menghasilkan elemen itu di dalam gambar.
-- Pertahankan gradasi cahaya studio dan palet biru–abu. Hindari latar sibuk dan pertahankan navy sebagai warna fallback. Jika teks berada di atas media, gunakan bidang latar yang stabil dan uji kontras pada setiap crop.
-- Prioritaskan satu packshot dan cantumkan dimensi eksplisit pada setiap gambar. Panel kontak menggunakan `picture` dengan crop mobile. Caption poster menandai visual formulasi sebagai ilustrasi.
-- Untuk mengganti gambar, verifikasi ukuran, crop, hak pakai, dan keadaan ketika media gagal dimuat. Tetapkan ulang `srcset` bila kandidat ukuran berubah.
+---
 
-## Sumber aset
+## 3. Spesifikasi Video Perkenalan Perusahaan (60–65 Detik)
 
-- `laundry-souring.webp`, `sabun-cuci-piring.webp`, dan `pembersih-lantai.webp` memakai packshot katalog Cleanique Lab. Transparansi dan label asli dipertahankan saat menghapus ruang kosong dan mengompresi berkas. [Katalog Cleanique Lab](https://indotech.id/brands/cleanique-lab/).
-- `ilustrasi-formulasi.webp` berasal dari visual “Validasi Kualitas” pada publikasi Indotech. Poster ini dipakai sambil menunggu video resmi. [Publikasi Indotech](https://indotech.id/profil-pabrik-kimia-terlengkap-yogyakarta/).
-- `mitra-jambi.webp`, `mitra-boyolali.webp`, dan `mitra-temanggung.webp` menggunakan berkas tema dari bagian mitra pada beranda publik. [Beranda Indotech](https://indotech.id/).
-- `hero-1024.webp` dan `hero-mobile.webp` dari ImageGen digunakan sebagai ilustrasi dekoratif pada panel kontak. `hero-1536.webp` dan `profile-poster.webp` adalah opsi cadangan. File JSON pendamping di folder `company-profile` mencatat sumber atau prompt.
+### Konfigurasi & Perilaku Teknis
+- Admin dapat mengisi tautan video resmi di **WordPress Customizer → Video Profil Perusahaan** (`indotech_video_url`), bersama judul (`indotech_video_title`) dan durasi tampilan (`indotech_video_duration`).
+- Mendukung tautan **YouTube**, **Vimeo**, maupun berkas **MP4** langsung yang di-host di media library/CDN resmi.
+- **Lazy Embed**: Tidak ada `<iframe>` atau `<video>` yang dimuat saat beranda dibuka. Pemutar hanya disuntikkan ke dalam dialog modal (`#ch-video-modal`) ketika pengunjung menekan tombol **Tonton Video Profil**, dan dibersihkan kembali saat modal ditutup (`Close` / klik backdrop / tombol `Escape`).
+- **Fallback Terstruktur**: Jika `indotech_video_url` kosong, modal otomatis menampilkan **Preview Storyboard Interaktif 4 Babak** lengkap dengan ringkasan profil PT Indotech Berkah Abadi dan CTA menuju halaman Tentang Kami atau Konsultasi B2B.
 
-## Storyboard video 55–65 detik
+### Storyboard Produksi Video Resmi
 
-| Waktu | Visual yang dibutuhkan | Narasi atau pesan |
+| Durasi | Visual Rekaman yang Disiapkan | Narasi / Pesan Utama |
 | --- | --- | --- |
-| 00–06 | Bidikan pembuka kantor atau area operasi yang disetujui. Logo resmi masuk sebagai grafis. | “Kami PT Indotech Berkah Abadi, berbasis di Sleman, Yogyakarta.” |
-| 06–18 | Produk nyata, pengemasan, dan proses penyiapan pesanan. | “Kami mengembangkan dan memasok produk kebersihan, laundry, dan pewangi untuk kebutuhan bisnis.” |
-| 18–31 | Cuplikan proses formulasi dan peninjauan kemasan bersama Cleanique Lab. | “Melalui layanan maklon, kami membantu pelaku usaha mengembangkan produk dengan merek mereka sendiri.” |
-| 31–44 | Mitra distribusi, konsep depo/toko, serta kegiatan pelatihan yang disetujui. | “Program kemitraan dan pelatihan mendukung distribusi dan pengembangan usaha.” |
-| 44–55 | Logo portofolio sesuai izin, kemudian cuplikan tim atau produk. | “Temukan solusi dan brand yang sesuai dengan kebutuhan Anda.” |
-| 55–65 | Logo dan domain resmi, dengan grafis singkat. | “Diskusikan kebutuhan bisnis Anda dengan Indotech.” |
+| **00–08 dtk** | Bidikan eksterior/operasional resmi PT Indotech Berkah Abadi di Sleman + overlay logo resmi | *"PT Indotech Berkah Abadi, mitra manufaktur dan pasokan kebersihan B2B sejak 2011 dari Sleman, Yogyakarta."* |
+| **08–22 dtk** | Proses formulasi di lab R&D Cleanique Lab, uji viskositas/pH, serta pengecekan sampel kemasan | *"Melalui fasilitas R&D dan layanan maklon Cleanique Lab, kami memproduksi formulasi yang memenuhi izin edar Kemenkes RI PKRT dan sertifikasi Halal."* |
+| **22–38 dtk** | Lini pengemasan produk curah 5L/20L Orchid Care & gudang palet siap kirim ke 34 provinsi | *"Menyediakan lebih dari 1.000 varian SKU laundry, homecare, pewangi, hingga pembersih khusus bagi ratusan mitra bisnis di 34 provinsi."* |
+| **38–52 dtk** | Suasana gerai Cleanique Mart, isi ulang Depo Cleanique, dan kelas praktik Cleanique Academy | *"Didukung jaringan kemitraan toko modern Cleanique Mart, Depo Cleanique, serta pembinaan kewirausahaan bersama Cleanique Academy."* |
+| **52–65 dtk** | Tim manajemen/konsultan B2B + animasi logo & ajakan konsultasi | *"Temukan solusi pasokan, maklon, atau kemitraan usaha Anda. Diskusikan kebutuhan B2B bersama tim Indotech."* |
 
-Gunakan rekaman nyata untuk proses dan fasilitas, persetujuan tertulis dari partisipan dan mitra, serta hak penggunaan musik. Gabungkan narasi akhir dengan informasi visual penting agar audiens memahami isi melalui audio. Sediakan caption VTT Bahasa Indonesia dan transkrip yang setara. Siapkan audio description apabila narasi belum mencakup informasi visual penting. [WCAG 2.2 untuk media berbasis waktu](https://www.w3.org/TR/WCAG22/#time-based-media).
-
-Kirim master 1080p dengan versi distribusi MP4 H.264, poster WebP 16:9, caption, dan transkrip. Pemutaran dimulai dari kontrol pengguna. Jika memakai layanan video pihak ketiga, tunda koneksi sampai pengguna memilih memutar dan tangani persetujuan yang berlaku. Tampilkan ringkasan perusahaan dan tautan profil ketika file belum tersedia atau pemutaran gagal.
+### Persyaratan Produksi & Aksesibilitas Video Akhir
+- Ekspor master 1080p MP4 (H.264) atau unggah ke kanal resmi dengan poster WebP 16:9.
+- Wajib menyertakan file **caption Bahasa Indonesia (`.vtt`)** dan ringkasan **transkrip teks** setara agar memenuhi [WCAG 2.2 Time-Based Media](https://www.w3.org/TR/WCAG22/#time-based-media).
+- Pastikan persetujuan tertulis (*release form*) untuk seluruh staf maupun pemilik gerai mitra yang tampil dalam rekaman.

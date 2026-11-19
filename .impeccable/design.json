@@ -1,48 +1,58 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-19T09:57:14+07:00",
-  "title": "Sistem desain Indotech",
+  "generatedAt": "2026-11-19T10:28:00+07:00",
+  "title": "Sistem desain Indotech (Manufy Architectural Evolution)",
   "extensions": {
     "motion": [
-      { "name": "control-color", "value": "160ms ease", "purpose": "Perubahan warna untuk hover pada CTA dan baris brand." }
+      { "name": "control-ease", "value": "200ms cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Transisi halus untuk hover tombol, tab proses hero, dan pergantian kisah mitra." }
     ],
     "breakpoints": [
-      { "name": "stack-content", "value": "640px" },
-      { "name": "stack-profile", "value": "768px" },
-      { "name": "mobile-navigation", "value": "768px" },
-      { "name": "hero-type", "value": "900px" }
+      { "name": "compact-hero-stack", "value": "560px" },
+      { "name": "grid-columns", "value": "768px" },
+      { "name": "mobile-drawer-nav", "value": "960px" },
+      { "name": "header-compact", "value": "1120px" }
     ]
   },
   "components": [
     {
-      "name": "CTA konsultasi",
+      "name": "Pill CTA Utama",
       "kind": "button",
-      "refersTo": "button-primary",
-      "description": "Aksi utama pada hero.",
-      "html": "<a class=\"ds-consult\" href=\"/kontak/#form-kontak\">Diskusikan Kebutuhan B2B <svg aria-hidden=\"true\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
-      "css": ".ds-consult{display:inline-flex;align-items:center;gap:10px;padding:13px 18px;border-radius:8px;background:var(--company-primary,#164ce5);color:#fff;font:650 14px Inter,sans-serif;text-decoration:none;transition:background-color .16s ease}.ds-consult:hover{background:var(--company-primary-hover,#123cba)}.ds-consult:focus-visible{outline:2px solid var(--company-primary,#164ce5);outline-offset:4px}"
+      "refersTo": "pill-cta",
+      "description": "Tombol aksi Konsultasi B2B dengan lingkaran panah putih.",
+      "html": "<a class=\"ch-pill-cta\" href=\"/kontak/#form-kontak\"><span>Konsultasi B2B</span><span class=\"ch-pill-cta-icon\" aria-hidden=\"true\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></span></a>",
+      "css": ".ch-pill-cta{display:inline-flex;align-items:center;gap:14px;min-height:52px;padding:6px 6px 6px 24px;border-radius:999px;background:#144ee3;color:#fff;font:600 15px Inter,sans-serif;text-decoration:none}.ch-pill-cta:hover{background:#0e3bc0}.ch-pill-cta-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:999px;background:#fff;color:#144ee3}"
     },
     {
-      "name": "Kartu katalog pada hero",
-      "kind": "button",
-      "refersTo": "catalog-link",
-      "description": "Akses katalog dari panel packshot.",
-      "html": "<a class=\"ds-catalog\" href=\"/produk/\"><span><strong>Produk kebersihan</strong>Lihat katalog Indotech</span><span class=\"ds-catalog-arrow\"><svg aria-hidden=\"true\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></span></a>",
-      "css": ".ds-catalog{display:inline-flex;align-items:center;gap:16px;padding:16px;border-radius:16px;background:#fff;color:var(--company-muted,#4c5b71);font:650 14px Inter,sans-serif;text-decoration:none}.ds-catalog strong{display:block;color:var(--company-ink,#101d36);font:700 19px 'Space Grotesk',sans-serif}.ds-catalog-arrow{display:grid;place-items:center;width:42px;height:42px;border-radius:8px;background:var(--company-primary,#164ce5);color:#fff}.ds-catalog:hover{background:var(--company-paper,#f6f8fc)}.ds-catalog:focus-visible{outline:2px solid var(--company-primary,#164ce5);outline-offset:4px}"
+      "name": "Kartu Detail L-Shape Stage",
+      "kind": "card",
+      "refersTo": "stage-card",
+      "description": "Kartu mengambang berlekuk L-shape pada panel foto hero.",
+      "html": "<div class=\"ch-stage-card\"><div class=\"ch-stage-card-top\"><p>Formulasi R&amp;D dan produksi merek Anda.</p></div><div class=\"ch-stage-card-bottom\"><a href=\"/produk/\">Lihat Katalog</a></div></div>",
+      "css": ".ch-stage-card{width:min(410px,100%)}.ch-stage-card-top{width:82%;background:#fff;padding:20px 22px 12px;border-radius:20px 20px 0 0}.ch-stage-card-bottom{background:#fff;border-radius:0 20px 20px 20px;padding:12px 22px;border-top:1px solid #dce3ee}"
     },
     {
-      "name": "Tautan solusi",
+      "name": "Tautan Solusi Gelap",
       "kind": "nav",
-      "description": "Aksi kontekstual pada latar navy.",
-      "html": "<div class=\"ds-solution\"><a href=\"/produk/\">Lihat katalog produk</a></div>",
-      "css": ".ds-solution{padding:16px;background:var(--company-ink,#101d36)}.ds-solution a{display:inline-flex;align-items:center;min-height:44px;color:var(--company-signal,#c5f47b);font:650 14px Inter,sans-serif;text-decoration:none}.ds-solution a:hover{text-decoration:underline;text-underline-offset:4px}.ds-solution a:focus-visible{outline:2px solid var(--company-signal,#c5f47b);outline-offset:4px}"
+      "description": "Tautan Signal Lime di atas permukaan Obsidian-Navy #0b1220.",
+      "html": "<div class=\"ch-solutions-dark\"><a class=\"ch-lime-link\" href=\"/produk/\">Lihat katalog produk</a></div>",
+      "css": ".ch-solutions-dark{padding:24px;background:#0b1220;border-radius:32px}.ch-lime-link{display:inline-flex;align-items:center;min-height:44px;color:#a3e635;font:600 14px Inter,sans-serif;text-decoration:none}.ch-lime-link:hover{text-decoration:underline}"
     }
   ],
   "narrative": {
-    "northStar": "Profil B2B dengan komposisi editorial industrial",
-    "overview": "Judul besar memperjelas penawaran Indotech. Fotografi produk dan bidang warna bergantian membimbing pembaca menuju solusi, brand, dan konsultasi.",
-    "keyCharacteristics": ["Packshot katalog di bidang navy", "Foto profil melintasi tepi panel solusi", "Galeri gerai asimetris"],
-    "dos": ["Gunakan foto nyata untuk bukti perusahaan.", "Jaga kontras pada setiap crop."],
-    "donts": ["Hindari menanam teks dan logo ke dalam media dekoratif."]
+    "northStar": "Arsitektur manufaktur daylight dengan palet Indotech Cobalt dan Signal Lime",
+    "overview": "Kanvas grid vertikal putus-putus membimbing pembaca dari Hero Interactive Stage ke Video Profil laboratorium yang menjorok menimpa blok solusi gelap, 7 brand portofolio, etalase kisah mitra asimetris, wawasan & FAQ, CTA orbital, hingga footer kartu putih.",
+    "keyCharacteristics": [
+      "Hero Interactive Stage 01-04 dengan kartu putih L-shape",
+      "Poster lab 4:5 menjorok menimpa blok solusi obsidian-navy",
+      "Showcase kisah mitra asimetris 3 kartu & CTA orbital konsentris"
+    ],
+    "dos": [
+      "Jaga safe-zone background image sesuai media-dan-video.md.",
+      "Gunakan Signal Lime #a3e635 hanya di atas permukaan gelap #0b1220."
+    ],
+    "donts": [
+      "Jangan menanam teks, badge, atau tombol play di dalam file gambar raster.",
+      "Jangan mencantumkan klaim legalitas BPOM/ISO sebelum sertifikat resmi terverifikasi."
+    ]
   }
 }

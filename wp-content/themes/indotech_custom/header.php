@@ -65,18 +65,27 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                 'menu_class'     => 'nav-menu',
                 'container'      => false,
                 'fallback_cb'    => function() {
-                    $items = [
-                        '/'             => 'Beranda',
+                    $items = is_front_page() ? [
+                        '/'              => 'Beranda',
+                        '/tentang-kami/' => 'Tentang Kami',
+                        '/#solusi-b2b'   => 'Solusi B2B',
+                        '/produk/'       => 'Produk',
+                        '/kemitraan/'    => 'Kemitraan',
+                        '/blog/'         => 'Blog',
+                    ] : [
+                        '/'              => 'Beranda',
                         '/tentang-kami/' => 'Tentang Kami',
                         '/produk/'       => 'Produk',
                         '/kemitraan/'    => 'Kemitraan',
                         '/blog/'         => 'Blog',
                         '/kontak/'       => 'Kontak',
                     ];
+                    $req_path = untrailingslashit( strtok( $_SERVER['REQUEST_URI'] ?? '', '?' ) );
                     echo '<ul class="nav-menu">';
                     foreach ( $items as $path => $label ) {
-                        $url    = esc_url( home_url( $path ) );
-                        $active = ( untrailingslashit( $_SERVER['REQUEST_URI'] ) === untrailingslashit( $path ) ) ? ' class="current-menu-item"' : '';
+                        $url       = esc_url( home_url( $path ) );
+                        $is_active = ( '/' === $path && is_front_page() ) || ( '/' !== $path && 0 !== strpos( $path, '/#' ) && $req_path === untrailingslashit( parse_url( home_url( $path ), PHP_URL_PATH ) ?: $path ) );
+                        $active    = $is_active ? ' class="current-menu-item"' : '';
                         echo "<li{$active}><a href=\"{$url}\">{$label}</a></li>";
                     }
                     echo '</ul>';
@@ -84,6 +93,12 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
             ]); ?>
 
             <div class="mobile-nav-extra">
+                <?php if ( is_front_page() ) : ?>
+                    <div class="ch-mobile-drawer-actions">
+                        <a href="<?php echo esc_url( home_url( '/produk/' ) ); ?>" class="ch-header-btn ch-header-btn--outline">Lihat Katalog</a>
+                        <a href="<?php echo esc_url( home_url( '/kontak/#form-kontak' ) ); ?>" class="ch-header-btn ch-header-btn--primary">Konsultasi B2B</a>
+                    </div>
+                <?php endif; ?>
                 <div class="mobile-nav-divider"></div>
                 <div class="mobile-nav-contact">
                     <span class="mn-label">Hubungi Kami</span>
@@ -119,18 +134,28 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
         <!-- ═══ ACTIONS ═════════════════════════════════════════════════ -->
         <div class="header-actions">
 
-            <!-- WhatsApp pill link — teks saja, tanpa ikon -->
-            <a href="https://wa.me/<?php echo esc_attr( $wa_num ); ?>?text=<?php echo $wa_msg; ?>"
-               class="header-wa-link"
-               target="_blank"
-               rel="noopener"
-               aria-label="Chat via WhatsApp">
-                <span>WhatsApp</span>
-            </a>
+            <?php if ( is_front_page() ) : ?>
+                <a href="<?php echo esc_url( home_url( '/produk/' ) ); ?>" class="ch-header-btn ch-header-btn--outline">
+                    Katalog
+                </a>
+                <span class="ch-header-sep" aria-hidden="true"></span>
+                <a href="<?php echo esc_url( home_url( '/kontak/#form-kontak' ) ); ?>" class="ch-header-btn ch-header-btn--primary">
+                    Konsultasi B2B
+                </a>
+            <?php else : ?>
+                <!-- WhatsApp pill link — teks saja, tanpa ikon -->
+                <a href="https://wa.me/<?php echo esc_attr( $wa_num ); ?>?text=<?php echo $wa_msg; ?>"
+                   class="header-wa-link"
+                   target="_blank"
+                   rel="noopener"
+                   aria-label="Chat via WhatsApp">
+                    <span>WhatsApp</span>
+                </a>
 
-            <a href="<?php echo esc_url( home_url( is_front_page() ? '/kontak/#form-kontak' : '/kontak/' ) ); ?>" class="btn btn-primary">
-                <?php echo is_front_page() ? 'Kontak B2B' : 'Hubungi Kami'; ?>
-            </a>
+                <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary">
+                    Hubungi Kami
+                </a>
+            <?php endif; ?>
 
             <!-- Mobile hamburger — tiga garis CSS murni, tanpa ikon eksternal -->
             <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Menu utama" aria-expanded="false" aria-controls="primary-nav">
