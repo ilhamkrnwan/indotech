@@ -58,16 +58,21 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
 
                 <p class="footer-company">PT Indotech Berkah Abadi</p>
                 <p class="footer-desc">
-                    Supplier produk homecare, laundry, dan pewangi B2B terpercaya.
-                    Melayani mitra bisnis di seluruh Indonesia sejak 2011.
+                    <?php if ( is_front_page() ) : ?>
+                        Pasokan produk kebersihan, maklon, kemitraan, dan pelatihan untuk bisnis.
+                    <?php else : ?>
+                        Supplier produk homecare, laundry, dan pewangi B2B terpercaya.
+                        Melayani mitra bisnis di seluruh Indonesia sejak 2011.
+                    <?php endif; ?>
                 </p>
 
-                <!-- Pill-shaped certification badges -->
-                <div class="footer-certs">
-                    <span class="cert-badge">BPOM</span>
-                    <span class="cert-badge">Halal MUI</span>
-                    <span class="cert-badge">ISO 9001</span>
-                </div>
+                <?php if ( ! is_front_page() ) : ?>
+                    <div class="footer-certs">
+                        <span class="cert-badge">BPOM</span>
+                        <span class="cert-badge">Halal MUI</span>
+                        <span class="cert-badge">ISO 9001</span>
+                    </div>
+                <?php endif; ?>
 
                 <!-- Social links — menggunakan ikon SVG -->
                 <div class="footer-social">
@@ -133,7 +138,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                     ]);
                     if ($brands_query->have_posts()) :
                         while ($brands_query->have_posts()) : $brands_query->the_post();
-                            $b_url = carbon_get_post_meta(get_the_ID(), 'brand_website_url');
+                            $b_url = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( get_the_ID(), 'brand_website_url' ) : '';
                             if (empty($b_url)) {
                                 $b_url = get_permalink();
                             }
@@ -215,6 +220,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
 
 </footer>
 
+<?php if ( ! is_front_page() ) : ?>
 <!-- Floating Buttons: WhatsApp & Scroll Up -->
 <div class="indotech-floating-actions">
     <!-- Scroll Up Floating Button -->
@@ -284,6 +290,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
         </a>
     </div>
 </div>
+<?php endif; ?>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

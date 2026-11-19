@@ -20,31 +20,49 @@
   const nav    = document.getElementById('primary-nav');
 
   if (toggle && nav) {
+    const companyHomepage = document.body.classList.contains('indotech-company-home');
+
+    function closeMenu() {
+      nav.classList.remove('open');
+      toggle.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
     toggle.addEventListener('click', () => {
       const open = nav.classList.toggle('open');
       toggle.classList.toggle('active', open);
       toggle.setAttribute('aria-expanded', String(open));
       document.body.style.overflow = open ? 'hidden' : '';
+      if (open && companyHomepage) nav.querySelector('a')?.focus();
     });
 
     // Close on link click
-    nav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        nav.classList.remove('open');
-        toggle.classList.remove('active');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      });
-    });
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
     // Close on outside click
     document.addEventListener('click', (e) => {
-      if (!header.contains(e.target) && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        toggle.classList.remove('active');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+      if (header && !header.contains(e.target) && nav.classList.contains('open')) {
+        closeMenu();
       }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+
+    if (companyHomepage && header) {
+      document.addEventListener('focusin', (e) => {
+        if (!header.contains(e.target) && nav.classList.contains('open')) closeMenu();
+      });
+    }
+
+    const mobileMenu = window.matchMedia('(max-width: 768px)');
+    mobileMenu.addEventListener('change', (e) => {
+      if (!e.matches && nav.classList.contains('open')) closeMenu();
     });
   }
 
@@ -106,7 +124,7 @@
   }
 
   // ── Smooth scroll for anchor links ─────────────────────
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
+  document.querySelectorAll('body:not(.indotech-company-home) a[href^="#"]:not([href="#"])').forEach(a => {
     a.addEventListener('click', function (e) {
       const target = document.querySelector(this.getAttribute('href'));
       if (target) {

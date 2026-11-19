@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-19T09:15:00+07:00",
+  "title": "Sistem desain Indotech",
+  "extensions": {
+    "motion": [
+      { "name": "control-color", "value": "160ms ease", "purpose": "Perubahan warna untuk hover pada CTA dan baris brand." }
+    ],
+    "breakpoints": [
+      { "name": "hero-crop", "value": "600px" },
+      { "name": "stack-content", "value": "640px" },
+      { "name": "mobile-navigation", "value": "768px" },
+      { "name": "hero-type", "value": "900px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "CTA konsultasi",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Aksi utama pada hero.",
+      "html": "<a class=\"ds-consult\" href=\"/kontak/#form-kontak\">Diskusikan Kebutuhan B2B <svg aria-hidden=\"true\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
+      "css": ".ds-consult{display:inline-flex;align-items:center;gap:10px;padding:13px 18px;border-radius:8px;background:var(--company-primary,#164ce5);color:#fff;font:650 14px Inter,sans-serif;text-decoration:none;transition:background-color .16s ease}.ds-consult:hover{background:var(--company-primary-hover,#123cba)}.ds-consult:focus-visible{outline:2px solid var(--company-primary,#164ce5);outline-offset:4px}"
+    },
+    {
+      "name": "CTA di atas cobalt",
+      "kind": "button",
+      "refersTo": "button-on-blue",
+      "description": "Aksi utama pada panel kontak penutup.",
+      "html": "<div class=\"ds-contact\"><a href=\"/kontak/#form-kontak\">Diskusikan Kebutuhan B2B</a></div>",
+      "css": ".ds-contact{padding:24px;background:var(--company-primary,#164ce5);border-radius:16px}.ds-contact a{display:inline-block;padding:13px 18px;border-radius:8px;background:#fff;color:var(--company-ink,#101d36);font:650 14px Inter,sans-serif;text-decoration:none}.ds-contact a:hover{background:var(--company-signal,#c5f47b)}.ds-contact a:focus-visible{outline:2px solid var(--company-signal,#c5f47b);outline-offset:4px}"
+    },
+    {
+      "name": "Tautan solusi",
+      "kind": "nav",
+      "description": "Aksi kontekstual pada latar navy.",
+      "html": "<div class=\"ds-solution\"><a href=\"/produk/\">Lihat katalog produk</a></div>",
+      "css": ".ds-solution{padding:16px;background:var(--company-ink,#101d36)}.ds-solution a{display:inline-flex;align-items:center;min-height:44px;color:var(--company-signal,#c5f47b);font:650 14px Inter,sans-serif;text-decoration:none}.ds-solution a:hover{text-decoration:underline;text-underline-offset:4px}.ds-solution a:focus-visible{outline:2px solid var(--company-signal,#c5f47b);outline-offset:4px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Profil B2B dengan komposisi editorial industrial",
+    "overview": "Judul besar memperjelas penawaran Indotech. Fotografi produk dan bidang warna bergantian membimbing pembaca menuju solusi, brand, dan konsultasi.",
+    "keyCharacteristics": ["Foto editorial lebar", "Daftar solusi dengan pemisah", "Cobalt, navy, putih, dan sedikit lime"],
+    "dos": ["Gunakan foto nyata untuk bukti perusahaan.", "Jaga kontras pada setiap crop."],
+    "donts": ["Hindari menanam teks dan logo ke dalam media dekoratif."]
+  }
+}

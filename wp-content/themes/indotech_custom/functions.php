@@ -37,6 +37,11 @@ function indotech_enqueue() {
     // Main stylesheet
     wp_enqueue_style('indotech-main', INDOTECH_URI . '/assets/css/main.css', [], filemtime(get_template_directory() . '/assets/css/main.css'));
 
+    if ( is_front_page() ) {
+        $company_css = 'assets/css/company-home.css';
+        wp_enqueue_style( 'indotech-company-home', get_theme_file_uri( $company_css ), [ 'indotech-main' ], filemtime( get_theme_file_path( $company_css ) ) );
+    }
+
     // Main JS
     wp_enqueue_script('indotech-main', INDOTECH_URI . '/assets/js/main.js', [], filemtime(get_template_directory() . '/assets/js/main.js'), true);
 

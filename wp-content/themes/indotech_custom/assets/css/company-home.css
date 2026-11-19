@@ -1,0 +1,373 @@
+/* Visual system for the redesigned company profile homepage. */
+.indotech-company-home {
+  --company-ink: #101d36;
+  --company-muted: #4c5b71;
+  --company-primary: #164ce5;
+  --company-primary-hover: #123cba;
+  --company-paper: #f6f8fc;
+  --company-white: #fff;
+  --company-rule: #d9e0ec;
+  --company-on-dark: #c4d0e8;
+  --company-signal: #c5f47b;
+  --company-radius: 16px;
+  --company-gutter: clamp(20px, 4vw, 48px);
+  --company-section-space: clamp(64px, 8vw, 116px);
+  color: var(--company-ink);
+}
+
+.indotech-company-home ::selection {
+  color: var(--company-ink);
+  background: var(--company-signal);
+}
+
+.indotech-company-home :focus-visible {
+  outline: 2px solid var(--company-primary);
+  outline-offset: 4px;
+}
+
+.indotech-company-home .site-header {
+  position: sticky;
+  background: var(--company-white);
+  border-bottom: 1px solid var(--company-rule);
+  backdrop-filter: none;
+}
+
+.indotech-company-home .header-inner,
+.indotech-company-home .site-footer .container {
+  max-width: 1376px;
+  padding-inline: var(--company-gutter);
+}
+
+.indotech-company-home .header-wa-link { display: none; }
+
+.indotech-company-home .header-actions .btn-primary {
+  display: inline-flex;
+  min-height: 44px;
+  padding: 10px 16px;
+  background: var(--company-primary);
+}
+
+.indotech-company-home .header-actions .btn-primary:hover { background: var(--company-primary-hover); }
+
+.company-skip-link {
+  position: fixed;
+  z-index: 1100;
+  inset: 12px auto auto 12px;
+  padding: 12px 16px;
+  background: var(--company-white);
+  color: var(--company-ink);
+  transform: translateY(calc(-100% - 24px));
+}
+
+.company-skip-link:focus { transform: none; }
+
+.company-home { background: var(--company-white); }
+.company-home [id] { scroll-margin-top: calc(var(--header-h) + 12px); }
+
+.company-wrap {
+  width: min(1280px, calc(100% - 2 * var(--company-gutter)));
+  margin-inline: auto;
+}
+
+.company-home h1,
+.company-home h2,
+.company-home h3 {
+  color: inherit;
+  text-wrap: balance;
+}
+
+.company-home h1 {
+  font-size: clamp(3rem, 6.8vw, 6rem);
+  line-height: 1.01;
+  letter-spacing: -.04em;
+}
+
+.company-home h2 {
+  font-size: clamp(2.35rem, 4.6vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -.04em;
+}
+
+.company-home h3 { font-size: clamp(1.15rem, 1.75vw, 1.55rem); }
+.company-home p { color: var(--company-muted); }
+
+.company-button,
+.company-text-link,
+.company-image-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  font-weight: 650;
+  font-size: .875rem;
+}
+
+.company-button svg,
+.company-text-link svg,
+.company-image-link svg,
+.company-brand svg { flex-shrink: 0; }
+
+.company-button {
+  padding: 13px 18px;
+  border-radius: 8px;
+  background: var(--company-primary);
+  color: var(--company-white);
+  transition: background-color .16s ease;
+}
+
+.company-button:hover { background: var(--company-primary-hover); }
+
+.company-text-link {
+  justify-content: flex-start;
+  color: var(--company-primary);
+  text-underline-offset: 4px;
+}
+
+.company-text-link:hover { text-decoration: underline; }
+
+.company-hero { padding-top: clamp(36px, 4.4vw, 64px); }
+
+.company-hero-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 320px);
+  gap: clamp(24px, 4.5vw, 72px);
+  align-items: end;
+  padding-bottom: clamp(26px, 3.35vw, 48px);
+}
+
+.company-hero h1 span { color: var(--company-primary); }
+.company-hero-summary p { margin-bottom: 20px; max-width: 32ch; }
+
+.company-hero-media,
+.company-profile-poster {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--company-radius);
+  background: var(--company-ink);
+}
+
+.company-hero-media { aspect-ratio: 2.32; }
+.company-profile-poster { aspect-ratio: 16 / 9; }
+
+.company-hero-media picture,
+.company-hero-media img,
+.company-profile-poster img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.company-hero-media img { object-position: 65% 51%; }
+
+.company-hero-caption,
+.company-profile-poster figcaption {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  padding: 5px 9px;
+  border-radius: 4px;
+  color: var(--company-white);
+  background: var(--company-ink);
+  font-size: .75rem;
+}
+
+.company-image-link {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: var(--company-ink);
+  background: var(--company-white);
+  transition: background-color .16s ease;
+}
+
+.company-image-link:hover { background: var(--company-signal); }
+.company-image-link:focus-visible { outline-color: var(--company-signal); }
+
+.company-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(24px, 6vw, 88px);
+  align-items: center;
+  padding-block: var(--company-section-space);
+}
+
+.company-intro-copy p,
+.company-solutions-grid > div > p,
+.company-insight-grid > div > p,
+.company-contact-panel p { margin-block: 18px 10px; max-width: 47ch; }
+
+.company-solutions {
+  padding-block: var(--company-section-space);
+  background: var(--company-ink);
+  color: var(--company-white);
+}
+
+.company-solutions-grid,
+.company-insight-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: start;
+  gap: clamp(28px, 6vw, 88px);
+}
+
+.company-solutions p { color: var(--company-on-dark); }
+.company-solutions a { color: var(--company-signal); }
+.company-solutions a:focus-visible { outline-color: var(--company-signal); }
+
+.company-solution-list { border-top: 1px solid #475670; }
+
+.company-solution {
+  padding-block: 20px 13px;
+  border-bottom: 1px solid #475670;
+}
+
+.company-solution p { margin-top: 6px; }
+
+.company-brands { padding-block: var(--company-section-space); }
+
+.company-section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px 24px;
+  margin-bottom: 24px;
+}
+
+.company-section-heading p { max-width: 37ch; }
+
+.company-brand-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 36px;
+  border-top: 1px solid var(--company-rule);
+}
+
+.company-brand-list li { border-bottom: 1px solid var(--company-rule); }
+
+.company-brand {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  min-height: 96px;
+  height: 100%;
+  padding: 12px 8px;
+  transition: background-color .16s ease;
+}
+
+.company-brand:hover { background: var(--company-paper); }
+
+.company-brand-logo {
+  width: 90px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.company-brand-name { grid-column: 2; }
+.company-brand-name p { margin-top: 2px; font-size: .875rem; }
+.company-brand svg { grid-column: 3; color: var(--company-primary); }
+
+.company-insights {
+  padding-block: clamp(48px, 6vw, 84px);
+  background: var(--company-paper);
+}
+
+.company-inline-links { display: flex; flex-wrap: wrap; gap: 0 18px; }
+.company-article-list { border-top: 1px solid var(--company-rule); }
+
+.company-article-list li {
+  padding-block: 14px 17px;
+  border-bottom: 1px solid var(--company-rule);
+}
+
+.company-article-list time {
+  color: var(--company-muted);
+  font-size: .8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.company-article-list h3 { margin-top: 5px; font-size: 1.125rem; }
+.company-article-list a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.company-contact { padding-block: clamp(36px, 6vw, 80px); }
+
+.company-contact-panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px 32px;
+  padding: clamp(24px, 5vw, 64px);
+  border-radius: var(--company-radius);
+  background: var(--company-primary);
+  color: var(--company-white);
+}
+
+.company-contact-panel h2 { font-size: clamp(2.25rem, 4.2vw, 3.75rem); }
+.company-contact-panel p { margin-bottom: 0; color: var(--company-white); }
+.company-contact-panel .company-button { color: var(--company-ink); background: var(--company-white); }
+.company-contact-panel .company-button:hover { background: var(--company-signal); }
+.company-contact-panel .company-button:focus-visible { outline-color: var(--company-signal); }
+
+.indotech-company-home .site-footer { background: var(--company-ink); }
+.indotech-company-home .site-footer :is(p, .footer-heading, .footer-company, .footer-links a, .footer-contact-label, .footer-contact-val, .footer-copy, .footer-bottom a) {
+  color: var(--company-on-dark);
+}
+.indotech-company-home .site-footer :focus-visible { outline-color: var(--company-signal); }
+
+@media (max-width: 900px) {
+  .company-hero-intro { grid-template-columns: minmax(0, 1fr) minmax(220px, 280px); gap: 24px; }
+  .company-hero h1 { font-size: clamp(3rem, 7vw, 4.5rem); }
+  .company-title-break { display: none; }
+}
+
+@media (max-width: 768px) {
+  .indotech-company-home .header-inner { gap: 8px; }
+  .indotech-company-home .header-actions { gap: 8px; }
+  .indotech-company-home .header-actions .btn-primary { padding-inline: 10px; font-size: .8125rem; }
+  .indotech-company-home .menu-toggle { width: 44px; height: 44px; }
+  .indotech-company-home .primary-nav {
+    visibility: hidden;
+    transform: none;
+    transition: none;
+  }
+  .indotech-company-home .primary-nav.open { visibility: visible; }
+  .indotech-company-home .primary-nav.open :is(.nav-menu li, .mobile-nav-extra) {
+    opacity: 1;
+    animation: none;
+  }
+  .indotech-company-home .primary-nav a { transition-property: color, background-color; }
+  .company-brand-list { gap: 0 16px; }
+  .company-brand { gap: 10px; grid-template-columns: 66px minmax(0, 1fr) auto; }
+  .company-brand-logo { width: 66px; }
+}
+
+@media (max-width: 640px) {
+  .company-hero-intro,
+  .company-intro,
+  .company-insight-grid,
+  .company-solutions-grid,
+  .company-brand-list { grid-template-columns: minmax(0, 1fr); }
+  .company-hero h1 { font-size: clamp(2.75rem, 10vw, 3.75rem); }
+  .company-hero-intro { gap: 16px; }
+  .company-hero-summary p { margin-bottom: 14px; }
+  .company-hero-media { aspect-ratio: 1.25; }
+  .company-hero-media img { object-position: 70% center; }
+  .company-hero-caption { inset: 10px auto auto 10px; }
+  .company-image-link { right: 10px; bottom: 10px; }
+  .company-brand { min-height: 79px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.indotech-company-home) { scroll-behavior: auto; }
+  .indotech-company-home :is(.company-button, .company-image-link, .company-brand, .primary-nav, .menu-toggle span) {
+    transition: none;
+  }
+}

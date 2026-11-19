@@ -6,8 +6,11 @@
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?>>
+<body <?php body_class( is_front_page() ? 'indotech-company-home' : '' ); ?>>
 <?php wp_body_open(); ?>
+<?php if ( is_front_page() ) : ?>
+    <a class="company-skip-link" href="#main-content">Lewati ke konten utama</a>
+<?php endif; ?>
 
 <?php
 $phone    = indotech_opt( 'phone',    '+62 856-0006-1005' );
@@ -125,12 +128,12 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                 <span>WhatsApp</span>
             </a>
 
-            <a href="<?php echo esc_url( home_url('/kontak/') ); ?>" class="btn btn-primary">
-                Hubungi Kami
+            <a href="<?php echo esc_url( home_url( is_front_page() ? '/kontak/#form-kontak' : '/kontak/' ) ); ?>" class="btn btn-primary">
+                <?php echo is_front_page() ? 'Kontak B2B' : 'Hubungi Kami'; ?>
             </a>
 
             <!-- Mobile hamburger — tiga garis CSS murni, tanpa ikon eksternal -->
-            <button class="menu-toggle" id="menu-toggle" aria-label="Buka Menu" aria-expanded="false">
+            <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Menu utama" aria-expanded="false" aria-controls="primary-nav">
                 <span></span>
                 <span></span>
                 <span></span>
