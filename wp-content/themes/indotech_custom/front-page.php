@@ -10,32 +10,48 @@ $contact_url = home_url( '/kontak/#form-kontak' );
 
 $hero_stages = [
     [
-        'num'   => '01',
-        'tab'   => 'Pasokan & Grosir',
-        'title' => 'Suplai curah & kemasan B2B dengan ribuan varian siap kirim.',
-        'cta'   => 'Lihat Katalog Produk',
-        'url'   => home_url( '/produk/' ),
+        'num'    => '01',
+        'tab'    => 'Pasokan & Grosir',
+        'title'  => 'Suplai curah & kemasan B2B dengan ribuan varian siap kirim.',
+        'cta'    => 'Lihat Katalog Produk',
+        'url'    => home_url( '/produk/' ),
+        'img'    => $media . '/cta-logistics-b2b.webp',
+        'width'  => 800,
+        'height' => 600,
+        'alt'    => 'Gudang distribusi kemasan curah dan grosir PT Indotech Berkah Abadi',
     ],
     [
-        'num'   => '02',
-        'tab'   => 'Maklon & R&D',
-        'title' => 'Formulasi R&D dan produksi private label berizin Kemenkes PKRT serta Halal.',
-        'cta'   => 'Pelajari Maklon Cleanique Lab',
-        'url'   => 'https://cleaniquelab.com/',
+        'num'    => '02',
+        'tab'    => 'Maklon & R&D',
+        'title'  => 'Formulasi R&D dan produksi private label berizin Kemenkes PKRT serta Halal.',
+        'cta'    => 'Pelajari Maklon Cleanique Lab',
+        'url'    => 'https://cleaniquelab.com/',
+        'img'    => $media . '/hero-manufy-stage.webp',
+        'width'  => 1376,
+        'height' => 768,
+        'alt'    => 'Tim R&D dan quality assurance PT Indotech Berkah Abadi memeriksa sampel formulasi produk kebersihan',
     ],
     [
-        'num'   => '03',
-        'tab'   => 'Kemitraan Usaha',
-        'title' => 'Program agen, distributor daerah, toko modern, dan depo isi ulang.',
-        'cta'   => 'Lihat Program Kemitraan',
-        'url'   => home_url( '/kemitraan/' ),
+        'num'    => '03',
+        'tab'    => 'Kemitraan Usaha',
+        'title'  => 'Program agen, distributor daerah, toko modern, dan depo isi ulang.',
+        'cta'    => 'Lihat Program Kemitraan',
+        'url'    => home_url( '/kemitraan/' ),
+        'img'    => $media . '/cta-collab-b2b.webp',
+        'width'  => 800,
+        'height' => 600,
+        'alt'    => 'Konsultan B2B Indotech meninjau sampel kemasan kemitraan bersama calon mitra usaha',
     ],
     [
-        'num'   => '04',
-        'tab'   => 'Pelatihan Akademi',
-        'title' => 'Kelas praktik formulasi kimia pembersih dan pendampingan bisnis.',
-        'cta'   => 'Lihat Program Cleanique Academy',
-        'url'   => 'https://cleaniqueacademy.com/',
+        'num'    => '04',
+        'tab'    => 'Pelatihan Akademi',
+        'title'  => 'Kelas praktik formulasi kimia pembersih dan pendampingan bisnis.',
+        'cta'    => 'Lihat Program Cleanique Academy',
+        'url'    => 'https://cleaniqueacademy.com/',
+        'img'    => $media . '/ilustrasi-formulasi.webp',
+        'width'  => 960,
+        'height' => 540,
+        'alt'    => 'Proses pengujian dan praktik formulasi laboratorium Cleanique Academy Indotech',
     ],
 ];
 $default_stage = $hero_stages[1];
@@ -71,16 +87,23 @@ $default_stage = $hero_stages[1];
                 </div>
             </div>
 
-            <div class="ch-hero-stage" data-hero-stage>
-                <img
-                    class="ch-hero-stage-img"
-                    src="<?php echo esc_url( $media . '/hero-manufy-stage.webp' ); ?>"
-                    width="1376"
-                    height="768"
-                    alt="Tim R&D dan quality assurance PT Indotech Berkah Abadi memeriksa sampel formulasi produk kebersihan"
-                    fetchpriority="high"
-                    decoding="async"
-                >
+            <div class="ch-hero-stage" data-hero-stage aria-roledescription="carousel" aria-label="Pilar Layanan B2B Indotech">
+                <div class="ch-hero-slides" aria-hidden="true">
+                    <?php foreach ( $hero_stages as $index => $stage ) :
+                        $is_active = ( 1 === $index );
+                        ?>
+                        <div class="ch-hero-slide<?php echo $is_active ? ' is-active' : ''; ?>" data-hero-slide="<?php echo (int) $index; ?>">
+                            <img
+                                class="ch-hero-stage-img"
+                                src="<?php echo esc_url( $stage['img'] ); ?>"
+                                width="<?php echo (int) $stage['width']; ?>"
+                                height="<?php echo (int) $stage['height']; ?>"
+                                alt="<?php echo esc_attr( $stage['alt'] ); ?>"
+                                <?php echo $is_active ? 'fetchpriority="high" ' : ''; ?>decoding="async"
+                            >
+                        </div>
+                    <?php endforeach; ?>
+                </div>
                 <div class="ch-stage-scrim" aria-hidden="true"></div>
 
                 <div class="ch-stage-overlay">
@@ -102,6 +125,7 @@ $default_stage = $hero_stages[1];
                             >
                                 <span class="ch-tab-num"><?php echo esc_html( $stage['num'] ); ?></span>
                                 <span class="ch-tab-label"><?php echo esc_html( $stage['tab'] ); ?></span>
+                                <span class="ch-tab-progress" aria-hidden="true"></span>
                             </button>
                         <?php endforeach; ?>
                     </div>

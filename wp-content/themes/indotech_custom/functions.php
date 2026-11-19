@@ -40,8 +40,21 @@ function indotech_enqueue() {
     if ( is_front_page() ) {
         $company_css = 'assets/css/company-home.css';
         wp_enqueue_style( 'indotech-company-home', get_theme_file_uri( $company_css ), [ 'indotech-main' ], filemtime( get_theme_file_path( $company_css ) ) );
+
+        $gsap_ver = '3.13.0';
+        wp_enqueue_script( 'indotech-gsap', get_theme_file_uri( 'assets/js/lib/gsap.min.js' ), [], $gsap_ver, true );
+        wp_enqueue_script( 'indotech-gsap-scrolltrigger', get_theme_file_uri( 'assets/js/lib/ScrollTrigger.min.js' ), [ 'indotech-gsap' ], $gsap_ver, true );
+        wp_enqueue_script( 'indotech-gsap-flip', get_theme_file_uri( 'assets/js/lib/Flip.min.js' ), [ 'indotech-gsap' ], $gsap_ver, true );
+        wp_enqueue_script( 'indotech-gsap-scrollto', get_theme_file_uri( 'assets/js/lib/ScrollToPlugin.min.js' ), [ 'indotech-gsap' ], $gsap_ver, true );
+
         $company_js = 'assets/js/company-home.js';
-        wp_enqueue_script( 'indotech-company-home-js', get_theme_file_uri( $company_js ), [], filemtime( get_theme_file_path( $company_js ) ), true );
+        wp_enqueue_script(
+            'indotech-company-home-js',
+            get_theme_file_uri( $company_js ),
+            [ 'indotech-gsap', 'indotech-gsap-scrolltrigger', 'indotech-gsap-flip', 'indotech-gsap-scrollto' ],
+            filemtime( get_theme_file_path( $company_js ) ),
+            true
+        );
     }
 
     // Main JS
@@ -146,7 +159,7 @@ add_filter('login_display_language_dropdown', '__return_false');
 // ── Defer Non-Critical JavaScript & Remove jQuery Migrate ────────────────────
 add_filter('script_loader_tag', function($tag, $handle) {
     if (is_admin()) return $tag;
-    if (in_array($handle, ['indotech-main', 'indotech-inquiry', 'indotech-company-home-js', 'google_gtagjs-js'], true)) {
+    if (in_array($handle, ['indotech-main', 'indotech-inquiry', 'indotech-gsap', 'indotech-gsap-scrolltrigger', 'indotech-gsap-flip', 'indotech-gsap-scrollto', 'indotech-company-home-js', 'google_gtagjs-js'], true)) {
         return str_replace(' src=', ' defer src=', $tag);
     }
     return $tag;

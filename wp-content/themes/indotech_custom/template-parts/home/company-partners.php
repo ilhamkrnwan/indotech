@@ -1,52 +1,52 @@
 <?php
 /**
- * Kisah Mitra & Jejak Kemitraan — Etalase Asimetris 3 Kartu (Manufy Customer Stories).
+ * Kisah Mitra & Jejak Kemitraan — Etalase Asimetris 3 Kartu dengan Transisi Liquid FLIP.
  */
 
 $media_img = get_theme_file_uri( 'assets/images/' );
 
 $stories = [
     [
-        'name'    => 'Bapak Hendra',
-        'role'    => 'Pengelola · Cleanique Mart Jambi',
-        'quote'   => 'Membuka cabang Cleanique Mart di Jambi mendapat respons luar biasa. Harga grosir B2B dari Indotech sangat kompetitif dengan margin usaha yang sehat.',
-        'image'   => $media_img . 'mitra-jambi.webp',
-        'alt'     => 'Tampak depan gerai kemitraan Cleanique Mart Jambi',
+        'name'  => 'Bapak Hendra',
+        'role'  => 'Pengelola · Cleanique Mart Jambi',
+        'quote' => 'Membuka cabang Cleanique Mart di Jambi mendapat respons luar biasa. Harga grosir B2B dari Indotech sangat kompetitif dengan margin usaha yang sehat.',
+        'image' => $media_img . 'mitra-jambi.webp',
+        'alt'   => 'Tampak depan gerai kemitraan Cleanique Mart Jambi',
     ],
     [
-        'name'    => 'Ibu Susi',
-        'role'    => 'Pengelola · Cleanique Mart Temanggung',
-        'quote'   => 'Sejak bermitra di Temanggung, pasokan produk pembersih dan sistem isi ulang selalu aman sehingga pelanggan rumah tangga rutin berbelanja ulang.',
-        'image'   => $media_img . 'mitra-temanggung.webp',
-        'alt'     => 'Tampak depan gerai kemitraan Cleanique Mart Temanggung',
+        'name'  => 'Ibu Susi',
+        'role'  => 'Pengelola · Cleanique Mart Temanggung',
+        'quote' => 'Sejak bermitra di Temanggung, pasokan produk pembersih dan sistem isi ulang selalu aman sehingga pelanggan rumah tangga rutin berbelanja ulang.',
+        'image' => $media_img . 'mitra-temanggung.webp',
+        'alt'   => 'Tampak depan gerai kemitraan Cleanique Mart Temanggung',
     ],
     [
-        'name'    => 'Bapak Fahmi',
-        'role'    => 'Pemilik · Cleanique Mart Palembang',
-        'quote'   => 'Kemitraan Cleanique Mart Palembang memberi dukungan produk yang konsisten dan respons tim yang sigap membantu kebutuhan promosi daerah kami.',
-        'image'   => $media_img . 'mitra-palembang.webp',
-        'alt'     => 'Tampak depan gerai kemitraan Cleanique Mart Palembang',
+        'name'  => 'Bapak Fahmi',
+        'role'  => 'Pemilik · Cleanique Mart Palembang',
+        'quote' => 'Kemitraan Cleanique Mart Palembang memberi dukungan produk yang konsisten dan respons tim yang sigap membantu kebutuhan promosi daerah kami.',
+        'image' => $media_img . 'mitra-palembang.webp',
+        'alt'   => 'Tampak depan gerai kemitraan Cleanique Mart Palembang',
     ],
     [
-        'name'    => 'H. Rahmat',
-        'role'    => 'Pemilik · Cleanique Mart Boyolali',
-        'quote'   => 'Pendampingan manajemen dan kelancaran suplai produk kebersihan dari Indotech menjaga perputaran stok gerai kami tetap stabil.',
-        'image'   => $media_img . 'mitra-boyolali.webp',
-        'alt'     => 'Tampak depan gerai kemitraan Cleanique Mart Boyolali',
+        'name'  => 'H. Rahmat',
+        'role'  => 'Pemilik · Cleanique Mart Boyolali',
+        'quote' => 'Pendampingan manajemen dan kelancaran suplai produk kebersihan dari Indotech menjaga perputaran stok gerai kami tetap stabil.',
+        'image' => $media_img . 'mitra-boyolali.webp',
+        'alt'   => 'Tampak depan gerai kemitraan Cleanique Mart Boyolali',
     ],
     [
-        'name'    => 'Ibu Retno',
-        'role'    => 'Pemilik · Cleanique Mart Demak',
-        'quote'   => 'Kualitas deterjen, softener, dan pewangi dari Indotech sangat konsisten sehingga pelanggan laundry dan rumah tangga selalu kembali.',
-        'image'   => $media_img . 'mitra-demak.webp',
-        'alt'     => 'Tampak depan gerai kemitraan Cleanique Mart Demak',
+        'name'  => 'Ibu Retno',
+        'role'  => 'Pemilik · Cleanique Mart Demak',
+        'quote' => 'Kualitas deterjen, softener, dan pewangi dari Indotech sangat konsisten sehingga pelanggan laundry dan rumah tangga selalu kembali.',
+        'image' => $media_img . 'mitra-demak.webp',
+        'alt'   => 'Tampak depan gerai kemitraan Cleanique Mart Demak',
     ],
     [
-        'name'    => 'Ibu Laras',
-        'role'    => 'Pemilik · Cleanique Mart Tajem, Sleman',
-        'quote'   => 'Pelanggan laundry kiloan di sekitar Sleman sangat menyukai pewangi Orchid Care dan deterjen konsentrat dari Indotech.',
-        'image'   => $media_img . 'mitra-tajem.webp',
-        'alt'     => 'Tampak depan gerai kemitraan Cleanique Mart Tajem Sleman',
+        'name'  => 'Ibu Laras',
+        'role'  => 'Pemilik · Cleanique Mart Tajem, Sleman',
+        'quote' => 'Pelanggan laundry kiloan di sekitar Sleman sangat menyukai pewangi Orchid Care dan deterjen konsentrat dari Indotech.',
+        'image' => $media_img . 'mitra-tajem.webp',
+        'alt'   => 'Tampak depan gerai kemitraan Cleanique Mart Tajem Sleman',
     ],
 ];
 
@@ -102,23 +102,28 @@ if ( post_type_exists( 'testimonial' ) ) {
         </div>
     </div>
 
-    <div
-        class="ch-stories-stage"
-        data-stories-stage
-        data-stories="<?php echo esc_attr( wp_json_encode( $stories, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) ); ?>"
-    >
-        <?php for ( $slot = 0; $slot < 3; $slot++ ) :
-            $story = $stories[ $slot ];
-            $is_lead = ( 0 === $slot );
+    <div class="ch-stories-stage" data-stories-stage>
+        <?php foreach ( $stories as $index => $story ) :
+            $is_lead      = ( 0 === $index );
+            $is_secondary = ( 1 === $index || 2 === $index );
+            $state_class  = $is_lead ? ' is-featured' : ( $is_secondary ? ' is-secondary' : ' is-hidden-slot' );
             ?>
-            <article class="ch-story-card<?php echo $is_lead ? ' is-featured' : ' is-secondary'; ?>" data-story-slot="<?php echo (int) $slot; ?>">
+            <article
+                class="ch-story-card<?php echo $state_class; ?>"
+                data-story-card
+                data-story-index="<?php echo (int) $index; ?>"
+                data-story-name="<?php echo esc_attr( $story['name'] ); ?>"
+                data-story-role="<?php echo esc_attr( $story['role'] ); ?>"
+                data-story-quote="<?php echo esc_attr( $story['quote'] ); ?>"
+                data-story-img="<?php echo esc_url( $story['image'] ); ?>"
+                data-story-alt="<?php echo esc_attr( $story['alt'] ); ?>"
+            >
                 <img
                     class="ch-story-img"
                     src="<?php echo esc_url( $story['image'] ); ?>"
                     width="400"
                     height="300"
                     alt="<?php echo esc_attr( $story['alt'] ); ?>"
-                    loading="lazy"
                     decoding="async"
                 >
                 <div class="ch-story-scrim" aria-hidden="true"></div>
@@ -127,31 +132,29 @@ if ( post_type_exists( 'testimonial' ) ) {
                         <h3 class="ch-story-name"><?php echo esc_html( $story['name'] ); ?></h3>
                         <p class="ch-story-role"><?php echo esc_html( $story['role'] ); ?></p>
                     </div>
-                    <?php if ( $is_lead ) : ?>
-                        <button
-                            type="button"
-                            class="ch-story-open"
-                            data-story-open
-                            aria-haspopup="dialog"
-                            aria-controls="ch-story-modal"
-                            aria-label="<?php echo esc_attr( 'Baca cerita lengkap ' . $story['name'] ); ?>"
-                        >
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7 5 19 12 7 19 7 5"></polygon></svg>
-                        </button>
-                    <?php endif; ?>
-                </div>
-                <?php if ( ! $is_lead ) : ?>
                     <button
                         type="button"
-                        class="ch-story-select"
-                        data-story-promote="<?php echo (int) $slot; ?>"
-                        aria-label="<?php echo esc_attr( 'Tampilkan kisah ' . $story['name'] ); ?>"
+                        class="ch-story-open"
+                        data-story-open
+                        aria-haspopup="dialog"
+                        aria-controls="ch-story-modal"
+                        aria-label="<?php echo esc_attr( 'Baca cerita lengkap ' . $story['name'] ); ?>"
+                        <?php echo $is_lead ? '' : 'hidden'; ?>
                     >
-                        <span class="ch-sr-only">Pilih kisah</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7 5 19 12 7 19 7 5"></polygon></svg>
                     </button>
-                <?php endif; ?>
+                </div>
+                <button
+                    type="button"
+                    class="ch-story-select"
+                    data-story-promote
+                    aria-label="<?php echo esc_attr( 'Tampilkan kisah ' . $story['name'] ); ?>"
+                    <?php echo $is_secondary ? '' : 'hidden'; ?>
+                >
+                    <span class="ch-sr-only">Pilih kisah</span>
+                </button>
             </article>
-        <?php endfor; ?>
+        <?php endforeach; ?>
     </div>
 
     <div class="ch-stories-foot">

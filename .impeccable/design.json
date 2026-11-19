@@ -4,7 +4,9 @@
   "title": "Sistem desain Indotech (Manufy Architectural Evolution)",
   "extensions": {
     "motion": [
-      { "name": "control-ease", "value": "200ms cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Transisi halus untuk hover tombol, tab proses hero, dan pergantian kisah mitra." }
+      { "name": "liquid-reveal", "value": "920ms cubic-bezier(0.87, 0, 0.13, 1)", "purpose": "Clip-path elips dan skala gambar untuk transisi slide hero dan poster kapabilitas Tentang Kami." },
+      { "name": "flip-expansion", "value": "780ms expo.inOut (GSAP Flip)", "purpose": "Ekspansi halus kartu kisah mitra dari slot kanan ke slot utama kiri dan morph lebar tab hero." },
+      { "name": "smooth-scroll", "value": "850ms power3.inOut (GSAP ScrollTrigger + ScrollTo)", "purpose": "Navigasi anchor halus, parallax scrubbed, dan reveal bertingkat tanpa menyembunyikan konten awal pada reduced motion." }
     ],
     "breakpoints": [
       { "name": "compact-hero-stack", "value": "560px" },
@@ -39,12 +41,12 @@
     }
   ],
   "narrative": {
-    "northStar": "Arsitektur manufaktur daylight dengan palet Indotech Cobalt dan Signal Lime",
-    "overview": "Kanvas grid vertikal putus-putus membimbing pembaca dari Hero Interactive Stage ke Video Profil laboratorium yang menjorok menimpa blok solusi gelap, 7 brand portofolio, etalase kisah mitra asimetris, wawasan & FAQ, CTA orbital, hingga footer kartu putih.",
+    "northStar": "Arsitektur manufaktur daylight dengan palet Indotech Cobalt, Signal Lime, dan gerak liquid editorial",
+    "overview": "Kanvas grid vertikal putus-putus membimbing pembaca dari Hero 4-slide liquid carousel ke Video Profil laboratorium berposisi inset yang bersinkronisasi dengan navigasi atas dan tombol play di kanan bawah, blok solusi gelap, 7 brand portofolio, etalase kisah mitra bergradasi tema dengan ekspansi FLIP kanan-ke-kiri, wawasan & FAQ, CTA orbital, hingga footer kartu putih.",
     "keyCharacteristics": [
-      "Hero Interactive Stage 01-04 dengan kartu putih L-shape",
-      "Poster lab 4:5 menjorok menimpa blok solusi obsidian-navy",
-      "Showcase kisah mitra asimetris 3 kartu & CTA orbital konsentris"
+      "Hero 4-slide liquid carousel 01-04 dengan tab morph & kartu L-shape",
+      "Poster lab 4:5 inset dari tepi kiri dengan tombol play kanan bawah",
+      "Kisah mitra bergradasi Cobalt-Obsidian tanpa kotak badge dengan ekspansi FLIP kanan-ke-kiri"
     ],
     "dos": [
       "Jaga safe-zone background image sesuai media-dan-video.md.",
