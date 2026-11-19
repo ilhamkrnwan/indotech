@@ -17,6 +17,7 @@
 !GLOSSARY.md
 !.impeccable/
 .impeccable/*
+!.impeccable/config.json
 !.impeccable/design.json
 !docs/
 docs/*
