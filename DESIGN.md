@@ -43,10 +43,11 @@ components:
     padding: "13px 18px"
   button-primary-hover:
     backgroundColor: "{colors.primary-hover}"
-  button-on-blue:
+  catalog-link:
     backgroundColor: "{colors.white}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.control}"
+    rounded: "{rounded.media}"
+    padding: "16px"
   media-frame:
     backgroundColor: "{colors.ink}"
     rounded: "{rounded.media}"
@@ -68,7 +69,7 @@ Space Grotesk membentuk hierarki judul. Inter dipakai untuk isi, navigasi, dan k
 
 ## Layout
 
-Lebar konten maksimum 1.280 px. Judul dan ringkasan hero berada di atas satu foto lebar. Profil menempatkan teks di kiri dan poster 16:9 di kanan. Bagian solusi menggunakan pengantar dan daftar yang dipisahkan garis, lalu portofolio brand memakai daftar dua kolom. Pada ≤640 px isi disusun satu kolom. Navigasi beralih ke menu mobile pada ≤768 px.
+Lebar konten maksimum 1.280 px. Judul dan ringkasan hero berada di atas panel packshot dengan kartu katalog di kanan. Pada desktop, poster profil 16:9 berada di kiri dan melintasi tepi panel solusi navy. Panel tersebut mengelompokkan empat penawaran dalam kisi dua kolom. Daftar brand diikuti galeri mitra asimetris. Pada ≤768 px, profil disusun satu kolom dan navigasi beralih ke menu mobile. Pada ≤640 px, hero, daftar solusi, dan kontak juga disusun satu kolom. Foto pertama galeri membentang di atas dua foto pendukung.
 
 ## Elevation & Depth
 
@@ -80,9 +81,9 @@ Media dan panel memakai sudut 16 px. Kontrol berbentuk persegi dengan sudut 8 px
 
 ## Components
 
-- **CTA utama** berlabel “Diskusikan Kebutuhan B2B” dan menuju formulir kontak. Panel akhir memakai versi putih dengan teks ink.
+- **CTA utama** berlabel “Diskusikan Kebutuhan B2B” dan menuju formulir kontak. Kartu katalog di dalam hero berfungsi sebagai jalur sekunder.
 - **Tautan aksi** memiliki label spesifik dan ikon panah dekoratif. Tautan pada latar gelap memakai signal sebagai warna teks dan fokus.
-- **Media editorial** memakai elemen `picture` bila crop berbeda antar layar, dimensi atau rasio tetap, dan caption ilustrasi yang dapat dibaca.
+- **Media editorial** menampilkan packshot katalog, foto gerai dengan caption, dan ilustrasi yang ditandai sesuai konteks. Gunakan `picture` ketika crop berbeda antarlayar.
 - **Menu mobile** memakai tombol dengan status terbuka, fokus keyboard, dan Escape untuk menutup. Konten dan CTA utama tampil langsung.
 
 ## Do's and Don'ts

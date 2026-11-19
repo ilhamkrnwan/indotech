@@ -4,19 +4,22 @@
 
 | Penempatan | Komposisi | Ekspor dan penerapan |
 | --- | --- | --- |
-| Hero desktop | Foto studio industrial satu adegan. Pertahankan ruang tenang di sisi kiri dan tempatkan produk di tengah-kanan. Jaga tutup dan dasar produk dalam area vertikal tengah sekitar 65% agar aman pada frame lebar. | Master minimal 1536 × 1024 px. Ekspor WebP lebar 1024 dan 1536 px. Frame tampilan sekitar 2,32:1 dengan `object-fit: cover`. Target ≤150 KB per varian desktop. |
-| Hero mobile | Pangkas ke kelompok produk dengan ruang untuk label di kiri atas dan tautan aksi di kanan bawah. Periksa keterbacaan pada 320 px. | Ekspor WebP sekitar 770 px lebar dengan crop terpisah. Frame tampilan 5:4. Target ≤100 KB. |
+| Hero | Tiga packshot katalog menggunakan latar studio navy. Pertahankan label asli dan ruang di sekeliling kemasan. Kartu katalog berada di kanan pada desktop dan di bawah kelompok produk pada mobile. | Gunakan WebP transparan, pangkas tepi kosong, dan pertahankan rasio setiap kemasan. Target total ≤150 KB untuk aset hero. |
 | Poster profil | Close-up media atau foto proses yang disetujui, dengan titik fokus di tengah agar aman terhadap crop dan caption. | Ekspor 960 × 540 px, WebP maksimal 100 KB. Muat secara lazy dan pertahankan rasio saat belum dimuat. |
+| Galeri mitra | Tiga foto gerai yang telah ditampilkan di Indotech. Pertahankan papan nama dan fasad dalam area fokus. | Gunakan berkas tema WebP. Label kota mengikuti publikasi sumber. |
 | Media berikutnya | Foto asli untuk tim, fasilitas, mitra dan SKU. Gunakan ilustrasi untuk konteks visual umum. | Catat sumber, hak pemakaian, fokus crop, dimensi, dan teks alternatif bila fotonya memuat informasi. |
 
 - Teks, logo, angka, sertifikasi, dan tombol dipasang sebagai HTML. Hindari menghasilkan elemen itu di dalam gambar.
 - Pertahankan gradasi cahaya studio dan palet biru–abu. Hindari latar sibuk dan pertahankan navy sebagai warna fallback. Jika teks berada di atas media, gunakan bidang latar yang stabil dan uji kontras pada setiap crop.
-- Hero menggunakan `picture` dengan media query untuk crop mobile. Gunakan dimensi atau rasio eksplisit untuk mencegah pergeseran layout dan prioritaskan satu gambar di hero. Caption menandai aset generatif sebagai ilustrasi.
+- Prioritaskan satu packshot dan cantumkan dimensi eksplisit pada setiap gambar. Panel kontak menggunakan `picture` dengan crop mobile. Caption poster menandai visual formulasi sebagai ilustrasi.
 - Untuk mengganti gambar, verifikasi ukuran, crop, hak pakai, dan keadaan ketika media gagal dimuat. Tetapkan ulang `srcset` bila kandidat ukuran berubah.
 
-## Aset yang dihasilkan
+## Sumber aset
 
-`hero-1536.webp`, `hero-1024.webp`, dan `hero-mobile.webp` berasal dari satu still life yang dihasilkan dengan ImageGen. `profile-poster.webp` menggunakan generasi terpisah. Seluruhnya berada di `wp-content/themes/indotech_custom/assets/images/company-profile/`. Kemasan tanpa merek menunjukkan jenis produk secara ilustratif. Setiap aset memiliki file JSON pendamping berisi prompt produksi.
+- `laundry-souring.webp`, `sabun-cuci-piring.webp`, dan `pembersih-lantai.webp` memakai packshot katalog Cleanique Lab. Transparansi dan label asli dipertahankan saat menghapus ruang kosong dan mengompresi berkas. [Katalog Cleanique Lab](https://indotech.id/brands/cleanique-lab/).
+- `ilustrasi-formulasi.webp` berasal dari visual “Validasi Kualitas” pada publikasi Indotech. Poster ini dipakai sambil menunggu video resmi. [Publikasi Indotech](https://indotech.id/profil-pabrik-kimia-terlengkap-yogyakarta/).
+- `mitra-jambi.webp`, `mitra-boyolali.webp`, dan `mitra-temanggung.webp` menggunakan berkas tema dari bagian mitra pada beranda publik. [Beranda Indotech](https://indotech.id/).
+- `hero-1024.webp` dan `hero-mobile.webp` dari ImageGen digunakan sebagai ilustrasi dekoratif pada panel kontak. `hero-1536.webp` dan `profile-poster.webp` adalah opsi cadangan. File JSON pendamping di folder `company-profile` mencatat sumber atau prompt.
 
 ## Storyboard video 55–65 detik
 

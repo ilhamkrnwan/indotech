@@ -20,12 +20,13 @@ Calon pelanggan dapat mengenali PT Indotech Berkah Abadi, menemukan solusi yang 
 
 ## Urutan beranda
 
-1. Header dengan logo resmi, menu aktif sesuai WordPress, dan Kontak B2B. Hero menjawab bidang usaha dan menampilkan satu CTA konsultasi, foto editorial, serta navigasi ke solusi.
+1. Header dengan logo resmi, menu aktif sesuai WordPress, dan Kontak B2B. Hero menjawab bidang usaha dan menampilkan satu CTA konsultasi, packshot Cleanique Lab, dan akses katalog.
 2. “Kenali Indotech” memuat ringkasan perusahaan, poster, dan tautan profil. Saat video resmi siap, kontrol pemutaran tampil pada bagian ini.
 3. “Apa kebutuhan bisnis Anda?” memperlihatkan pasokan dan distribusi, maklon dan formulasi, kemitraan usaha, serta pelatihan dan edukasi. Setiap jalur mempunyai tujuan yang spesifik.
 4. “Ekosistem brand” memuat Orchid Care, Cleanique Lab, Cleanique Academy, Cleanique Mart, Depo Cleanique, Malabeez, dan Prokopi. Profil WordPress yang terbit didahulukan. Brand dengan situs afiliasi memakai situs resmi sebagai tautan cadangan. Prokopi memakai katalog bila profilnya belum terbit.
-5. “Wawasan & bantuan” menghubungkan pembaca ke artikel dan FAQ yang tersedia. Daftar artikel menampilkan maksimal tiga entri terbit di luar kategori bawaan WordPress. Tim editorial mengelola kualitas dan status publikasi konten melalui WordPress.
-6. CTA penutup menuju formulir yang sama. Footer memberikan identitas dan kanal kontak resmi.
+5. “Jejak kemitraan” menampilkan tiga foto gerai Cleanique Mart yang sudah dipublikasikan dan mengarahkan pembaca ke halaman kemitraan.
+6. “Wawasan & bantuan” menghubungkan pembaca ke artikel dan FAQ yang tersedia. Daftar artikel menampilkan maksimal tiga entri terbit di luar kategori bawaan WordPress. Tim editorial mengelola kualitas dan status publikasi konten melalui WordPress.
+7. CTA penutup menuju formulir yang sama. Footer memberikan identitas dan kanal kontak resmi.
 
 Tempatkan bukti kualitas dan studi kasus antara solusi dan CTA penutup setelah tersedia materi yang disetujui. Minta persetujuan pemakaian untuk foto partner atau testimoni. Kelola izin edar berdasarkan produk dan sertifikasi berdasarkan pemegang serta ruang lingkup dokumen. Catat sumber, tanggal, dan definisi untuk metrik publik.
 

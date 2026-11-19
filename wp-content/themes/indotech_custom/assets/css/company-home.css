@@ -148,22 +148,38 @@
   background: var(--company-ink);
 }
 
-.company-hero-media { aspect-ratio: 2.32; }
-.company-profile-poster { aspect-ratio: 16 / 9; }
-
-.company-hero-media picture,
-.company-hero-media img,
-.company-profile-poster img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.company-hero-media {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 285px);
+  align-items: end;
+  gap: 20px;
+  padding: clamp(22px, 4vw, 56px);
+  min-height: clamp(330px, 37vw, 510px);
+  background: radial-gradient(ellipse at 40% 80%, #38609b 0%, #223d68 44%, #101d36 100%);
 }
 
-.company-hero-media img { object-position: 65% 51%; }
+.company-hero-products {
+  --packshot-height: clamp(180px, 25vw, 360px);
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: clamp(8px, 2.4vw, 34px);
+}
 
-.company-hero-caption,
+.company-hero-products img {
+  width: auto;
+  max-width: 40%;
+  height: calc(var(--packshot-height) * .82);
+  object-fit: contain;
+  object-position: bottom;
+  filter: drop-shadow(0 12px 12px rgb(7 16 34 / 38%));
+}
+
+.company-hero-products img:nth-child(2) { height: var(--packshot-height); }
+
+.company-profile-poster { aspect-ratio: 16 / 9; z-index: 1; }
+.company-profile-poster img { width: 100%; height: 100%; object-fit: cover; }
+
 .company-profile-poster figcaption {
   position: absolute;
   left: 18px;
@@ -176,26 +192,46 @@
 }
 
 .company-image-link {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-  padding: 10px 15px;
-  border-radius: 8px;
-  color: var(--company-ink);
+  justify-content: space-between;
+  padding: 16px;
+  border-radius: var(--company-radius);
+  color: var(--company-muted);
   background: var(--company-white);
   transition: background-color .16s ease;
 }
 
-.company-image-link:hover { background: var(--company-signal); }
+.company-image-link strong {
+  display: block;
+  color: var(--company-ink);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
+}
+
+.company-arrow-box {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--company-primary);
+  color: var(--company-white);
+}
+
+.company-image-link:hover { background: var(--company-paper); }
+.company-image-link:hover .company-arrow-box { background: var(--company-primary-hover); }
 .company-image-link:focus-visible { outline-color: var(--company-signal); }
 
 .company-intro {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: clamp(24px, 6vw, 88px);
   align-items: center;
-  padding-block: var(--company-section-space);
+  padding: var(--company-section-space) clamp(0px, 4vw, 58px) clamp(30px, 4vw, 54px);
 }
+
+.company-intro-copy { grid-area: 1 / 2; }
+.company-profile-poster { grid-area: 1 / 1; transform: translateY(clamp(40px, 6vw, 84px)); }
 
 .company-intro-copy p,
 .company-solutions-grid > div > p,
@@ -203,7 +239,8 @@
 .company-contact-panel p { margin-block: 18px 10px; max-width: 47ch; }
 
 .company-solutions {
-  padding-block: var(--company-section-space);
+  padding: var(--company-section-space) clamp(24px, 5vw, 68px) clamp(40px, 6vw, 84px);
+  border-radius: var(--company-radius);
   background: var(--company-ink);
   color: var(--company-white);
 }
@@ -220,11 +257,15 @@
 .company-solutions a { color: var(--company-signal); }
 .company-solutions a:focus-visible { outline-color: var(--company-signal); }
 
-.company-solution-list { border-top: 1px solid #475670; }
+.company-solution-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px clamp(18px, 3vw, 44px);
+}
 
 .company-solution {
   padding-block: 20px 13px;
-  border-bottom: 1px solid #475670;
+  border-top: 1px solid #475670;
 }
 
 .company-solution p { margin-top: 6px; }
@@ -274,6 +315,34 @@
 .company-brand-name p { margin-top: 2px; font-size: .875rem; }
 .company-brand svg { grid-column: 3; color: var(--company-primary); }
 
+.company-partners { padding-bottom: var(--company-section-space); }
+.company-partners .company-section-heading { margin-bottom: clamp(18px, 3vw, 32px); }
+.company-partners .company-section-heading p { margin-top: 12px; }
+
+.company-partner-gallery {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  gap: clamp(12px, 2vw, 24px);
+}
+
+.company-partner-photo {
+  border-radius: var(--company-radius);
+  overflow: hidden;
+  background: var(--company-paper);
+}
+
+.company-partner-photo img {
+  width: 100%;
+  height: clamp(155px, 22vw, 286px);
+  object-fit: cover;
+}
+
+.company-partner-photo figcaption {
+  padding: 10px 14px;
+  font-size: .875rem;
+  font-weight: 650;
+}
+
 .company-insights {
   padding-block: clamp(48px, 6vw, 84px);
   background: var(--company-paper);
@@ -299,22 +368,26 @@
 .company-contact { padding-block: clamp(36px, 6vw, 80px); }
 
 .company-contact-panel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: end;
-  gap: 20px 32px;
-  padding: clamp(24px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 58px);
+  padding: clamp(20px, 3vw, 48px);
   border-radius: var(--company-radius);
-  background: var(--company-primary);
-  color: var(--company-white);
+  background: var(--company-paper);
+  color: var(--company-ink);
+}
+
+.company-contact-panel img {
+  width: 100%;
+  aspect-ratio: 1.6;
+  object-fit: cover;
+  object-position: 65% center;
+  border-radius: var(--company-radius);
 }
 
 .company-contact-panel h2 { font-size: clamp(2.25rem, 4.2vw, 3.75rem); }
-.company-contact-panel p { margin-bottom: 0; color: var(--company-white); }
-.company-contact-panel .company-button { color: var(--company-ink); background: var(--company-white); }
-.company-contact-panel .company-button:hover { background: var(--company-signal); }
-.company-contact-panel .company-button:focus-visible { outline-color: var(--company-signal); }
+.company-contact-panel p { margin-bottom: 20px; }
 
 .indotech-company-home .site-footer { background: var(--company-ink); }
 .indotech-company-home .site-footer :is(p, .footer-heading, .footer-company, .footer-links a, .footer-contact-label, .footer-contact-val, .footer-copy, .footer-bottom a) {
@@ -347,22 +420,32 @@
   .company-brand-list { gap: 0 16px; }
   .company-brand { gap: 10px; grid-template-columns: 66px minmax(0, 1fr) auto; }
   .company-brand-logo { width: 66px; }
+  .company-intro { grid-template-columns: minmax(0, 1fr); padding-inline: 0; }
+  .company-intro-copy, .company-profile-poster { grid-area: auto; transform: none; }
+  .company-solutions-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 640px) {
   .company-hero-intro,
-  .company-intro,
+  .company-hero-media,
   .company-insight-grid,
-  .company-solutions-grid,
-  .company-brand-list { grid-template-columns: minmax(0, 1fr); }
+  .company-contact-panel,
+  .company-brand-list,
+  .company-solution-list { grid-template-columns: minmax(0, 1fr); }
   .company-hero h1 { font-size: clamp(2.75rem, 10vw, 3.75rem); }
   .company-hero-intro { gap: 16px; }
   .company-hero-summary p { margin-bottom: 14px; }
-  .company-hero-media { aspect-ratio: 1.25; }
-  .company-hero-media img { object-position: 70% center; }
-  .company-hero-caption { inset: 10px auto auto 10px; }
-  .company-image-link { right: 10px; bottom: 10px; }
+  .company-hero-media { gap: 14px; min-height: 0; padding: 20px 12px 12px; }
+  .company-hero-products { --packshot-height: clamp(150px, 51vw, 245px); }
+  .company-image-link { padding: 10px 12px; }
+  .company-profile-poster figcaption { inset: auto 10px 10px; width: fit-content; }
+  .company-solutions { padding-top: 40px; }
   .company-brand { min-height: 79px; }
+  .company-partner-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .company-partner-photo:first-child { grid-column: 1 / -1; }
+  .company-partner-photo:first-child img { height: auto; aspect-ratio: 1.8; }
+  .company-partner-photo:not(:first-child) img { height: auto; aspect-ratio: 1.15; }
+  .company-contact-panel img { aspect-ratio: 1.9; }
 }
 
 @media (prefers-reduced-motion: reduce) {

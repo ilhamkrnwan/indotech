@@ -46,21 +46,17 @@ $solutions = [
             </div>
         </div>
 
-        <figure class="company-hero-media">
-            <picture>
-                <source media="(max-width: 600px)" srcset="<?php echo esc_url( $media . '/hero-mobile.webp' ); ?>">
-                <img
-                    src="<?php echo esc_url( $media . '/hero-1536.webp' ); ?>"
-                    srcset="<?php echo esc_url( $media . '/hero-1024.webp' ); ?> 1024w, <?php echo esc_url( $media . '/hero-1536.webp' ); ?> 1536w"
-                    sizes="(min-width: 1352px) 1280px, (min-width: 641px) calc(100vw - 72px), calc(100vw - 40px)"
-                    width="1536" height="1024" alt="" fetchpriority="high" decoding="async">
-            </picture>
-            <figcaption class="company-hero-caption">Ilustrasi produk kebersihan</figcaption>
-            <a class="company-image-link" href="#solusi-b2b">
-                Jelajahi solusi B2B
-                <?php get_template_part( 'template-parts/home/company-arrow', null, [ 'direction' => 'down' ] ); ?>
+        <div class="company-hero-media">
+            <div class="company-hero-products">
+                <img src="<?php echo esc_url( $media . '/laundry-souring.webp' ); ?>" width="218" height="510" alt="Souring untuk laundry" decoding="async">
+                <img src="<?php echo esc_url( $media . '/sabun-cuci-piring.webp' ); ?>" width="329" height="620" alt="Sabun cuci piring kemasan 5 liter" fetchpriority="high" decoding="async">
+                <img src="<?php echo esc_url( $media . '/pembersih-lantai.webp' ); ?>" width="218" height="510" alt="Pembersih lantai Pelmos" decoding="async">
+            </div>
+            <a class="company-image-link" href="<?php echo esc_url( home_url( '/produk/' ) ); ?>">
+                <span><strong>Produk kebersihan</strong>Lihat katalog Indotech</span>
+                <span class="company-arrow-box"><?php get_template_part( 'template-parts/home/company-arrow' ); ?></span>
             </a>
-        </figure>
+        </div>
     </section>
 
     <section class="company-intro company-wrap" aria-labelledby="company-profile-title">
@@ -73,13 +69,13 @@ $solutions = [
             </a>
         </div>
         <figure class="company-profile-poster">
-            <img src="<?php echo esc_url( $media . '/profile-poster.webp' ); ?>" width="960" height="540" alt="" loading="lazy" decoding="async">
-            <figcaption>Ilustrasi untuk video profil perusahaan</figcaption>
+            <img src="<?php echo esc_url( $media . '/ilustrasi-formulasi.webp' ); ?>" width="960" height="540" alt="" loading="lazy" decoding="async">
+            <figcaption>Ilustrasi formulasi dari publikasi Indotech</figcaption>
         </figure>
     </section>
 
-    <section class="company-solutions" id="solusi-b2b" aria-labelledby="company-solutions-title">
-        <div class="company-wrap company-solutions-grid">
+    <section class="company-solutions company-wrap" id="solusi-b2b" aria-labelledby="company-solutions-title">
+        <div class="company-solutions-grid">
             <div>
                 <h2 id="company-solutions-title">Apa kebutuhan bisnis Anda?</h2>
                 <p>Dari pengadaan produk hingga pengembangan merek dan usaha, temukan jalur yang sesuai.</p>
@@ -100,18 +96,23 @@ $solutions = [
     </section>
 
     <?php get_template_part( 'template-parts/home/company-brands' ); ?>
+    <?php get_template_part( 'template-parts/home/company-partners' ); ?>
     <?php get_template_part( 'template-parts/home/company-insights' ); ?>
 
     <section class="company-wrap company-contact" aria-labelledby="company-contact-title">
         <div class="company-contact-panel">
+            <picture>
+                <source media="(max-width: 640px)" srcset="<?php echo esc_url( $media . '/hero-mobile.webp' ); ?>">
+                <img src="<?php echo esc_url( $media . '/hero-1024.webp' ); ?>" width="1024" height="683" alt="" loading="lazy" decoding="async">
+            </picture>
             <div>
                 <h2 id="company-contact-title">Mari bahas kebutuhan Anda.</h2>
                 <p>Ceritakan kebutuhan pengadaan, maklon, kemitraan, atau pelatihan kepada tim Indotech.</p>
+                <a class="company-button" href="<?php echo esc_url( $contact_url ); ?>">
+                    Diskusikan Kebutuhan B2B
+                    <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                </a>
             </div>
-            <a class="company-button" href="<?php echo esc_url( $contact_url ); ?>">
-                Diskusikan Kebutuhan B2B
-                <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
-            </a>
         </div>
     </section>
 </main>
