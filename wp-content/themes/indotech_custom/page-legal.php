@@ -12,33 +12,37 @@
  */
 
 // Build heading anchors dari konten halaman untuk navigasi sidebar
-function indotech_extract_headings( $content ) {
-    preg_match_all( '/<h([2-3])[^>]*>(.*?)<\/h\1>/i', $content, $matches, PREG_SET_ORDER );
-    $headings = [];
-    foreach ( $matches as $m ) {
-        $text   = wp_strip_all_tags( $m[2] );
-        $anchor = sanitize_title( $text );
-        $level  = (int) $m[1];
-        $headings[] = compact( 'text', 'anchor', 'level' );
+if ( ! function_exists( 'indotech_extract_headings' ) ) {
+    function indotech_extract_headings( $content ) {
+        preg_match_all( '/<h([2-3])[^>]*>(.*?)<\/h\1>/i', $content, $matches, PREG_SET_ORDER );
+        $headings = [];
+        foreach ( $matches as $m ) {
+            $text   = wp_strip_all_tags( $m[2] );
+            $anchor = sanitize_title( $text );
+            $level  = (int) $m[1];
+            $headings[] = compact( 'text', 'anchor', 'level' );
+        }
+        return $headings;
     }
-    return $headings;
 }
 
 // Tambahkan id anchor ke heading dalam konten
-function indotech_add_heading_ids( $content ) {
-    return preg_replace_callback(
-        '/<h([2-3])([^>]*)>(.*?)<\/h\1>/i',
-        function ( $m ) {
-            $text   = wp_strip_all_tags( $m[3] );
-            $anchor = sanitize_title( $text );
-            $attrs  = $m[2];
-            if ( strpos( $attrs, 'id=' ) === false ) {
-                $attrs .= ' id="' . esc_attr( $anchor ) . '"';
-            }
-            return "<h{$m[1]}{$attrs}>{$m[3]}</h{$m[1]}>";
-        },
-        $content
-    );
+if ( ! function_exists( 'indotech_add_heading_ids' ) ) {
+    function indotech_add_heading_ids( $content ) {
+        return preg_replace_callback(
+            '/<h([2-3])([^>]*)>(.*?)<\/h\1>/i',
+            function ( $m ) {
+                $text   = wp_strip_all_tags( $m[3] );
+                $anchor = sanitize_title( $text );
+                $attrs  = $m[2];
+                if ( strpos( $attrs, 'id=' ) === false ) {
+                    $attrs .= ' id="' . esc_attr( $anchor ) . '"';
+                }
+                return "<h{$m[1]}{$attrs}>{$m[3]}</h{$m[1]}>";
+            },
+            $content
+        );
+    }
 }
 
 get_header();
@@ -74,10 +78,10 @@ $last_updated = get_the_modified_date( 'd F Y' );
                 <span aria-hidden="true">/</span>
                 <span aria-current="page"><?php echo esc_html( $page_title ); ?></span>
             </nav>
-            <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Dokumen Resmi</span>
+            <span class="section-tag">Dokumen Resmi</span>
             <h1 class="inner-page-title"><?php echo esc_html( $page_title ); ?></h1>
             <?php if ( $last_updated ) : ?>
-            <p class="inner-page-subtitle" style="font-size:14px;opacity:.5;">
+            <p class="ch-hero-meta">
                 Terakhir diperbarui: <?php echo esc_html( $last_updated ); ?>
             </p>
             <?php endif; ?>

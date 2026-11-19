@@ -747,7 +747,7 @@
         // Hero crisp arrival (never hides stage media LCP)
         window.gsap.from('.ch-hero-h1 .ch-h1-primary, .ch-hero-h1 .ch-h1-secondary, .ch-tilt-badge', {
           y: 22,
-          autoAlpha: 0,
+          opacity: 0,
           duration: 0.68,
           stagger: 0.08,
           ease: 'expo.out',
@@ -756,7 +756,7 @@
 
         window.gsap.from('.ch-hero-copy, .ch-hero-aside, .ch-stage-card', {
           y: 18,
-          autoAlpha: 0,
+          opacity: 0,
           duration: 0.62,
           stagger: 0.08,
           delay: 0.12,
@@ -779,7 +779,7 @@
         // Section 2: Tentang Kami & overlapping poster parallax
         window.gsap.from('#ch-about-title, .ch-cap-thumb, .ch-cap-caption', {
           y: 22,
-          autoAlpha: 0,
+          opacity: 0,
           duration: 0.6,
           stagger: 0.06,
           ease: 'power3.out',
@@ -868,7 +868,7 @@
 
         window.gsap.from('.ch-solution-card', {
           y: 20,
-          autoAlpha: 0,
+          opacity: 0,
           duration: 0.56,
           stagger: 0.08,
           ease: 'power3.out',
@@ -883,7 +883,7 @@
         // Section 3B: 7 Brands staggered rows
         window.gsap.from('.ch-brand-row', {
           y: 16,
-          autoAlpha: 0,
+          opacity: 0,
           duration: 0.48,
           stagger: 0.045,
           ease: 'power2.out',
@@ -898,7 +898,7 @@
         // Section 4: Kisah Mitra stage entrance
         window.gsap.from('.ch-stories-head, .ch-stories-stage', {
           y: 24,
-          autoAlpha: 0,
+          opacity: 0,
           duration: 0.64,
           stagger: 0.1,
           ease: 'power3.out',
@@ -913,7 +913,7 @@
         // Section 5: Insights & FAQ
         window.gsap.from('.ch-article-item, .ch-faq-item', {
           y: 14,
-          autoAlpha: 0,
+          opacity: 0,
           duration: 0.46,
           stagger: 0.045,
           ease: 'power2.out',

@@ -32,29 +32,64 @@ function indotech_setup() {
 }
 add_action('after_setup_theme', 'indotech_setup');
 
+/**
+ * Menentukan apakah halaman saat ini menggunakan sistem desain editorial Indotech–Manufy
+ * (Beranda, seluruh template halaman statis, dan 404 — tidak termasuk arsip/single CPT maupun pricelist).
+ */
+function indotech_is_manufy_page() {
+    if ( is_front_page() || is_404() ) {
+        return true;
+    }
+    if ( ! is_page() ) {
+        return false;
+    }
+    if (
+        is_page_template( [ 'archive-product.php', 'archive-download.php', 'page-pricelist.php', 'page-daftar-harga.php', 'page-price-list.php' ] ) ||
+        is_page( [ 'produk', 'download-center', 'daftar-harga', 'price-list', 'pricelist' ] )
+    ) {
+        return false;
+    }
+    return true;
+}
+
 // ── Enqueue Assets ───────────────────────────────────────────────────────────
 function indotech_enqueue() {
     // Main stylesheet
     wp_enqueue_style('indotech-main', INDOTECH_URI . '/assets/css/main.css', [], filemtime(get_template_directory() . '/assets/css/main.css'));
 
-    if ( is_front_page() ) {
+    if ( indotech_is_manufy_page() ) {
         $company_css = 'assets/css/company-home.css';
         wp_enqueue_style( 'indotech-company-home', get_theme_file_uri( $company_css ), [ 'indotech-main' ], filemtime( get_theme_file_path( $company_css ) ) );
 
         $gsap_ver = '3.13.0';
         wp_enqueue_script( 'indotech-gsap', get_theme_file_uri( 'assets/js/lib/gsap.min.js' ), [], $gsap_ver, true );
         wp_enqueue_script( 'indotech-gsap-scrolltrigger', get_theme_file_uri( 'assets/js/lib/ScrollTrigger.min.js' ), [ 'indotech-gsap' ], $gsap_ver, true );
-        wp_enqueue_script( 'indotech-gsap-flip', get_theme_file_uri( 'assets/js/lib/Flip.min.js' ), [ 'indotech-gsap' ], $gsap_ver, true );
         wp_enqueue_script( 'indotech-gsap-scrollto', get_theme_file_uri( 'assets/js/lib/ScrollToPlugin.min.js' ), [ 'indotech-gsap' ], $gsap_ver, true );
 
-        $company_js = 'assets/js/company-home.js';
-        wp_enqueue_script(
-            'indotech-company-home-js',
-            get_theme_file_uri( $company_js ),
-            [ 'indotech-gsap', 'indotech-gsap-scrolltrigger', 'indotech-gsap-flip', 'indotech-gsap-scrollto' ],
-            filemtime( get_theme_file_path( $company_js ) ),
-            true
-        );
+        if ( is_front_page() ) {
+            wp_enqueue_script( 'indotech-gsap-flip', get_theme_file_uri( 'assets/js/lib/Flip.min.js' ), [ 'indotech-gsap' ], $gsap_ver, true );
+
+            $company_js = 'assets/js/company-home.js';
+            wp_enqueue_script(
+                'indotech-company-home-js',
+                get_theme_file_uri( $company_js ),
+                [ 'indotech-gsap', 'indotech-gsap-scrolltrigger', 'indotech-gsap-flip', 'indotech-gsap-scrollto' ],
+                filemtime( get_theme_file_path( $company_js ) ),
+                true
+            );
+        } else {
+            $static_css = 'assets/css/company-static.css';
+            wp_enqueue_style( 'indotech-company-static', get_theme_file_uri( $static_css ), [ 'indotech-company-home' ], filemtime( get_theme_file_path( $static_css ) ) );
+
+            $static_js = 'assets/js/company-static.js';
+            wp_enqueue_script(
+                'indotech-company-static-js',
+                get_theme_file_uri( $static_js ),
+                [ 'indotech-gsap', 'indotech-gsap-scrolltrigger', 'indotech-gsap-scrollto' ],
+                filemtime( get_theme_file_path( $static_js ) ),
+                true
+            );
+        }
     }
 
     // Main JS
@@ -159,7 +194,7 @@ add_filter('login_display_language_dropdown', '__return_false');
 // ── Defer Non-Critical JavaScript & Remove jQuery Migrate ────────────────────
 add_filter('script_loader_tag', function($tag, $handle) {
     if (is_admin()) return $tag;
-    if (in_array($handle, ['indotech-main', 'indotech-inquiry', 'indotech-gsap', 'indotech-gsap-scrolltrigger', 'indotech-gsap-flip', 'indotech-gsap-scrollto', 'indotech-company-home-js', 'google_gtagjs-js'], true)) {
+    if (in_array($handle, ['indotech-main', 'indotech-inquiry', 'indotech-gsap', 'indotech-gsap-scrolltrigger', 'indotech-gsap-flip', 'indotech-gsap-scrollto', 'indotech-company-home-js', 'indotech-company-static-js', 'google_gtagjs-js'], true)) {
         return str_replace(' src=', ' defer src=', $tag);
     }
     return $tag;

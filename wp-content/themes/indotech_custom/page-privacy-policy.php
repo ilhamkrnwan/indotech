@@ -60,9 +60,9 @@ $default_content = '
 <h3>B. Data Profil Bisnis dan Legalitas</h3>
 <p>Nama badan usaha (PT/CV/UD), alamat kantor pusat, alamat pengiriman gudang/Franco, dokumen legalitas usaha (NIB, SIUP) untuk verifikasi kelayakan distribusi produk.</p>
 <h3>C. Data Keuangan dan Transaksi</h3>
-<p>Detail rekening bank pengirim, informasi bukti transfer pembayaran, riwayat pesanan produk (Cleanique Academy, Cleanique Lab, Cleanique Mart, Depo Cleanique, Malabeez, Orchid Care, Prokopi), total volume pembelian, serta status penawaran harga (*price inquiry*).</p>
+<p>Detail rekening bank pengirim, informasi bukti transfer pembayaran, riwayat pesanan produk (Cleanique Academy, Cleanique Lab, Cleanique Mart, Depo Cleanique, Malabeez, Orchid Care, Prokopi), total volume pembelian, serta status penawaran harga (<em>price inquiry</em>).</p>
 <h3>D. Data Teknis dan Kunjungan Web</h3>
-<p>Alamat IP (*Internet Protocol*), tipe peramban web (*browser*), zona waktu, sistem operasi yang digunakan, aktivitas kunjungan halaman (*clickstream*), durasi kunjungan, serta informasi yang diperoleh melalui cookie analitis.</p>
+<p>Alamat IP (<em>Internet Protocol</em>), tipe peramban web (<em>browser</em>), zona waktu, sistem operasi yang digunakan, aktivitas kunjungan halaman (<em>clickstream</em>), durasi kunjungan, serta informasi yang diperoleh melalui cookie analitis.</p>
 
 <h2>3. Metode Pengumpulan Data Pribadi</h2>
 <p>Kami mengumpulkan data Anda melalui beberapa cara:</p>
@@ -77,7 +77,7 @@ $default_content = '
 <ul>
     <li><strong>Pemrosesan Transaksi:</strong> Mengelola pemesanan grosir, memverifikasi pembayaran bank, menjadwalkan pengiriman kargo, dan menerbitkan faktur atau surat jalan resmi.</li>
     <li><strong>Layanan Kemitraan:</strong> Menghubungi calon mitra untuk diskusi kelayakan keagenan, memberikan konsultasi gratis kemitraan, dan menunjuk Account Manager khusus bagi akun B2B Anda.</li>
-    <li><strong>Kepatuhan Regulasi:</strong> Memastikan seluruh transaksi bisnis dan produk memenuhi regulasi BPOM RI, sertifikasi Halal MUI, dan sertifikasi standar ISO 9001.</li>
+    <li><strong>Kepatuhan Regulasi:</strong> Memastikan seluruh transaksi bisnis dan produk memenuhi regulasi Izin Edar Kemenkes RI (PKRT), Sertifikasi Halal, dan standar uji mutu laboratorium kami.</li>
     <li><strong>Pengembangan Layanan:</strong> Menganalisis preferensi pasar B2B guna mengembangkan varian aroma/produk baru dan memperbaiki sistem distribusi kami.</li>
     <li><strong>Pemasaran Terarah:</strong> Mengirimkan katalog produk terbaru, brosur marketing cetak/digital, program diskon musiman, atau info acara B2B nasional.</li>
 </ul>
@@ -95,7 +95,7 @@ $default_content = '
 <ul>
     <li><strong>Penyedia Jasa Logistik:</strong> Memberikan nama, telepon, dan alamat gudang kepada perusahaan ekspedisi (kargo laut/darat) pihak ketiga untuk mengirimkan kontainer produk ke lokasi Anda.</li>
     <li><strong>Penyedia Infrastruktur IT:</strong> Penyedia server hosting cloud aman yang membantu kami mengoperasikan situs web dan sistem e-commerce B2B kami.</li>
-    <li><strong>Kepatuhan Hukum:</strong> Apabila diwajibkan oleh aparat penegak hukum, instansi pemerintah (BPOM/MUI), atau perintah pengadilan resmi di bawah hukum Republik Indonesia.</li>
+    <li><strong>Kepatuhan Hukum:</strong> Apabila diwajibkan oleh aparat penegak hukum, instansi pemerintah berwenang (Kemenkes RI/MUI), atau perintah pengadilan resmi di bawah hukum Republik Indonesia.</li>
 </ul>
 
 <h2>7. Hak Pelindungan Data Anda</h2>
@@ -140,10 +140,10 @@ if ( empty( $last_updated ) ) {
                 <span aria-hidden="true">/</span>
                 <span aria-current="page"><?php echo esc_html( $page_title ); ?></span>
             </nav>
-            <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Dokumen Resmi</span>
+            <span class="section-tag">Dokumen Resmi</span>
             <h1 class="inner-page-title"><?php echo esc_html( $page_title ); ?></h1>
             <?php if ( $last_updated ) : ?>
-            <p class="inner-page-subtitle" style="font-size:14px;opacity:.5;">
+            <p class="ch-hero-meta">
                 Terakhir diperbarui: <?php echo esc_html( $last_updated ); ?>
             </p>
             <?php endif; ?>

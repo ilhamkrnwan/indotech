@@ -6,9 +6,14 @@
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <?php wp_head(); ?>
 </head>
-<body <?php body_class( is_front_page() ? 'indotech-company-home' : '' ); ?>>
+<?php
+$is_manufy = function_exists( 'indotech_is_manufy_page' ) && indotech_is_manufy_page();
+$is_static = $is_manufy && ! is_front_page();
+$body_extra = $is_manufy ? ( $is_static ? 'indotech-company-home indotech-static-page' : 'indotech-company-home' ) : '';
+?>
+<body <?php body_class( $body_extra ); ?>>
 <?php wp_body_open(); ?>
-<?php if ( is_front_page() ) : ?>
+<?php if ( $is_manufy ) : ?>
     <a class="company-skip-link" href="#main-content">Lewati ke konten utama</a>
 <?php endif; ?>
 
@@ -64,8 +69,8 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                 'theme_location' => 'primary',
                 'menu_class'     => 'nav-menu',
                 'container'      => false,
-                'fallback_cb'    => function() {
-                    $items = is_front_page() ? [
+                'fallback_cb'    => function() use ( $is_manufy ) {
+                    $items = $is_manufy ? [
                         '/'              => 'Beranda',
                         '/tentang-kami/' => 'Tentang Kami',
                         '/#solusi-b2b'   => 'Solusi B2B',
@@ -83,9 +88,10 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                     $req_path = untrailingslashit( strtok( $_SERVER['REQUEST_URI'] ?? '', '?' ) );
                     echo '<ul class="nav-menu">';
                     foreach ( $items as $path => $label ) {
-                        $url       = esc_url( home_url( $path ) );
-                        $is_active = ( '/' === $path && is_front_page() ) || ( '/' !== $path && 0 !== strpos( $path, '/#' ) && $req_path === untrailingslashit( parse_url( home_url( $path ), PHP_URL_PATH ) ?: $path ) );
-                        $active    = $is_active ? ' class="current-menu-item"' : '';
+                        $url         = esc_url( home_url( $path ) );
+                        $target_path = untrailingslashit( parse_url( home_url( $path ), PHP_URL_PATH ) ?: $path );
+                        $is_active   = ( '/' === $path && is_front_page() ) || ( '/' !== $path && 0 !== strpos( $path, '/#' ) && ( $req_path === $target_path || strpos( $req_path . '/', $target_path . '/' ) === 0 ) );
+                        $active      = $is_active ? ' class="current-menu-item"' : '';
                         echo "<li{$active}><a href=\"{$url}\">{$label}</a></li>";
                     }
                     echo '</ul>';
@@ -93,7 +99,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
             ]); ?>
 
             <div class="mobile-nav-extra">
-                <?php if ( is_front_page() ) : ?>
+                <?php if ( $is_manufy ) : ?>
                     <div class="ch-mobile-drawer-actions">
                         <a href="<?php echo esc_url( home_url( '/produk/' ) ); ?>" class="ch-header-btn ch-header-btn--outline">Lihat Katalog</a>
                         <a href="<?php echo esc_url( home_url( '/kontak/#form-kontak' ) ); ?>" class="ch-header-btn ch-header-btn--primary">Konsultasi B2B</a>
@@ -134,7 +140,7 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
         <!-- ═══ ACTIONS ═════════════════════════════════════════════════ -->
         <div class="header-actions">
 
-            <?php if ( is_front_page() ) : ?>
+            <?php if ( $is_manufy ) : ?>
                 <a href="<?php echo esc_url( home_url( '/produk/' ) ); ?>" class="ch-header-btn ch-header-btn--outline">
                     Katalog
                 </a>

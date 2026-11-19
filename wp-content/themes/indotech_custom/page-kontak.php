@@ -32,7 +32,7 @@ get_header();
                 <span aria-hidden="true">/</span>
                 <span aria-current="page">Kontak</span>
             </nav>
-            <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Hubungi Kami</span>
+            <span class="section-tag">Hubungi Kami</span>
             <h1 class="inner-page-title">Ada yang Bisa <em>Kami Bantu?</em></h1>
             <p class="inner-page-subtitle">Tim kami siap menjawab pertanyaan Anda seputar produk, kemitraan, dan distribusi. Respon dalam 1×24 jam kerja.</p>
         </div>
@@ -41,7 +41,7 @@ get_header();
     <!-- ════════════════════════════════════════════════════════
          INFO KONTAK — 3 kartu informasi
     ════════════════════════════════════════════════════════ -->
-    <section class="contact-info-section section-padding" id="info-kontak" style="background:var(--surface);">
+    <section class="contact-info-section section-padding" id="info-kontak">
         <div class="container">
             <div class="contact-cards-grid">
 
@@ -57,14 +57,14 @@ get_header();
                 </div>
 
                 <div class="contact-info-card contact-info-card--featured reveal reveal-delay-1">
-                    <div class="contact-info-icon" style="background:#ffffff; border-color:#ffffff; color:var(--cobalt);" aria-hidden="true">
+                    <div class="contact-info-icon" aria-hidden="true">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </div>
-                    <span class="contact-info-label" style="color:rgba(255,255,255,.5);">Email</span>
-                    <a href="mailto:<?php echo esc_attr( $email ); ?>" class="contact-info-value" style="color:var(--white);">
+                    <span class="contact-info-label">Email</span>
+                    <a href="mailto:<?php echo esc_attr( $email ); ?>" class="contact-info-value">
                         <?php echo esc_html( $email ); ?>
                     </a>
-                    <p class="contact-info-note" style="color:rgba(255,255,255,.45);">Balasan dalam 1×24 jam kerja</p>
+                    <p class="contact-info-note">Balasan dalam 1×24 jam kerja</p>
                 </div>
 
                 <div class="contact-info-card reveal reveal-delay-2">
@@ -131,7 +131,9 @@ get_header();
                             <select id="kontak-subject" name="subject" class="form-input form-select">
                                 <option value="" disabled selected>Pilih topik...</option>
                                 <option value="inquiry-produk">Permintaan Produk</option>
-                                <option value="kemitraan">Kemitraan & Distribusi</option>
+                                <option value="maklon">Jasa Maklon (OEM / Private Label)</option>
+                                <option value="kemitraan">Kemitraan &amp; Distribusi</option>
+                                <option value="pelatihan">Program Pelatihan (Cleanique Academy)</option>
                                 <option value="penawaran-harga">Permintaan Penawaran Harga</option>
                                 <option value="komplain">Keluhan / Komplain</option>
                                 <option value="lainnya">Lainnya</option>
@@ -145,7 +147,7 @@ get_header();
 
                         <div id="indotech-inquiry-response" class="form-response" role="alert" aria-live="polite" style="display:none;"></div>
 
-                        <button type="submit" id="kontak-submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">
+                        <button type="submit" id="kontak-submit" class="btn btn-primary btn-lg ch-form-submit">
                             <span class="btn-text">Kirim Pesan</span>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg>
                         </button>
@@ -184,7 +186,7 @@ get_header();
 
                     <!-- Jam Operasional -->
                     <div class="operating-hours">
-                        <h4 class="oh-title">Jam Operasional</h4>
+                        <h3 class="oh-title">Jam Operasional</h3>
                         <ul class="oh-list">
                             <li>
                                 <span class="oh-day">Senin – Jumat</span>

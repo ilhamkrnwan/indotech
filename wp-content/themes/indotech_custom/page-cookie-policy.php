@@ -50,7 +50,7 @@ $headings     = [];
 // Default Legal Content
 $default_content = '
 <h2>1. Pengertian Cookie</h2>
-<p>Cookie adalah file teks kecil berisi data unik yang dikirimkan oleh server situs web ke peramban (*browser*) komputer atau perangkat seluler Anda saat Anda mengunjungi situs tersebut. Cookie disimpan di penyimpanan lokal perangkat Anda agar situs web dapat mengenali perangkat Anda dan mengingat preferensi Anda pada kunjungan berikutnya.</p>
+<p>Cookie adalah file teks kecil berisi data unik yang dikirimkan oleh server situs web ke peramban (<em>browser</em>) komputer atau perangkat seluler Anda saat Anda mengunjungi situs tersebut. Cookie disimpan di penyimpanan lokal perangkat Anda agar situs web dapat mengenali perangkat Anda dan mengingat preferensi Anda pada kunjungan berikutnya.</p>
 
 <h2>2. Alasan Kami Menggunakan Cookie</h2>
 <p>PT Indotech Berkah Abadi menggunakan cookie untuk meningkatkan kualitas penelusuran situs web B2B kami dan mempermudah operasional transaksi Anda. Cookie membantu kami mendeteksi masalah teknis, mempercepat waktu pemuatan halaman, dan mengenali apakah Anda adalah calon mitra yang telah mengisi inquiry formulir kontak sebelumnya.</p>
@@ -69,10 +69,10 @@ $default_content = '
 <h2>4. Mengontrol dan Menonaktifkan Cookie</h2>
 <p>Anda memiliki hak penuh untuk menyetujui, menolak, atau menghapus cookie yang tersimpan di perangkat Anda. Sebagian besar browser web secara otomatis menerima cookie, tetapi Anda dapat mengubah pengaturan browser Anda untuk menolaknya:</p>
 <ul>
-    <li><strong>Google Chrome:</strong> Masuk ke <em>Setelan > Privasi dan Keamanan > Cookie dan Data Situs Lainnya</em>.</li>
-    <li><strong>Safari (Mac/iOS):</strong> Buka <em>Preferences > Privacy > Block all cookies</em>.</li>
-    <li><strong>Mozilla Firefox:</strong> Buka <em>Pengaturan > Privasi & Keamanan > Cookie dan Data Situs</em>.</li>
-    <li><strong>Microsoft Edge:</strong> Masuk ke <em>Settings > Cookies and site permissions</em>.</li>
+    <li><strong>Google Chrome:</strong> Masuk ke <em>Setelan &gt; Privasi dan Keamanan &gt; Cookie dan Data Situs Lainnya</em>.</li>
+    <li><strong>Safari (Mac/iOS):</strong> Buka <em>Preferences &gt; Privacy &gt; Block all cookies</em>.</li>
+    <li><strong>Mozilla Firefox:</strong> Buka <em>Pengaturan &gt; Privasi &amp; Keamanan &gt; Cookie dan Data Situs</em>.</li>
+    <li><strong>Microsoft Edge:</strong> Masuk ke <em>Settings &gt; Cookies and site permissions</em>.</li>
 </ul>
 <p>Harap diperhatikan bahwa jika Anda menonaktifkan cookie tertentu, beberapa bagian atau fitur interaktif di situs web B2B kami (seperti validasi inquiry form atau fitur filter katalog) mungkin tidak dapat berfungsi dengan sempurna.</p>
 
@@ -112,10 +112,10 @@ if ( empty( $last_updated ) ) {
                 <span aria-hidden="true">/</span>
                 <span aria-current="page"><?php echo esc_html( $page_title ); ?></span>
             </nav>
-            <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Dokumen Resmi</span>
+            <span class="section-tag">Dokumen Resmi</span>
             <h1 class="inner-page-title"><?php echo esc_html( $page_title ); ?></h1>
             <?php if ( $last_updated ) : ?>
-            <p class="inner-page-subtitle" style="font-size:14px;opacity:.5;">
+            <p class="ch-hero-meta">
                 Terakhir diperbarui: <?php echo esc_html( $last_updated ); ?>
             </p>
             <?php endif; ?>

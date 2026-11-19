@@ -15,7 +15,19 @@ $wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );
 $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk dan kemitraan.' );
 ?>
 
-<?php if ( is_front_page() ) : ?>
+<?php if ( function_exists( 'indotech_is_manufy_page' ) && indotech_is_manufy_page() ) :
+    $req_uri = strtok( $_SERVER['REQUEST_URI'] ?? '', '?' );
+    $is_blog_active = is_page( 'blog' );
+    $is_produk_active = is_page( 'produk' );
+    $footer_links = [
+        [ 'url' => home_url( '/' ),             'label' => 'Beranda',      'active' => is_front_page() ],
+        [ 'url' => home_url( '/tentang-kami/' ), 'label' => 'Tentang Kami', 'active' => is_page( 'tentang-kami' ) ],
+        [ 'url' => home_url( '/produk/' ),       'label' => 'Produk',       'active' => $is_produk_active ],
+        [ 'url' => home_url( '/kemitraan/' ),    'label' => 'Kemitraan',    'active' => is_page( 'kemitraan' ) ],
+        [ 'url' => home_url( '/blog/' ),         'label' => 'Blog',         'active' => $is_blog_active ],
+        [ 'url' => home_url( '/kontak/' ),       'label' => 'Kontak',       'active' => is_page( 'kontak' ) ],
+    ];
+?>
 <footer class="ch-footer-wrap" id="site-footer">
     <div class="ch-wrap">
         <div class="ch-footer-card">
@@ -23,12 +35,9 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                 <div class="ch-footer-brand-col">
                     <h2 class="ch-footer-headline">Membangun Masa Depan<br>Industri Kebersihan B2B</h2>
                     <nav class="ch-footer-nav" aria-label="Navigasi Footer">
-                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="is-active">Beranda</a>
-                        <a href="<?php echo esc_url( home_url( '/tentang-kami/' ) ); ?>">Tentang Kami</a>
-                        <a href="<?php echo esc_url( home_url( '/produk/' ) ); ?>">Produk</a>
-                        <a href="<?php echo esc_url( home_url( '/kemitraan/' ) ); ?>">Kemitraan</a>
-                        <a href="<?php echo esc_url( home_url( '/blog/' ) ); ?>">Blog</a>
-                        <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>">Kontak</a>
+                        <?php foreach ( $footer_links as $fl ) : ?>
+                            <a href="<?php echo esc_url( $fl['url'] ); ?>"<?php echo $fl['active'] ? ' class="is-active"' : ''; ?>><?php echo esc_html( $fl['label'] ); ?></a>
+                        <?php endforeach; ?>
                     </nav>
                 </div>
 

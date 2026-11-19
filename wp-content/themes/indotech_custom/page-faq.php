@@ -96,227 +96,10 @@ if ( function_exists( 'indotech_render_faq_schema' ) ) {
 }
 ?>
 
-<style>
-/* ════════════════════════════════════════════════════════
-   FAQ CUSTOM PAGE STYLES (Clean & Modern Glassmorphism)
-   ════════════════════════════════════════════════════════ */
-.faq-search-wrap {
-    margin-top: -30px;
-    margin-bottom: 50px;
-    position: relative;
-    z-index: 10;
-}
-.faq-search-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    box-shadow: var(--shadow-md);
-    max-width: 680px;
-    margin: 0 auto;
-    transition: all 0.3s ease;
-}
-.faq-search-card:focus-within {
-    border-color: var(--cobalt);
-    box-shadow: 0 10px 25px rgba(0, 87, 255, 0.12);
-}
-.faq-search-input {
-    border: none;
-    outline: none;
-    font-size: 16px;
-    color: var(--ink);
-    width: 100%;
-    background: transparent;
-}
-.faq-search-icon {
-    color: var(--text-muted);
-    flex-shrink: 0;
-}
-
-.faq-layout-grid {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 40px;
-    align-items: start;
-}
-
-/* Sidebar Tabs Navigation */
-.faq-sidebar {
-    position: sticky;
-    top: 100px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.faq-nav-btn {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 20px;
-    border: 1px solid transparent;
-    border-radius: 12px;
-    background: transparent;
-    color: var(--text-secondary);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.3s ease;
-}
-.faq-nav-btn svg {
-    transition: color 0.3s ease;
-}
-.faq-nav-btn:hover {
-    background: var(--white);
-    color: var(--cobalt);
-}
-.faq-nav-btn--active {
-    background: var(--white);
-    color: var(--cobalt);
-    border-color: var(--border);
-    box-shadow: var(--shadow-sm);
-}
-
-/* Accordion Styling */
-.faq-content-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
-.faq-group-section {
-    scroll-margin-top: 110px;
-}
-.faq-group-title-wrap {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
-    border-bottom: 2px solid var(--border);
-    padding-bottom: 12px;
-}
-.faq-group-title-wrap svg {
-    color: var(--cobalt);
-}
-.faq-group-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--ink);
-    margin: 0;
-}
-
-.faq-accordion-item {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 16px;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.faq-accordion-item:hover {
-    border-color: var(--cobalt-pale-border);
-    box-shadow: 0 4px 15px rgba(0, 87, 255, 0.04);
-}
-.faq-accordion-item--active {
-    border-color: var(--cobalt);
-    box-shadow: 0 8px 24px rgba(0, 87, 255, 0.06);
-}
-
-.faq-header-btn {
-    width: 100%;
-    padding: 22px 28px;
-    background: none;
-    border: none;
-    outline: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--ink);
-    cursor: pointer;
-    gap: 16px;
-}
-.faq-header-btn:focus-visible {
-    background: var(--surface);
-}
-.faq-toggle-icon {
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: var(--surface);
-    color: var(--text-secondary);
-    transition: all 0.3s ease;
-}
-.faq-accordion-item--active .faq-toggle-icon {
-    background: var(--cobalt);
-    color: var(--white);
-    transform: rotate(180deg);
-}
-
-.faq-body-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.faq-body-inner {
-    padding: 0 28px 28px 28px;
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--text-secondary);
-}
-
-/* Empty search placeholder */
-.faq-empty-state {
-    display: none;
-    text-align: center;
-    padding: 60px 20px;
-    background: var(--white);
-    border: 1px dashed var(--border);
-    border-radius: 16px;
-    color: var(--text-muted);
-}
-.faq-empty-state svg {
-    margin-bottom: 16px;
-    color: var(--text-muted);
-}
-
-/* Responsive Styles */
-@media (max-width: 991px) {
-    .faq-layout-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    .faq-sidebar {
-        position: static;
-        flex-direction: row;
-        overflow-x: auto;
-        padding-bottom: 8px;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-    }
-    .faq-sidebar::-webkit-scrollbar {
-        display: none;
-    }
-    .faq-nav-btn {
-        flex-shrink: 0;
-        scroll-snap-align: start;
-        padding: 12px 18px;
-    }
-}
-</style>
-
 <main id="main-content">
 
     <!-- ════════════════════════════════════════════════════════
-         HERO SECTION — Desain Premium & Selaras dengan Tema
+         HERO SECTION
     ════════════════════════════════════════════════════════ -->
     <section class="inner-page-hero" id="faq-hero">
         <div class="hero-bg" aria-hidden="true">
@@ -329,13 +112,13 @@ if ( function_exists( 'indotech_render_faq_schema' ) ) {
                 <span aria-hidden="true">/</span>
                 <span aria-current="page">FAQ</span>
             </nav>
-            <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Pusat Bantuan</span>
+            <span class="section-tag">Pusat Bantuan</span>
             <h1 class="inner-page-title">Pertanyaan <em>Sering Diajukan</em></h1>
             <p class="inner-page-subtitle">Temukan jawaban cepat atas pertanyaan seputar formulasi produk, metode penggunaan, serta prosedur kemitraan kami.</p>
         </div>
     </section>
 
-    <div class="container" style="margin-bottom: 100px;">
+    <div class="container ch-faq-container">
 
         <!-- ════════════════════════════════════════════════════════
              SEARCH BAR — Filter Pencarian Realtime

@@ -60,7 +60,7 @@
       });
     }
 
-    const mobileMenu = window.matchMedia('(max-width: 768px)');
+    const mobileMenu = window.matchMedia(companyHomepage ? '(max-width: 960px)' : '(max-width: 768px)');
     mobileMenu.addEventListener('change', (e) => {
       if (!e.matches && nav.classList.contains('open')) closeMenu();
     });
@@ -105,7 +105,7 @@
   const navLinks = document.querySelectorAll('.nav-menu a');
   const sectionTargets = document.querySelectorAll('section[id]');
 
-  if (navLinks.length && sectionTargets.length) {
+  if (navLinks.length && sectionTargets.length && !document.body.classList.contains('indotech-static-page')) {
     const navIO = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {

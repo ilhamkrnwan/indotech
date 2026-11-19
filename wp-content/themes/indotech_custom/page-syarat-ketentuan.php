@@ -64,8 +64,8 @@ $default_content = '
 <h2>3. Pemesanan, Harga Grosir, & Pembayaran</h2>
 <p>Seluruh transaksi grosir B2B diatur oleh ketentuan pemesanan sebagai berikut:</p>
 <ul>
-    <li><strong>Inquiry Harga:</strong> Harga produk yang tertera di situs bersifat estimasi dasar B2B. Harga final grosir ditentukan berdasarkan volume pesanan dan kesepakatan tertulis yang diterbitkan melalui penawaran harga resmi (*Quotation*).</li>
-    <li><strong>Termin Pembayaran (TOP):</strong> Metode pembayaran standar adalah transfer bank lunas sebelum pengiriman (CBD - *Cash Before Delivery*), kecuali telah disetujui kesepakatan tertulis mengenai termin pembayaran (*Term of Payment*) untuk akun distributor tertentu.</li>
+    <li><strong>Inquiry Harga:</strong> Harga produk yang tertera di situs bersifat estimasi dasar B2B. Harga final grosir ditentukan berdasarkan volume pesanan dan kesepakatan tertulis yang diterbitkan melalui penawaran harga resmi (<em>Quotation</em>).</li>
+    <li><strong>Termin Pembayaran (TOP):</strong> Metode pembayaran standar adalah transfer bank lunas sebelum pengiriman (CBD - <em>Cash Before Delivery</em>), kecuali telah disetujui kesepakatan tertulis mengenai termin pembayaran (<em>Term of Payment</em>) untuk akun distributor tertentu.</li>
     <li><strong>Mata Uang & Pajak:</strong> Seluruh harga disajikan dalam mata uang Rupiah (IDR). Penyesuaian pajak pertambahan nilai (PPN) akan disesuaikan dengan faktur pajak resmi perusahaan sesuai undang-undang perpajakan Indonesia.</li>
 </ul>
 
@@ -81,15 +81,15 @@ $default_content = '
 <p>Sebagai produsen berstandar tinggi, kami menjamin seluruh mutu produk kami:</p>
 <ul>
     <li>Klaim retur produk hanya diterima jika terjadi cacat produksi dari pabrik (misalnya kebocoran segel mesin, ketidaksesuaian formula produk, atau salah kirim varian).</li>
-    <li>Laporan kerusakan atau ketidaksesuaian barang harus diajukan maksimal **2×24 jam** sejak produk diterima oleh gudang Anda, dengan menyertakan video unboxing resmi dan nomor batch produksi.</li>
+    <li>Laporan kerusakan atau ketidaksesuaian barang harus diajukan maksimal <strong>2×24 jam</strong> sejak produk diterima oleh gudang Anda, dengan menyertakan video unboxing resmi dan nomor batch produksi.</li>
     <li>Kami akan mengganti produk yang cacat dengan produk baru yang sesuai setelah proses verifikasi tim quality control kami selesai.</li>
 </ul>
 
 <h2>6. Hak Kekayaan Intelektual</h2>
-<p>Semua materi di situs web ini, termasuk desain visual, teks, nama brand dagang (**Cleanique Academy, Cleanique Lab, Cleanique Mart, Depo Cleanique, Malabeez, Orchid Care, Prokopi**), logo perusahaan PT. Indotech Berkah Abadi, grafis, dan kode pemrograman adalah hak cipta milik kami. Penggunaan komersial, reproduksi, atau modifikasi konten tanpa izin tertulis dari direksi PT Indotech Berkah Abadi sangat dilarang dan dapat dituntut secara hukum.</p>
+<p>Semua materi di situs web ini, termasuk desain visual, teks, nama brand dagang (<strong>Cleanique Academy, Cleanique Lab, Cleanique Mart, Depo Cleanique, Malabeez, Orchid Care, Prokopi</strong>), logo perusahaan PT. Indotech Berkah Abadi, grafis, dan kode pemrograman adalah hak cipta milik kami. Penggunaan komersial, reproduksi, atau modifikasi konten tanpa izin tertulis dari direksi PT Indotech Berkah Abadi sangat dilarang dan dapat dituntut secara hukum.</p>
 
 <h2>7. Hukum yang Berlaku & Resolusi Perselisihan</h2>
-<p>Syarat & Ketentuan ini diatur dan ditafsirkan berdasarkan hukum Negara Kesatuan Republik Indonesia. Setiap perselisihan, sengketa dagang, atau tuntutan hukum yang timbul terkait dengan layanan dan produk PT Indotech Berkah Abadi akan diselesaikan secara musyawarah mufakat terlebih dahulu. Apabila tidak tercapai mufakat, perselisihan akan diselesaikan melalui **Pengadilan Negeri Sleman**, Daerah Istimewa Yogyakarta.</p>
+<p>Syarat &amp; Ketentuan ini diatur dan ditafsirkan berdasarkan hukum Negara Kesatuan Republik Indonesia. Setiap perselisihan, sengketa dagang, atau tuntutan hukum yang timbul terkait dengan layanan dan produk PT Indotech Berkah Abadi akan diselesaikan secara musyawarah mufakat terlebih dahulu. Apabila tidak tercapai mufakat, perselisihan akan diselesaikan melalui <strong>Pengadilan Negeri Sleman</strong>, Daerah Istimewa Yogyakarta.</p>
 ';
 
 if ( have_posts() ) {
@@ -124,10 +124,10 @@ if ( empty( $last_updated ) ) {
                 <span aria-hidden="true">/</span>
                 <span aria-current="page"><?php echo esc_html( $page_title ); ?></span>
             </nav>
-            <span class="section-tag" style="color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);">Dokumen Resmi</span>
+            <span class="section-tag">Dokumen Resmi</span>
             <h1 class="inner-page-title"><?php echo esc_html( $page_title ); ?></h1>
             <?php if ( $last_updated ) : ?>
-            <p class="inner-page-subtitle" style="font-size:14px;opacity:.5;">
+            <p class="ch-hero-meta">
                 Terakhir diperbarui: <?php echo esc_html( $last_updated ); ?>
             </p>
             <?php endif; ?>

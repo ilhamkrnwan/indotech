@@ -5,23 +5,23 @@ Dokumen ini merumuskan kebutuhan fungsional, non-fungsional, struktur seluruh ha
 ## 1. Tujuan & Cakupan Fase
 
 - **Tujuan**: Memberikan kesan modern, kreatif, dan kredibel layaknya perusahaan manufaktur B2B terkemuka melalui komposisi editorial arsitektural, fotografi produk/fasilitas beraturan, serta akses video perkenalan perusahaan — tanpa menghilangkan satu pun pilar bisnis B2B Indotech.
-- **Cakupan Fase 1 (Implementasi Sekarang)**: Penerapan total sistem desain baru, token warna, tipografi lokal `Onest` + `Inter`, aset background image baru, modul Video Profil berbasis Customizer, serta perombakan penuh beranda (`front-page.php`, header & footer beranda).
-- **Cakupan Fase 2 (Rollout Terencana)**: Penyelarasan halaman dalam (`/tentang-kami/`, `/produk/`, `/kemitraan/`, `/kontak/`, `/blog/`, `/faq/`, dan arsip brand/industri) mengikuti `DESIGN.md` baru serta penambahan topik Maklon & Pelatihan di formulir `/kontak/`.
+- **Cakupan Fase 1 (Implementasi Beranda)**: Penerapan sistem desain baru, token warna, tipografi lokal `Onest` + `Inter`, aset background image baru, carousel liquid Hero & Kisah Mitra, modul Video Profil terintegrasi, serta perombakan penuh beranda (`front-page.php`, header & footer kartu putih).
+- **Cakupan Fase 2 (Diterapkan pada Template Statis)**: Penyelarasan seluruh template halaman statis (`/tentang-kami/`, `/kemitraan/`, `/kontak/`, `/faq/`, `/blog/`, `/privacy-policy/`, `/syarat-ketentuan/`, `/cookie-policy/`, `page.php`, dan `404.php`) ke sistem desain `DESIGN.md` beserta opsi subjek *Jasa Maklon* & *Program Pelatihan* di formulir `/kontak/`. (Arsip/detail CPT produk & pricelist tetap dipertahankan terpisah.)
 
 ## 2. Struktur Halaman Situs (Information Architecture)
 
 | Rute / Halaman | Peran & Konten Wajib | Aksi Utama (CTA) | Status Implementasi |
 | --- | --- | --- | --- |
-| **Beranda** `/` | 7 blok editorial B2B: Hero + Interactive Process Stage `01–04`, Tentang Kami + Video Profil & KPI, Blok Gelap 4 Solusi B2B, Ekosistem 7 Brand, Kisah Mitra Asimetris, Wawasan & FAQ, Orbital CTA & Footer Kartu Putih. | `Konsultasi B2B` & `Lihat Katalog` | **Fase 1 (Aktif)** |
-| **Tentang Kami** `/tentang-kami/` | Sejarah sejak 2011, visi/misi, fasilitas R&D Sleman, video profil resmi, dan daftar izin edar Kemenkes RI PKRT & Halal yang terverifikasi. | `Konsultasi B2B` | Fase 2 (template ada) |
-| **Solusi B2B** `/#solusi-b2b` (atau halaman khusus) | Penjabaran 4 pilar: Pasokan & Distribusi, Maklon & Formulasi (`cleaniquelab.com`), Kemitraan Usaha (`/kemitraan/`), dan Pelatihan (`cleaniqueacademy.com`), terhubung ke CPT `industry` & `application`. | `Pilih Jalur Solusi` | Ringkasan di Beranda Fase 1; landing page terpisah di Fase 2 |
-| **Produk & Katalog** `/produk/` & `/products/{slug}/` | Katalog interaktif dengan filter kategori (`product_cat`), brand, pencarian AJAX, spesifikasi kemasan, dan tombol minta penawaran. | `Minta Penawaran` / `Lihat Detail` | Template & AJAX aktif |
-| **Profil Brand** `/brands/{slug}/` | Profil masing-masing dari 7 brand (`Orchid Care`, `Cleanique Lab`, `Cleanique Mart`, `Depo Cleanique`, `Cleanique Academy`, `Malabeez`, `Prokopi`) beserta produk terkait. | `Jelajahi Produk Brand` / Situs Resmi | Template aktif + diringkas di Beranda |
-| **Kemitraan** `/kemitraan/` | Skema Distributor, Agen, Toko Cleanique Mart, dan Depo Cleanique, alur pendaftaran 4 langkah, serta formulir pengajuan mitra. | `Ajukan Kemitraan` | Template aktif |
-| **Blog & Edukasi** `/blog/` | Artikel industri kebersihan, formulasi, tips laundry, dan artikel SEO terkait maklon. | `Baca Artikel` | Template aktif |
-| **FAQ B2B** `/faq/` | Daftar tanya-jawab komprehensif terkait pemesanan, legalitas PKRT/Halal, pengiriman luar Jawa, maklon, dan pelatihan. | `Tanya via WhatsApp` | Terintegrasi ringkas di Beranda + halaman `/faq/` |
-| **Kontak & Penawaran** `/kontak/#form-kontak` | Formulir permintaan penawaran, informasi alamat Sleman, peta lokasi, dan jalur WhatsApp 3 divisi CS (Keagenan, Retail, Pelatihan). | `Kirim Penawaran` | Target CTA Beranda; perluasan subjek Maklon & Pelatihan di Fase 2 |
-| **Legal, Download & Pricelist** `/privacy-policy/`, `/syarat-ketentuan/`, `/cookie-policy/`, `/download-center/`, `/daftar-harga/` | Dokumen legalitas situs, kebijakan privasi/cookie, katalog PDF, dan halaman daftar harga. | `Baca / Unduh` | Halaman aktif terpisah |
+| **Beranda** `/` | 7 blok editorial B2B: Hero + Interactive Process Stage `01–04`, Tentang Kami + Video Profil & KPI, Blok Gelap 4 Solusi B2B, Ekosistem Brand Kami, Kisah Mitra Asimetris, Wawasan & FAQ, Orbital CTA & Footer Kartu Putih. | `Konsultasi B2B` & `Lihat Katalog` | **Fase 1 (Aktif)** |
+| **Tentang Kami** `/tentang-kami/` | Sejarah sejak 2011 (`15+` tahun), visi/misi kontras Obsidian-Navy, nilai perusahaan, aplikasi layanan B2B, panel sertifikasi Kemenkes RI PKRT & Halal, peta lokasi, dan CTA orbital. | `Konsultasi B2B` | **Fase 2 (Diterapkan)** |
+| **Solusi B2B** `/#solusi-b2b` (atau halaman khusus) | Penjabaran 4 pilar: Pasokan & Distribusi, Maklon & Formulasi (`cleaniquelab.com`), Kemitraan Usaha (`/kemitraan/`), dan Pelatihan (`cleaniqueacademy.com`), terhubung ke CPT `industry` & `application`. | `Pilih Jalur Solusi` | Aktif terintegrasi di Beranda |
+| **Produk & Katalog** `/produk/` & `/products/{slug}/` | Katalog interaktif dengan filter kategori (`product_cat`), brand, pencarian AJAX, spesifikasi kemasan, dan tombol minta penawaran. | `Minta Penawaran` / `Lihat Detail` | Template & AJAX aktif (terisolasi) |
+| **Profil Brand** `/brands/{slug}/` | Profil brand (`Orchid Care`, `Cleanique Lab`, `Cleanique Mart`, `Depo Cleanique`, `Cleanique Academy`, `Malabeez`, `Prokopi`) beserta produk terkait. | `Jelajahi Produk Brand` / Situs Resmi | Template CPT aktif + diringkas di Beranda |
+| **Kemitraan** `/kemitraan/` | Skema Distributor, Reseller (kartu unggulan Obsidian-Navy), Horeka & Institusi, alur pendaftaran 4 langkah, FAQ kemitraan, dan formulir pendaftaran mitra via WhatsApp/AJAX. | `Ajukan Kemitraan` | **Fase 2 (Diterapkan)** |
+| **Blog & Edukasi** `/blog/` | Artikel pilihan, pencarian, sorting, filter kategori AJAX, widget konsultasi B2B, dan CTA orbital penutup. | `Baca Artikel` | **Fase 2 (Diterapkan)** |
+| **FAQ B2B** `/faq/` | Pencarian instan, navigasi kategori sticky, akordeon interaktif, JSON-LD `FAQPage`, dan panel CTA WhatsApp Obsidian-Navy. | `Tanya via WhatsApp` | **Fase 2 (Diterapkan)** |
+| **Kontak & Penawaran** `/kontak/#form-kontak` | Formulir permintaan penawaran (termasuk subjek Maklon & Pelatihan), informasi alamat Sleman, peta lokasi, dan jalur WhatsApp resmi. | `Kirim Penawaran` | **Fase 2 (Diterapkan)** |
+| **Legal, Default Page & 404** `/privacy-policy/`, `/syarat-ketentuan/`, `/cookie-policy/` | Dokumen legalitas situs ber-TOC sticky, template `page.php`, dan halaman `404.php` bergaya Manufy. | `Baca / Hubungi Kami` | **Fase 2 (Diterapkan)** |
 
 ## 3. Spesifikasi 7 Blok Beranda Fase 1
 
