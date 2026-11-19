@@ -24,26 +24,12 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                     <h2 class="ch-footer-headline">Membangun Masa Depan<br>Industri Kebersihan B2B</h2>
                     <nav class="ch-footer-nav" aria-label="Navigasi Footer">
                         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="is-active">Beranda</a>
-                        <span class="ch-dot" aria-hidden="true">•</span>
                         <a href="<?php echo esc_url( home_url( '/tentang-kami/' ) ); ?>">Tentang Kami</a>
-                        <span class="ch-dot" aria-hidden="true">•</span>
                         <a href="<?php echo esc_url( home_url( '/produk/' ) ); ?>">Produk</a>
-                        <span class="ch-dot" aria-hidden="true">•</span>
                         <a href="<?php echo esc_url( home_url( '/kemitraan/' ) ); ?>">Kemitraan</a>
-                        <span class="ch-dot" aria-hidden="true">•</span>
                         <a href="<?php echo esc_url( home_url( '/blog/' ) ); ?>">Blog</a>
-                        <span class="ch-dot" aria-hidden="true">•</span>
                         <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>">Kontak</a>
                     </nav>
-                    <div class="ch-footer-meta">
-                        <p><strong>PT Indotech Berkah Abadi</strong> &mdash; <?php echo esc_html( $address ); ?></p>
-                        <div class="ch-footer-cs">
-                            <a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a>
-                            <a href="https://wa.me/6287885590088?text=<?php echo rawurlencode( 'Halo Indotech, saya ingin bertanya mengenai program Keagenan & B2B.' ); ?>" target="_blank" rel="noopener">CS Keagenan: +62 878-8559-0088</a>
-                            <a href="https://wa.me/6282215840088?text=<?php echo rawurlencode( 'Halo Indotech, saya ingin bertanya mengenai program Pelatihan.' ); ?>" target="_blank" rel="noopener">CS Pelatihan: +62 822-1584-0088</a>
-                            <a href="https://wa.me/6285559474797?text=<?php echo rawurlencode( 'Halo Indotech, saya ingin bertanya mengenai Retail Produk.' ); ?>" target="_blank" rel="noopener">CS Retail: +62 855-5947-4797</a>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="ch-footer-form-col">
@@ -67,7 +53,47 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                 </div>
             </div>
 
-            <div class="ch-footer-wordmark" aria-hidden="true">[INDOTECH]</div>
+            <div class="ch-footer-info-bar">
+                <div class="ch-footer-info-col ch-footer-info-col--office">
+                    <span class="ch-footer-label">Kantor &amp; Produksi</span>
+                    <p class="ch-footer-company">PT Indotech Berkah Abadi</p>
+                    <p class="ch-footer-address"><?php echo esc_html( $address ); ?></p>
+                </div>
+
+                <div class="ch-footer-info-col">
+                    <span class="ch-footer-label">Kontak Resmi</span>
+                    <div class="ch-footer-contact-stack">
+                        <a href="mailto:<?php echo esc_attr( $email ); ?>" class="ch-footer-contact-link"><?php echo esc_html( $email ); ?></a>
+                        <a href="tel:<?php echo esc_attr( preg_replace( '/[\s\-]/', '', $phone ) ); ?>" class="ch-footer-contact-link"><?php echo esc_html( $phone ); ?></a>
+                    </div>
+                </div>
+
+                <div class="ch-footer-info-col">
+                    <span class="ch-footer-label">Layanan WhatsApp CS</span>
+                    <ul class="ch-footer-cs-list">
+                        <li>
+                            <a href="https://wa.me/6287885590088?text=<?php echo rawurlencode( 'Halo Indotech, saya ingin bertanya mengenai program Keagenan & B2B.' ); ?>" target="_blank" rel="noopener">
+                                <span class="ch-cs-role">Keagenan</span>
+                                <span class="ch-cs-num">+62 878-8559-0088</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://wa.me/6282215840088?text=<?php echo rawurlencode( 'Halo Indotech, saya ingin bertanya mengenai program Pelatihan.' ); ?>" target="_blank" rel="noopener">
+                                <span class="ch-cs-role">Pelatihan</span>
+                                <span class="ch-cs-num">+62 822-1584-0088</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://wa.me/6285559474797?text=<?php echo rawurlencode( 'Halo Indotech, saya ingin bertanya mengenai Retail Produk.' ); ?>" target="_blank" rel="noopener">
+                                <span class="ch-cs-role">Retail</span>
+                                <span class="ch-cs-num">+62 855-5947-4797</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="ch-footer-wordmark" aria-hidden="true">INDOTECH</div>
 
             <div class="ch-footer-bottom">
                 <div class="ch-footer-socials">

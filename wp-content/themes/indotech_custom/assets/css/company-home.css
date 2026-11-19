@@ -140,7 +140,7 @@
 .indotech-company-home .nav-menu {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 }
 
 .indotech-company-home .nav-menu li {
@@ -148,16 +148,8 @@
   align-items: center;
 }
 
-.indotech-company-home .nav-menu li + li::before {
-  content: '•';
-  color: var(--ch-muted-display);
-  font-size: 0.6875rem;
-  margin-inline: 6px;
-  pointer-events: none;
-}
-
 .indotech-company-home .nav-menu li a {
-  padding: 8px 10px;
+  padding: 8px 14px;
   border-radius: 999px;
   font-size: 0.875rem;
   font-weight: 500;
@@ -182,12 +174,6 @@
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
-}
-
-.ch-header-sep {
-  width: 1px;
-  height: 20px;
-  background: var(--ch-grid);
 }
 
 .ch-header-btn {
@@ -1041,7 +1027,7 @@
   outline-color: var(--ch-lime-bright);
 }
 
-/* ── Block 3B: Ekosistem 7 Brand ─────────────────────────── */
+/* ── Block 3B: Ekosistem Brand ───────────────────────────── */
 .ch-brands {
   padding-block: clamp(32px, 4vw, 56px) clamp(56px, 7vw, 96px);
 }
@@ -1079,7 +1065,8 @@
   gap: 18px;
   align-items: center;
   min-height: 102px;
-  padding: 16px 10px;
+  padding: 18px 14px;
+  border-radius: 14px;
   transition: background-color 0.18s ease;
 }
 
@@ -1110,27 +1097,11 @@
   color: var(--ch-cobalt);
 }
 
-.ch-brand-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 10px;
-  margin-bottom: 4px;
-}
-
-.ch-brand-meta h3 {
-  font-size: 1.125rem;
+.ch-brand-info h3 {
+  font-size: 1.0625rem;
   font-weight: 600;
   color: var(--ch-ink);
-}
-
-.ch-brand-tag {
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: var(--ch-cobalt-tint);
-  color: var(--ch-cobalt);
-  font-size: 0.75rem;
-  font-weight: 600;
+  margin: 0 0 4px;
 }
 
 .ch-brand-info p {
@@ -1612,9 +1583,9 @@
 
 .ch-footer-top {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(260px, 4.5fr);
-  gap: clamp(28px, 5vw, 64px);
-  align-items: start;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.95fr);
+  gap: clamp(28px, 4.5vw, 56px);
+  align-items: end;
 }
 
 .ch-footer-headline {
@@ -1622,15 +1593,15 @@
   font-weight: 700;
   line-height: 1.1;
   color: var(--ch-ink);
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .ch-footer-nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 14px;
-  margin-bottom: 20px;
+  gap: 4px 24px;
+  margin-bottom: 0;
 }
 
 .ch-footer-nav a {
@@ -1648,38 +1619,103 @@
   font-weight: 600;
 }
 
-.ch-dot {
-  color: var(--ch-muted-display);
-  font-size: 0.75rem;
+.ch-footer-info-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.95fr) minmax(0, 1.15fr);
+  gap: 24px clamp(24px, 4vw, 48px);
+  margin-top: clamp(24px, 3vw, 36px);
+  padding-top: clamp(22px, 2.8vw, 30px);
+  border-top: 1px solid var(--ch-grid);
+  align-items: start;
 }
 
-.ch-footer-meta {
+.ch-footer-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ch-slate);
+  margin-bottom: 10px;
+}
+
+.ch-footer-company {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ch-ink);
+  margin: 0 0 4px;
+}
+
+.ch-footer-address {
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--ch-slate);
+  margin: 0;
+  max-width: 42ch;
 }
 
-.ch-footer-meta strong {
-  color: var(--ch-ink);
-}
-
-.ch-footer-cs {
+.ch-footer-contact-stack {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-  margin-top: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
 }
 
-.ch-footer-cs a {
-  color: var(--ch-cobalt);
-  font-weight: 500;
-  min-height: 44px;
+.ch-footer-contact-link {
   display: inline-flex;
   align-items: center;
+  min-height: 36px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ch-ink);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.18s ease;
 }
 
-.ch-footer-cs a:hover {
+.ch-footer-contact-link:hover {
+  color: var(--ch-cobalt);
   text-decoration: underline;
+}
+
+.ch-footer-cs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-footer-cs-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 36px;
+  padding-block: 4px;
+  border-bottom: 1px solid var(--ch-canvas);
+  font-size: 0.875rem;
+  transition: color 0.18s ease;
+}
+
+.ch-footer-cs-list li:last-child a {
+  border-bottom: 0;
+}
+
+.ch-cs-role {
+  color: var(--ch-slate);
+  font-weight: 500;
+}
+
+.ch-cs-num {
+  color: var(--ch-ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  transition: color 0.18s ease;
+}
+
+.ch-footer-cs-list a:hover .ch-cs-num {
+  color: var(--ch-cobalt);
 }
 
 .ch-footer-form-title {
@@ -1736,20 +1772,20 @@
 }
 
 .ch-footer-form-msg {
-  margin-top: 8px;
-  min-height: 20px;
+  margin-top: 6px;
+  min-height: 0;
   font-size: 0.8125rem;
   color: var(--ch-cobalt);
   font-weight: 500;
 }
 
 .ch-footer-wordmark {
-  margin-block: clamp(24px, 4.5vw, 52px);
+  margin-block: clamp(24px, 3.8vw, 44px) clamp(18px, 2.8vw, 28px);
   font-family: 'Onest', sans-serif;
-  font-size: clamp(2.85rem, 11vw, 9.25rem);
+  font-size: clamp(2.85rem, 11.4vw, 9.5rem);
   font-weight: 700;
   line-height: 0.92;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.03em;
   text-align: center;
   color: #8692a7;
   user-select: none;
@@ -1758,10 +1794,9 @@
 }
 
 .ch-footer-bottom {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
   gap: 16px 24px;
   padding-top: 22px;
   border-top: 1px solid var(--ch-grid);
@@ -1792,6 +1827,7 @@
 .ch-footer-copy {
   font-size: 0.875rem;
   color: var(--ch-slate);
+  text-align: center;
   margin: 0;
 }
 
@@ -2018,11 +2054,8 @@
 
 /* ── Responsive Breakpoints ──────────────────────────────── */
 @media (max-width: 1120px) {
-  .indotech-company-home .nav-menu li + li::before {
-    margin-inline: 4px;
-  }
   .indotech-company-home .nav-menu li a {
-    padding: 7px 7px;
+    padding: 7px 10px;
     font-size: 0.8125rem;
   }
   .ch-header-btn {
@@ -2098,9 +2131,6 @@
   .indotech-company-home .primary-nav.open .nav-menu li:nth-child(4) { transition-delay: 0.16s; }
   .indotech-company-home .primary-nav.open .nav-menu li:nth-child(5) { transition-delay: 0.20s; }
   .indotech-company-home .primary-nav.open .nav-menu li:nth-child(6) { transition-delay: 0.24s; }
-  .indotech-company-home .nav-menu li + li::before {
-    display: none;
-  }
   .indotech-company-home .nav-menu li a {
     display: block;
     width: 100%;
@@ -2171,6 +2201,26 @@
   .ch-footer-top {
     grid-template-columns: minmax(0, 1fr);
   }
+  .ch-footer-top {
+    align-items: start;
+  }
+  .ch-footer-info-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ch-footer-info-col--office {
+    grid-column: 1 / -1;
+  }
+  .ch-footer-contact-link,
+  .ch-footer-cs-list a {
+    min-height: 44px;
+  }
+  .ch-footer-bottom {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+  .ch-footer-copy {
+    text-align: left;
+  }
   .ch-about-media-wrap {
     padding-left: 0;
     margin-bottom: 0;
@@ -2234,8 +2284,7 @@
 }
 
 @media (max-width: 560px) {
-  .indotech-company-home .header-actions .ch-header-btn--outline,
-  .indotech-company-home .header-actions .ch-header-sep {
+  .indotech-company-home .header-actions .ch-header-btn--outline {
     display: none;
   }
   .indotech-company-home .header-actions .ch-header-btn--primary {
@@ -2277,6 +2326,9 @@
     flex: 1 1 auto;
     width: 100%;
     height: 260px;
+  }
+  .ch-footer-info-bar {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

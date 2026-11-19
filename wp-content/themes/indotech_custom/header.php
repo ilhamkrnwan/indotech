@@ -138,7 +138,6 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                 <a href="<?php echo esc_url( home_url( '/produk/' ) ); ?>" class="ch-header-btn ch-header-btn--outline">
                     Katalog
                 </a>
-                <span class="ch-header-sep" aria-hidden="true"></span>
                 <a href="<?php echo esc_url( home_url( '/kontak/#form-kontak' ) ); ?>" class="ch-header-btn ch-header-btn--primary">
                     Konsultasi B2B
                 </a>
