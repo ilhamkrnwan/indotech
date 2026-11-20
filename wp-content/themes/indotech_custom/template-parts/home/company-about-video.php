@@ -6,10 +6,7 @@
 $media_cp  = get_theme_file_uri( 'assets/images/company-profile' );
 $media_img = get_theme_file_uri( 'assets/images' );
 
-$video_raw      = indotech_opt( 'video_url', '' );
-$video_title    = indotech_opt( 'video_title', 'Profil PT Indotech Berkah Abadi — Ekosistem Manufaktur B2B' );
 $video_duration = indotech_opt( 'video_duration', '01:05' );
-$video_config   = indotech_get_video_embed_config( $video_raw );
 
 $capabilities = [
     [
@@ -21,8 +18,8 @@ $capabilities = [
         'pWidth'   => 800,
         'pHeight'  => 1000,
         'duration' => $video_duration,
-        'alt'      => 'Pengujian formulasi di laboratorium Indotech',
-        'pAlt'     => 'Formulator senior memeriksa larutan formulasi biru cobalt di laboratorium R&D Indotech',
+        'alt'      => 'Peralatan formulasi di laboratorium Indotech',
+        'pAlt'     => 'Peralatan gelas laboratorium dan larutan formulasi biru cobalt di ruang R&D Indotech',
     ],
     [
         'id'       => 'facility',
@@ -33,8 +30,8 @@ $capabilities = [
         'pWidth'   => 1376,
         'pHeight'  => 768,
         'duration' => '00:48',
-        'alt'      => 'Tim teknis memeriksa proses produksi dan kontrol kualitas',
-        'pAlt'     => 'Tim quality control memeriksa proses manufaktur dan formulasi produk kebersihan',
+        'alt'      => 'Fasilitas manufaktur dan peralatan formulasi terstandar PT Indotech Berkah Abadi',
+        'pAlt'     => 'Fasilitas manufaktur dan peralatan formulasi terstandar PT Indotech Berkah Abadi',
     ],
     [
         'id'       => 'logistics',
@@ -67,29 +64,6 @@ $kpis = [
     [ 'val' => '500', 'accent' => '+', 'label' => 'Mitra B2B, agen, toko & institusi aktif' ],
     [ 'val' => '1.000', 'accent' => '+', 'label' => 'Varian SKU homecare, laundry & pewangi' ],
     [ 'val' => '34', 'accent' => '', 'label' => 'Provinsi dijangkau jaringan logistik kami' ],
-];
-
-$storyboard_steps = [
-    [
-        'time'  => '00:00 – 00:15',
-        'title' => 'Identitas & Basis Operasi Sleman',
-        'copy'  => 'Berdiri sejak 2011 di Sleman, D.I. Yogyakarta, PT Indotech Berkah Abadi hadir sebagai produsen dan supplier kimia kebersihan B2B.',
-    ],
-    [
-        'time'  => '00:15 – 00:32',
-        'title' => 'R&D & Jasa Maklon Cleanique Lab',
-        'copy'  => 'Pengembangan formulasi custom dan layanan private label dengan dukungan pengurusan izin edar Kemenkes RI PKRT serta Halal.',
-    ],
-    [
-        'time'  => '00:32 – 00:48',
-        'title' => 'Suplai 1.000+ SKU & Jaringan Kemitraan',
-        'copy'  => 'Melayani pengadaan grosir hingga pengembangan gerai toko modern Cleanique Mart dan depo isi ulang Depo Cleanique.',
-    ],
-    [
-        'time'  => '00:48 – 01:05',
-        'title' => 'Pelatihan Formulasi Cleanique Academy',
-        'copy'  => 'Membuka transfer ilmu pembuatan produk kebersihan dan pendampingan kewirausahaan bagi mitra di seluruh Indonesia.',
-    ],
 ];
 ?>
 
@@ -196,66 +170,4 @@ $storyboard_steps = [
     </div>
 </section>
 
-<div
-    id="ch-video-modal"
-    class="ch-modal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="ch-video-modal-title"
-    data-video-type="<?php echo esc_attr( $video_config['type'] ); ?>"
-    data-video-src="<?php echo esc_url( $video_config['src'] ); ?>"
-    hidden
->
-    <div class="ch-modal-backdrop" data-modal-close></div>
-    <div class="ch-modal-dialog ch-modal-dialog--video">
-        <div class="ch-modal-header">
-            <h2 id="ch-video-modal-title" class="ch-modal-title"><?php echo esc_html( $video_title ); ?></h2>
-            <button type="button" class="ch-modal-close" data-modal-close aria-label="Tutup pemutar video">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-        </div>
-
-        <div class="ch-modal-body">
-            <?php if ( $video_config['type'] !== 'none' ) : ?>
-                <div class="ch-video-frame" id="ch-video-embed-mount"></div>
-            <?php else : ?>
-                <div class="ch-storyboard-preview">
-                    <div class="ch-storyboard-visual">
-                        <img
-                            src="<?php echo esc_url( $media_cp . '/hero-manufy-stage.webp' ); ?>"
-                            width="1376"
-                            height="768"
-                            alt="Preview fasilitas R&D dan operasional PT Indotech Berkah Abadi"
-                            loading="lazy"
-                        >
-                        <div class="ch-storyboard-caption">
-                            <span class="ch-storyboard-badge">Ringkasan Profil · <?php echo esc_html( $video_duration ); ?></span>
-                            <p>Pilih babak di bawah untuk meninjau cakupan ekosistem bisnis PT Indotech Berkah Abadi.</p>
-                        </div>
-                    </div>
-
-                    <div class="ch-storyboard-steps" role="tablist" aria-label="Babak video profil Indotech">
-                        <?php foreach ( $storyboard_steps as $idx => $step ) : ?>
-                            <button
-                                type="button"
-                                role="tab"
-                                class="ch-storyboard-step<?php echo 0 === $idx ? ' is-active' : ''; ?>"
-                                aria-selected="<?php echo 0 === $idx ? 'true' : 'false'; ?>"
-                                data-storyboard-step="<?php echo (int) $idx; ?>"
-                            >
-                                <span class="ch-step-time"><?php echo esc_html( $step['time'] ); ?></span>
-                                <strong><?php echo esc_html( $step['title'] ); ?></strong>
-                                <span class="ch-step-copy"><?php echo esc_html( $step['copy'] ); ?></span>
-                            </button>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            <?php endif; ?>
-
-            <div class="ch-modal-footer-actions">
-                <a class="ch-header-btn ch-header-btn--outline" href="<?php echo esc_url( home_url( '/tentang-kami/' ) ); ?>">Halaman Tentang Kami</a>
-                <a class="ch-header-btn ch-header-btn--primary" href="<?php echo esc_url( home_url( '/kontak/#form-kontak' ) ); ?>">Konsultasi B2B</a>
-            </div>
-        </div>
-    </div>
-</div>
+<?php get_template_part( 'template-parts/home/company-video-modal' ); ?>

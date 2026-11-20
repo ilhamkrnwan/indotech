@@ -37,17 +37,6 @@
     if (!modal || !triggers.length) return;
 
     let lastTrigger = null;
-    const sbSteps = Array.from(modal.querySelectorAll('[data-storyboard-step]'));
-
-    const activateChapter = (index) => {
-      if (!sbSteps.length) return;
-      const target = sbSteps[index] || sbSteps[0];
-      sbSteps.forEach((step) => {
-        const active = step === target;
-        step.classList.toggle('is-active', active);
-        step.setAttribute('aria-selected', String(active));
-      });
-    };
 
     const closeModal = () => {
       modal.hidden = true;
@@ -82,8 +71,6 @@
           video.playsInline = true;
           mount.replaceChildren(video);
         }
-      } else {
-        activateChapter(0);
       }
 
       modal.hidden = false;
@@ -109,7 +96,6 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !modal.hidden) closeModal();
     });
-    sbSteps.forEach((step, idx) => step.addEventListener('click', () => activateChapter(idx)));
   }
 
   function initFormPreselectors(scrollToTarget) {

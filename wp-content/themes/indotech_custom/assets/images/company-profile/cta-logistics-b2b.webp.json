@@ -1,9 +1,9 @@
 {
-    "prompt": "4:3 editorial industrial photo of a clean sunlit B2B chemical distribution warehouse bay with palletized unbranded matte-white & cobalt-blue 5L/20L jerrycans and an Indonesian operations supervisor in a cobalt-navy vest checking a tablet. No text, logos, labels, or watermarks.",
-    "placement": "Orbital CTA top-right supporting photo",
+    "prompt": "4:3 architectural industrial photograph of a sunlit B2B chemical distribution warehouse bay in 5500K daylight; symmetrical high-bay steel racks stocked with shrink-wrapped pallets of unbranded matte-white and cobalt-blue HDPE 5L/20L jerrycans along a clean epoxy floor. Zero people, zero workers, zero faces, zero text, labels, or watermarks.",
+    "placement": "Orbital CTA top-right photo & Hero Slide 01",
     "aspectRatio": "4:3",
-    "safeZone": "Full frame with natural breathing margin; decorative photo without overlaid text",
+    "safeZone": "Uncluttered reflective light-grey epoxy aisle foreground",
     "dimensions": "800x600",
     "sourceSize": "1200x896",
-    "createdAt": "2026-11-19T03:19:27+00:00"
+    "createdAt": "2026-11-20T03:06:41+00:00"
 }

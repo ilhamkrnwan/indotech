@@ -1,4 +1,9 @@
 {
-  "prompt": "Sumber: https://indotech.id/wp-content/uploads/2026/08/Validasi-Kualitas.png",
-  "createdAt": "2026-11-19T02:54:26.154Z"
+    "prompt": "16:9 close-up editorial photograph of a sunlit chemistry R&D bench in 5500K daylight; stainless burette stand dispensing a cobalt-blue droplet into a rippled Erlenmeyer flask, flanked by a clean test tube rack and white optical microscope above a calm white counter safe zone. Zero people, zero faces, zero hands, zero text, logos, sparkles, or watermarks.",
+    "placement": "Hero Slide 04, Section 2 R&D thumbnail & Blog Featured fallback",
+    "aspectRatio": "16:9",
+    "safeZone": "Bottom 30% clean white laboratory counter foreground",
+    "dimensions": "960x540",
+    "sourceSize": "1376x768",
+    "createdAt": "2026-11-20T03:06:41+00:00"
 }

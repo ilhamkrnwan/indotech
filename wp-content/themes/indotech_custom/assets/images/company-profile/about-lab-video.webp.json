@@ -1,9 +1,9 @@
 {
-    "prompt": "Vertical portrait editorial photograph inside modern R&D chemical formulation lab; Indonesian senior chemist in safety glasses and crisp white coat with cobalt inner collar examining translucent cobalt-tinted formulation flask under bright 5500K daylight; uncluttered steel tabletop bottom 20% safe zone. No text, logos, watermarks, or play icons.",
-    "placement": "Tentang Kami overlapping video poster card",
+    "prompt": "Vertical 4:5 editorial photograph inside a minimalist sunlit chemical R&D formulation lab (5500K daylight); borosilicate volumetric flasks, graduated cylinders, cobalt-blue Erlenmeyer flask on magnetic stirrer, stainless burette stand and blank analytical scale above uncluttered steel foreground. Zero people, zero faces, zero hands, zero text, logos, play icons, or watermarks.",
+    "placement": "Tentang Kami overlapping vertical video poster card",
     "aspectRatio": "4:5",
-    "safeZone": "Bottom 20% (floating video play pill)",
+    "safeZone": "Bottom 20% brushed stainless tabletop (floating video play button & caption)",
     "dimensions": "800x1000",
     "sourceSize": "896x1200",
-    "createdAt": "2026-11-19T03:19:27+00:00"
+    "createdAt": "2026-11-20T03:06:41+00:00"
 }

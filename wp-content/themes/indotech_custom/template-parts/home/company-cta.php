@@ -51,7 +51,7 @@ $wa_msg      = rawurlencode( 'Halo Indotech, saya ingin mendiskusikan kebutuhan 
                 src="<?php echo esc_url( $media_cp . '/cta-collab-b2b.webp' ); ?>"
                 width="800"
                 height="600"
-                alt="Konsultan B2B Indotech meninjau sampel kemasan produk pembersih bersama mitra"
+                alt="Rangkaian sampel kemasan produk pembersih B2B dan private label PT Indotech Berkah Abadi"
                 loading="lazy"
                 decoding="async"
             >

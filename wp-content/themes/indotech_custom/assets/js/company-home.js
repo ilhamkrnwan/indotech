@@ -21,8 +21,6 @@
   const reducedMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
   const prefersReduced = () => reducedMotionMQ.matches;
 
-  let activeChapterIdx = 0;
-
   // 1. Hero 4-Slide Liquid Carousel (01-04)
   function initHeroCarousel() {
     const stage = document.querySelector('[data-hero-stage]');
@@ -296,7 +294,6 @@
         if (idx === currentCap) return;
         const prevCap = currentCap;
         currentCap = idx;
-        activeChapterIdx = idx;
 
         capBtns.forEach((b) => {
           const active = b === btn;
@@ -434,23 +431,11 @@
     });
   });
 
-  // 4. Video Profile Lightbox & Storyboard Tabs
+  // 4. Video Profile Cinema Lightbox
   function initVideoModal() {
     const videoModal = document.getElementById('ch-video-modal');
     const videoOpenBtn = document.querySelector('[data-video-open]');
     if (!videoModal || !videoOpenBtn) return;
-
-    const sbSteps = Array.from(videoModal.querySelectorAll('[data-storyboard-step]'));
-
-    const activateChapter = (chapterIndex) => {
-      if (!sbSteps.length) return;
-      const target = sbSteps[chapterIndex] || sbSteps[0];
-      sbSteps.forEach((s) => {
-        const active = s === target;
-        s.classList.toggle('is-active', active);
-        s.setAttribute('aria-selected', String(active));
-      });
-    };
 
     videoOpenBtn.addEventListener('click', () => {
       const type = videoModal.dataset.videoType || 'none';
@@ -472,14 +457,8 @@
           video.playsInline = true;
           mount.replaceChildren(video);
         }
-      } else {
-        activateChapter(activeChapterIdx);
       }
       openModal(videoModal, videoOpenBtn);
-    });
-
-    sbSteps.forEach((step, idx) => {
-      step.addEventListener('click', () => activateChapter(idx));
     });
   }
 

@@ -72,7 +72,7 @@ function indotech_customizer($wp_customize) {
     ]);
     $wp_customize->add_control('indotech_video_url', [
         'label'       => __('URL Video Profil (YouTube / Vimeo / MP4)', 'indotech'),
-        'description' => __('Kosongkan untuk menampilkan preview storyboard interaktif 4 babak.', 'indotech'),
+        'description' => __('Kosongkan untuk menampilkan preview visual fasilitas perusahaan di modal video.', 'indotech'),
         'section'     => 'indotech_company_video',
         'type'        => 'url',
     ]);

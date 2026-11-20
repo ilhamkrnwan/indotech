@@ -29,7 +29,7 @@ $hero_stages = [
         'img'    => $media . '/hero-manufy-stage.webp',
         'width'  => 1376,
         'height' => 768,
-        'alt'    => 'Tim R&D dan quality assurance PT Indotech Berkah Abadi memeriksa sampel formulasi produk kebersihan',
+        'alt'    => 'Fasilitas manufaktur dan laboratorium formulasi R&D PT Indotech Berkah Abadi',
     ],
     [
         'num'    => '03',
@@ -40,7 +40,7 @@ $hero_stages = [
         'img'    => $media . '/cta-collab-b2b.webp',
         'width'  => 800,
         'height' => 600,
-        'alt'    => 'Konsultan B2B Indotech meninjau sampel kemasan kemitraan bersama calon mitra usaha',
+        'alt'    => 'Rangkaian sampel kemasan produk pembersih dan kemitraan B2B PT Indotech Berkah Abadi',
     ],
     [
         'num'    => '04',
@@ -51,7 +51,7 @@ $hero_stages = [
         'img'    => $media . '/ilustrasi-formulasi.webp',
         'width'  => 960,
         'height' => 540,
-        'alt'    => 'Proses pengujian dan praktik formulasi laboratorium Cleanique Academy Indotech',
+        'alt'    => 'Meja kerja formulasi laboratorium dan pengujian mutu Cleanique Academy Indotech',
     ],
 ];
 $default_stage = $hero_stages[1];

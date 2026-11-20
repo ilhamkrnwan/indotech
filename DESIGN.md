@@ -90,5 +90,7 @@ Sudut besar `28px–32px` membingkai media stage, kartu kisah mitra, panel solus
 
 - Gunakan hanya klaim legalitas terverifikasi (`Izin Edar Kemenkes RI PKRT` & `Sertifikasi Halal`) dan angka yang sinkron (`15+ Tahun`, `500+ Mitra`, `1.000+ SKU`, `34 Provinsi`, `7 Brand`).
 - Gunakan `#a3e635` hanya di latar gelap `#0b1220`; di latar terang gunakan `#d9f99d` dengan teks gelap `#0b1220`.
+- Seluruh aset foto editorial/ilustrasi perusahaan berfokus pada arsitektur fasilitas, peralatan laboratorium, kemasan B2B polos, dan logistik gudang **tanpa model wanita maupun wajah manusia**.
 - Jaga *safe-zone* gambar latar bebas objek penting agar tab, tombol play video, dan kartu detail selalu terbaca dengan kontras WCAG 2.2 AA serta target minimal `44×44px`.
 - Jangan menanamkan teks, logo, angka, atau ikon tombol *play* di dalam aset raster gambar.
+- Modal video profil ([company-video-modal.php](wp-content/themes/indotech_custom/template-parts/home/company-video-modal.php)) memakai satu bingkai sinema besar `16:9` (maks `1140px`) yang fokus pada pemutar video tanpa header bar, tab storyboard, maupun CTA tambahan yang berlebihan.

@@ -134,7 +134,7 @@ get_header();
                         src="<?php echo esc_url( $media_cp . '/cta-collab-b2b.webp' ); ?>"
                         width="800"
                         height="600"
-                        alt="Konsultan B2B Indotech berdiskusi mengenai paket kemasan kemitraan bersama calon mitra usaha"
+                        alt="Sampel kemasan jeriken dan botol produk kemitraan B2B PT Indotech Berkah Abadi"
                         fetchpriority="high"
                         decoding="async"
                     >

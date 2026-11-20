@@ -10,17 +10,18 @@ Setiap aset foto yang digunakan sebagai latar elemen UI wajib memenuhi 5 pilar a
 
 | Penempatan | Aspek Rasio & Dimensi Target | Safe-Zone UI (Wajib Tenang / Bersih) | Aturan Fokus Subjek |
 | --- | --- | --- | --- |
-| **Hero Interactive Stage** (`hero-manufy-stage.webp`) | `16:9` (`1376×768` atau maks `1600×900`, WebP `<= 120 KB`) | **Bawah-kiri 30%** (untuk tab proses `01–04`) dan **bawah-kanan 35%** (untuk kartu putih L-shape) harus berupa permukaan bersih tanpa detail rumit atau wajah. | Subjek manusia & peralatan utama diposisikan di **55% area tengah-atas**, memberi ruang bernapas atas minimal `12%`. |
-| **About Lab & Video Poster** (`about-lab-video.webp`) | `4:5` (`800×1000`, WebP `<= 80 KB`) | **Bawah 20%** harus tenang/minim kontras ekstrem sebagai tempat tombol *Play Video Profil* mengambang. | Subjek utama berada di **2/3 bagian atas** dengan ruang kepala aman saat di-crop di desktop maupun mobile. |
-| **Orbital CTA Kiri & Kanan** (`cta-collab-b2b.webp`, `cta-logistics-b2b.webp`) | `4:3` (`800×600`, WebP `<= 80 KB`) | Seluruh pinggir berjarak aman dari wajah/objek penting karena kartu dipotong dengan `border-radius: 24px`. | Tidak boleh ada teks overlay di atas foto pendukung CTA; foto berfungsi sebagai penyeimbang visual orbit. |
+| **Hero Interactive Stage** (`hero-manufy-stage.webp`, `ilustrasi-formulasi.webp`) | `16:9` (`1376×768` / `960×540`, WebP `<= 120 KB`) | **Bawah-kiri 30%** (untuk tab proses `01–04`) dan **bawah-kanan 35%** (untuk kartu putih L-shape) harus berupa permukaan meja/lantai bersih tanpa detail rumit. | Fokus pada reaktor stainless, alat gelas borosilikat & larutan biru cobalt di **area tengah-atas**, tanpa model manusia atau wajah. |
+| **About Lab & Video Poster** (`about-lab-video.webp`) | `4:5` (`800×1000`, WebP `<= 80 KB`) | **Bawah 20%** harus tenang/minim kontras ekstrem sebagai tempat tombol *Play Video Profil* mengambang. | Peralatan gelas formulasi, *magnetic stirrer*, & neraca analitik berada di **2/3 bagian atas**, tanpa model manusia atau wajah. |
+| **Orbital CTA Kiri & Kanan** (`cta-collab-b2b.webp`, `cta-logistics-b2b.webp`) | `4:3` (`800×600`, WebP `<= 80 KB`) | Seluruh pinggir dan sudut bawah-kanan tetap bersih karena kartu dipotong dengan `border-radius: 24px` atau ditempati overlay L-shape. | Sampel kemasan polos & lorong palet logistik rapi dalam daylight `5500K` tanpa kehadiran manusia maupun label merek fiktif. |
 | **Kisah Mitra / Gerai Nyata** (`mitra-*.webp`) | `4:3` / `1:1` (foto dokumentasi nyata yang disetujui) | **Bawah-kiri 35%** memakai kartu putih solid/semi-buram berbatas jelas agar nama gerai dan peran terbaca tanpa bergantung pada kecerahan papan toko. | Pastikan fasad dan papan nama gerai Cleanique Mart tidak terpotong oleh sudut membulat kartu. |
 
 ### B. Aturan Pencahayaan, Warna, & Estetika Industrial-Modern
 
 1. **Pencahayaan Daylight Arsitektural (`5200K–6000K`)**: Gunakan cahaya natural terang yang menonjolkan kebersihan fasilitas produksi, laboratorium kaca, dan lantai epoksi gudang — hindari filter gelap suram, efek neon berlebihan, atau saturasi kuning/oranye berlebih.
-2. **Harmoni Palet Indotech**: Utamakan latar netral terang (baja tahan karat, kaca arsitektural, dinding putih-abu dingin) dengan aksen **Indotech Cobalt (`#144EE3`)** atau **Deep Obsidian-Navy (`#0B1220`)** pada jas lab, rompi operasional, tutup jeriken, atau cairan sampel agar menyatu dengan tema situs.
-3. **Larangan Keras Elemen UI di Dalam Gambar**: Dilarang keras menghasilkan atau menempelkan teks promosi, tipografi judul, logo brand fiktif, stiker sertifikasi, angka statistik, ikon tombol *play*, maupun watermark ke dalam file raster gambar. Semua teks, badge, sertifikasi, dan tombol wajib dirender sebagai HTML/SVG.
-4. **Kejujuran Visual & Kemasan**: Untuk ilustrasi konsep fasilitas/konsultasi, gunakan wadah/jeriken polos tanpa merek (*unbranded*) agar tidak menimbulkan ekspektasi label SKU palsu; untuk foto gerai dan produk spesifik, gunakan dokumentasi foto nyata atau packshot katalog resmi.
+2. **Visual Fasilitas Bebas Wajah & Model Wanita**: Seluruh aset editorial hasil generasi di `assets/images/company-profile/` berfokus pada arsitektur fasilitas manufaktur, peralatan gelas laboratorium presisi, kemasan jeriken polos B2B, serta rak logistik gudang **tanpa menampilkan model wanita maupun wajah manusia**.
+3. **Harmoni Palet Indotech**: Utamakan latar netral terang (baja tahan karat, kaca arsitektural, dinding putih-abu dingin) dengan aksen **Indotech Cobalt (`#144EE3`)** atau **Deep Obsidian-Navy (`#0B1220`)** pada cairan sampel dan kemasan HDPE polos agar menyatu dengan tema situs.
+4. **Larangan Keras Elemen UI di Dalam Gambar**: Dilarang keras menghasilkan atau menempelkan teks promosi, tipografi judul, logo brand fiktif, stiker sertifikasi, angka statistik, ikon tombol *play*, maupun watermark ke dalam file raster gambar. Semua teks, badge, sertifikasi, dan tombol wajib dirender sebagai HTML/SVG.
+5. **Kejujuran Visual & Kemasan**: Untuk ilustrasi konsep fasilitas/kemasan B2B, gunakan wadah/jeriken polos tanpa merek (*unbranded*) agar tidak menimbulkan ekspektasi label SKU palsu; untuk foto gerai dan produk spesifik, gunakan dokumentasi foto nyata atau packshot katalog resmi.
 
 ### C. Aturan Overlay, Scrim & Keterbacaan Kontras
 
@@ -64,8 +65,8 @@ Setiap aset foto yang digunakan sebagai latar elemen UI wajib memenuhi 5 pilar a
 ### Konfigurasi & Perilaku Teknis
 - Admin dapat mengisi tautan video resmi di **WordPress Customizer → Video Profil Perusahaan** (`indotech_video_url`), bersama judul (`indotech_video_title`) dan durasi tampilan (`indotech_video_duration`).
 - Mendukung tautan **YouTube**, **Vimeo**, maupun berkas **MP4** langsung yang di-host di media library/CDN resmi.
-- **Lazy Embed**: Tidak ada `<iframe>` atau `<video>` yang dimuat saat beranda dibuka. Pemutar hanya disuntikkan ke dalam dialog modal (`#ch-video-modal`) ketika pengunjung menekan tombol **Tonton Video Profil**, dan dibersihkan kembali saat modal ditutup (`Close` / klik backdrop / tombol `Escape`).
-- **Fallback Terstruktur**: Jika `indotech_video_url` kosong, modal otomatis menampilkan **Preview Storyboard Interaktif 4 Babak** lengkap dengan ringkasan profil PT Indotech Berkah Abadi dan CTA menuju halaman Tentang Kami atau Konsultasi B2B.
+- **Lazy Embed**: Tidak ada `<iframe>` atau `<video>` yang dimuat saat beranda dibuka. Pemutar hanya disuntikkan ke dalam dialog modal sinema tunggal (`#ch-video-modal`, berbagi partial `template-parts/home/company-video-modal.php`) ketika pengunjung menekan tombol **Tonton Video Profil**, dan dibersihkan kembali saat modal ditutup (`Close` / klik backdrop / tombol `Escape`).
+- **Tampilan Modal Fokus Video (`Cinema Lightbox`)**: Modal dibuat besar (`min(1140px, 94vw)`, rasio `16:9` penuh) dengan tombol tutup mengambang di pojok kanan atas tanpa bilah header tambahan, kartu babak storyboard, maupun tombol CTA footer agar perhatian pengunjung sepenuhnya tertuju ke video. Jika `indotech_video_url` belum diisi, panggung `16:9` menampilkan poster visual bersih dengan penanda tombol putar dan judul singkat video profil.
 
 ### Storyboard Produksi Video Resmi
 
