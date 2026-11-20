@@ -73,7 +73,6 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                     $items = $is_manufy ? [
                         '/'              => 'Beranda',
                         '/tentang-kami/' => 'Tentang Kami',
-                        '/#solusi-b2b'   => 'Solusi B2B',
                         '/produk/'       => 'Produk',
                         '/kemitraan/'    => 'Kemitraan',
                         '/blog/'         => 'Blog',
