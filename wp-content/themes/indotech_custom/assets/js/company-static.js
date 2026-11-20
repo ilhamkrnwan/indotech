@@ -267,6 +267,8 @@
           '.cs-ledger-list .cs-ledger-row',
           '.cs-cert-columns .cs-cert-item',
           '.cs-hairline-matrix .cs-hairline-cell',
+          '.cs-editorial-grid .cs-item',
+          '.cs-usp-ledger .cs-usp-cell',
           '.cs-app-grid .cs-app-card',
           '.cs-dark-cols-3 .cs-dark-col',
           '.cs-process-rail .cs-process-step',

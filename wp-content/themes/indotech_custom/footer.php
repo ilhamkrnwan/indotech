@@ -16,9 +16,8 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
 ?>
 
 <?php if ( function_exists( 'indotech_is_manufy_page' ) && indotech_is_manufy_page() ) :
-    $req_uri = strtok( $_SERVER['REQUEST_URI'] ?? '', '?' );
-    $is_blog_active = is_page( 'blog' );
-    $is_produk_active = is_page( 'produk' );
+    $is_blog_active   = is_page( 'blog' ) || is_singular( 'post' ) || is_category() || is_tag() || is_date() || is_author() || is_home();
+    $is_produk_active = is_page( [ 'produk', 'download-center' ] ) || is_post_type_archive( [ 'product', 'brand', 'application', 'industry' ] ) || is_singular( [ 'product', 'brand', 'application', 'industry' ] ) || is_tax( 'product_cat' );
     $footer_links = [
         [ 'url' => home_url( '/' ),             'label' => 'Beranda',      'active' => is_front_page() ],
         [ 'url' => home_url( '/tentang-kami/' ), 'label' => 'Tentang Kami', 'active' => is_page( 'tentang-kami' ) ],

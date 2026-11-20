@@ -22,6 +22,8 @@
       const phone = ($form.find('[name="phone"]').val() || $form.find('[name="contact_phone"]').val() || '').trim();
       
       let message = ($form.find('[name="message"]').val() || $form.find('[name="contact_message"]').val() || '').trim();
+      const address = ($form.find('[name="address"]').val() || '').trim();
+      const productSize = $form.find('[name="product_size"]:checked').val() || '';
       const $checkedAroma = $form.find('[name="product_aroma"]:checked');
       const productAroma = $checkedAroma.val() || '';
       const aromaLabelAttr = $checkedAroma.attr('data-label') || 'Pilih Varian';

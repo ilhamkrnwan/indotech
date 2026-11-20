@@ -358,7 +358,7 @@ get_header();
                 <p class="ch-section-sub">Jangkauan formula produk kimia pembersih dan solusi maklon kami untuk berbagai sektor operasional usaha.</p>
             </header>
 
-            <div class="cs-app-grid">
+            <div class="cs-editorial-grid">
                 <?php
                 $app_query = new WP_Query( [
                     'post_type'      => 'application',
@@ -370,31 +370,33 @@ get_header();
                     while ( $app_query->have_posts() ) :
                         $app_query->the_post();
                         $app_id      = get_the_ID();
+                        $app_title   = get_the_title();
+                        $title_lower = strtolower( $app_title );
                         $tagline     = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $app_id, 'app_tagline' ) : '';
-                        $title_lower = strtolower( get_the_title() );
-                        $svg_icon    = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
+                        $desc        = $tagline ? wp_trim_words( wp_strip_all_tags( $tagline ), 16, '...' ) : wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 16, '...' );
 
-                        if ( strpos( $title_lower, 'laundry' ) !== false ) {
-                            $svg_icon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="12" cy="13" r="5"/><path d="M12 10a3 3 0 0 1 0 6"/><circle cx="8" cy="6" r="1"/></svg>';
-                        } elseif ( strpos( $title_lower, 'detail' ) !== false || strpos( $title_lower, 'car' ) !== false || strpos( $title_lower, 'auto' ) !== false ) {
-                            $svg_icon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>';
+                        if ( has_post_thumbnail() ) {
+                            $img_html = get_the_post_thumbnail( $app_id, 'indotech-card', [ 'loading' => 'lazy', 'decoding' => 'async' ] );
+                        } else {
+                            $fallback_img = $media_cp . '/ilustrasi-formulasi.webp';
+                            if ( strpos( $title_lower, 'laundry' ) !== false ) {
+                                $fallback_img = $media_cp . '/hero-manufy-stage.webp';
+                            } elseif ( strpos( $title_lower, 'detail' ) !== false || strpos( $title_lower, 'car' ) !== false || strpos( $title_lower, 'auto' ) !== false ) {
+                                $fallback_img = $media_cp . '/cta-logistics-b2b.webp';
+                            }
+                            $img_html = '<img src="' . esc_url( $fallback_img ) . '" alt="' . esc_attr( $app_title ) . '" loading="lazy" decoding="async">';
                         }
-                        ?>
-                        <article class="cs-app-card">
-                            <div class="cs-app-meta">
-                                <span class="cs-app-icon"><?php echo $svg_icon; ?></span>
-                                <span class="cs-app-kicker">Aplikasi B2B</span>
-                            </div>
-                            <h3 class="cs-app-title"><?php the_title(); ?></h3>
-                            <?php if ( $tagline ) : ?>
-                                <p class="cs-app-desc"><?php echo esc_html( $tagline ); ?></p>
-                            <?php endif; ?>
-                            <a href="<?php the_permalink(); ?>" class="ch-inline-link cs-app-link">
-                                <span>Pelajari Selengkapnya</span>
-                                <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
-                            </a>
-                        </article>
-                        <?php
+
+                        get_template_part( 'template-parts/archive/editorial-item', null, [
+                            'url'            => get_permalink( $app_id ),
+                            'title'          => $app_title,
+                            'desc'           => $desc,
+                            'image_html'     => $img_html,
+                            'fallback_label' => $app_title,
+                            'media_variant'  => 'wide',
+                            'heading_tag'    => 'h3',
+                            'post_id'        => $app_id,
+                        ] );
                     endwhile;
                     wp_reset_postdata();
                 else :

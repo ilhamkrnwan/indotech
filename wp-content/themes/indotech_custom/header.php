@@ -85,12 +85,17 @@ $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya mengenai produk
                         '/blog/'         => 'Blog',
                         '/kontak/'       => 'Kontak',
                     ];
-                    $req_path = untrailingslashit( strtok( $_SERVER['REQUEST_URI'] ?? '', '?' ) );
+                    $req_path       = untrailingslashit( strtok( $_SERVER['REQUEST_URI'] ?? '', '?' ) );
+                    $is_product_ctx = is_page( [ 'produk', 'download-center' ] ) || is_post_type_archive( [ 'product', 'brand', 'application', 'industry' ] ) || is_singular( [ 'product', 'brand', 'application', 'industry' ] ) || is_tax( 'product_cat' );
+                    $is_blog_ctx    = is_page( 'blog' ) || is_singular( 'post' ) || is_category() || is_tag() || is_date() || is_author() || is_home();
                     echo '<ul class="nav-menu">';
                     foreach ( $items as $path => $label ) {
                         $url         = esc_url( home_url( $path ) );
                         $target_path = untrailingslashit( parse_url( home_url( $path ), PHP_URL_PATH ) ?: $path );
-                        $is_active   = ( '/' === $path && is_front_page() ) || ( '/' !== $path && 0 !== strpos( $path, '/#' ) && ( $req_path === $target_path || strpos( $req_path . '/', $target_path . '/' ) === 0 ) );
+                        $is_active   = ( '/' === $path && is_front_page() )
+                            || ( '/produk/' === $path && $is_product_ctx )
+                            || ( '/blog/' === $path && $is_blog_ctx )
+                            || ( '/' !== $path && 0 !== strpos( $path, '/#' ) && ( $req_path === $target_path || strpos( $req_path . '/', $target_path . '/' ) === 0 ) );
                         $active      = $is_active ? ' class="current-menu-item"' : '';
                         echo "<li{$active}><a href=\"{$url}\">{$label}</a></li>";
                     }

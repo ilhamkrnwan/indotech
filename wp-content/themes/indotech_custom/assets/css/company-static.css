@@ -38,6 +38,11 @@
 .cs-pill-tag {
   display: inline-flex;
   align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  justify-self: start;
   min-height: 28px;
   padding: 4px 12px;
   border-radius: 999px;
@@ -48,6 +53,7 @@
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+  white-space: nowrap;
   margin-bottom: 14px;
 }
 
@@ -64,6 +70,11 @@
 .cs-inline-lime-tag {
   display: inline-flex;
   align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  justify-self: start;
   padding: 3px 9px;
   margin-left: 6px;
   border-radius: 999px;
@@ -74,6 +85,7 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
   vertical-align: middle;
 }
 
@@ -1439,6 +1451,180 @@
   margin-bottom: 0;
 }
 
+/* ── Minimalist Anti-Slop Editorial Grid & Items ────────── */
+.cs-editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(26px, 3vw, 40px) clamp(18px, 2.2vw, 28px);
+  transition: opacity 0.2s ease;
+}
+
+.cs-editorial-grid.products-loading {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.cs-editorial-grid--2col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cs-item {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  min-width: 0;
+}
+
+.cs-item-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cs-item-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+  transition: border-color 0.22s ease;
+}
+
+.cs-item-media--wide {
+  aspect-ratio: 16 / 10;
+}
+
+.cs-item-media--logo {
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: var(--ch-white);
+}
+
+.cs-item-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s var(--ch-ease);
+}
+
+.cs-item-media--logo img {
+  width: auto;
+  height: auto;
+  max-width: 74%;
+  max-height: 74%;
+  object-fit: contain;
+}
+
+.cs-item-link:hover .cs-item-media {
+  border-color: rgba(20, 78, 227, 0.35);
+}
+
+.cs-item-link:hover .cs-item-media img {
+  transform: scale(1.035);
+}
+
+.cs-item-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--ch-cobalt-tint) 0%, var(--ch-canvas) 100%);
+  color: var(--ch-slate);
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 16px;
+  text-align: center;
+}
+
+.cs-item-body {
+  padding: 14px 2px 0;
+}
+
+.cs-item-title {
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.32;
+  color: var(--ch-ink);
+  margin: 0 0 6px;
+  letter-spacing: -0.02em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.18s ease;
+}
+
+.cs-item-link:hover .cs-item-title {
+  color: var(--ch-cobalt);
+}
+
+.cs-item-desc {
+  font-size: 0.9rem;
+  line-height: 1.56;
+  color: var(--ch-slate);
+  margin: 0;
+  max-width: 48ch;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Borderless Editorial Featured Lead (Blog Page) */
+.cs-featured-lead {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(24px, 3.5vw, 48px);
+  align-items: center;
+}
+
+.cs-featured-lead-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+}
+
+.cs-featured-lead-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s var(--ch-ease);
+}
+
+.cs-featured-lead:hover .cs-featured-lead-media img {
+  transform: scale(1.03);
+}
+
+.cs-featured-lead-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cs-featured-lead-kicker {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ch-cobalt);
+  margin-bottom: 10px;
+}
+
 /* ── Blog Archive Layout & AJAX Grid ─────────────────────── */
 .cs-featured-stage {
   display: grid;
@@ -1473,12 +1659,18 @@
   position: absolute;
   top: 20px;
   left: 20px;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: calc(100% - 40px);
+  flex: 0 0 auto;
   padding: 6px 14px;
   border-radius: 999px;
   background: var(--ch-lime);
   color: var(--ch-ink);
   font-size: 0.75rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .cs-featured-body {
@@ -2414,11 +2606,17 @@
   .cs-split-faq,
   .cs-contact-ledger,
   .cs-featured-stage,
+  .cs-featured-lead,
+  .cs-editorial-grid--2col,
   .cs-blog-grid,
   .cs-faq-layout,
   .cs-legal-grid,
   .cs-404-split {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs-editorial-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .cs-hero-copy {
@@ -2456,6 +2654,7 @@
 }
 
 @media (max-width: 640px) {
+  .cs-editorial-grid,
   .cs-hairline-matrix--4,
   .cs-process-rail,
   .cs-form-row {
@@ -2480,8 +2679,16 @@
   }
 }
 
+@media (max-width: 420px) {
+  .cs-pill-tag,
+  .cs-inline-lime-tag,
+  .cs-featured-badge {
+    white-space: normal;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .cs-main :is(.cs-app-card, .blog-card, .cs-featured-img, .blog-img, .cs-stage-video-trigger, .cs-scheme-select-btn, .filter-btn, .faq-toggle-icon, .cs-route-list a) {
+  .cs-main :is(.cs-app-card, .blog-card, .cs-featured-img, .blog-img, .cs-item-media img, .cs-stage-video-trigger, .cs-scheme-select-btn, .filter-btn, .faq-toggle-icon, .cs-route-list a) {
     transition-property: color, background-color, border-color, opacity !important;
     transform: none !important;
   }

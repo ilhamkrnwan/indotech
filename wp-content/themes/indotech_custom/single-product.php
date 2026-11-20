@@ -2,1077 +2,475 @@
 /**
  * Template Name: Single Product
  * Template Post Type: product
+ *
+ * Halaman Detail Produk B2B — Arsitektur Manufy Daylight.
+ * Mempertahankan schema Product JSON-LD, galeri + lightbox, spesifikasi Carbon Fields, & inquiry-ajax.js form.
  */
 
 get_header();
-echo '<main id="main-content">';
 ?>
 
-<style>
-.product-detail-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 48px;
-    align-items: start;
-}
-.product-header-block {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 32px;
-    align-items: start;
-}
-.product-main-image-wrap {
-    width: 100%;
-    height: 320px;
-    border-radius: 12px;
-    background: var(--white);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-    cursor: zoom-in;
-    transition: all var(--trans);
-}
-.product-main-image-wrap:hover {
-    border-color: var(--brand-accent);
-    box-shadow: var(--shadow-sm);
-}
-.product-main-image-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 12px;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.product-main-image-wrap:hover img {
-    transform: scale(1.05);
-}
-.product-thumbnails-grid {
-    display: flex;
-    gap: 10px;
-    margin-top: 12px;
-    flex-wrap: wrap;
-}
-.product-thumb-item {
-    width: 56px;
-    height: 56px;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 2px solid var(--border);
-    background: var(--white);
-    cursor: pointer;
-    transition: all var(--trans);
-}
-.product-thumb-item:hover, .product-thumb-item.active {
-    border-color: var(--brand-accent);
-}
-.product-thumb-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+<main id="main-content" class="ch-main cs-main" tabindex="-1">
+    <div class="ch-canvas-band ch-canvas-band--top">
+        <div class="ch-grid-guides" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
 
-/* Lightbox Modal */
-.gallery-lightbox {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.95);
-    z-index: 99999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.gallery-lightbox.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-.lightbox-content {
-    max-width: 85%;
-    max-height: 85%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: scale(0.95);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.gallery-lightbox.active .lightbox-content {
-    transform: scale(1);
-}
-.lightbox-content img {
-    max-width: 100%;
-    max-height: 80vh;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-.lightbox-close {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    background: none;
-    border: none;
-    color: var(--white);
-    font-size: 40px;
-    line-height: 1;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: all var(--trans);
-    z-index: 2;
-}
-.lightbox-close:hover {
-    opacity: 1;
-}
-.lightbox-prev, .lightbox-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: var(--white);
-    font-size: 32px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.6;
-    transition: all var(--trans);
-    user-select: none;
-    z-index: 2;
-}
-.lightbox-prev:hover, .lightbox-next:hover {
-    opacity: 1;
-    background: rgba(255, 255, 255, 0.2);
-}
-.lightbox-prev {
-    left: 24px;
-}
-.lightbox-next {
-    right: 24px;
-}
-.lightbox-counter {
-    position: absolute;
-    bottom: 24px;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-}
+        <?php
+        while ( have_posts() ) :
+            the_post();
+            $product_id     = get_the_ID();
+            $sku            = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $product_id, 'product_sku' ) : '';
+            $brand_relation = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $product_id, 'product_brand' ) : [];
+            $downloads      = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $product_id, 'product_downloads' ) : [];
+            $specs          = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $product_id, 'product_specifications' ) : [];
 
-/* Related Product Cards */
-.brand-product-card {
-    --brand-accent: var(--cobalt);
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    transition: all var(--trans);
-    position: relative;
-    box-shadow: var(--shadow-xs);
-}
-.brand-product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: rgba(0, 87, 255, 0.15);
-}
-.brand-product-card-img-wrap {
-    margin-bottom: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    background: var(--surface);
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--border);
-    transition: border-color var(--trans);
-}
-.brand-product-card:hover .brand-product-card-img-wrap {
-    border-color: rgba(0, 87, 255, 0.15);
-}
-.brand-product-card-sku-wrap {
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--brand-accent);
-    letter-spacing: 0.06em;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-.brand-product-card-title {
-    font-size: 18px;
-    margin-bottom: 10px;
-    line-height: 1.3;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    transition: color var(--trans);
-}
-.brand-product-card:hover .brand-product-card-title {
-    color: var(--brand-accent);
-}
-.brand-product-card-excerpt {
-    font-size: 13.5px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 24px;
-}
-.brand-product-card .btn-outline {
-    margin-top: auto;
-    font-size: 12px;
-    text-align: center;
-    display: block;
-    border-color: var(--brand-accent) !important;
-    color: var(--brand-accent) !important;
-    background: transparent;
-    padding: 10px 16px;
-    transition: all var(--trans);
-}
-.brand-product-card:hover .btn-outline {
-    background: var(--brand-accent) !important;
-    color: var(--white) !important;
-    border-color: var(--brand-accent) !important;
-    box-shadow: 0 4px 12px rgba(0, 87, 255, 0.15);
-}
+            $brand_id    = 0;
+            $brand_title = '';
+            $brand_url   = '#';
+            if ( ! empty( $brand_relation ) && isset( $brand_relation[0]['id'] ) ) {
+                $brand_id    = $brand_relation[0]['id'];
+                $brand_title = get_the_title( $brand_id );
+                $brand_url   = get_permalink( $brand_id );
+            }
 
-@media (max-width: 991px) {
-    .product-detail-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-}
-@media (max-width: 768px) {
-    .product-header-block {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-    .product-main-image-wrap {
-        height: 280px;
-    }
-    .lightbox-prev { left: 12px; width: 44px; height: 44px; font-size: 24px; }
-    .lightbox-next { right: 12px; width: 44px; height: 44px; font-size: 24px; }
-    .lightbox-close { top: 12px; right: 12px; font-size: 32px; }
-}
+            $product_terms    = get_the_terms( $product_id, 'product_cat' );
+            $product_category = ( ! empty( $product_terms ) && ! is_wp_error( $product_terms ) ) ? $product_terms[0]->name : '';
+            $product_image    = get_the_post_thumbnail_url( $product_id, 'large' );
 
-.products-grid-catalog {
-    display: grid;
-    gap: 24px;
-}
+            $product_schema = [
+                '@context'     => 'https://schema.org',
+                '@type'        => 'Product',
+                'name'         => wp_strip_all_tags( get_the_title() ),
+                'description'  => wp_strip_all_tags( get_the_excerpt() ),
+                'url'          => get_permalink(),
+                'manufacturer' => [ '@id' => home_url( '/#organization' ) ],
+            ];
+            if ( $sku ) {
+                $product_schema['sku'] = $sku;
+            }
+            if ( $product_image ) {
+                $product_schema['image'] = $product_image;
+            }
+            if ( $brand_title ) {
+                $product_schema['brand'] = [ '@type' => 'Brand', 'name' => $brand_title ];
+            }
+            if ( $product_category ) {
+                $product_schema['category'] = $product_category;
+            }
+            if ( function_exists( 'indotech_print_jsonld' ) ) {
+                indotech_print_jsonld( $product_schema );
+            }
+            ?>
 
-@media (max-width: 767px) {
-    .product-detail-wrapper {
-        padding-top: 80px !important;
-        padding-bottom: 40px !important;
-    }
-    .product-detail-grid {
-        gap: 20px !important;
-    }
-    /* Reduce lateral padding on mobile container so it doesn't waste space */
-    .product-detail-wrapper .container {
-        padding: 0 12px !important;
-    }
-    
-    /* Header card content padding */
-    .product-detail-grid > div > div {
-        padding: 20px 12px !important;
-        border-radius: 8px !important;
-    }
-    
-    .product-header-block {
-        gap: 16px !important;
-    }
-    .product-main-image-wrap {
-        height: 220px !important;
-        border-radius: 6px !important;
-    }
-    
-    /* Related products grid */
-    .products-grid-catalog {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 10px !important;
-    }
-    .brand-product-card {
-        padding: 10px !important;
-        border-radius: 6px !important;
-    }
-    .brand-product-card-img-wrap {
-        height: 120px !important;
-        margin-bottom: 8px !important;
-        border-radius: 4px !important;
-    }
-    .brand-product-card-sku-wrap {
-        font-size: 8px !important;
-        margin-bottom: 4px !important;
-    }
-    .brand-product-card-title {
-        font-size: 13px !important;
-        margin-bottom: 4px !important;
-        line-height: 1.25 !important;
-        min-height: auto !important;
-    }
-    .brand-product-card-excerpt {
-        font-size: 11px !important;
-        margin-bottom: 12px !important;
-        line-height: 1.4 !important;
-    }
-    .brand-product-card .btn-outline {
-        padding: 6px 10px !important;
-        font-size: 11px !important;
-        border-radius: 4px !important;
-    }
-    
-    /* Inquiry form container card */
-    .product-inquiry-box {
-        padding: 24px 16px !important;
-        border-radius: 8px !important;
-    }
-}
+            <section class="cs-hero cs-hero--compact ch-wrap" aria-labelledby="cs-product-title">
+                <nav class="cs-breadcrumb" aria-label="Breadcrumb">
+                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Beranda</a>
+                    <span aria-hidden="true">/</span>
+                    <a href="<?php echo esc_url( get_post_type_archive_link( 'product' ) ?: home_url( '/produk/' ) ); ?>">Produk</a>
+                    <span aria-hidden="true">/</span>
+                    <span aria-current="page"><?php the_title(); ?></span>
+                </nav>
 
-/* Product Description List Styling */
-.product-description ol,
-.product-description ul {
-    padding-left: 24px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-.product-description ol {
-    list-style-type: decimal;
-}
-.product-description ul {
-    list-style-type: disc;
-}
-.product-description li {
-    margin-bottom: 8px;
-}
-
-/* Badge Radio Styles */
-.badge-radio-label {
-    cursor: pointer;
-    user-select: none;
-}
-.badge-radio-label input[type="radio"] {
-    display: none;
-}
-.badge-radio-label .badge-radio-span {
-    display: inline-block;
-    padding: 10px 18px;
-    font-size: 13.5px;
-    font-weight: 600;
-    border-radius: 30px;
-    border: 2px solid var(--border);
-    background: var(--white);
-    color: var(--text-secondary);
-    transition: all 0.2s ease;
-}
-.badge-radio-label input[type="radio"]:checked + .badge-radio-span {
-    border-color: var(--brand-accent) !important;
-    background: var(--brand-accent) !important;
-    color: var(--white) !important;
-    box-shadow: 0 4px 12px rgba(0, 87, 255, 0.15);
-}
-.badge-radio-label:hover .badge-radio-span {
-    border-color: var(--brand-accent);
-    color: var(--ink);
-}
-
-/* Product Description Rich Typography & Headings (Override Tailwind Preflight) */
-.product-description {
-    color: #475569 !important;
-    line-height: 1.8 !important;
-    font-size: 15px !important;
-}
-.product-description h3 {
-    font-size: 20px !important;
-    font-weight: 700 !important;
-    color: #0f172a !important;
-    margin-top: 32px !important;
-    margin-bottom: 14px !important;
-    letter-spacing: -0.02em !important;
-    line-height: 1.3 !important;
-    display: block !important;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 8px;
-}
-.product-description p {
-    margin-bottom: 18px !important;
-    color: #475569 !important;
-    line-height: 1.8 !important;
-    font-size: 15px !important;
-}
-.product-description ul {
-    list-style-type: disc !important;
-    padding-left: 28px !important;
-    margin-top: 10px !important;
-    margin-bottom: 24px !important;
-    display: block !important;
-}
-.product-description ol {
-    list-style-type: decimal !important;
-    padding-left: 28px !important;
-    margin-top: 10px !important;
-    margin-bottom: 24px !important;
-    display: block !important;
-}
-.product-description li {
-    margin-bottom: 10px !important;
-    line-height: 1.7 !important;
-    color: #334155 !important;
-    font-size: 15px !important;
-    display: list-item !important;
-}
-.product-description strong, 
-.product-description b {
-    font-weight: 700 !important;
-    color: #0f172a !important;
-}
-
-/* ── Share Buttons & Tooltips ───────────────────────── */
-.share-btn {
-    position: relative;
-    width: 36px;
-    height: 36px;
-    border-radius: 50% !important;
-    padding: 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    text-decoration: none !important;
-    border: none !important;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-.share-btn:hover {
-    transform: translateY(-3px) scale(1.08) !important;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18) !important;
-}
-
-/* Tooltip Popup */
-.share-btn[data-tooltip]::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    background: #0F172A;
-    color: #FFFFFF;
-    font-size: 11.5px;
-    font-weight: 600;
-    white-space: nowrap;
-    padding: 5px 10px;
-    border-radius: 6px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-    z-index: 10;
-}
-
-/* Tooltip Arrow */
-.share-btn[data-tooltip]::after {
-    content: '';
-    position: absolute;
-    bottom: calc(100% + 2px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    border-width: 5px 5px 0 5px;
-    border-style: solid;
-    border-color: #0F172A transparent transparent transparent;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    z-index: 10;
-}
-
-.share-btn[data-tooltip]:hover::before,
-.share-btn[data-tooltip]:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-</style>
-
-<?php
-
-while (have_posts()) : the_post();
-    $product_id = get_the_ID();
-    
-    // Retrieve Carbon Fields Meta
-    $sku = carbon_get_post_meta($product_id, 'product_sku');
-    $brand_relation = carbon_get_post_meta($product_id, 'product_brand');
-    $downloads = carbon_get_post_meta($product_id, 'product_downloads');
-    $specs = carbon_get_post_meta($product_id, 'product_specifications');
-
-    // Retrieve associated brand info
-    $brand_id = 0;
-    $brand_title = '';
-    $brand_accent = '#0057FF';
-    $brand_url = '#';
-    if (!empty($brand_relation) && isset($brand_relation[0]['id'])) {
-        $brand_id = $brand_relation[0]['id'];
-        $brand_title = get_the_title($brand_id);
-        $brand_accent = carbon_get_post_meta($brand_id, 'brand_accent_color') ?: '#0057FF';
-        $brand_url = get_permalink($brand_id);
-    }
-?>
-
-<?php
-/*
- * JSON-LD Product schema (B2B). Tanpa harga publik — model "hubungi untuk
- * penawaran", jadi blok `offers` dihilangkan agar tidak memicu warning
- * "missing price" di Google. manufacturer di-link ke entitas Organization
- * (@id #organization dari inc/seo.php) untuk memperkuat graf entitas (GEO).
- */
-$product_terms    = get_the_terms( $product_id, 'product_cat' );
-$product_category = ( ! empty( $product_terms ) && ! is_wp_error( $product_terms ) ) ? $product_terms[0]->name : '';
-$product_image    = get_the_post_thumbnail_url( $product_id, 'large' );
-
-$product_schema = [
-	'@context'     => 'https://schema.org',
-	'@type'        => 'Product',
-	'name'         => wp_strip_all_tags( get_the_title() ),
-	'description'  => wp_strip_all_tags( get_the_excerpt() ),
-	'url'          => get_permalink(),
-	'manufacturer' => [ '@id' => home_url( '/#organization' ) ],
-];
-if ( $sku ) {
-	$product_schema['sku'] = $sku;
-}
-if ( $product_image ) {
-	$product_schema['image'] = $product_image;
-}
-if ( $brand_title ) {
-	$product_schema['brand'] = [ '@type' => 'Brand', 'name' => $brand_title ];
-}
-if ( $product_category ) {
-	$product_schema['category'] = $product_category;
-}
-
-if ( function_exists( 'indotech_print_jsonld' ) ) {
-	indotech_print_jsonld( $product_schema );
-}
-?>
-
-<div class="product-detail-wrapper" style="--brand-accent: <?php echo esc_attr($brand_accent); ?>; background: var(--surface); min-height: 100vh; padding-top: 120px; padding-bottom: 80px;">
-    <div class="container">
-        
-        <!-- Breadcrumbs / Navigation Back -->
-        <nav class="product-breadcrumbs" style="margin-bottom: 24px; font-size: 13.5px; color: var(--text-secondary);">
-            <a href="<?php echo esc_url(home_url('/')); ?>" style="color: var(--text-muted);">Beranda</a> &nbsp;/&nbsp; 
-            <a href="<?php echo esc_url(get_post_type_archive_link('product')); ?>" style="color: var(--text-muted);">Produk</a> &nbsp;/&nbsp; 
-            <span style="color: var(--ink); font-weight: 500;"><?php the_title(); ?></span>
-        </nav>
-
-        <div class="product-detail-grid">
-            
-            <!-- ── LEFT COLUMN: Product Info, Specs, & Downloads ── -->
-            <div>
-                <!-- Main Header Info Card -->
-                <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 36px 40px; margin-bottom: 30px; box-shadow: var(--shadow-xs);">
-                    
-                    <!-- Title & Brand Header Block (Above Image) -->
-                    <div style="margin-bottom: 24px;">
-                        <h1 style="font-size: clamp(24px, 4vw, 34px); margin-bottom: 12px; letter-spacing: -0.03em; line-height: 1.25; font-weight: 700; color: var(--ink);"><?php the_title(); ?></h1>
-                        
-                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid var(--border);">
-                            <?php if ($brand_id) : ?>
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-size: 14px; color: var(--text-secondary);">Brand:</span>
-                                    <a href="<?php echo esc_url($brand_url); ?>" style="color: var(--brand-accent); font-weight: 600; font-size: 14px; text-decoration: none; border-bottom: 1px solid transparent; transition: border var(--trans);" onmouseover="this.style.borderBottomColor='var(--brand-accent)'" onmouseout="this.style.borderBottomColor='transparent'">
-                                        <?php echo esc_html($brand_title); ?>
-                                    </a>
-                                </div>
-                            <?php else: ?>
-                                <div></div>
-                            <?php endif; ?>
-
-                            <!-- Social Share Buttons -->
-                            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                                <span style="font-size: 12.5px; font-weight: 600; color: var(--text-secondary); margin-right: 4px;">Bagikan:</span>
-                                <!-- WhatsApp Share -->
-                                <a href="https://api.whatsapp.com/send?text=<?php echo urlencode(get_the_title() . ' ' . get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="share-btn share-wa" data-tooltip="WhatsApp" aria-label="Bagikan via WhatsApp" style="background: #25D366; color: #FFF;">
-                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                                </a>
-                                <!-- Facebook Share -->
-                                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="share-btn share-fb" data-tooltip="Facebook" aria-label="Bagikan via Facebook" style="background: #1877F2; color: #FFF;">
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.7 5H18V0h-3.808C10.592 0 9 1.583 9 4.615V8z"/></svg>
-                                </a>
-                                <!-- LinkedIn Share -->
-                                <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="share-btn share-li" data-tooltip="LinkedIn" aria-label="Bagikan via LinkedIn" style="background: #0A66C2; color: #FFF;">
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.262-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                </a>
-                                <!-- Twitter/X Share -->
-                                <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener noreferrer" class="share-btn share-tw" data-tooltip="X (Twitter)" aria-label="Bagikan via X" style="background: #000; color: #FFF;">
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                </a>
-                                <!-- Copy Link Button -->
-                                <button id="copy-product-link" class="share-btn share-copy" data-tooltip="Salin Link" aria-label="Salin Tautan Produk" style="background: #64748B; color: #FFF;">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                                </button>
-                            </div>
-                        </div>
+                <div class="cs-product-headline-row">
+                    <div>
+                        <?php if ( $brand_id ) : ?>
+                            <a href="<?php echo esc_url( $brand_url ); ?>" class="cs-pill-tag" style="margin-bottom: 12px;">
+                                <?php echo esc_html( $brand_title ); ?>
+                            </a>
+                        <?php elseif ( $product_category ) : ?>
+                            <span class="cs-pill-tag" style="margin-bottom: 12px;"><?php echo esc_html( $product_category ); ?></span>
+                        <?php endif; ?>
+                        <h1 id="cs-product-title" class="cs-single-h1"><?php the_title(); ?></h1>
                     </div>
 
-                    <!-- Visual Gallery (Large view + Thumbs) -->
+                    <div class="cs-share-icons" aria-label="Bagikan produk">
+                        <a href="https://api.whatsapp.com/send?text=<?php echo rawurlencode( get_the_title() . ' ' . get_permalink() ); ?>" target="_blank" rel="noopener noreferrer" class="share-btn" aria-label="Bagikan via WhatsApp">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo rawurlencode( get_permalink() ); ?>" target="_blank" rel="noopener noreferrer" class="share-btn" aria-label="Bagikan via LinkedIn">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.262-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                        <button type="button" id="copy-product-link" class="share-btn" aria-label="Salin Tautan Produk">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="cs-product-layout">
                     <div>
-                        <div class="product-main-image-wrap" style="height: 380px;">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('large'); ?>
+                        <div class="product-main-image-wrap">
+                            <?php if ( has_post_thumbnail() ) : ?>
+                                <?php the_post_thumbnail( 'large', [ 'fetchpriority' => 'high', 'decoding' => 'async' ] ); ?>
                             <?php else : ?>
-                                <span style="font-weight:700; color:var(--text-muted); font-size:16px;">TIDAK ADA GAMBAR</span>
+                                <span class="cs-item-placeholder"><?php echo esc_html( $brand_title ?: 'Produk Indotech' ); ?></span>
                             <?php endif; ?>
                         </div>
-                        
-                        <!-- Gallery Thumbs Grid -->
-                        <?php 
-                        $prod_gallery = carbon_get_post_meta($product_id, 'product_gallery');
-                        
-                        // Collect all images starting with featured image
-                        $all_images = [];
-                        $featured_url = get_the_post_thumbnail_url($product_id, 'large');
-                        if ($featured_url) {
+
+                        <?php
+                        $prod_gallery = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $product_id, 'product_gallery' ) : [];
+                        $all_images   = [];
+                        $featured_url = get_the_post_thumbnail_url( $product_id, 'large' );
+                        if ( $featured_url ) {
                             $all_images[] = $featured_url;
                         }
-                        if (!empty($prod_gallery)) {
-                            foreach ($prod_gallery as $img_id) {
-                                $g_url = wp_get_attachment_image_url($img_id, 'large');
-                                if ($g_url && !in_array($g_url, $all_images)) {
+                        if ( ! empty( $prod_gallery ) ) {
+                            foreach ( $prod_gallery as $img_id ) {
+                                $g_url = wp_get_attachment_image_url( $img_id, 'large' );
+                                if ( $g_url && ! in_array( $g_url, $all_images, true ) ) {
                                     $all_images[] = $g_url;
                                 }
                             }
                         }
-                        
-                        if (count($all_images) > 1) : 
-                        ?>
+                        if ( count( $all_images ) > 1 ) :
+                            ?>
                             <div class="product-thumbnails-grid">
-                                <?php foreach ($all_images as $idx => $img_url) : ?>
-                                    <div class="product-thumb-item <?php echo $idx === 0 ? 'active' : ''; ?>" data-index="<?php echo $idx; ?>">
-                                        <img src="<?php echo esc_url($img_url); ?>" alt="Gallery Image <?php echo $idx + 1; ?>">
-                                    </div>
+                                <?php foreach ( $all_images as $idx => $img_url ) : ?>
+                                    <button type="button" class="product-thumb-item <?php echo $idx === 0 ? 'active' : ''; ?>" data-index="<?php echo (int) $idx; ?>" aria-label="Pilih gambar <?php echo (int) ( $idx + 1 ); ?>">
+                                        <img src="<?php echo esc_url( $img_url ); ?>" alt="Galeri <?php echo (int) ( $idx + 1 ); ?>">
+                                    </button>
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
-                        
-                        <!-- JSON-encoded data for JS Lightbox -->
-                        <script id="product-gallery-data" type="application/json">
-                        <?php echo json_encode($all_images); ?>
-                        </script>
-                    </div>
 
-                    <hr style="border: 0; border-top: 1px solid var(--border); margin: 30px 0;">
+                        <script id="product-gallery-data" type="application/json"><?php echo wp_json_encode( $all_images ); ?></script>
 
-                    <!-- Product Description Content -->
-                    <div class="product-description" style="color: var(--text-secondary); line-height: 1.8; font-size: 15px;">
-                        <?php the_content(); ?>
-                    </div>
-                </div>
-
-                <!-- Technical Specifications Card -->
-                <?php if (!empty($specs)) : ?>
-                    <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 40px; margin-bottom: 30px; box-shadow: var(--shadow-xs);">
-                        <h2 style="font-size: 20px; margin-bottom: 24px; letter-spacing: -0.02em; border-bottom: 1px solid var(--border); padding-bottom: 12px;">Spesifikasi Teknis</h2>
-                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px;">
-                            <tbody>
-                                <?php foreach ($specs as $spec) : 
-                                    if (empty($spec['spec_name'])) continue;
-                                ?>
-                                    <tr style="border-bottom: 1px solid var(--border);">
-                                        <td style="padding: 14px 10px 14px 0; font-weight: 600; color: var(--ink); width: 35%;"><?php echo esc_html($spec['spec_name']); ?></td>
-                                        <td style="padding: 14px 10px; color: var(--text-secondary);"><?php echo esc_html($spec['spec_value']); ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                <?php endif; ?>
-
-                <!-- Related Downloads Card -->
-                <?php if (!empty($downloads)) : ?>
-                    <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: var(--shadow-xs);">
-                        <h2 style="font-size: 20px; margin-bottom: 20px; letter-spacing: -0.02em; border-bottom: 1px solid var(--border); padding-bottom: 12px;">Brosur & Dokumen Teknis</h2>
-                        <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 20px;">Silakan unduh dokumen panduan keselamatan (SDS) atau katalog teknis berikut:</p>
-                        <div style="display: flex; flex-direction: column; gap: 14px;">
-                            <?php 
-                            foreach ($downloads as $dl) : 
-                                $dl_id = $dl['id'];
-                                $dl_url = wp_get_attachment_url($dl_id);
-                                $dl_title = get_the_title($dl_id);
-                                $is_gated = carbon_get_post_meta($dl_id, 'download_gate_active') === 'yes';
-                            ?>
-                                <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;">
-                                    <div style="display: flex; align-items: center; gap: 12px;">
-                                        <!-- PDF Icon representation -->
-                                        <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(255,0,0,0.1); color: red; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">PDF</div>
-                                        <div>
-                                            <span style="font-size: 14px; font-weight: 600; color: var(--ink); display: block;"><?php echo esc_html($dl_title); ?></span>
-                                            <?php if ($is_gated) : ?>
-                                                <span style="font-size: 10px; color: var(--brand-accent); font-weight: 600; text-transform: uppercase;">Wajib Isi Form Prospek</span>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                    <a href="<?php echo esc_url($dl_url); ?>" <?php echo !$is_gated ? 'download' : ''; ?> class="btn btn-outline" style="font-size: 12px; padding: 8px 16px; border-color: var(--brand-accent); color: var(--brand-accent);">
-                                        Unduh File
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
+                        <div class="cs-product-section">
+                            <h2>Deskripsi &amp; Kegunaan Produk</h2>
+                            <div class="product-description">
+                                <?php the_content(); ?>
+                            </div>
                         </div>
-                    </div>
-                <?php endif; ?>
 
-                <!-- Related Products (Produk Serupa) -->
-                <?php
-                $terms = get_the_terms($product_id, 'product_cat');
-                $term_ids = [];
-                if (!empty($terms) && !is_wp_error($terms)) {
-                    foreach ($terms as $term) {
-                        $term_ids[] = $term->term_id;
-                    }
-                }
+                        <?php if ( ! empty( $specs ) ) : ?>
+                            <div class="cs-product-section">
+                                <h2>Spesifikasi Teknis</h2>
+                                <table class="cs-specs-table">
+                                    <tbody>
+                                        <?php
+                                        foreach ( $specs as $spec ) :
+                                            if ( empty( $spec['spec_name'] ) ) {
+                                                continue;
+                                            }
+                                            ?>
+                                            <tr>
+                                                <th scope="row"><?php echo esc_html( $spec['spec_name'] ); ?></th>
+                                                <td><?php echo esc_html( $spec['spec_value'] ); ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php endif; ?>
 
-                $related_posts = [];
-                if (!empty($term_ids)) {
-                    $related_query = new WP_Query([
-                        'post_type'      => 'product',
-                        'posts_per_page' => 3,
-                        'post__not_in'   => [$product_id],
-                        'post_status'    => 'publish',
-                        'tax_query'      => [
-                            [
-                                'taxonomy' => 'product_cat',
-                                'field'    => 'term_id',
-                                'terms'    => $term_ids,
-                            ]
-                        ]
-                    ]);
-                    if ($related_query->have_posts()) {
-                        $related_posts = $related_query->posts;
-                    }
-                }
-
-                $posts_found = count($related_posts);
-                if ($posts_found < 3) {
-                    $exclude_ids = array_merge([$product_id], wp_list_pluck($related_posts, 'ID'));
-                    $fallback_query = new WP_Query([
-                        'post_type'      => 'product',
-                        'posts_per_page' => 3 - $posts_found,
-                        'post__not_in'   => $exclude_ids,
-                        'post_status'    => 'publish',
-                    ]);
-                    if ($fallback_query->have_posts()) {
-                        $related_posts = array_merge($related_posts, $fallback_query->posts);
-                    }
-                }
-
-                if (!empty($related_posts)) :
-                ?>
-                    <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 40px; margin-top: 30px; box-shadow: var(--shadow-xs);">
-                        <h2 style="font-size: 20px; margin-bottom: 24px; letter-spacing: -0.02em; border-bottom: 1px solid var(--border); padding-bottom: 12px; font-weight: 700; color: var(--ink);">Produk Serupa</h2>
-                        
-                        <div class="products-grid-catalog" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-                            <?php 
-                            foreach ($related_posts as $post_item) :
-                                $rp_id = $post_item->ID;
-                                $rp_sku = carbon_get_post_meta($rp_id, 'product_sku');
-                                $rp_brand = carbon_get_post_meta($rp_id, 'product_brand');
-                                
-                                $rp_b_title = '';
-                                $rp_b_accent = '#0057FF';
-                                if (!empty($rp_brand) && isset($rp_brand[0]['id'])) {
-                                    $rp_b_id = $rp_brand[0]['id'];
-                                    $rp_b_title = get_the_title($rp_b_id);
-                                    $rp_b_accent = carbon_get_post_meta($rp_b_id, 'brand_accent_color') ?: '#0057FF';
-                                }
-                            ?>
-                                <article class="brand-product-card" style="--brand-accent: <?php echo esc_attr($rp_b_accent); ?>; padding: 20px; border-radius: 14px;">
-                                    <div class="brand-product-card-img-wrap" style="height: 160px; margin-bottom: 16px; border-radius: 8px;">
-                                        <?php if (has_post_thumbnail($rp_id)) : ?>
-                                            <?php echo get_the_post_thumbnail($rp_id, 'indotech-thumb', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
-                                        <?php else : ?>
-                                            <span style="font-weight:700; color: var(--text-muted); font-size: 13px;">TIDAK ADA GAMBAR</span>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div style="flex: 1; display: flex; flex-direction: column;">
-                                        <?php if ($rp_b_title) : ?>
-                                            <div class="brand-product-card-sku-wrap" style="font-size: 10px; margin-bottom: 8px;">
-                                                <span style="font-weight: 600; text-transform: none;"><?php echo esc_html($rp_b_title); ?></span>
+                        <?php if ( ! empty( $downloads ) ) : ?>
+                            <div class="cs-product-section">
+                                <h2>Brosur &amp; Dokumen Teknis</h2>
+                                <div class="cs-doc-list">
+                                    <?php
+                                    foreach ( $downloads as $dl ) :
+                                        $dl_id    = $dl['id'];
+                                        $dl_url   = wp_get_attachment_url( $dl_id );
+                                        $dl_title = get_the_title( $dl_id );
+                                        $is_gated = function_exists( 'carbon_get_post_meta' ) && carbon_get_post_meta( $dl_id, 'download_gate_active' ) === 'yes';
+                                        ?>
+                                        <div class="cs-doc-row">
+                                            <div class="cs-doc-row-info">
+                                                <div class="pdf-icon-wrapper" aria-hidden="true">PDF</div>
+                                                <div>
+                                                    <span class="cs-doc-row-title"><?php echo esc_html( $dl_title ); ?></span>
+                                                    <?php if ( $is_gated ) : ?>
+                                                        <span class="cs-dl-status">Wajib Isi Form Prospek</span>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
-                                        <?php endif; ?>
-                                        <h4 class="brand-product-card-title" style="font-size: 16px; margin-bottom: 8px; min-height: 42px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"><?php echo esc_html(get_the_title($rp_id)); ?></h4>
-                                        <p class="brand-product-card-excerpt" style="font-size: 12.5px; margin-bottom: 20px; line-height: 1.5; color: var(--text-secondary); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"><?php echo wp_strip_all_tags(get_the_excerpt($rp_id)); ?></p>
-                                        <a href="<?php echo esc_url(get_permalink($rp_id)); ?>" class="btn btn-outline" style="padding: 10px 16px; font-size: 12px; margin-top: auto;">
-                                            Lihat Produk &rarr;
-                                        </a>
-                                    </div>
-                                </article>
-                            <?php 
-                            endforeach;
-                            ?>
-                        </div>
+                                            <a href="<?php echo esc_url( $dl_url ); ?>" <?php echo ! $is_gated ? 'download' : ''; ?> class="cs-dl-btn cs-dl-btn--outline" style="flex: 0 0 auto;">
+                                                Unduh File
+                                            </a>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
-                <?php endif; ?>
 
-            </div>
+                    <aside class="cs-inquiry-panel" aria-label="Formulir permintaan produk">
+                        <h2>Tanya Detail Produk</h2>
+                        <p>Pilih spesifikasi ukuran atau varian yang diinginkan untuk terhubung langsung dengan tim B2B kami via WhatsApp.</p>
 
-            <!-- ── RIGHT COLUMN: STICKY B2B INQUIRY FORM ── -->
-            <aside style="position: sticky; top: calc(var(--header-h) + 20px); z-index: 10;">
-                <div class="product-inquiry-box" style="background: var(--white); border: 1px solid var(--brand-accent); border-radius: 16px; padding: 40px; box-shadow: var(--shadow-md);">
-                    <h3 style="font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.02em;">Tanya Detail Produk</h3>
-                    <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px;">Pilih spesifikasi produk yang diinginkan dan tanyakan langsung ke admin kami via WhatsApp.</p>
+                        <form id="indotech-inquiry-form" method="POST" class="cs-form">
+                            <input type="hidden" name="product_id" value="<?php echo esc_attr( $product_id ); ?>">
+                            <input type="hidden" name="product_title" value="<?php echo esc_attr( get_the_title( $product_id ) ); ?>">
+                            <input type="hidden" name="whatsapp_number" value="6287885590088">
+                            <input type="text" name="website_url" value="" style="display: none;" tabindex="-1" autocomplete="off">
 
-                    <!-- Inquiry Form -->
-                    <form id="indotech-inquiry-form" method="POST" style="display: flex; flex-direction: column; gap: 16px;">
-                        <!-- Hidden inputs -->
-                        <input type="hidden" name="product_id" value="<?php echo esc_attr($product_id); ?>">
-                        <input type="hidden" name="product_title" value="<?php echo esc_attr(get_the_title($product_id)); ?>">
-                        <input type="hidden" name="whatsapp_number" value="6287885590088">
-                        <input type="text" name="website_url" value="" style="display: none;" tabindex="-1" autocomplete="off"> <!-- Honeypot -->
+                            <div class="cs-form-group">
+                                <label class="cs-form-label" for="prod-full-name">Nama Lengkap <span class="form-required">*</span></label>
+                                <input id="prod-full-name" type="text" name="full_name" class="cs-form-input" placeholder="Masukkan nama Anda" required>
+                            </div>
 
-                        <div>
-                            <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">Nama Lengkap *</label>
-                            <input type="text" name="full_name" placeholder="Masukkan nama Anda" required style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: inherit; font-size: 14px;">
-                        </div>
-
-                        <?php
-                        $sizes = array();
-                        $aromas = array();
-                        $aroma_label = 'Pilih Varian';
-                        if (is_array($specs)) {
-                            foreach ($specs as $spec) {
-                                if (empty($spec['spec_name'])) continue;
-                                $name_lower = strtolower(trim($spec['spec_name']));
-                                if ($name_lower === 'ukuran tersedia' || $name_lower === 'ukuran') {
-                                    $sizes = array_map('trim', explode(',', $spec['spec_value']));
-                                } elseif ($name_lower === 'aroma tersedia' || $name_lower === 'aroma' || $name_lower === 'varian' || $name_lower === 'varian tersedia') {
-                                    $aromas = array_map('trim', explode(',', $spec['spec_value']));
-                                    if ($name_lower === 'varian' || $name_lower === 'varian tersedia') {
-                                        $aroma_label = 'Pilih Varian';
+                            <?php
+                            $sizes       = [];
+                            $aromas      = [];
+                            $aroma_label = 'Pilih Varian';
+                            if ( is_array( $specs ) ) {
+                                foreach ( $specs as $spec ) {
+                                    if ( empty( $spec['spec_name'] ) ) {
+                                        continue;
+                                    }
+                                    $name_lower = strtolower( trim( $spec['spec_name'] ) );
+                                    if ( $name_lower === 'ukuran tersedia' || $name_lower === 'ukuran' ) {
+                                        $sizes = array_map( 'trim', explode( ',', $spec['spec_value'] ) );
+                                    } elseif ( $name_lower === 'aroma tersedia' || $name_lower === 'aroma' || $name_lower === 'varian' || $name_lower === 'varian tersedia' ) {
+                                        $aromas = array_map( 'trim', explode( ',', $spec['spec_value'] ) );
                                     }
                                 }
                             }
-                        }
-                        ?>
+                            ?>
 
-                        <?php if (!empty($sizes)) : ?>
-                            <div>
-                                <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;">Pilih Ukuran *</label>
-                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                                    <?php foreach ($sizes as $idx => $size) : ?>
-                                        <label class="badge-radio-label">
-                                            <input type="radio" name="product_size" value="<?php echo esc_attr($size); ?>" <?php echo $idx === 0 ? 'checked' : ''; ?>>
-                                            <span class="badge-radio-span"><?php echo esc_html($size); ?></span>
-                                        </label>
-                                    <?php endforeach; ?>
+                            <?php if ( ! empty( $sizes ) ) : ?>
+                                <div class="cs-form-group">
+                                    <span class="cs-form-label">Pilih Ukuran <span class="form-required">*</span></span>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                        <?php foreach ( $sizes as $idx => $size ) : ?>
+                                            <label class="badge-radio-label">
+                                                <input type="radio" name="product_size" value="<?php echo esc_attr( $size ); ?>" <?php echo $idx === 0 ? 'checked' : ''; ?>>
+                                                <span class="badge-radio-span"><?php echo esc_html( $size ); ?></span>
+                                            </label>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php endif; ?>
+                            <?php endif; ?>
 
-                        <?php if (!empty($aromas)) : ?>
-                            <div>
-                                <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;"><?php echo esc_html($aroma_label); ?> *</label>
-                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                                    <?php foreach ($aromas as $idx => $aroma) : ?>
-                                        <label class="badge-radio-label">
-                                            <input type="radio" name="product_aroma" data-label="<?php echo esc_attr($aroma_label); ?>" value="<?php echo esc_attr($aroma); ?>" <?php echo $idx === 0 ? 'checked' : ''; ?>>
-                                            <span class="badge-radio-span"><?php echo esc_html($aroma); ?></span>
-                                        </label>
-                                    <?php endforeach; ?>
+                            <?php if ( ! empty( $aromas ) ) : ?>
+                                <div class="cs-form-group">
+                                    <span class="cs-form-label"><?php echo esc_html( $aroma_label ); ?> <span class="form-required">*</span></span>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                        <?php foreach ( $aromas as $idx => $aroma ) : ?>
+                                            <label class="badge-radio-label">
+                                                <input type="radio" name="product_aroma" data-label="<?php echo esc_attr( $aroma_label ); ?>" value="<?php echo esc_attr( $aroma ); ?>" <?php echo $idx === 0 ? 'checked' : ''; ?>>
+                                                <span class="badge-radio-span"><?php echo esc_html( $aroma ); ?></span>
+                                            </label>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
+                            <?php endif; ?>
+
+                            <div class="cs-form-group">
+                                <label class="cs-form-label" for="prod-address">Alamat Lengkap <span class="form-required">*</span></label>
+                                <textarea id="prod-address" name="address" class="cs-form-input cs-form-textarea" placeholder="Tuliskan kota/alamat pengiriman lengkap Anda..." rows="3" required></textarea>
                             </div>
-                        <?php endif; ?>
 
-                        <div>
-                            <label style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">Alamat Lengkap *</label>
-                            <textarea name="address" placeholder="Tuliskan alamat pengiriman lengkap Anda..." rows="3" required style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: inherit; font-size: 14px; resize: vertical;"></textarea>
-                        </div>
+                            <button type="submit" class="ch-pill-cta cs-form-submit">
+                                <span>Tanya via WhatsApp</span>
+                                <span class="ch-pill-cta-icon" aria-hidden="true">
+                                    <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                                </span>
+                            </button>
+                        </form>
 
-                        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; background: var(--brand-accent); border-color: var(--brand-accent); padding: 14px;">
-                            Tanya via WhatsApp &rarr;
-                        </button>
-                    </form>
-
-                    <!-- Alert Feedback Box -->
-                    <div id="indotech-inquiry-response" style="display: none; margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-size: 13.5px; line-height: 1.45; font-weight: 500;"></div>
+                        <div id="indotech-inquiry-response" class="form-response" style="display: none; margin-top: 14px;"></div>
+                    </aside>
                 </div>
-            </aside>
+            </section>
 
-        </div>
+            <?php
+            $terms    = get_the_terms( $product_id, 'product_cat' );
+            $term_ids = ( ! empty( $terms ) && ! is_wp_error( $terms ) ) ? wp_list_pluck( $terms, 'term_id' ) : [];
+            $related_posts = [];
+
+            if ( ! empty( $term_ids ) ) {
+                $related_query = new WP_Query( [
+                    'post_type'      => 'product',
+                    'posts_per_page' => 3,
+                    'post__not_in'   => [ $product_id ],
+                    'post_status'    => 'publish',
+                    'tax_query'      => [
+                        [
+                            'taxonomy' => 'product_cat',
+                            'field'    => 'term_id',
+                            'terms'    => $term_ids,
+                        ],
+                    ],
+                ] );
+                if ( $related_query->have_posts() ) {
+                    $related_posts = $related_query->posts;
+                }
+            }
+
+            if ( count( $related_posts ) < 3 ) {
+                $exclude_ids    = array_merge( [ $product_id ], wp_list_pluck( $related_posts, 'ID' ) );
+                $fallback_query = new WP_Query( [
+                    'post_type'      => 'product',
+                    'posts_per_page' => 3 - count( $related_posts ),
+                    'post__not_in'   => $exclude_ids,
+                    'post_status'    => 'publish',
+                ] );
+                if ( $fallback_query->have_posts() ) {
+                    $related_posts = array_merge( $related_posts, $fallback_query->posts );
+                }
+            }
+            ?>
+
+            <?php if ( ! empty( $related_posts ) ) : ?>
+                <section class="cs-band ch-wrap" aria-labelledby="cs-related-products-title">
+                    <header class="ch-section-head">
+                        <div>
+                            <span class="cs-pill-tag">Rekomendasi</span>
+                            <h2 id="cs-related-products-title" class="ch-section-h2 ch-section-h2--sm">Produk <span>Serupa</span></h2>
+                        </div>
+                        <a href="<?php echo esc_url( home_url( '/produk/' ) ); ?>" class="ch-inline-link">
+                            <span>Semua produk</span>
+                            <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                        </a>
+                    </header>
+
+                    <div class="cs-editorial-grid">
+                        <?php
+                        foreach ( $related_posts as $rp_post ) :
+                            $rp_id          = $rp_post->ID;
+                            $rp_brand       = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $rp_id, 'product_brand' ) : [];
+                            $brand_fallback = ( ! empty( $rp_brand ) && isset( $rp_brand[0]['id'] ) ) ? get_the_title( $rp_brand[0]['id'] ) : 'Indotech';
+                            $img_html       = has_post_thumbnail( $rp_id )
+                                ? get_the_post_thumbnail( $rp_id, 'indotech-thumb', [ 'loading' => 'lazy', 'decoding' => 'async' ] )
+                                : '';
+                            $desc = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $rp_id ) ), 14, '...' );
+                            get_template_part( 'template-parts/archive/editorial-item', null, [
+                                'url'            => get_permalink( $rp_id ),
+                                'title'          => get_the_title( $rp_id ),
+                                'desc'           => $desc,
+                                'image_html'     => $img_html,
+                                'fallback_label' => $brand_fallback,
+                                'media_variant'  => 'product',
+                                'heading_tag'    => 'h3',
+                                'post_id'        => $rp_id,
+                            ] );
+                        endforeach;
+                        ?>
+                    </div>
+                </section>
+            <?php endif; ?>
+
+            <?php get_template_part( 'template-parts/home/company-cta' ); ?>
+
+        <?php endwhile; ?>
     </div>
-</div>
+</main>
 
-<!-- Lightbox Modal -->
-<div id="gallery-lightbox" class="gallery-lightbox">
-    <button class="lightbox-close" aria-label="Tutup Galeri">&times;</button>
-    <button class="lightbox-prev" aria-label="Gambar Sebelumnya">&lsaquo;</button>
+<div id="gallery-lightbox" class="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Tampilan Produk">
+    <button type="button" class="lightbox-close" aria-label="Tutup Galeri">&times;</button>
+    <button type="button" class="lightbox-prev" aria-label="Gambar Sebelumnya">&lsaquo;</button>
     <div class="lightbox-content">
         <img id="lightbox-img" src="" alt="Tampilan Produk">
     </div>
-    <button class="lightbox-next" aria-label="Gambar Berikutnya">&rsaquo;</button>
+    <button type="button" class="lightbox-next" aria-label="Gambar Berikutnya">&rsaquo;</button>
     <div class="lightbox-counter"><span id="lightbox-current">1</span> / <span id="lightbox-total">1</span></div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const imagesEl = document.getElementById('product-gallery-data');
-    if (!imagesEl) return;
-    
-    const images = JSON.parse(imagesEl.textContent);
-    if (!images || !images.length) return;
+    if (imagesEl) {
+        const images       = JSON.parse(imagesEl.textContent || '[]');
+        let currentIndex   = 0;
+        const mainImgWrap  = document.querySelector('.product-main-image-wrap');
+        const mainImg      = mainImgWrap ? mainImgWrap.querySelector('img') : null;
+        const thumbs       = document.querySelectorAll('.product-thumb-item');
+        const lightbox     = document.getElementById('gallery-lightbox');
+        const lightboxImg  = document.getElementById('lightbox-img');
+        const lbClose      = lightbox ? lightbox.querySelector('.lightbox-close') : null;
+        const lbPrev       = lightbox ? lightbox.querySelector('.lightbox-prev') : null;
+        const lbNext       = lightbox ? lightbox.querySelector('.lightbox-next') : null;
+        const lbCurrent    = document.getElementById('lightbox-current');
+        const lbTotal      = document.getElementById('lightbox-total');
 
-    let currentIndex = 0;
-
-    const mainImgWrap = document.querySelector('.product-main-image-wrap');
-    const mainImg = mainImgWrap ? mainImgWrap.querySelector('img') : null;
-    const thumbs = document.querySelectorAll('.product-thumb-item');
-
-    // Thumbnail swapping
-    thumbs.forEach(thumb => {
-        thumb.addEventListener('click', function() {
-            const index = parseInt(this.dataset.index);
-            currentIndex = index;
-
-            // Update main image src and clear responsive attributes to force override
-            if (mainImg) {
-                mainImg.src = images[currentIndex];
-                if (mainImg.hasAttribute('srcset')) mainImg.removeAttribute('srcset');
-                if (mainImg.hasAttribute('sizes')) mainImg.removeAttribute('sizes');
+        if (images.length) {
+            if (lbTotal) lbTotal.textContent = images.length;
+            if (images.length <= 1) {
+                if (lbPrev) lbPrev.style.display = 'none';
+                if (lbNext) lbNext.style.display = 'none';
             }
 
-            // Update active state in UI
-            thumbs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
+            const syncImage = () => {
+                if (mainImg && images[currentIndex]) {
+                    mainImg.src = images[currentIndex];
+                    mainImg.removeAttribute('srcset');
+                    mainImg.removeAttribute('sizes');
+                }
+                if (lightboxImg && images[currentIndex]) lightboxImg.src = images[currentIndex];
+                if (lbCurrent) lbCurrent.textContent = currentIndex + 1;
+                thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+            };
 
-    // Lightbox Modal selectors
-    const lightbox = document.getElementById('gallery-lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxClose = lightbox ? lightbox.querySelector('.lightbox-close') : null;
-    const lightboxPrev = lightbox ? lightbox.querySelector('.lightbox-prev') : null;
-    const lightboxNext = lightbox ? lightbox.querySelector('.lightbox-next') : null;
-    const lightboxCurrent = document.getElementById('lightbox-current');
-    const lightboxTotal = document.getElementById('lightbox-total');
+            thumbs.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    currentIndex = parseInt(this.dataset.index, 10) || 0;
+                    syncImage();
+                });
+            });
 
-    if (lightboxTotal) {
-        lightboxTotal.textContent = images.length;
-    }
-
-    function updateLightboxImage() {
-        if (lightboxImg) {
-            lightboxImg.src = images[currentIndex];
-        }
-        if (lightboxCurrent) {
-            lightboxCurrent.textContent = currentIndex + 1;
-        }
-    }
-
-    function openLightbox() {
-        if (!lightbox) return;
-        updateLightboxImage();
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-        if (!lightbox) return;
-        lightbox.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function showNext() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateLightboxImage();
-        
-        // Also update main page active states for consistency
-        if (mainImg) {
-            mainImg.src = images[currentIndex];
-            if (mainImg.hasAttribute('srcset')) mainImg.removeAttribute('srcset');
-            if (mainImg.hasAttribute('sizes')) mainImg.removeAttribute('sizes');
-        }
-        thumbs.forEach((t, i) => {
-            t.classList.toggle('active', i === currentIndex);
-        });
-    }
-
-    function showPrev() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateLightboxImage();
-
-        // Also update main page active states for consistency
-        if (mainImg) {
-            mainImg.src = images[currentIndex];
-            if (mainImg.hasAttribute('srcset')) mainImg.removeAttribute('srcset');
-            if (mainImg.hasAttribute('sizes')) mainImg.removeAttribute('sizes');
-        }
-        thumbs.forEach((t, i) => {
-            t.classList.toggle('active', i === currentIndex);
-        });
-    }
-
-    if (mainImgWrap) {
-        mainImgWrap.addEventListener('click', openLightbox);
-    }
-
-    if (lightboxClose) {
-        lightboxClose.addEventListener('click', closeLightbox);
-    }
-
-    if (lightboxPrev) {
-        lightboxPrev.addEventListener('click', function(e) {
-            e.stopPropagation();
-            showPrev();
-        });
-    }
-
-    if (lightboxNext) {
-        lightboxNext.addEventListener('click', function(e) {
-            e.stopPropagation();
-            showNext();
-        });
-    }
-
-    if (lightbox) {
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
-                closeLightbox();
+            if (mainImgWrap) {
+                mainImgWrap.addEventListener('click', () => {
+                    if (!lightbox) return;
+                    syncImage();
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
             }
-        });
+
+            const closeLb = () => {
+                if (!lightbox) return;
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            if (lbClose) lbClose.addEventListener('click', closeLb);
+            if (lbPrev) lbPrev.addEventListener('click', e => {
+                e.stopPropagation();
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                syncImage();
+            });
+            if (lbNext) lbNext.addEventListener('click', e => {
+                e.stopPropagation();
+                currentIndex = (currentIndex + 1) % images.length;
+                syncImage();
+            });
+            if (lightbox) {
+                lightbox.addEventListener('click', e => {
+                    if (e.target === lightbox || e.target.classList.contains('lightbox-content')) closeLb();
+                });
+            }
+            document.addEventListener('keydown', e => {
+                if (!lightbox || !lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLb();
+                if (images.length > 1) {
+                    if (e.key === 'ArrowRight') {
+                        currentIndex = (currentIndex + 1) % images.length;
+                        syncImage();
+                    }
+                    if (e.key === 'ArrowLeft') {
+                        currentIndex = (currentIndex - 1 + images.length) % images.length;
+                        syncImage();
+                    }
+                }
+            });
+        }
     }
 
-    // Copy Product Link Handler
     const copyProdBtn = document.getElementById('copy-product-link');
     if (copyProdBtn) {
         copyProdBtn.addEventListener('click', function() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(function() {
-                copyProdBtn.setAttribute('data-tooltip', 'Link Tersalin!');
-                copyProdBtn.style.background = '#10B981';
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                copyProdBtn.style.borderColor = '#10b981';
+                copyProdBtn.style.color       = '#10b981';
                 setTimeout(() => {
-                    copyProdBtn.setAttribute('data-tooltip', 'Salin Link');
-                    copyProdBtn.style.background = '#64748B';
-                }, 2500);
-            }).catch(function() {
-                alert('Gagal menyalin tautan');
-            });
+                    copyProdBtn.style.borderColor = '';
+                    copyProdBtn.style.color       = '';
+                }, 2000);
+            }).catch(() => {});
         });
     }
 });
 </script>
 
-<?php
-endwhile;
-
-echo '</main>';
-get_footer();
-
+<?php get_footer(); ?>

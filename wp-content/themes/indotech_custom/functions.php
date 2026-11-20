@@ -34,18 +34,12 @@ add_action('after_setup_theme', 'indotech_setup');
 
 /**
  * Menentukan apakah halaman saat ini menggunakan sistem desain editorial Indotech–Manufy
- * (Beranda, seluruh template halaman statis, dan 404 — tidak termasuk arsip/single CPT maupun pricelist).
+ * (Beranda, halaman statis, arsip, single CPT/post, pencarian, dan 404 — tidak termasuk pricelist).
  */
 function indotech_is_manufy_page() {
-    if ( is_front_page() || is_404() ) {
-        return true;
-    }
-    if ( ! is_page() ) {
-        return false;
-    }
     if (
-        is_page_template( [ 'archive-product.php', 'archive-download.php', 'page-pricelist.php', 'page-daftar-harga.php', 'page-price-list.php' ] ) ||
-        is_page( [ 'produk', 'download-center', 'daftar-harga', 'price-list', 'pricelist' ] )
+        is_page_template( [ 'page-pricelist.php', 'page-daftar-harga.php', 'page-price-list.php' ] ) ||
+        is_page( [ 'daftar-harga', 'price-list', 'pricelist' ] )
     ) {
         return false;
     }
@@ -80,6 +74,9 @@ function indotech_enqueue() {
         } else {
             $static_css = 'assets/css/company-static.css';
             wp_enqueue_style( 'indotech-company-static', get_theme_file_uri( $static_css ), [ 'indotech-company-home' ], filemtime( get_theme_file_path( $static_css ) ) );
+
+            $editorial_css = 'assets/css/company-editorial.css';
+            wp_enqueue_style( 'indotech-company-editorial', get_theme_file_uri( $editorial_css ), [ 'indotech-company-static' ], filemtime( get_theme_file_path( $editorial_css ) ) );
 
             $static_js = 'assets/js/company-static.js';
             wp_enqueue_script(
@@ -336,46 +333,34 @@ function indotech_filter_products_handler() {
     ob_start();
     if ($product_query->have_posts()) :
         while ($product_query->have_posts()) : $product_query->the_post();
-            $p_id = get_the_ID();
-            $sku = carbon_get_post_meta($p_id, 'product_sku');
-            $brand_relation = carbon_get_post_meta($p_id, 'product_brand');
-            
-            $b_title = '';
-            $b_accent = '#0057FF';
-            if (!empty($brand_relation) && isset($brand_relation[0]['id'])) {
-                $b_id = $brand_relation[0]['id'];
-                $b_title = get_the_title($b_id);
-                $b_accent = carbon_get_post_meta($b_id, 'brand_accent_color') ?: '#0057FF';
-            }
-            ?>
-            <article class="brand-product-card" style="--brand-accent: <?php echo esc_attr($b_accent); ?>;">
-                <div class="brand-product-card-img-wrap">
-                    <?php if (has_post_thumbnail()) : ?>
-                        <?php the_post_thumbnail('indotech-thumb', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
-                    <?php else : ?>
-                        <span style="font-weight:700; color: var(--text-muted); font-size: 14px;">TIDAK ADA GAMBAR</span>
-                    <?php endif; ?>
-                </div>
-                <div style="flex: 1; display: flex; flex-direction: column;">
-                    <?php if ($b_title) : ?>
-                        <div class="brand-product-card-sku-wrap">
-                            <span style="font-weight: 600; text-transform: none;"><?php echo esc_html($b_title); ?></span>
-                        </div>
-                    <?php endif; ?>
-                    <h3 class="brand-product-card-title"><?php the_title(); ?></h3>
-                    <p class="brand-product-card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 12); ?></p>
-                    <a href="<?php the_permalink(); ?>" class="btn btn-outline">
-                        Lihat Produk &rarr;
-                    </a>
-                </div>
-            </article>
-            <?php
+            $p_id           = get_the_ID();
+            $brand_relation = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($p_id, 'product_brand') : [];
+            $brand_fallback = (!empty($brand_relation) && isset($brand_relation[0]['id'])) ? get_the_title($brand_relation[0]['id']) : 'Indotech';
+            $img_html       = has_post_thumbnail()
+                ? get_the_post_thumbnail($p_id, 'indotech-thumb', [
+                    'loading'  => 'lazy',
+                    'decoding' => 'async',
+                    'sizes'    => '(max-width: 640px) 100vw, (max-width: 960px) 50vw, 410px',
+                ])
+                : '';
+            $desc = wp_trim_words(wp_strip_all_tags(get_the_excerpt()), 14, '...');
+            get_template_part('template-parts/archive/editorial-item', null, [
+                'url'            => get_permalink($p_id),
+                'title'          => get_the_title($p_id),
+                'desc'           => $desc,
+                'image_html'     => $img_html,
+                'fallback_label' => $brand_fallback,
+                'media_variant'  => 'product',
+                'heading_tag'    => 'h2',
+                'post_id'        => $p_id,
+            ]);
         endwhile;
         wp_reset_postdata();
     else :
         ?>
-        <div style="grid-column: 1 / -1; background: var(--white); padding: 40px; border-radius: 12px; text-align: center; color: var(--text-muted); border: 1px solid var(--border);">
-            Belum ada produk terdaftar.
+        <div class="cs-empty-panel">
+            <h3>Belum ada produk terdaftar</h3>
+            <p>Coba kata kunci pencarian lain atau pilih kembali seluruh kategori produk.</p>
         </div>
         <?php
     endif;
@@ -503,59 +488,36 @@ function indotech_filter_posts_handler() {
     ob_start();
     if ($blog_query->have_posts()) :
         while ($blog_query->have_posts()) : $blog_query->the_post();
-            $post_cats = get_the_category();
-            $cat_lbl   = $post_cats ? esc_html($post_cats[0]->name) : '';
-            $card_words = str_word_count(strip_tags(get_the_content()));
-            $card_reading_time = max(1, ceil($card_words / 200));
-            ?>
-            <article class="blog-card reveal visible" role="listitem" id="post-<?php the_ID(); ?>">
-                <a href="<?php the_permalink(); ?>" class="blog-thumb" aria-label="Baca: <?php the_title_attribute(); ?>">
-                    <?php if (has_post_thumbnail()) : ?>
-                        <?php echo wp_get_attachment_image(get_post_thumbnail_id(), 'indotech-card', false, [
-                            'class'    => 'blog-img',
-                            'loading'  => 'lazy',
-                            'decoding' => 'async',
-                            'sizes'    => '(max-width: 575px) 100vw, (max-width: 991px) 50vw, 380px',
-                        ]); ?>
-                    <?php else : ?>
-                        <div class="blog-img-placeholder"><span class="blog-placeholder-label">Indotech</span></div>
-                    <?php endif; ?>
-                    <?php if ($cat_lbl) : ?>
-                        <span class="blog-category"><?php echo $cat_lbl; ?></span>
-                    <?php endif; ?>
-                </a>
-                <div class="blog-body">
-                    <div class="blog-meta">
-                        <time datetime="<?php echo get_the_date('Y-m-d'); ?>"><?php echo get_the_date('d M Y'); ?></time>
-                        <span class="blog-meta-sep" aria-hidden="true">·</span>
-                        <span><?php the_author(); ?></span>
-                        <span class="blog-meta-sep" aria-hidden="true">·</span>
-                        <span style="display:inline-flex; align-items:center; gap:3px;">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            <?php echo $card_reading_time; ?> mnt baca
-                        </span>
-                    </div>
-                    <h3 class="blog-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                    <p class="blog-excerpt"><?php echo esc_html(wp_trim_words(get_the_excerpt(), 22, '...')); ?></p>
-                    <a href="<?php the_permalink(); ?>" class="blog-read-more" aria-label="Baca selengkapnya: <?php the_title_attribute(); ?>">
-                        Baca Selengkapnya →
-                    </a>
-                </div>
-            </article>
-            <?php
+            $p_id     = get_the_ID();
+            $img_html = has_post_thumbnail()
+                ? wp_get_attachment_image(get_post_thumbnail_id(), 'indotech-card', false, [
+                    'loading'  => 'lazy',
+                    'decoding' => 'async',
+                    'sizes'    => '(max-width: 640px) 100vw, (max-width: 960px) 50vw, 410px',
+                ])
+                : '';
+            $desc = wp_trim_words(wp_strip_all_tags(get_the_excerpt()), 16, '...');
+            get_template_part('template-parts/archive/editorial-item', null, [
+                'url'            => get_permalink($p_id),
+                'title'          => get_the_title($p_id),
+                'desc'           => $desc,
+                'image_html'     => $img_html,
+                'fallback_label' => 'Indotech Journal',
+                'media_variant'  => 'wide',
+                'heading_tag'    => 'h3',
+                'post_id'        => $p_id,
+                'role_listitem'  => true,
+            ]);
         endwhile;
         wp_reset_postdata();
     else :
         ?>
-        <div class="blog-empty reveal" style="text-align:center;padding:80px 0;grid-column:1/-1;">
-            <div class="blog-empty-icon" aria-hidden="true">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="color:var(--border-dark);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-            </div>
-            <h3 style="font-size:20px;margin:20px 0 8px;">Belum ada artikel</h3>
-            <p style="color:var(--text-secondary);margin-bottom:28px;">
-                Coba cari dengan kata kunci atau filter kategori yang berbeda.
-            </p>
-            <a href="#" class="btn btn-outline reset-filters-btn">Lihat Semua Artikel</a>
+        <div class="blog-empty cs-empty-panel">
+            <h3>Belum ada artikel</h3>
+            <p>Coba cari dengan kata kunci atau filter kategori yang berbeda.</p>
+            <a href="#" class="ch-pill-cta reset-filters-btn">
+                <span>Lihat Semua Artikel</span>
+            </a>
         </div>
         <?php
     endif;

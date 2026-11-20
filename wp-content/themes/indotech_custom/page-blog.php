@@ -139,22 +139,21 @@ get_header();
             </div>
         </section>
 
-        <!-- Band 2: Flagship Featured Article Stage -->
+        <!-- Band 2: Borderless Editorial Featured Lead -->
         <?php if ( $featured_id && ! $active_cat ) :
             $feat_cats    = get_the_category( $featured_id );
             $feat_cat_lbl = $feat_cats ? esc_html( $feat_cats[0]->name ) : 'Artikel';
             $feat_date    = get_the_date( 'd M Y', $featured_id );
             $feat_author  = get_the_author_meta( 'display_name', get_post_field( 'post_author', $featured_id ) );
-            $feat_excerpt = get_the_excerpt( $featured_id );
+            $feat_excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $featured_id ) ), 24, '...' );
             $feat_url     = get_permalink( $featured_id );
             $feat_title   = get_the_title( $featured_id );
             ?>
             <section class="cs-band cs-band--tight ch-wrap" id="blog-featured" aria-label="Artikel pilihan">
-                <article class="cs-featured-stage">
-                    <a href="<?php echo esc_url( $feat_url ); ?>" class="cs-featured-media" tabindex="-1" aria-hidden="true">
+                <article class="cs-featured-lead">
+                    <a href="<?php echo esc_url( $feat_url ); ?>" class="cs-featured-lead-media" tabindex="-1" aria-hidden="true">
                         <?php if ( has_post_thumbnail( $featured_id ) ) : ?>
                             <?php echo wp_get_attachment_image( get_post_thumbnail_id( $featured_id ), 'large', false, [
-                                'class'         => 'cs-featured-img',
                                 'loading'       => 'eager',
                                 'fetchpriority' => 'high',
                                 'decoding'      => 'async',
@@ -163,7 +162,6 @@ get_header();
                         <?php else : ?>
                             <img
                                 src="<?php echo esc_url( $media_cp . '/ilustrasi-formulasi.webp' ); ?>"
-                                class="cs-featured-img"
                                 width="960"
                                 height="540"
                                 alt=""
@@ -171,24 +169,17 @@ get_header();
                                 decoding="async"
                             >
                         <?php endif; ?>
-                        <span class="cs-featured-badge">Artikel Pilihan · <?php echo $feat_cat_lbl; ?></span>
                     </a>
 
-                    <div class="cs-featured-body">
-                        <div class="cs-featured-meta">
-                            <span><?php echo esc_html( $feat_date ); ?></span>
-                            <span aria-hidden="true">·</span>
-                            <span><?php echo esc_html( $feat_author ); ?></span>
-                        </div>
+                    <div class="cs-featured-lead-body">
+                        <span class="cs-featured-lead-kicker">Artikel Pilihan · <?php echo $feat_cat_lbl; ?></span>
                         <h2 class="cs-featured-title">
                             <a href="<?php echo esc_url( $feat_url ); ?>"><?php echo esc_html( $feat_title ); ?></a>
                         </h2>
-                        <p class="blog-featured-excerpt cs-featured-excerpt"><?php echo esc_html( wp_trim_words( $feat_excerpt, 32, '...' ) ); ?></p>
-                        <a href="<?php echo esc_url( $feat_url ); ?>" class="ch-pill-cta cs-featured-cta">
-                            <span>Baca Artikel Lengkap</span>
-                            <span class="ch-pill-cta-icon" aria-hidden="true">
-                                <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
-                            </span>
+                        <p class="cs-featured-excerpt"><?php echo esc_html( $feat_excerpt ); ?></p>
+                        <a href="<?php echo esc_url( $feat_url ); ?>" class="ch-inline-link">
+                            <span>Baca artikel lengkap</span>
+                            <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
                         </a>
                     </div>
                 </article>
@@ -246,47 +237,31 @@ get_header();
                 </div>
             </div>
 
-            <div id="blog-posts-grid" class="cs-blog-grid" role="list">
+            <div id="blog-posts-grid" class="cs-editorial-grid" role="list">
                 <?php if ( $blog_query->have_posts() ) : ?>
                     <?php while ( $blog_query->have_posts() ) :
                         $blog_query->the_post();
-                        $post_cats         = get_the_category();
-                        $cat_lbl           = $post_cats ? esc_html( $post_cats[0]->name ) : '';
-                        $card_words        = str_word_count( strip_tags( get_the_content() ) );
-                        $card_reading_time = max( 1, ceil( $card_words / 200 ) );
-                        ?>
-                        <article class="blog-card reveal" role="listitem" id="post-<?php the_ID(); ?>">
-                            <a href="<?php the_permalink(); ?>" class="blog-thumb" aria-label="Baca: <?php the_title_attribute(); ?>">
-                                <?php if ( has_post_thumbnail() ) : ?>
-                                    <?php echo wp_get_attachment_image( get_post_thumbnail_id(), 'indotech-card', false, [
-                                        'class'    => 'blog-img',
-                                        'loading'  => 'lazy',
-                                        'decoding' => 'async',
-                                        'sizes'    => '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 410px',
-                                    ] ); ?>
-                                <?php else : ?>
-                                    <div class="blog-img-placeholder"><span class="blog-placeholder-label">Indotech Journal</span></div>
-                                <?php endif; ?>
-                                <?php if ( $cat_lbl ) : ?>
-                                    <span class="blog-category"><?php echo $cat_lbl; ?></span>
-                                <?php endif; ?>
-                            </a>
-                            <div class="blog-body">
-                                <div class="blog-meta">
-                                    <time datetime="<?php echo esc_attr( get_the_date( 'Y-m-d' ) ); ?>"><?php echo esc_html( get_the_date( 'd M Y' ) ); ?></time>
-                                    <span class="blog-meta-sep" aria-hidden="true">·</span>
-                                    <span><?php the_author(); ?></span>
-                                    <span class="blog-meta-sep" aria-hidden="true">·</span>
-                                    <span><?php echo (int) $card_reading_time; ?> mnt baca</span>
-                                </div>
-                                <h3 class="blog-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                <p class="blog-excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 22, '...' ) ); ?></p>
-                                <a href="<?php the_permalink(); ?>" class="blog-read-more" aria-label="Baca selengkapnya: <?php the_title_attribute(); ?>">
-                                    Baca Selengkapnya →
-                                </a>
-                            </div>
-                        </article>
-                    <?php endwhile;
+                        $p_id     = get_the_ID();
+                        $img_html = has_post_thumbnail()
+                            ? wp_get_attachment_image( get_post_thumbnail_id(), 'indotech-card', false, [
+                                'loading'  => 'lazy',
+                                'decoding' => 'async',
+                                'sizes'    => '(max-width: 640px) 100vw, (max-width: 960px) 50vw, 410px',
+                            ] )
+                            : '';
+                        $desc = wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 16, '...' );
+                        get_template_part( 'template-parts/archive/editorial-item', null, [
+                            'url'            => get_permalink( $p_id ),
+                            'title'          => get_the_title( $p_id ),
+                            'desc'           => $desc,
+                            'image_html'     => $img_html,
+                            'fallback_label' => 'Indotech Journal',
+                            'media_variant'  => 'wide',
+                            'heading_tag'    => 'h3',
+                            'post_id'        => $p_id,
+                            'role_listitem'  => true,
+                        ] );
+                    endwhile;
                     wp_reset_postdata(); ?>
                 <?php else : ?>
                     <div class="blog-empty cs-empty-panel">

@@ -2,802 +2,318 @@
 /**
  * Template Name: Single Brand
  * Template Post Type: brand
+ *
+ * Halaman Detail Brand Ekosistem PT Indotech Berkah Abadi — Arsitektur Manufy Daylight.
  */
 
 get_header();
-echo '<main id="main-content">';
-
-while (have_posts()) : the_post();
-    $brand_id = get_the_ID();
-    
-    // Retrieve Carbon Fields Meta
-    $tagline = carbon_get_post_meta($brand_id, 'brand_tagline');
-    $accent_color = carbon_get_post_meta($brand_id, 'brand_accent_color') ?: '#0057FF';
-    $website_url = carbon_get_post_meta($brand_id, 'brand_website_url');
-    $gallery = carbon_get_post_meta($brand_id, 'brand_gallery');
-
-    // Query all products belonging to this brand (robustly supporting both old and new Carbon Fields formats)
-    global $wpdb;
-    $product_ids = $wpdb->get_col($wpdb->prepare("
-        SELECT post_id 
-        FROM {$wpdb->postmeta} 
-        WHERE (meta_key = '_product_brand' AND meta_value = %s)
-           OR (meta_key = '_product_brand|||0|id' AND meta_value = %s)
-    ", 'post:brand:' . $brand_id, $brand_id));
-
-    $product_query = new WP_Query([
-        'post_type'      => 'product',
-        'posts_per_page' => -1,
-        'post_status'    => 'publish',
-        'post__in'       => !empty($product_ids) ? $product_ids : [0]
-    ]);
 ?>
 
-<div class="brand-detail-wrapper" style="--brand-color: <?php echo esc_attr($accent_color); ?>;">
-    
-    <style>
-    .brand-single-hero {
-        background: var(--ink);
-        color: var(--white);
-        padding: 100px 0 70px;
-        border-bottom: 4px solid var(--brand-color);
-        position: relative;
-        overflow: hidden;
-    }
-    .brand-hero-meta {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 2;
-    }
-    .brand-hero-logo {
-        width: 100px;
-        height: 100px;
-        background: var(--white);
-        padding: 12px;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-    .brand-hero-logo img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-    }
-
-    .brand-grid-container {
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 48px;
-        align-items: start;
-    }
-    .brand-product-card {
-        background: var(--white);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-        transition: all var(--trans);
-        position: relative;
-        box-shadow: var(--shadow-xs);
-    }
-    .brand-product-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-md);
-        border-color: rgba(0, 87, 255, 0.15);
-    }
-    .brand-product-card-img-wrap {
-        margin-bottom: 20px;
-        border-radius: 10px;
-        overflow: hidden;
-        background: var(--surface);
-        height: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid var(--border);
-        transition: border-color var(--trans);
-    }
-    .brand-product-card:hover .brand-product-card-img-wrap {
-        border-color: rgba(0, 87, 255, 0.15);
-    }
-    .brand-product-card-title {
-        font-size: 18px;
-        margin-bottom: 10px;
-        line-height: 1.3;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        color: var(--ink);
-        transition: color var(--trans);
-    }
-    .brand-product-card:hover .brand-product-card-title {
-        color: var(--brand-color);
-    }
-    .brand-product-card .btn-outline {
-        margin-top: auto;
-        font-size: 13px;
-        font-weight: 600;
-        text-align: center;
-        display: block;
-        border-color: var(--brand-color) !important;
-        color: var(--brand-color) !important;
-        background: transparent;
-        padding: 10px 16px;
-        transition: all var(--trans);
-        border-radius: 8px;
-        text-decoration: none;
-    }
-    .brand-product-card:hover .btn-outline {
-        background: var(--brand-color) !important;
-        color: var(--white) !important;
-        border-color: var(--brand-color) !important;
-        box-shadow: 0 4px 12px rgba(0, 87, 255, 0.15);
-    }
-    .brand-usp-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-    .brand-usp-card {
-        background: var(--white);
-        padding: 24px;
-        border-radius: 16px;
-        border: 1px solid var(--border);
-        display: flex;
-        gap: 16px;
-        align-items: start;
-        transition: transform var(--trans);
-    }
-    .brand-usp-card:hover {
-        transform: translateY(-2px);
-    }
-    .brand-usp-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 10px;
-        background: rgba(0, 87, 255, 0.08);
-        color: var(--brand-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-        .brand-gallery-img {
-            transition: transform var(--trans);
-        }
-        .brand-gallery-img:hover {
-            transform: scale(1.05);
-        }
-        @media (max-width: 991px) {
-            .brand-grid-container {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        }
-        @media (max-width: 768px) {
-            .brand-usp-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Brand Description List Styling */
-        .brand-description ol,
-        .brand-description ul {
-            padding-left: 24px;
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-        .brand-description ol {
-            list-style-type: decimal;
-        }
-        .brand-description ul {
-            list-style-type: disc;
-        }
-        .brand-description li {
-            margin-bottom: 8px;
-        }
-
-        @media (max-width: 767px) {
-            .brand-detail-wrapper {
-                padding-bottom: 40px !important;
-            }
-            .brand-detail-wrapper .container {
-                padding: 0 12px !important;
-            }
-            .brand-description-box {
-                padding: 24px 16px !important;
-                border-radius: 8px !important;
-                margin-bottom: 24px !important;
-            }
-            .brand-inquiry-box {
-                padding: 24px 16px !important;
-                border-radius: 8px !important;
-            }
-            .brand-gallery-box {
-                padding: 24px 16px !important;
-                border-radius: 8px !important;
-            }
-            .brand-info-box {
-                padding: 24px 16px !important;
-                border-radius: 8px !important;
-            }
-        }
-
-        /* Bento Grid Gallery Style */
-        .brand-bento-gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: 140px;
-            gap: 12px;
-            margin-top: 30px;
-            margin-bottom: 40px;
-        }
-        .brand-bento-item {
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            display: block;
-            box-shadow: var(--shadow-sm);
-            transition: transform var(--trans), box-shadow var(--trans);
-        }
-        .brand-bento-item:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        .brand-bento-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .brand-bento-item:nth-child(1) {
-            grid-column: span 2;
-            grid-row: span 2;
-        }
-        .brand-bento-item:nth-child(2) {
-            grid-column: span 1;
-            grid-row: span 1;
-        }
-        .brand-bento-item:nth-child(3) {
-            grid-column: span 1;
-            grid-row: span 1;
-        }
-        .brand-bento-item:nth-child(4) {
-            grid-column: span 3;
-            grid-row: span 1;
-        }
-        @media (max-width: 768px) {
-            .brand-bento-gallery {
-                grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 100px;
-                gap: 8px;
-            }
-            .brand-bento-item:nth-child(1) {
-                grid-column: span 2;
-                grid-row: span 2;
-            }
-            .brand-bento-item:nth-child(2) {
-                grid-column: span 1;
-                grid-row: span 1;
-            }
-            .brand-bento-item:nth-child(3) {
-                grid-column: span 1;
-                grid-row: span 1;
-            }
-            .brand-bento-item:nth-child(4) {
-                grid-column: span 2;
-                grid-row: span 1;
-            }
-        }
-
-        /* Lightbox Modal Style */
-        .gallery-lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            z-index: 99999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .gallery-lightbox.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .lightbox-content {
-            max-width: 85%;
-            max-height: 85%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: scale(0.95);
-            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .gallery-lightbox.active .lightbox-content {
-            transform: scale(1);
-        }
-        .lightbox-content img {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        .lightbox-close {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 40px;
-            line-height: 1;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: all var(--trans);
-            z-index: 2;
-        }
-        .lightbox-close:hover {
-            opacity: 1;
-        }
-        .lightbox-prev, .lightbox-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: var(--white);
-            font-size: 32px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.6;
-            transition: all var(--trans);
-            user-select: none;
-            z-index: 2;
-        }
-        .lightbox-prev:hover, .lightbox-next:hover {
-            opacity: 1;
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .lightbox-prev {
-            left: 24px;
-        }
-        .lightbox-next {
-            right: 24px;
-        }
-        .lightbox-counter {
-            position: absolute;
-            bottom: 24px;
-            color: var(--white);
-            font-size: 14px;
-            font-weight: 600;
-            opacity: 0.8;
-        }
-        @media (max-width: 767px) {
-            .lightbox-prev { left: 12px; width: 44px; height: 44px; font-size: 24px; }
-            .lightbox-next { right: 12px; width: 44px; height: 44px; font-size: 24px; }
-            .lightbox-close { top: 12px; right: 12px; font-size: 32px; }
-        }
-        </style>
-
-    <!-- ── Brand Hero Header ── -->
-    <?php
-    $glow_color = (in_array(strtolower(trim($accent_color)), ['#111827', '#000', '#000000', '#1a1a1a'])) ? '#0057FF' : $accent_color;
-    ?>
-    <section class="inner-page-hero" id="brand-hero" style="border-bottom: 4px solid var(--brand-color);">
-        <div class="hero-bg" aria-hidden="true">
-            <div class="hero-grid-overlay"></div>
-            <div class="hero-glow hero-glow--1" style="background: radial-gradient(circle, <?php echo esc_attr($glow_color); ?>40, transparent 70%); opacity: .5;"></div>
+<main id="main-content" class="ch-main cs-main" tabindex="-1">
+    <div class="ch-canvas-band ch-canvas-band--top">
+        <div class="ch-grid-guides" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
         </div>
-        <div class="container inner-page-hero-inner reveal">
-            <!-- Breadcrumbs -->
-            <nav class="breadcrumb" aria-label="Breadcrumb">
-                <a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a>
-                <span aria-hidden="true">/</span>
-                <a href="<?php echo esc_url( get_post_type_archive_link('brand') ); ?>">Brand</a>
-                <span aria-hidden="true">/</span>
-                <span aria-current="page"><?php the_title(); ?></span>
-            </nav>
 
-            <div class="brand-hero-meta" style="display: flex; align-items: center; gap: 28px; margin-top: 20px; flex-wrap: wrap;">
-                <?php 
-                $local_logo = indotech_get_brand_logo_url(get_the_title());
-                if (has_post_thumbnail() || !empty($local_logo)) : 
-                ?>
-                    <div class="brand-hero-logo" style="width: 100px; height: 100px; background: var(--white); padding: 12px; border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
-                        <?php 
-                        if (has_post_thumbnail()) {
-                            the_post_thumbnail('large', ['style' => 'max-width:100%;max-height:100%;object-fit:contain;']);
-                        } else {
-                            echo '<img src="' . esc_url($local_logo) . '" alt="' . esc_attr(get_the_title()) . ' logo" style="max-width:100%;max-height:100%;object-fit:contain;">';
-                        }
-                        ?>
-                    </div>
-                <?php endif; ?>
-                <div>
-                    <?php if ($tagline) : ?>
-                        <span class="section-tag section-tag--white" style="margin-bottom: 12px;"><?php echo esc_html($tagline); ?></span>
-                    <?php endif; ?>
-                    <h1 class="inner-page-title" style="margin: 0; font-weight: 700;"><?php the_title(); ?></h1>
-                </div>
-            </div>
-            
-            <p class="inner-page-subtitle" style="margin-top: 24px; max-width: 700px;"><?php echo esc_html(get_the_excerpt()); ?></p>
-        </div>
-    </section>
+        <?php
+        while ( have_posts() ) :
+            the_post();
+            $brand_id     = get_the_ID();
+            $brand_title  = get_the_title();
+            $tagline      = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $brand_id, 'brand_tagline' ) : '';
+            $website_url  = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $brand_id, 'brand_website_url' ) : '';
+            $gallery      = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $brand_id, 'brand_gallery' ) : [];
+            $local_logo   = function_exists( 'indotech_get_brand_logo_url' ) ? indotech_get_brand_logo_url( $brand_title ) : '';
 
-    <!-- ── Brand Content Section ── -->
-    <section class="brand-body-section" style="padding: 60px 0; background: var(--surface);">
-        <div class="container">
-            
-            <?php
-            $brand_title = get_the_title();
+            global $wpdb;
+            $product_ids = $wpdb->get_col( $wpdb->prepare( "
+                SELECT post_id
+                FROM {$wpdb->postmeta}
+                WHERE (meta_key = '_product_brand' AND meta_value = %s)
+                   OR (meta_key = '_product_brand|||0|id' AND meta_value = %s)
+            ", 'post:brand:' . $brand_id, $brand_id ) );
+
+            $product_query = new WP_Query( [
+                'post_type'      => 'product',
+                'posts_per_page' => 9,
+                'post_status'    => 'publish',
+                'post__in'       => ! empty( $product_ids ) ? $product_ids : [ 0 ],
+            ] );
+
             $brand_usps = [];
-
-            switch (strtolower(trim($brand_title))) {
+            switch ( strtolower( trim( $brand_title ) ) ) {
                 case 'cleanique academy':
                     $brand_usps = [
-                        [
-                            'title' => 'Kurikulum Praktis & Teruji',
-                            'desc'  => 'Diajarkan langsung oleh praktisi berpengalaman di industri laundry komersial dengan modul yang mudah dipahami.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>'
-                        ],
-                        [
-                            'title' => 'Konsultasi & Mentoring Bisnis',
-                            'desc'  => 'Setiap alumni mendapatkan bimbingan pasca-pelatihan untuk memulai atau mengoptimalkan bisnis laundry secara mandiri.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
-                        ],
-                        [
-                            'title' => 'Workshop Formulasi Mandiri',
-                            'desc'  => 'Pelajari teknik meracik sabun, softener, dan parfum laundry standar industri untuk memangkas biaya operasional hingga 50%.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'
-                        ],
-                        [
-                            'title' => 'Dukungan Komunitas Nasional',
-                            'desc'  => 'Bergabung dengan jaringan ribuan pengusaha laundry se-Indonesia untuk saling bertukar informasi dan peluang pasar.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>'
-                        ]
+                        [ 'title' => 'Kurikulum Praktis & Teruji', 'desc' => 'Diajarkan langsung oleh praktisi berpengalaman di industri laundry komersial dengan modul terstruktur.' ],
+                        [ 'title' => 'Konsultasi & Mentoring Bisnis', 'desc' => 'Setiap alumni memperoleh pendampingan pasca-pelatihan untuk memulai maupun memperluas usaha.' ],
+                        [ 'title' => 'Workshop Formulasi Mandiri', 'desc' => 'Pelajari teknik meracik deterjen, softener, dan parfum laundry secara terukur serta higienis.' ],
+                        [ 'title' => 'Dukungan Jaringan Nasional', 'desc' => 'Terhubung dengan komunitas pengusaha laundry dan pasokan bahan baku Indotech di 34 provinsi.' ],
                     ];
                     break;
-
                 case 'cleanique lab':
                     $brand_usps = [
-                        [
-                            'title' => 'Tim R&D Ahli & Berpengalaman',
-                            'desc'  => 'Formulasi produk didukung oleh ahli kimia khusus untuk menghasilkan performa pembersihan maksimal dan aman.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.77 3.77z"/></svg>'
-                        ],
-                        [
-                            'title' => 'Layanan Maklon Private Label',
-                            'desc'  => 'Solusi produksi ujung-ke-ujung (end-to-end) bagi Anda yang ingin meluncurkan brand sabun atau chemical pembersih sendiri.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>'
-                        ],
-                        [
-                            'title' => 'Fasilitas Manufaktur Modern',
-                            'desc'  => 'Diproduksi menggunakan mesin standar industri demi memastikan konsistensi batch dan output produksi volume tinggi.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>'
-                        ],
-                        [
-                            'title' => 'Legalitas & Sertifikasi Lengkap',
-                            'desc'  => 'Formula bersertifikat Halal MUI, standar mutu ISO 9001:2015, serta registrasi izin edar Kemenkes RI.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>'
-                        ]
+                        [ 'title' => 'Tim R&D Ahli & Berpengalaman', 'desc' => 'Pengembangan formulasi kimia didukung tenaga analis berpengalaman untuk performa bersih optimal.' ],
+                        [ 'title' => 'Layanan Maklon Private Label', 'desc' => 'Solusi produksi terpadu bagi pelaku usaha yang ingin meluncurkan merek produk kebersihan sendiri.' ],
+                        [ 'title' => 'Fasilitas Produksi Terukur', 'desc' => 'Diproduksi menggunakan peralatan industri terkontrol demi memastikan konsistensi mutu antar batch.' ],
+                        [ 'title' => 'Legalitas & Pengujian Mutu', 'desc' => 'Didukung pendampingan izin edar Kemenkes RI (PKRT), Sertifikasi Halal, dan standar mutu laboratorium internal.' ],
                     ];
                     break;
-
                 case 'cleanique mart':
                     $brand_usps = [
-                        [
-                            'title' => 'One-Stop Cleaning Supplies',
-                            'desc'  => 'Menyediakan stok produk kebersihan terlengkap mulai dari sabun laundry, pembersih rumah, hingga peralatan komersial.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>'
-                        ],
-                        [
-                            'title' => 'Kemitraan Toko Kebersihan',
-                            'desc'  => 'Konsep waralaba/kemitraan toko modern dengan sistem POS terintegrasi, pasokan produk stabil, dan dukungan pemasaran.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
-                        ],
-                        [
-                            'title' => 'Konsep Ramah Lingkungan',
-                            'desc'  => 'Menerapkan sistem minim sampah (zero waste) melalui stasiun pengisian ulang sabun untuk mengurangi kemasan plastik sekali pakai.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7 12l3 3 7-7"/></svg>'
-                        ],
-                        [
-                            'title' => 'Jaminan Stok & Distribusi',
-                            'desc'  => 'Didukung rantai pasok langsung dari pabrik PT Indotech Berkah Abadi untuk menjamin ketersediaan barang setiap saat.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>'
-                        ]
+                        [ 'title' => 'One-Stop Cleaning Supplies', 'desc' => 'Menyediakan stok produk kebersihan lengkap mulai dari kimia laundry hingga perlengkapan ritel.' ],
+                        [ 'title' => 'Kemitraan Toko Kebersihan Modern', 'desc' => 'Konsep gerai ritel dengan suplai stabil dari pabrik serta materi pendampingan operasional.' ],
+                        [ 'title' => 'Konsep Minim Kemasan Sekali Pakai', 'desc' => 'Menghadirkan opsi pengisian ulang sabun untuk menekan biaya kemasan konsumen akhir.' ],
+                        [ 'title' => 'Stabilitas Stok Pabrik', 'desc' => 'Didukung rantai pasok langsung PT Indotech Berkah Abadi demi ketersediaan barang berkelanjutan.' ],
                     ];
                     break;
-
                 case 'depo cleanique':
                     $brand_usps = [
-                        [
-                            'title' => 'Stabilitas Harga Terjamin',
-                            'desc'  => 'Kami memastikan tidak ada perang harga di antara mitra. Kontrak eksklusif wilayah menjaga profit margin Anda tetap sehat dan berkelanjutan.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><path d="M12 22V12"/></svg>'
-                        ],
-                        [
-                            'title' => 'Bayar Sabunnya Saja',
-                            'desc'  => 'Hampir 40% biaya produk ritel habis untuk kemasan sekali pakai. Di sini, Anda hanya membayar isi sabunnya.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v12M6 12h12"/></svg>'
-                        ],
-                        [
-                            'title' => 'Legalitas Penuh',
-                            'desc'  => 'Dibantu pengurusan izin OSS, Kemenkes, hingga sertifikasi Halal secara tuntas dan cepat.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>'
-                        ],
-                        [
-                            'title' => 'Grosir Tangan Pertama',
-                            'desc'  => 'Memotong rantai distribusi panjang. Dapatkan harga langsung produsen untuk bisnis laundry dan warung Anda.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
-                        ]
+                        [ 'title' => 'Kualitas Stabil Langsung Pabrik', 'desc' => 'Menjaga mutu kimia pembersih dari pabrik ke depo isi ulang dengan margin usaha mitra tetap sehat.' ],
+                        [ 'title' => 'Efisiensi Kemasan Ritel', 'desc' => 'Pelanggan fokus membeli isi produk sehingga pengeluaran plastik sekali pakai berkurang drastis.' ],
+                        [ 'title' => 'Pendampingan Kesiapan Usaha', 'desc' => 'Mitra didampingi dari perencanaan tata letak depo hingga manajemen pasokan awal.' ],
+                        [ 'title' => 'Suplai Grosir Tangan Pertama', 'desc' => 'Harga langsung produsen untuk menjangkau segmen rumah tangga maupun usaha laundry lokal.' ],
                     ];
                     break;
-
                 case 'malabeez':
                     $brand_usps = [
-                        [
-                            'title' => 'Aroma Mewah Timur Tengah',
-                            'desc'  => 'Menyediakan wewangian premium khas Timur Tengah seperti Kasturi, Baccarat, Masjidil Haram, dan Masjid Nabawi.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>'
-                        ],
-                        [
-                            'title' => 'Teknologi Anti-Bakteri',
-                            'desc'  => 'Diformulasikan dengan perlindungan Anti Musty & Antibacterial untuk menjaga sajadah dan mukena tetap higienis.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,4 12,14.01 9,11.01"/><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/></svg>'
-                        ],
-                        [
-                            'title' => 'Formula Bebas Alkohol',
-                            'desc'  => '100% bebas alkohol sehingga sangat aman digunakan untuk ibadah sehari-hari tanpa memicu pusing atau eneg.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7 12l3 3 7-7"/></svg>'
-                        ],
-                        [
-                            'title' => 'Wangi Tahan Lama',
-                            'desc'  => 'Menggunakan minyak wangi berkualitas tinggi yang menyerap ke serat kain dan bertahan hingga berhari-hari.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>'
-                        ]
+                        [ 'title' => 'Karakter Aroma Khas Timur Tengah', 'desc' => 'Hadir dalam varian aroma elegan untuk sajadah, mukena, linen kamar, dan ruang ibadah.' ],
+                        [ 'title' => 'Formulasi Antibakteri', 'desc' => 'Diformulasikan untuk menjaga kesegaran kain dan menghindari bau lembap pada tekstil.' ],
+                        [ 'title' => 'Nyaman untuk Pemakaian Harian', 'desc' => 'Formula water-based bebas alkohol agar aman dan nyaman digunakan di area ibadah.' ],
+                        [ 'title' => 'Wangi Tahan Lama di Serat', 'desc' => 'Bibit parfum pilihan yang menyatu baik pada serat kain serta bertahan lama.' ],
                     ];
                     break;
-
                 case 'orchid care':
                     $brand_usps = [
-                        [
-                            'title' => 'Pilihan Utama Laundry Profesional',
-                            'desc'  => 'Digunakan oleh ribuan pengusaha laundry komersial karena ampuh mengangkat noda membandel dalam sekali cuci.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>'
-                        ],
-                        [
-                            'title' => 'Proteksi Serat Kain & Warna',
-                            'desc'  => 'Menjaga kecerahan warna pakaian agar tidak pudar dan melindungi kelembutan kain meski sering dicuci.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'
-                        ],
-                        [
-                            'title' => 'Formula Rendah Busa (Low Suds)',
-                            'desc'  => 'Sangat aman untuk mesin cuci tipe front-loading (pintu depan), mencegah korosi, dan menghemat konsumsi air bilasan.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>'
-                        ],
-                        [
-                            'title' => 'Sertifikasi Kemenkes & Halal',
-                            'desc'  => 'Seluruh produk memiliki izin edar resmi dari Kementerian Kesehatan RI dan bersertifikat Halal untuk ketenangan bisnis Anda.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>'
-                        ]
+                        [ 'title' => 'Andalan Laundry Komersial', 'desc' => 'Digunakan oleh ratusan usaha laundry kiloan maupun hotel untuk pengangkatan noda secara efektif.' ],
+                        [ 'title' => 'Proteksi Serat & Warna Pakaian', 'desc' => 'Menjaga kelembutan kain serta membantu mempertahankan kecerahan warna pakaian.' ],
+                        [ 'title' => 'Formula Low-Suds Efisien', 'desc' => 'Aman bagi mesin cuci front-loading dan membantu menghemat penggunaan air saat pembilasan.' ],
+                        [ 'title' => 'Izin Edar Kemenkes RI & Halal', 'desc' => 'Produk terdaftar di Kemenkes RI (PKRT) serta mengantongi Sertifikasi Halal.' ],
                     ];
                     break;
-
                 case 'prokopi':
                     $brand_usps = [
-                        [
-                            'title' => 'Standard Mutu Food-Grade',
-                            'desc'  => 'Diformulasikan khusus dengan bahan yang sepenuhnya aman bagi kesehatan manusia dan tidak merusak komponen mesin kopi.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>'
-                        ],
-                        [
-                            'title' => 'Menjaga Cita Rasa Espresso',
-                            'desc'  => 'Menghilangkan residu minyak kopi (coffee oils) dan sisa kerak gosong pada group head agar rasa kopi tetap murni.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'
-                        ],
-                        [
-                            'title' => 'Formula Descaling Ampuh',
-                            'desc'  => 'Efektif melarutkan penumpukan mineral/kerak kapur di dalam boiler dan pipa boiler pemanas mesin espresso.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
-                        ],
-                        [
-                            'title' => 'Kompatibel dengan Berbagai Mesin',
-                            'desc'  => 'Cocok digunakan untuk mesin espresso komersial kafe, mesin semi-otomatis rumahan, hingga grinder kopi.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>'
-                        ]
+                        [ 'title' => 'Formula Food-Grade', 'desc' => 'Dirancang aman untuk perangkat penyeduh minuman dan tidak merusak komponen mesin kopi.' ],
+                        [ 'title' => 'Menjaga Kemurnian Rasa Espresso', 'desc' => 'Membersihkan residu minyak kopi dan kerak pada group head agar hasil ekstraksi konsisten.' ],
+                        [ 'title' => 'Pembersihan Kerak Boiler', 'desc' => 'Efektif melarutkan penumpukan mineral di jalur pemanas mesin espresso komersial.' ],
+                        [ 'title' => 'Kompatibel Multi-Perangkat', 'desc' => 'Sesuai bagi mesin espresso kafe, semi-otomatis, hingga perawatan grinder kopi.' ],
                     ];
                     break;
-
                 default:
                     $brand_usps = [
-                        [
-                            'title' => 'Formulasi Khusus Komersial',
-                            'desc'  => 'Dirancang dengan konsentrasi bahan aktif tinggi untuk hasil pembersihan maksimal pada skala industri.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'
-                        ],
-                        [
-                            'title' => 'Aroma Tahan Lama',
-                            'desc'  => 'Dilengkapi teknologi parfum pilihan yang melekat kuat pada serat kain dan bertahan hingga berhari-hari.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>'
-                        ],
-                        [
-                            'title' => 'Efisiensi Biaya Operasional',
-                            'desc'  => 'Harga grosir langsung dari produsen yang memberikan penghematan biaya pengeluaran kimia operasional bisnis Anda.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
-                        ],
-                        [
-                            'title' => 'Ramah Serat & Kulit',
-                            'desc'  => 'Bahan aktif biodegradable yang lembut di kulit, tidak menimbulkan korosi, serta memperpanjang usia pakai linen Anda.',
-                            'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>'
-                        ]
+                        [ 'title' => 'Formulasi Khusus B2B', 'desc' => 'Dirancang dengan konsentrasi bahan aktif terukur untuk hasil kebersihan skala industri.' ],
+                        [ 'title' => 'Performa & Aroma Terstandar', 'desc' => 'Dikembangkan bersama tim R&D PT Indotech Berkah Abadi demi kepuasan pengguna akhir.' ],
+                        [ 'title' => 'Efisiensi Biaya Operasional', 'desc' => 'Skema pasokan langsung pabrik menjaga struktur biaya usaha tetap kompetitif.' ],
+                        [ 'title' => 'Kepatuhan Legalitas Resmi', 'desc' => 'Didukung izin edar Kemenkes RI (PKRT) dan Sertifikasi Halal untuk varian terkait.' ],
                     ];
                     break;
             }
             ?>
 
-            <div class="brand-grid-container">
-                
-                <!-- Left Column: Description, USPs, & Products -->
-                <div>
-                    <div class="brand-description-box" style="background: var(--white); padding: 40px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 40px;">
-                        <h2 style="font-size: 24px; margin-bottom: 20px; letter-spacing: -0.02em; font-weight: 700;">Tentang Brand</h2>
-                        <div class="brand-content-text" style="color: var(--text-secondary); line-height: 1.75; font-size: 15px;">
-                            <?php the_content(); ?>
-                        </div>
-                        <?php if ($website_url) : ?>
-                            <a href="<?php echo esc_url($website_url); ?>" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 30px; background: var(--brand-color); border-color: var(--brand-color); font-weight: 600;">
-                                Kunjungi Website Resmi &rarr;
-                            </a>
-                        <?php endif; ?>
-                    </div>
+            <section class="cs-hero cs-hero--compact ch-wrap" id="brand-hero" aria-labelledby="cs-brand-title">
+                <nav class="cs-breadcrumb" aria-label="Breadcrumb">
+                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Beranda</a>
+                    <span aria-hidden="true">/</span>
+                    <a href="<?php echo esc_url( get_post_type_archive_link( 'brand' ) ?: home_url( '/brands/' ) ); ?>">Brand</a>
+                    <span aria-hidden="true">/</span>
+                    <span aria-current="page"><?php the_title(); ?></span>
+                </nav>
 
-                    <?php if (!empty($gallery)) : ?>
-                        <?php
-                        $gallery_urls = [];
-                        foreach ($gallery as $img_id) {
-                            $gallery_urls[] = wp_get_attachment_image_url($img_id, 'large');
-                        }
-                        ?>
-                        <script id="brand-gallery-data" type="application/json">
-                            <?php echo json_encode($gallery_urls); ?>
-                        </script>
-
-                        <div class="brand-bento-gallery">
-                            <?php 
-                            $idx = 0;
-                            foreach ($gallery as $img_id) : 
-                                $img_url = wp_get_attachment_image_url($img_id, 'large');
-                            ?>
-                                <a href="<?php echo esc_url($img_url); ?>" class="brand-bento-item brand-gallery-link" data-index="<?php echo $idx; ?>">
-                                    <?php echo wp_get_attachment_image($img_id, 'large', false); ?>
-                                </a>
-                            <?php 
-                                $idx++;
-                            endforeach; 
+                <div class="cs-brand-head">
+                    <?php if ( has_post_thumbnail() || ! empty( $local_logo ) ) : ?>
+                        <div class="cs-brand-logo-frame">
+                            <?php
+                            if ( has_post_thumbnail() ) {
+                                the_post_thumbnail( 'large' );
+                            } else {
+                                echo '<img src="' . esc_url( $local_logo ) . '" alt="' . esc_attr( $brand_title ) . ' logo">';
+                            }
                             ?>
                         </div>
                     <?php endif; ?>
 
-                    <!-- Brand Features / USP -->
-                    <div class="brand-features-box" style="margin-bottom: 50px;">
-                        <h2 style="font-size: 24px; margin-bottom: 24px; letter-spacing: -0.02em; font-weight: 700;">Mengapa Memilih Produk <em><?php the_title(); ?></em>?</h2>
-                        <div class="brand-usp-grid">
-                            
-                            <?php foreach ($brand_usps as $usp) : ?>
-                                <div class="brand-usp-card">
-                                    <div class="brand-usp-icon" style="background: var(--surface); color: var(--brand-color); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-bottom: 16px;">
-                                        <?php echo $usp['icon']; ?>
-                                    </div>
-                                    <div>
-                                        <h4 style="font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 6px;"><?php echo esc_html($usp['title']); ?></h4>
-                                        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0;"><?php echo esc_html($usp['desc']); ?></p>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-
-                        </div>
+                    <div style="flex: 1 1 320px;">
+                        <?php if ( $tagline ) : ?>
+                            <span class="cs-pill-tag"><?php echo esc_html( $tagline ); ?></span>
+                        <?php endif; ?>
+                        <h1 id="cs-brand-title" class="cs-single-h1"><?php the_title(); ?></h1>
+                        <?php if ( has_excerpt() ) : ?>
+                            <p class="cs-muted-note" style="max-width: 60ch; margin: 12px 0 0; line-height: 1.6;"><?php echo esc_html( wp_strip_all_tags( get_the_excerpt() ) ); ?></p>
+                        <?php endif; ?>
+                        <?php if ( $website_url ) : ?>
+                            <div style="margin-top: 18px;">
+                                <a href="<?php echo esc_url( $website_url ); ?>" target="_blank" rel="noopener noreferrer" class="ch-pill-cta">
+                                    <span>Kunjungi Website Resmi</span>
+                                    <span class="ch-pill-cta-icon" aria-hidden="true">
+                                        <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                                    </span>
+                                </a>
+                            </div>
+                        <?php endif; ?>
                     </div>
-
-
                 </div>
+            </section>
 
-                <!-- Right Column: Sidebar (Gallery & Info) -->
-                <aside>
-                    <!-- B2B Inquiry Box specific to Brand -->
-                    <div class="brand-inquiry-box" style="background: var(--white); border: 1px solid var(--brand-color); border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: var(--shadow-sm);">
-                        <h3 style="font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.01em;">Kemitraan & Maklon</h3>
-                        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px;">Hubungi tim penjualan B2B kami untuk meminta katalog harga grosir atau konsultasi Private Label (Maklon) brand <strong><?php the_title(); ?></strong>.</p>
-                        
-                        <?php
-                        // Robustly fetch a product ID from this brand or fallback
-                        $first_product_id = 0;
-                        if ($product_query->have_posts()) {
-                            $first_product_id = $product_query->posts[0]->ID;
-                        }
-                        if (empty($first_product_id)) {
-                            $fallback_posts = get_posts(['post_type' => 'product', 'posts_per_page' => 1]);
-                            if (!empty($fallback_posts)) {
-                                $first_product_id = $fallback_posts[0]->ID;
+            <section class="cs-band cs-band--tight ch-wrap" aria-label="Informasi dan formulir brand">
+                <div class="cs-product-layout">
+                    <div>
+                        <div class="cs-product-section" style="margin-top: 0; padding-top: 0; border-top: 0;">
+                            <h2>Tentang <?php the_title(); ?></h2>
+                            <div class="product-description">
+                                <?php the_content(); ?>
+                            </div>
+                        </div>
+
+                        <?php if ( ! empty( $gallery ) ) :
+                            $gallery_urls = [];
+                            foreach ( $gallery as $img_id ) {
+                                $u = wp_get_attachment_image_url( $img_id, 'large' );
+                                if ( $u ) {
+                                    $gallery_urls[] = $u;
+                                }
                             }
-                        }
-                        ?>
-                        <form id="indotech-inquiry-form" method="POST" style="display: flex; flex-direction: column; gap: 14px;">
-                            <input type="hidden" name="product_id" value="<?php echo esc_attr($first_product_id); ?>">
-                            <input type="hidden" name="brand_title" value="<?php echo esc_attr(get_the_title()); ?>">
-                            <input type="hidden" name="whatsapp_number" value="6287885590088">
-                            <input type="text" name="website_url" value="" style="display: none;" tabindex="-1" autocomplete="off"> <!-- Honeypot -->
+                            ?>
+                            <script id="brand-gallery-data" type="application/json"><?php echo wp_json_encode( $gallery_urls ); ?></script>
 
-                            <div>
-                                <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Nama Lengkap</label>
-                                <input type="text" name="full_name" placeholder="Masukkan nama Anda" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px;">
+                            <div class="brand-bento-gallery">
+                                <?php
+                                $idx = 0;
+                                foreach ( $gallery as $img_id ) :
+                                    $img_url = wp_get_attachment_image_url( $img_id, 'large' );
+                                    if ( ! $img_url ) {
+                                        continue;
+                                    }
+                                    ?>
+                                    <a href="<?php echo esc_url( $img_url ); ?>" class="brand-bento-item brand-gallery-link" data-index="<?php echo (int) $idx; ?>">
+                                        <?php echo wp_get_attachment_image( $img_id, 'large', false ); ?>
+                                    </a>
+                                    <?php
+                                    $idx++;
+                                endforeach;
+                                ?>
                             </div>
+                        <?php endif; ?>
 
-                            <div>
-                                <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Email Bisnis</label>
-                                <input type="email" name="email" placeholder="nama@perusahaan.com" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px;">
+                        <div class="cs-product-section">
+                            <h2>Mengapa Memilih <?php the_title(); ?>?</h2>
+                            <div class="cs-usp-ledger">
+                                <?php foreach ( $brand_usps as $usp ) : ?>
+                                    <article class="cs-usp-cell">
+                                        <h3><?php echo esc_html( $usp['title'] ); ?></h3>
+                                        <p><?php echo esc_html( $usp['desc'] ); ?></p>
+                                    </article>
+                                <?php endforeach; ?>
                             </div>
-
-                            <div>
-                                <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Pesan Kustom</label>
-                                <textarea name="message" rows="3" style="width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: inherit; font-size: 13.5px; resize: vertical;">Halo, saya tertarik untuk meminta katalog produk dan harga grosir untuk brand <?php the_title(); ?>.</textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; background: #0f172a; border-color: #0f172a; color: #ffffff; padding: 12px; font-size: 13.5px; font-weight: 700;">
-                                Kirim Permintaan &rarr;
-                            </button>
-                        </form>
-
-                        <div id="indotech-inquiry-response" style="display: none; margin-top: 14px; padding: 10px 14px; border-radius: 8px; font-size: 13px; line-height: 1.4; font-weight: 500;"></div>
-                    </div>
-
-                    <div class="brand-info-box" style="background: var(--white); padding: 30px; border-radius: 16px; border: 1px solid var(--border);">
-                        <h3 style="font-size: 18px; margin-bottom: 20px; letter-spacing: -0.01em; font-weight: 700;">Holding Korporat</h3>
-                        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 15px;">
-                            Setiap produk di bawah brand <strong><?php the_title(); ?></strong> diproduksi dengan standar mutu tinggi dan formula khusus dari PT Indotech Berkah Abadi.
-                        </p>
-                        <hr style="border: 0; border-top: 1px solid var(--border); margin: 15px 0;">
-                        <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Sertifikasi</span>
-                        <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
-                            <span style="font-size: 10px; font-weight: 700; padding: 4px 8px; background: var(--surface); border-radius: 4px;">BPOM</span>
-                            <span style="font-size: 10px; font-weight: 700; padding: 4px 8px; background: var(--surface); border-radius: 4px;">Halal MUI</span>
-                            <span style="font-size: 10px; font-weight: 700; padding: 4px 8px; background: var(--surface); border-radius: 4px;">ISO 9001</span>
                         </div>
                     </div>
-                </aside>
-            </div>
-        </div>
-    </section>
 
-</div>
+                    <aside>
+                        <div class="cs-inquiry-panel">
+                            <h2>Kemitraan &amp; Maklon</h2>
+                            <p>Hubungi tim B2B kami untuk meminta katalog harga grosir maupun konsultasi kemitraan brand <strong><?php the_title(); ?></strong>.</p>
 
-<?php
-endwhile;
-?>
+                            <?php
+                            $first_product_id = $product_query->have_posts() ? $product_query->posts[0]->ID : 0;
+                            if ( empty( $first_product_id ) ) {
+                                $fallback_posts   = get_posts( [ 'post_type' => 'product', 'posts_per_page' => 1 ] );
+                                $first_product_id = ! empty( $fallback_posts ) ? $fallback_posts[0]->ID : 0;
+                            }
+                            ?>
+                            <form id="indotech-inquiry-form" method="POST" class="cs-form">
+                                <input type="hidden" name="product_id" value="<?php echo esc_attr( $first_product_id ); ?>">
+                                <input type="hidden" name="brand_title" value="<?php echo esc_attr( $brand_title ); ?>">
+                                <input type="hidden" name="whatsapp_number" value="6287885590088">
+                                <input type="text" name="website_url" value="" style="display: none;" tabindex="-1" autocomplete="off">
 
-<!-- Lightbox Modal -->
-<div id="gallery-lightbox" class="gallery-lightbox">
-    <button class="lightbox-close" aria-label="Tutup Galeri">&times;</button>
-    <button class="lightbox-prev" aria-label="Gambar Sebelumnya">&lsaquo;</button>
+                                <div class="cs-form-group">
+                                    <label class="cs-form-label" for="brand-full-name">Nama Lengkap</label>
+                                    <input id="brand-full-name" type="text" name="full_name" class="cs-form-input" placeholder="Masukkan nama Anda">
+                                </div>
+
+                                <div class="cs-form-group">
+                                    <label class="cs-form-label" for="brand-email">Email Bisnis</label>
+                                    <input id="brand-email" type="email" name="email" class="cs-form-input" placeholder="nama@perusahaan.com">
+                                </div>
+
+                                <div class="cs-form-group">
+                                    <label class="cs-form-label" for="brand-message">Pesan Kebutuhan</label>
+                                    <textarea id="brand-message" name="message" rows="3" class="cs-form-input cs-form-textarea">Halo, saya tertarik untuk meminta katalog produk dan harga grosir untuk brand <?php the_title(); ?>.</textarea>
+                                </div>
+
+                                <button type="submit" class="ch-pill-cta cs-form-submit">
+                                    <span>Kirim Permintaan</span>
+                                    <span class="ch-pill-cta-icon" aria-hidden="true">
+                                        <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                                    </span>
+                                </button>
+                            </form>
+
+                            <div id="indotech-inquiry-response" class="form-response" style="display: none; margin-top: 14px;"></div>
+                        </div>
+
+                        <div class="cs-holding-note">
+                            <h2>Holding Korporat</h2>
+                            <p>Diproduksi dan didistribusikan oleh PT Indotech Berkah Abadi dengan pengawasan mutu laboratorium terstandar sejak 2011.</p>
+                            <div class="ch-legal-badges">
+                                <span class="ch-legal-pill">Izin Edar Kemenkes RI (PKRT)</span>
+                                <span class="ch-legal-pill">Sertifikasi Halal</span>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <?php if ( $product_query->have_posts() ) : ?>
+                <section class="cs-band ch-wrap" aria-labelledby="cs-brand-products-title">
+                    <header class="ch-section-head">
+                        <div>
+                            <span class="cs-pill-tag">Katalog Brand</span>
+                            <h2 id="cs-brand-products-title" class="ch-section-h2 ch-section-h2--sm">Produk <span><?php the_title(); ?></span></h2>
+                        </div>
+                        <a href="<?php echo esc_url( home_url( '/produk/' ) ); ?>" class="ch-inline-link">
+                            <span>Lihat semua produk</span>
+                            <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                        </a>
+                    </header>
+
+                    <div class="cs-editorial-grid">
+                        <?php
+                        while ( $product_query->have_posts() ) :
+                            $product_query->the_post();
+                            $p_id     = get_the_ID();
+                            $img_html = has_post_thumbnail()
+                                ? get_the_post_thumbnail( $p_id, 'indotech-thumb', [ 'loading' => 'lazy', 'decoding' => 'async' ] )
+                                : '';
+                            $desc = wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 14, '...' );
+                            get_template_part( 'template-parts/archive/editorial-item', null, [
+                                'url'            => get_permalink( $p_id ),
+                                'title'          => get_the_title( $p_id ),
+                                'desc'           => $desc,
+                                'image_html'     => $img_html,
+                                'fallback_label' => $brand_title ?: 'Indotech',
+                                'media_variant'  => 'product',
+                                'heading_tag'    => 'h3',
+                                'post_id'        => $p_id,
+                            ] );
+                        endwhile;
+                        wp_reset_postdata();
+                        ?>
+                    </div>
+                </section>
+            <?php endif; ?>
+
+            <?php get_template_part( 'template-parts/home/company-cta' ); ?>
+
+        <?php endwhile; ?>
+    </div>
+</main>
+
+<div id="gallery-lightbox" class="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Galeri Brand">
+    <button type="button" class="lightbox-close" aria-label="Tutup Galeri">&times;</button>
+    <button type="button" class="lightbox-prev" aria-label="Gambar Sebelumnya">&lsaquo;</button>
     <div class="lightbox-content">
         <img id="lightbox-img" src="" alt="Galeri Brand">
     </div>
-    <button class="lightbox-next" aria-label="Gambar Berikutnya">&rsaquo;</button>
+    <button type="button" class="lightbox-next" aria-label="Gambar Berikutnya">&rsaquo;</button>
     <div class="lightbox-counter"><span id="lightbox-current">1</span> / <span id="lightbox-total">1</span></div>
 </div>
 
@@ -805,98 +321,70 @@ endwhile;
 document.addEventListener('DOMContentLoaded', function() {
     const imagesEl = document.getElementById('brand-gallery-data');
     if (!imagesEl) return;
-    
-    const images = JSON.parse(imagesEl.textContent);
-    if (!images || !images.length) return;
+    const images = JSON.parse(imagesEl.textContent || '[]');
+    if (!images.length) return;
 
-    let currentIndex = 0;
+    let currentIndex     = 0;
+    const lightbox       = document.getElementById('gallery-lightbox');
+    const lightboxImg    = document.getElementById('lightbox-img');
+    const lightboxClose  = lightbox ? lightbox.querySelector('.lightbox-close') : null;
+    const lightboxPrev   = lightbox ? lightbox.querySelector('.lightbox-prev') : null;
+    const lightboxNext   = lightbox ? lightbox.querySelector('.lightbox-next') : null;
+    const lightboxCurr   = document.getElementById('lightbox-current');
+    const lightboxTotal  = document.getElementById('lightbox-total');
 
-    // Lightbox Modal selectors
-    const lightbox = document.getElementById('gallery-lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxClose = lightbox ? lightbox.querySelector('.lightbox-close') : null;
-    const lightboxPrev = lightbox ? lightbox.querySelector('.lightbox-prev') : null;
-    const lightboxNext = lightbox ? lightbox.querySelector('.lightbox-next') : null;
-    const lightboxCurrent = document.getElementById('lightbox-current');
-    const lightboxTotal = document.getElementById('lightbox-total');
+    if (lightboxTotal) lightboxTotal.textContent = images.length;
 
-    if (lightboxTotal) {
-        lightboxTotal.textContent = images.length;
-    }
-
-    function updateLightboxImage() {
-        if (lightboxImg) {
-            lightboxImg.src = images[currentIndex];
-        }
-        if (lightboxCurrent) {
-            lightboxCurrent.textContent = currentIndex + 1;
-        }
-    }
-
-    function openLightbox(index) {
+    const updateImg = () => {
+        if (lightboxImg) lightboxImg.src = images[currentIndex];
+        if (lightboxCurr) lightboxCurr.textContent = currentIndex + 1;
+    };
+    const openLb = idx => {
         if (!lightbox) return;
-        currentIndex = index;
-        updateLightboxImage();
+        currentIndex = idx;
+        updateImg();
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
+    };
+    const closeLb = () => {
         if (!lightbox) return;
         lightbox.classList.remove('active');
         document.body.style.overflow = '';
-    }
+    };
 
-    function showNext() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateLightboxImage();
-    }
-
-    function showPrev() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateLightboxImage();
-    }
-
-    // Attach click events to gallery links
-    const galleryLinks = document.querySelectorAll('.brand-gallery-link');
-    galleryLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+    document.querySelectorAll('.brand-gallery-link').forEach(link => {
+        link.addEventListener('click', e => {
             e.preventDefault();
-            const index = parseInt(this.dataset.index) || 0;
-            openLightbox(index);
+            openLb(parseInt(link.dataset.index, 10) || 0);
         });
     });
-
-    if (lightboxClose) {
-        lightboxClose.addEventListener('click', closeLightbox);
-    }
-    if (lightboxPrev) {
-        lightboxPrev.addEventListener('click', showPrev);
-    }
-    if (lightboxNext) {
-        lightboxNext.addEventListener('click', showNext);
-    }
-
-    // Close on clicking overlay (outside content image)
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLb);
+    if (lightboxPrev) lightboxPrev.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateImg();
+    });
+    if (lightboxNext) lightboxNext.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateImg();
+    });
     if (lightbox) {
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
-                closeLightbox();
-            }
+        lightbox.addEventListener('click', e => {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) closeLb();
         });
     }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', e => {
         if (!lightbox || !lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowRight') showNext();
-        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'Escape') closeLb();
+        if (e.key === 'ArrowRight') {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateImg();
+        }
+        if (e.key === 'ArrowLeft') {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateImg();
+        }
     });
 });
 </script>
 
-<?php
-echo '</main>';
-get_footer();
-
+<?php get_footer(); ?>

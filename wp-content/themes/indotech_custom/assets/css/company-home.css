@@ -401,6 +401,11 @@
 .ch-tilt-badge {
   display: inline-flex;
   align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  justify-self: start;
   padding: 6px 14px;
   border-radius: 999px;
   background: var(--ch-lime);
@@ -410,9 +415,9 @@
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1.2;
+  white-space: nowrap;
   transform: rotate(-12deg) translate(-2px, 7px);
   margin-right: 4px;
-  flex-shrink: 0;
 }
 
 .ch-hero-aside {
@@ -866,6 +871,11 @@
 .ch-legal-pill {
   display: inline-flex;
   align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  justify-self: start;
   padding: 6px 12px;
   border-radius: 999px;
   background: var(--ch-lime);
@@ -1956,7 +1966,13 @@
 }
 
 .ch-storyboard-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  justify-self: start;
   padding: 4px 10px;
   border-radius: 999px;
   background: var(--ch-lime);
