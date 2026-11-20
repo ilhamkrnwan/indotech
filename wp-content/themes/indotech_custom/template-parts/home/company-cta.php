@@ -21,9 +21,9 @@ $wa_msg      = rawurlencode( 'Halo Indotech, saya ingin mendiskusikan kebutuhan 
         <figure class="ch-orbital-photo ch-orbital-photo--tr">
             <img
                 src="<?php echo esc_url( $media_cp . '/cta-logistics-b2b.webp' ); ?>"
-                width="800"
-                height="600"
-                alt="Gudang distribusi produk kebersihan B2B PT Indotech Berkah Abadi"
+                width="1376"
+                height="768"
+                alt="Stok kemasan jeriken industri HDPE dan logistik pengiriman kargo PT Indotech Berkah Abadi"
                 loading="lazy"
                 decoding="async"
             >
@@ -49,9 +49,9 @@ $wa_msg      = rawurlencode( 'Halo Indotech, saya ingin mendiskusikan kebutuhan 
         <figure class="ch-orbital-photo ch-orbital-photo--bl">
             <img
                 src="<?php echo esc_url( $media_cp . '/cta-collab-b2b.webp' ); ?>"
-                width="800"
-                height="600"
-                alt="Rangkaian sampel kemasan produk pembersih B2B dan private label PT Indotech Berkah Abadi"
+                width="1376"
+                height="768"
+                alt="Stasiun isi ulang modern Depo Cleanique dan kemitraan produk kebersihan PT Indotech Berkah Abadi"
                 loading="lazy"
                 decoding="async"
             >

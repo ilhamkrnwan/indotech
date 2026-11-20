@@ -35,7 +35,7 @@ $video_config = function_exists( 'indotech_get_video_embed_config' ) ? indotech_
                         src="<?php echo esc_url( $media_cp . '/hero-manufy-stage.webp' ); ?>"
                         width="1376"
                         height="768"
-                        alt="Preview video profil fasilitas PT Indotech Berkah Abadi"
+                        alt="Preview video profil fasilitas manufaktur PT Indotech Berkah Abadi"
                         loading="lazy"
                         decoding="async"
                     >

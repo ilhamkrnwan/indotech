@@ -162,9 +162,9 @@ get_header();
                         <?php else : ?>
                             <img
                                 src="<?php echo esc_url( $media_cp . '/ilustrasi-formulasi.webp' ); ?>"
-                                width="960"
-                                height="540"
-                                alt=""
+                                width="1376"
+                                height="768"
+                                alt="Laboratorium formulasi kimia pembersih dan riset aplikasi PT Indotech Berkah Abadi"
                                 fetchpriority="high"
                                 decoding="async"
                             >

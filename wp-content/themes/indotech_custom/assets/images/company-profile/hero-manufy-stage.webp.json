@@ -1,9 +1,14 @@
 {
-    "prompt": "Wide 16:9 architectural editorial photograph inside a spotless modern chemical manufacturing & R&D facility in 5500K daylight; gleaming stainless-steel reactors and clear/cobalt-blue borosilicate glassware along an uncluttered brushed stainless-steel foreground safe zone. Zero people, zero faces, zero hands, zero text, logos, or watermarks.",
-    "placement": "Hero Interactive Process Stage & Video Cinema Preview",
-    "aspectRatio": "16:9",
-    "safeZone": "Bottom-left 30% (process tabs 01-04) & bottom-right 35% (L-shape detail card)",
+    "provenance": "generated-clean-indotech",
+    "theme": "Indotech Industrial-Modern Daylight (Clean Version)",
+    "description": "Wide modern chemical manufacturing and liquid formulation plant with stainless steel mixing reactors, sanitary piping, spotless epoxy floor safe zone, zero text/logos.",
     "dimensions": "1376x768",
-    "sourceSize": "1376x768",
-    "createdAt": "2026-11-20T03:06:41+00:00"
+    "format": "webp",
+    "cleanFeatures": [
+        "Strictly zero baked-in text, typography, logos, or infographics",
+        "Reflects authentic Indotech business: chemical reactors, B2B HDPE jerrycans, Depo Cleanique refill station, Academy formulation bench, QC lab",
+        "Architectural 5500K daylight with subtle Indotech Cobalt accents (#144EE3)",
+        "Calm lower safe-zone for WCAG 2.2 AA website UI overlays"
+    ],
+    "updatedAt": "2026-11-20T14:11:00+07:00"
 }

@@ -1,9 +1,14 @@
 {
-    "prompt": "4:3 architectural industrial photograph of a sunlit B2B chemical distribution warehouse bay in 5500K daylight; symmetrical high-bay steel racks stocked with shrink-wrapped pallets of unbranded matte-white and cobalt-blue HDPE 5L/20L jerrycans along a clean epoxy floor. Zero people, zero workers, zero faces, zero text, labels, or watermarks.",
-    "placement": "Orbital CTA top-right photo & Hero Slide 01",
-    "aspectRatio": "4:3",
-    "safeZone": "Uncluttered reflective light-grey epoxy aisle foreground",
-    "dimensions": "800x600",
-    "sourceSize": "1200x896",
-    "createdAt": "2026-11-20T03:06:41+00:00"
+    "provenance": "generated-clean-indotech",
+    "theme": "Indotech Industrial-Modern Daylight (Clean Version)",
+    "description": "B2B chemical distribution warehouse logistics bay with pallets of matte-white HDPE jerrycans (5L & 20L) with cobalt-blue caps, reflective epoxy floor, 5500K daylight, clean safe zone, zero text/logos.",
+    "dimensions": "1376x768",
+    "format": "webp",
+    "cleanFeatures": [
+        "Strictly zero baked-in text, typography, logos, or infographics",
+        "Reflects authentic Indotech business: chemical reactors, B2B HDPE jerrycans, Depo Cleanique refill station, Academy formulation bench, QC lab",
+        "Architectural 5500K daylight with subtle Indotech Cobalt accents (#144EE3)",
+        "Calm lower safe-zone for WCAG 2.2 AA website UI overlays"
+    ],
+    "updatedAt": "2026-11-20T14:11:00+07:00"
 }

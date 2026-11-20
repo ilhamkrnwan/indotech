@@ -16,9 +16,9 @@ $hero_stages = [
         'cta'    => 'Lihat Katalog Produk',
         'url'    => home_url( '/produk/' ),
         'img'    => $media . '/cta-logistics-b2b.webp',
-        'width'  => 800,
-        'height' => 600,
-        'alt'    => 'Gudang distribusi kemasan curah dan grosir PT Indotech Berkah Abadi',
+        'width'  => 1376,
+        'height' => 768,
+        'alt'    => 'Stok kemasan jeriken industri HDPE dan logistik pengiriman kargo PT Indotech Berkah Abadi',
     ],
     [
         'num'    => '02',
@@ -29,7 +29,7 @@ $hero_stages = [
         'img'    => $media . '/hero-manufy-stage.webp',
         'width'  => 1376,
         'height' => 768,
-        'alt'    => 'Fasilitas manufaktur dan laboratorium formulasi R&D PT Indotech Berkah Abadi',
+        'alt'    => 'Fasilitas manufaktur dan reaktor pencampuran kimia modern berstandar Kemenkes PKRT PT Indotech Berkah Abadi',
     ],
     [
         'num'    => '03',
@@ -38,9 +38,9 @@ $hero_stages = [
         'cta'    => 'Lihat Program Kemitraan',
         'url'    => home_url( '/kemitraan/' ),
         'img'    => $media . '/cta-collab-b2b.webp',
-        'width'  => 800,
-        'height' => 600,
-        'alt'    => 'Rangkaian sampel kemasan produk pembersih dan kemitraan B2B PT Indotech Berkah Abadi',
+        'width'  => 1376,
+        'height' => 768,
+        'alt'    => 'Stasiun isi ulang modern Depo Cleanique dan kemitraan produk kebersihan PT Indotech Berkah Abadi',
     ],
     [
         'num'    => '04',
@@ -49,9 +49,9 @@ $hero_stages = [
         'cta'    => 'Lihat Program Cleanique Academy',
         'url'    => 'https://cleaniqueacademy.com/',
         'img'    => $media . '/ilustrasi-formulasi.webp',
-        'width'  => 960,
-        'height' => 540,
-        'alt'    => 'Meja kerja formulasi laboratorium dan pengujian mutu Cleanique Academy Indotech',
+        'width'  => 1376,
+        'height' => 768,
+        'alt'    => 'Meja praktik formulasi kimia pembersih Cleanique Academy PT Indotech Berkah Abadi',
     ],
 ];
 $default_stage = $hero_stages[1];

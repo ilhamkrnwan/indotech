@@ -73,7 +73,7 @@ get_header();
                             } elseif ( strpos( $title_lower, 'detail' ) !== false || strpos( $title_lower, 'car' ) !== false || strpos( $title_lower, 'auto' ) !== false ) {
                                 $fallback_img = $media_cp . '/cta-logistics-b2b.webp';
                             }
-                            $img_html = '<img src="' . esc_url( $fallback_img ) . '" alt="' . esc_attr( $title ) . '" loading="lazy" decoding="async">';
+                            $img_html = '<img src="' . esc_url( $fallback_img ) . '" width="1376" height="768" alt="' . esc_attr( $title ) . '" loading="lazy" decoding="async">';
                         }
 
                         get_template_part( 'template-parts/archive/editorial-item', null, [

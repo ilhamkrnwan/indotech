@@ -120,7 +120,7 @@ get_header();
                     src="<?php echo esc_url( $media_cp . '/hero-manufy-stage.webp' ); ?>"
                     width="1376"
                     height="768"
-                    alt="Fasilitas manufaktur dan laboratorium R&D produk kebersihan PT Indotech Berkah Abadi"
+                    alt="Fasilitas manufaktur dan reaktor pencampuran kimia modern berstandar Kemenkes PKRT PT Indotech Berkah Abadi"
                     fetchpriority="high"
                     decoding="async"
                 >
@@ -186,7 +186,7 @@ get_header();
                             src="<?php echo esc_url( $media_cp . '/about-lab-video.webp' ); ?>"
                             width="800"
                             height="1000"
-                            alt="Peralatan gelas laboratorium dan larutan sampel formulasi di ruang R&D Indotech"
+                            alt="Laboratorium pengujian mutu dan formulasi R&D PT Indotech Berkah Abadi"
                             loading="lazy"
                             decoding="async"
                         >

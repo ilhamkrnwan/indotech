@@ -1,9 +1,14 @@
 {
-    "prompt": "Vertical 4:5 editorial photograph inside a minimalist sunlit chemical R&D formulation lab (5500K daylight); borosilicate volumetric flasks, graduated cylinders, cobalt-blue Erlenmeyer flask on magnetic stirrer, stainless burette stand and blank analytical scale above uncluttered steel foreground. Zero people, zero faces, zero hands, zero text, logos, play icons, or watermarks.",
-    "placement": "Tentang Kami overlapping vertical video poster card",
-    "aspectRatio": "4:5",
-    "safeZone": "Bottom 20% brushed stainless tabletop (floating video play button & caption)",
+    "provenance": "generated-clean-indotech",
+    "theme": "Indotech Industrial-Modern Daylight (Clean Version)",
+    "description": "Vertical 4:5 portrait of chemical R&D quality control analytical laboratory with analytical balance, pH probe in cobalt-blue solution beaker, volumetric flasks, brushed-steel foreground safe zone, zero text/logos.",
     "dimensions": "800x1000",
-    "sourceSize": "896x1200",
-    "createdAt": "2026-11-20T03:06:41+00:00"
+    "format": "webp",
+    "cleanFeatures": [
+        "Strictly zero baked-in text, typography, logos, or infographics",
+        "Reflects authentic Indotech business: chemical reactors, B2B HDPE jerrycans, Depo Cleanique refill station, Academy formulation bench, QC lab",
+        "Architectural 5500K daylight with subtle Indotech Cobalt accents (#144EE3)",
+        "Calm lower safe-zone for WCAG 2.2 AA website UI overlays"
+    ],
+    "updatedAt": "2026-11-20T14:11:00+07:00"
 }

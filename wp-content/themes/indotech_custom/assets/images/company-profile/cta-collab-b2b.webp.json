@@ -1,9 +1,14 @@
 {
-    "prompt": "4:3 architectural studio photograph of unbranded matte-white and cobalt-blue 5L HDPE jerrycans, blank white 1L trigger spray bottles, translucent blue sample vials in an acrylic tray, and a closed silver laptop on a sunlit light-oak and white conference table. Zero people, zero faces, zero hands, zero labels, text, or watermarks.",
-    "placement": "Orbital CTA bottom-left supporting photo & Kemitraan hero",
-    "aspectRatio": "4:3",
-    "safeZone": "Bottom-right table surface clear for Kemitraan hero L-card",
-    "dimensions": "800x600",
-    "sourceSize": "1200x896",
-    "createdAt": "2026-11-20T03:06:41+00:00"
+    "provenance": "generated-clean-indotech",
+    "theme": "Indotech Industrial-Modern Daylight (Clean Version)",
+    "description": "Modern minimalist eco-friendly liquid soap refill station (Depo Cleanique) with stainless dispenser taps, clean white shelves, refill bottles with cobalt-blue accents, bright natural daylight, zero text/logos.",
+    "dimensions": "1376x768",
+    "format": "webp",
+    "cleanFeatures": [
+        "Strictly zero baked-in text, typography, logos, or infographics",
+        "Reflects authentic Indotech business: chemical reactors, B2B HDPE jerrycans, Depo Cleanique refill station, Academy formulation bench, QC lab",
+        "Architectural 5500K daylight with subtle Indotech Cobalt accents (#144EE3)",
+        "Calm lower safe-zone for WCAG 2.2 AA website UI overlays"
+    ],
+    "updatedAt": "2026-11-20T14:11:00+07:00"
 }

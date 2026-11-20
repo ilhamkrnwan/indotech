@@ -72,8 +72,15 @@ get_header();
                         if ( has_post_thumbnail() ) {
                             $img_html = get_the_post_thumbnail( $ind_id, 'indotech-card', [ 'loading' => 'lazy', 'decoding' => 'async' ] );
                         } else {
-                            $fallback_img = $fallback_pool[ $idx % count( $fallback_pool ) ];
-                            $img_html     = '<img src="' . esc_url( $fallback_img ) . '" alt="' . esc_attr( $title ) . '" loading="lazy" decoding="async">';
+                            $t_low = strtolower( $title );
+                            if ( strpos( $t_low, 'hotel' ) !== false || strpos( $t_low, 'resort' ) !== false || strpos( $t_low, 'hospitality' ) !== false ) {
+                                $fallback_img = $media_cp . '/industry-hospitality.webp';
+                            } elseif ( strpos( $t_low, 'laundry' ) !== false || strpos( $t_low, 'binatu' ) !== false ) {
+                                $fallback_img = $media_cp . '/industry-laundry.webp';
+                            } else {
+                                $fallback_img = $fallback_pool[ $idx % count( $fallback_pool ) ];
+                            }
+                            $img_html = '<img src="' . esc_url( $fallback_img ) . '" alt="' . esc_attr( $title ) . '" loading="lazy" decoding="async">';
                         }
                         $idx++;
 

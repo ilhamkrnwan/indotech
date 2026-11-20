@@ -52,10 +52,13 @@ Setiap aset foto yang digunakan sebagai latar elemen UI wajib memenuhi 5 pilar a
 
 | Berkas | Lokasi & Penempatan | Sumber & Provenance |
 | --- | --- | --- |
-| `hero-manufy-stage.webp` | `assets/images/company-profile/` — Latar Hero Interactive Process Stage | Generated editorial visual + sidecar `hero-manufy-stage.webp.json` |
-| `about-lab-video.webp` | `assets/images/company-profile/` — Poster vertikal *overlapping* Tentang Kami & Video | Generated editorial visual + sidecar `about-lab-video.webp.json` |
-| `cta-collab-b2b.webp` | `assets/images/company-profile/` — Foto pendukung kiri-bawah Orbital CTA | Generated editorial visual + sidecar `cta-collab-b2b.webp.json` |
-| `cta-logistics-b2b.webp` | `assets/images/company-profile/` — Foto pendukung kanan-atas Orbital CTA | Generated editorial visual + sidecar `cta-logistics-b2b.webp.json` |
+| `hero-manufy-stage.webp` | `assets/images/company-profile/` — Latar Hero Interactive Process Stage (Maklon & R&D) | Aset `master-konten` Batch 1/016 (Alur Produksi Private Label Pabrik Kemenkes) |
+| `about-lab-video.webp` | `assets/images/company-profile/` — Poster vertikal *overlapping* Tentang Kami & Video | Aset `master-konten` Batch 1/001 (Validasi Kualitas Formula B2B) |
+| `cta-collab-b2b.webp` | `assets/images/company-profile/` — Hero Stage 03 & Foto Kiri-Bawah Orbital CTA | Aset `master-konten` Batch 1/002 (Depo Cleanique Mitra Bisnis Siap Jalan) |
+| `cta-logistics-b2b.webp` | `assets/images/company-profile/` — Hero Stage 01 & Foto Kanan-Atas Orbital CTA | Aset `master-konten` Batch 4/003 (Kemasan Jerigen HDPE Tebal Standar Kargo) |
+| `ilustrasi-formulasi.webp`| `assets/images/company-profile/` — Hero Stage 04 & Slide Pelatihan Akademi | Aset `master-konten` Batch 1/004 (Belajar Formulasi Cleanique Academy) |
+| `industry-hospitality.webp`| `assets/images/company-profile/` — Arsip Sektor Industri Hospitality & Hotel | Aset `master-konten` Batch 1/001 (Hospitality B2B) |
+| `industry-laundry.webp`    | `assets/images/company-profile/` — Arsip Sektor Industri Laundry Komersial | Aset `master-konten` Batch 1/001 (Laundry B2B) |
 | `mitra-*.webp` | `assets/images/` — Etalase Kisah Mitra Cleanique Mart | Dokumentasi foto gerai nyata pada repositori Indotech |
 
 ---

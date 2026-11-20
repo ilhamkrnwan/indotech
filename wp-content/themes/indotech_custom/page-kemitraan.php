@@ -132,9 +132,9 @@ get_header();
                 <figure class="cs-collage-main">
                     <img
                         src="<?php echo esc_url( $media_cp . '/cta-collab-b2b.webp' ); ?>"
-                        width="800"
-                        height="600"
-                        alt="Sampel kemasan jeriken dan botol produk kemitraan B2B PT Indotech Berkah Abadi"
+                        width="1376"
+                        height="768"
+                        alt="Stasiun isi ulang Depo Cleanique dan program kemitraan sabun curah PT Indotech Berkah Abadi"
                         fetchpriority="high"
                         decoding="async"
                     >
@@ -326,9 +326,9 @@ get_header();
                     <figure class="cs-studio-photo">
                         <img
                             src="<?php echo esc_url( $media_cp . '/cta-logistics-b2b.webp' ); ?>"
-                            width="800"
-                            height="600"
-                            alt="Gudang logistik kemasan curah PT Indotech Berkah Abadi"
+                            width="1376"
+                            height="768"
+                            alt="Standar kemasan jerigen industri HDPE dan pengiriman kargo PT Indotech Berkah Abadi"
                             loading="lazy"
                             decoding="async"
                         >
