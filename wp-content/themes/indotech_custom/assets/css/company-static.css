@@ -1,1839 +1,2488 @@
 /* ============================================================
-   INDOTECH STATIC PAGES — EDITORIAL MANUFY DESIGN SYSTEM v3.0
-   Scoped to body.indotech-static-page (inherits tokens from company-home.css)
+   INDOTECH STATIC TEMPLATES — FULL MANUFY ARCHITECTURAL SYSTEM
+   PT Indotech Berkah Abadi
+   Works alongside company-home.css tokens & .ch-* primitives.
    ============================================================ */
 
 .indotech-static-page {
-  --cobalt: var(--ch-cobalt);
-  --cobalt-dark: var(--ch-cobalt-hover);
-  --cobalt-deep: #0b2f99;
-  --cobalt-light: #3b71f6;
-  --cobalt-pale: var(--ch-cobalt-tint);
-  --ink: var(--ch-ink);
-  --surface: var(--ch-canvas);
-  --surface-2: #eef2f8;
-  --border: var(--ch-grid);
-  --border-dark: #c5cfdf;
-  --text-primary: var(--ch-ink);
-  --text-secondary: var(--ch-slate);
-  --text-muted: #5a677e;
-  --container: 1320px;
-}
-
-.indotech-static-page main#main-content {
-  position: relative;
   background: var(--ch-canvas);
-  isolation: isolate;
-  overflow-x: clip;
-  padding-bottom: clamp(20px, 3vw, 36px);
+  color: var(--ch-ink);
 }
 
-.indotech-static-page main#main-content::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  width: min(1320px, calc(100% - 2 * var(--ch-gutter)));
-  margin-inline: auto;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.72;
-  background-image:
-    repeating-linear-gradient(to bottom, var(--ch-grid) 0 4px, transparent 4px 9px),
-    repeating-linear-gradient(to bottom, var(--ch-grid) 0 4px, transparent 4px 9px),
-    repeating-linear-gradient(to bottom, var(--ch-grid) 0 4px, transparent 4px 9px),
-    repeating-linear-gradient(to bottom, var(--ch-grid) 0 4px, transparent 4px 9px),
-    repeating-linear-gradient(to bottom, var(--ch-grid) 0 4px, transparent 4px 9px),
-    repeating-linear-gradient(to bottom, var(--ch-grid) 0 4px, transparent 4px 9px);
-  background-size: 1px 100%;
-  background-position: 0 0, 20% 0, 40% 0, 60% 0, 80% 0, 100% 0;
-  background-repeat: no-repeat;
+.indotech-static-page .site-footer:not(.ch-footer-wrap) {
+  display: none;
 }
 
-.indotech-static-page main#main-content > * {
+.cs-main {
   position: relative;
-  z-index: 1;
 }
 
-.indotech-static-page .container {
-  max-width: min(1320px, calc(100% - 2 * var(--ch-gutter)));
-  width: 100%;
-  margin-inline: auto;
-  padding-inline: 0;
-}
-
-.indotech-static-page .section-padding {
-  padding-block: clamp(56px, 6.5vw, 96px);
-}
-
-.indotech-static-page [id] {
+.cs-main [id] {
   scroll-margin-top: calc(var(--header-h, 72px) + 24px);
 }
 
-/* Prevent reveal opacity conflicts between main.js IntersectionObserver & GSAP */
-.indotech-static-page .reveal {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
-/* ── Typography & Section Chrome ─────────────────────────── */
-.indotech-static-page main#main-content h1,
-.indotech-static-page main#main-content h2,
-.indotech-static-page main#main-content h3,
-.indotech-static-page main#main-content h4,
-.indotech-static-page .about-stat-value,
-.indotech-static-page .timeline-year,
-.indotech-static-page .value-num,
-.indotech-static-page .partner-step-num,
-.indotech-static-page .contact-info-value,
-.indotech-static-page .contact-wa-number,
-.indotech-static-page .wa-cta-title,
-.indotech-static-page .ch-404-code {
+.cs-main h1,
+.cs-main h2,
+.cs-main h3,
+.cs-main h4 {
   font-family: 'Onest', 'Inter', sans-serif;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
-.indotech-static-page main#main-content p {
+.cs-main p {
   text-wrap: pretty;
 }
 
-.indotech-static-page .section-header {
-  margin-bottom: clamp(28px, 4vw, 44px);
-}
-
-.indotech-static-page .section-tag,
-.indotech-static-page .section-tag--dark {
+/* ── Shared Pills & Eyebrows ─────────────────────────────── */
+.cs-pill-tag {
   display: inline-flex;
   align-items: center;
-  padding: 6px 14px;
+  min-height: 28px;
+  padding: 4px 12px;
   border-radius: 999px;
   background: var(--ch-lime);
   color: var(--ch-ink);
-  border: 0;
   font-family: 'Inter', sans-serif;
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-}
-
-.indotech-static-page .section-title {
-  font-size: clamp(1.85rem, 3.6vw, 3rem);
-  font-weight: 700;
-  line-height: 1.06;
-  color: var(--ch-ink);
   margin-bottom: 14px;
 }
 
-.indotech-static-page .section-title em {
-  font-style: normal;
-  color: var(--ch-muted-display);
-}
-
-.indotech-static-page .section-desc,
-.indotech-static-page .why-us-desc {
-  color: var(--ch-slate);
-  font-size: 1rem;
-  line-height: 1.65;
-}
-
-.indotech-static-page .section-header--split .sh-divider {
-  background: var(--ch-grid);
-}
-
-/* ── Global Pill Buttons ─────────────────────────────────── */
-.indotech-static-page .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 46px;
-  padding: 11px 24px;
-  border-radius: 999px;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  transition: background-color 0.2s var(--ch-ease), border-color 0.2s var(--ch-ease), color 0.2s var(--ch-ease), transform 0.2s var(--ch-ease);
-}
-
-.indotech-static-page .btn-lg {
-  min-height: 50px;
-  padding: 12px 28px;
-}
-
-.indotech-static-page .btn-primary {
-  background: var(--ch-cobalt);
-  border: 1.5px solid var(--ch-cobalt);
-  color: var(--ch-white);
-}
-
-.indotech-static-page .btn-primary:hover {
-  background: var(--ch-cobalt-hover);
-  border-color: var(--ch-cobalt-hover);
-  transform: translateY(-1px);
-}
-
-.indotech-static-page .btn-outline {
-  background: var(--ch-white);
-  border: 1.5px solid var(--ch-ink);
-  color: var(--ch-ink);
-}
-
-.indotech-static-page .btn-outline:hover {
-  background: var(--ch-ink);
-  border-color: var(--ch-ink);
-  color: var(--ch-white);
-}
-
-/* ── Manufy Daylight Inner Hero ──────────────────────────── */
-.indotech-static-page .inner-page-hero,
-.indotech-static-page .page-hero {
-  background: transparent;
-  padding: clamp(36px, 4.5vw, 64px) 0 0;
-  text-align: left;
-  overflow: visible;
-}
-
-.indotech-static-page .inner-page-hero .hero-bg {
-  display: none;
-}
-
-.indotech-static-page .inner-page-hero-inner,
-.indotech-static-page .page-hero > .container {
-  padding-bottom: clamp(28px, 3.8vw, 44px);
-  border-bottom: 1px solid var(--ch-grid);
-}
-
-.indotech-static-page .breadcrumb {
-  color: var(--ch-slate);
-  font-size: 0.875rem;
-  margin-bottom: 18px;
-}
-
-.indotech-static-page .breadcrumb a {
-  color: var(--ch-slate);
-}
-
-.indotech-static-page .breadcrumb a:hover {
-  color: var(--ch-cobalt);
-}
-
-.indotech-static-page .breadcrumb span[aria-current] {
-  color: var(--ch-ink);
-  font-weight: 600;
-}
-
-.indotech-static-page .inner-page-title,
-.indotech-static-page .page-hero h1 {
-  font-size: clamp(2.25rem, 5vw, 4.15rem);
-  font-weight: 700;
-  line-height: 1.02;
-  color: var(--ch-ink);
-  margin: 16px 0 16px;
-  max-width: 18ch;
-}
-
-.indotech-static-page .inner-page-hero--sm .inner-page-title {
-  max-width: 24ch;
-}
-
-.indotech-static-page .inner-page-title em {
-  font-style: normal;
-  color: var(--ch-muted-display);
-}
-
-.indotech-static-page .inner-page-subtitle,
-.indotech-static-page .page-hero p {
-  font-size: clamp(1rem, 1.35vw, 1.125rem);
-  font-weight: 400;
-  color: var(--ch-slate);
-  max-width: 60ch;
-  line-height: 1.65;
-  margin: 0;
-}
-
-.indotech-static-page .ch-hero-meta {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 8px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--ch-slate);
-}
-
-/* ── Surface Rhythm on #f6f7fa Canvas ────────────────────── */
-.indotech-static-page .about-story-section,
-.indotech-static-page .about-visi-section,
-.indotech-static-page .about-values-section,
-.indotech-static-page .about-applications-section,
-.indotech-static-page .about-map-section,
-.indotech-static-page .services-section,
-.indotech-static-page .faq-section,
-.indotech-static-page .contact-info-section,
-.indotech-static-page .contact-section,
-.indotech-static-page .blog-featured-section,
-.indotech-static-page .blog-section,
-.indotech-static-page .legal-section {
-  background: transparent;
-}
-
-/* ── Tentang Kami ────────────────────────────────────────── */
-.indotech-static-page .about-stats-strip {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-md);
-}
-
-.indotech-static-page .about-stat-item {
-  border-right-color: var(--ch-grid);
-}
-
-.indotech-static-page .about-stat-value {
-  color: var(--ch-cobalt);
-  font-variant-numeric: tabular-nums;
-}
-
-.indotech-static-page .about-stat-label {
-  color: var(--ch-slate);
-  font-size: 0.8125rem;
-}
-
-.indotech-static-page .about-timeline {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-lg);
-  padding: clamp(24px, 3vw, 36px);
-}
-
-.indotech-static-page .about-timeline::before {
-  left: 47px;
-  top: 40px;
-  bottom: 40px;
-  background: var(--ch-grid);
-}
-
-.indotech-static-page .timeline-item {
-  border-bottom-color: var(--ch-grid);
-}
-
-.indotech-static-page .timeline-dot {
-  border-color: var(--ch-white);
-  background: var(--border-dark);
-}
-
-.indotech-static-page .timeline-item--active .timeline-dot {
-  background: var(--ch-cobalt);
-}
-
-.indotech-static-page .timeline-year {
-  color: var(--ch-cobalt);
-  background: var(--ch-cobalt-tint);
-  border-color: transparent;
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
-.indotech-static-page .timeline-body h4 {
-  color: var(--ch-ink);
-  font-size: 1rem;
-}
-
-.indotech-static-page .timeline-body p {
-  color: var(--ch-slate);
-  font-size: 0.875rem;
-}
-
-.indotech-static-page .visi-card {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-lg);
-  padding: clamp(28px, 4vw, 44px);
-}
-
-.indotech-static-page .visi-card:hover {
-  border-color: rgba(20, 78, 227, 0.28);
-  box-shadow: 0 12px 28px rgba(11, 18, 32, 0.06);
-}
-
-.indotech-static-page .visi-card-icon {
-  background: var(--ch-cobalt-tint);
-  color: var(--ch-cobalt);
-  border-radius: 16px;
-}
-
-.indotech-static-page .visi-card-icon svg {
-  stroke: var(--ch-cobalt);
-}
-
-.indotech-static-page .visi-card-label {
-  color: var(--ch-cobalt);
-  font-size: 0.75rem;
-}
-
-.indotech-static-page .visi-card-title {
-  color: var(--ch-ink);
-  font-size: 1.375rem;
-}
-
-.indotech-static-page .visi-card-desc,
-.indotech-static-page .misi-list li {
-  color: var(--ch-slate);
-  font-size: 0.9375rem;
-}
-
-/* Signature Obsidian-Navy contrast for Misi card */
-.indotech-static-page .visi-card--misi {
-  background: var(--ch-ink);
-  border-color: var(--ch-ink);
-}
-
-.indotech-static-page .visi-card--misi .visi-card-icon {
-  background: var(--ch-ink-elevated);
-  color: var(--ch-lime-bright);
-}
-
-.indotech-static-page .visi-card--misi .visi-card-icon svg {
-  stroke: var(--ch-lime-bright);
-}
-
-.indotech-static-page .visi-card--misi .visi-card-label {
-  color: var(--ch-lime-bright);
-}
-
-.indotech-static-page .visi-card--misi .visi-card-title {
-  color: var(--ch-white);
-}
-
-.indotech-static-page .visi-card--misi .misi-list li {
-  color: var(--ch-on-dark);
-}
-
-.indotech-static-page .visi-card--misi .misi-list svg {
-  stroke: var(--ch-lime-bright);
-}
-
-/* Values Grid (4 clean white architectural cards) */
-.indotech-static-page .values-grid {
-  gap: 20px;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  overflow: visible;
-}
-
-.indotech-static-page .value-card {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-md);
-  padding: 28px 24px;
-  transition: transform 0.22s var(--ch-ease), border-color 0.22s var(--ch-ease), box-shadow 0.22s var(--ch-ease);
-}
-
-.indotech-static-page .value-card:hover {
-  background: var(--ch-white);
-  border-color: rgba(20, 78, 227, 0.35);
-  box-shadow: 0 12px 26px rgba(11, 18, 32, 0.06);
-  transform: translateY(-2px);
-}
-
-.indotech-static-page .value-num {
-  top: 20px;
-  right: 22px;
-  color: var(--text-muted);
-  font-size: 2.25rem;
-}
-
-.indotech-static-page .value-card:hover .value-num {
-  color: var(--ch-cobalt);
-}
-
-.indotech-static-page .value-card .ch-card-head {
-  padding-right: 48px;
-}
-
-/* Shared side-by-side card header (eliminates stacked AI icon tiles) */
-.indotech-static-page .ch-card-head {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-
-.indotech-static-page .ch-card-head .service-icon,
-.indotech-static-page .ch-card-head .cert-card-icon,
-.indotech-static-page .ch-card-head .partner-step-icon {
-  margin: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  flex-shrink: 0;
-}
-
-.indotech-static-page .ch-card-head .service-title,
-.indotech-static-page .ch-card-head h3 {
-  margin-bottom: 0;
-}
-
-.indotech-static-page .partner-type-tag {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: var(--ch-cobalt-tint);
-  color: var(--ch-cobalt);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  margin-bottom: 16px;
-}
-
-/* Aplikasi Layanan B2B cards (migrated from page-tentang-kami.php inline <style>) */
-.indotech-static-page .applications-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-top: 32px;
-}
-
-.indotech-static-page .premium-app-card {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-md);
-  padding: 32px 28px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  transition: transform 0.22s var(--ch-ease), border-color 0.22s var(--ch-ease), box-shadow 0.22s var(--ch-ease);
-}
-
-.indotech-static-page .premium-app-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(20, 78, 227, 0.35);
-  box-shadow: 0 14px 30px rgba(11, 18, 32, 0.07);
-}
-
-.indotech-static-page .premium-app-icon-wrap {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  background: var(--ch-cobalt-tint);
-  color: var(--ch-cobalt);
-  margin-bottom: 22px;
-  transition: transform 0.22s var(--ch-ease);
-}
-
-.indotech-static-page .premium-app-card:hover .premium-app-icon-wrap {
-  transform: scale(1.06);
-}
-
-.indotech-static-page .premium-app-card-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.indotech-static-page .premium-app-tag {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ch-cobalt);
-  margin-bottom: 8px;
-  display: inline-block;
-}
-
-.indotech-static-page .premium-app-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--ch-ink);
-  margin-bottom: 10px;
-  line-height: 1.28;
-}
-
-.indotech-static-page .premium-app-desc {
-  font-size: 0.9375rem;
-  color: var(--ch-slate);
-  line-height: 1.62;
-  margin-bottom: 24px;
-}
-
-.indotech-static-page .premium-app-btn {
-  margin-top: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--ch-cobalt);
-  transition: gap 0.2s var(--ch-ease);
-}
-
-.indotech-static-page .premium-app-btn:hover {
-  gap: 12px;
-  color: var(--ch-cobalt-hover);
-}
-
-/* Dark Obsidian-Navy Certification Band (mirrors #solusi-b2b on homepage) */
-.indotech-static-page .about-cert-section {
-  background: var(--ch-ink);
-  color: var(--ch-white);
-  width: min(1320px, calc(100% - 2 * var(--ch-gutter)));
-  margin-inline: auto;
-  border-radius: 32px;
-  padding: clamp(44px, 6vw, 80px) clamp(24px, 5vw, 60px);
-}
-
-.indotech-static-page .about-cert-section > .container {
-  max-width: 100%;
-}
-
-.indotech-static-page .about-cert-section .section-tag {
+.cs-pill-tag--lime {
   background: var(--ch-lime);
   color: var(--ch-ink);
 }
 
-.indotech-static-page .about-cert-section .section-title {
-  color: var(--ch-white);
-}
-
-.indotech-static-page .about-cert-section .why-us-desc {
-  color: var(--ch-on-dark);
-}
-
-.indotech-static-page .about-cert-inner {
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.35fr);
-  gap: clamp(28px, 4vw, 56px);
-}
-
-.indotech-static-page .about-cert-grid {
-  gap: clamp(20px, 2.5vw, 32px);
-}
-
-.indotech-static-page .cert-card {
-  background: transparent;
-  border: 0;
-  border-top: 1px solid var(--ch-rule-dark);
-  border-radius: 0;
-  padding: 20px 0 0;
-  box-shadow: none;
-  text-align: left;
-  transition: border-color 0.2s ease;
-}
-
-.indotech-static-page .cert-card:hover {
-  border-top-color: var(--ch-lime-bright);
-  box-shadow: none;
-  transform: none;
-}
-
-.indotech-static-page .cert-card-icon {
-  background: rgba(163, 230, 53, 0.1);
-  border: 1px solid rgba(163, 230, 53, 0.22);
-  color: var(--ch-lime-bright);
-  border-radius: 12px;
-}
-
-.indotech-static-page .cert-card-icon svg {
-  stroke: var(--ch-lime-bright);
-}
-
-.indotech-static-page .cert-card h3,
-.indotech-static-page .cert-card h4 {
-  color: var(--ch-white);
-  font-size: 1rem;
-  line-height: 1.3;
-  margin: 0;
-}
-
-.indotech-static-page .cert-card p {
-  color: var(--ch-on-dark);
-  font-size: 0.875rem;
-}
-
-.indotech-static-page .about-map-wrap {
-  border-radius: var(--ch-radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--ch-grid);
-  background: var(--ch-white);
-  aspect-ratio: 16 / 9;
-  min-height: 360px;
-}
-
-/* ── Kemitraan ───────────────────────────────────────────── */
-.indotech-static-page .services-grid {
-  gap: 24px;
-  align-items: stretch;
-}
-
-.indotech-static-page .service-card {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: 24px;
-  padding: clamp(28px, 3.4vw, 38px);
-  box-shadow: none;
-}
-
-.indotech-static-page .service-card:hover {
-  border-color: rgba(20, 78, 227, 0.35);
-  box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
-  transform: translateY(-2px);
-}
-
-.indotech-static-page .service-icon {
+.cs-pill-tag--subtle {
   background: var(--ch-cobalt-tint);
-  border: 0;
-  border-radius: 14px;
   color: var(--ch-cobalt);
 }
 
-.indotech-static-page .service-icon svg {
-  stroke: var(--ch-cobalt);
-}
-
-.indotech-static-page .service-title {
-  color: var(--ch-ink);
-}
-
-.indotech-static-page .service-desc,
-.indotech-static-page .service-perks li {
-  color: var(--ch-slate);
-}
-
-.indotech-static-page .service-perks svg,
-.indotech-static-page .service-cta {
-  stroke: var(--ch-cobalt);
-  color: var(--ch-cobalt);
-}
-
-.indotech-static-page .service-cta {
-  font-family: 'Inter', sans-serif;
-  min-height: 44px;
-}
-
-/* Featured Partner Tier in Deep Obsidian-Navy */
-.indotech-static-page .service-card--featured {
-  background: var(--ch-ink);
-  border-color: var(--ch-ink);
-  box-shadow: 0 18px 40px rgba(11, 18, 32, 0.14);
-}
-
-.indotech-static-page .service-card--featured:hover {
-  background: var(--ch-ink);
-  border-color: var(--ch-ink-elevated);
-  box-shadow: 0 22px 44px rgba(11, 18, 32, 0.18);
-  transform: translateY(-2px);
-}
-
-.indotech-static-page .service-card--featured .service-badge {
-  position: static;
-  transform: none;
-  width: fit-content;
-  align-self: flex-start;
-  margin-bottom: 18px;
-  padding: 5px 12px;
+.cs-inline-lime-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  margin-left: 6px;
   border-radius: 999px;
   background: var(--ch-lime);
   color: var(--ch-ink);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-}
-
-.indotech-static-page .service-card--featured .service-icon {
-  background: var(--ch-ink-elevated);
-  border: 1px solid var(--ch-rule-dark);
-}
-
-.indotech-static-page .service-card--featured .service-icon svg {
-  stroke: var(--ch-lime-bright);
-}
-
-.indotech-static-page .service-card--featured .service-title {
-  color: var(--ch-white);
-}
-
-.indotech-static-page .service-card--featured .service-desc,
-.indotech-static-page .service-card--featured .service-perks li {
-  color: var(--ch-on-dark);
-}
-
-.indotech-static-page .service-card--featured .service-perks svg {
-  stroke: var(--ch-lime-bright);
-}
-
-.indotech-static-page .service-card--featured .service-cta {
-  color: var(--ch-lime-bright);
-  background: rgba(163, 230, 53, 0.12);
-  padding: 10px 18px;
-  border-radius: 999px;
-  width: fit-content;
-}
-
-.indotech-static-page .service-card--featured .service-cta:hover {
-  background: var(--ch-lime);
-  color: var(--ch-ink);
-}
-
-/* Partner Steps */
-.indotech-static-page .partner-steps {
-  gap: 18px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  overflow: visible;
-}
-
-.indotech-static-page .partner-step {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-md);
-  padding: 28px 24px;
-}
-
-.indotech-static-page .partner-step:hover {
-  background: var(--ch-white);
-  border-color: rgba(20, 78, 227, 0.35);
-}
-
-.indotech-static-page .partner-step-num {
-  color: var(--text-muted);
-  font-size: 2rem;
-  margin-bottom: 14px;
-}
-
-.indotech-static-page .partner-step:hover .partner-step-num {
-  color: var(--ch-cobalt);
-}
-
-.indotech-static-page .partner-step-icon {
-  background: var(--ch-cobalt-tint);
-  border-color: transparent;
-  color: var(--ch-cobalt);
-}
-
-.indotech-static-page .partner-step-icon svg {
-  stroke: var(--ch-cobalt);
-}
-
-.indotech-static-page .partner-step-icon--active {
-  background: var(--ch-cobalt);
-  border-color: var(--ch-cobalt);
-}
-
-.indotech-static-page .partner-step-icon--active svg {
-  stroke: var(--ch-white);
-}
-
-.indotech-static-page .partner-step-arrow {
-  display: none;
-}
-
-.indotech-static-page .partner-step h3 {
-  color: var(--ch-ink);
-}
-
-.indotech-static-page .partner-step p {
-  color: var(--ch-slate);
-  font-size: 0.875rem;
-}
-
-/* Kemitraan native <details> FAQ */
-.indotech-static-page .faq-list {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: 24px;
-}
-
-.indotech-static-page .faq-item {
-  border-bottom-color: var(--ch-grid);
-  background: var(--ch-white);
-}
-
-.indotech-static-page .faq-item[open] {
-  background: var(--ch-canvas);
-}
-
-.indotech-static-page .faq-question {
-  color: var(--ch-ink);
-  font-family: 'Onest', 'Inter', sans-serif;
-  font-size: 1rem;
-  min-height: 60px;
-}
-
-.indotech-static-page .faq-question:hover,
-.indotech-static-page .faq-item[open] .faq-question {
-  color: var(--ch-cobalt);
-}
-
-.indotech-static-page .faq-answer p {
-  color: var(--ch-slate);
-}
-
-/* ── Kontak & Forms ──────────────────────────────────────── */
-.indotech-static-page .contact-cards-grid {
-  gap: 20px;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  overflow: visible;
-}
-
-.indotech-static-page .contact-info-card {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: 24px;
-  padding: 32px 28px;
-}
-
-.indotech-static-page .contact-info-card:hover {
-  background: var(--ch-white);
-  border-color: rgba(20, 78, 227, 0.35);
-}
-
-.indotech-static-page .contact-info-icon {
-  background: var(--ch-cobalt-tint);
-  border: 0;
-  border-radius: 14px;
-  color: var(--ch-cobalt);
-  box-shadow: none;
-}
-
-.indotech-static-page .contact-info-label {
-  color: var(--ch-slate);
-  font-size: 0.75rem;
-}
-
-.indotech-static-page .contact-info-value {
-  color: var(--ch-ink);
-  word-break: break-word;
-}
-
-.indotech-static-page .contact-info-value:hover {
-  color: var(--ch-cobalt);
-}
-
-.indotech-static-page .contact-info-note {
-  color: var(--ch-slate);
-  font-size: 0.875rem;
-}
-
-.indotech-static-page .contact-info-card--featured {
-  background: var(--ch-ink);
-  border-color: var(--ch-ink);
-}
-
-.indotech-static-page .contact-info-card--featured:hover {
-  background: var(--ch-ink);
-  border-color: var(--ch-ink-elevated);
-}
-
-.indotech-static-page .contact-info-card--featured .contact-info-icon {
-  background: var(--ch-ink-elevated);
-  border: 1px solid var(--ch-rule-dark);
-  color: var(--ch-lime-bright);
-}
-
-.indotech-static-page .contact-info-card--featured .contact-info-label {
-  color: var(--ch-lime-bright);
-}
-
-.indotech-static-page .contact-info-card--featured .contact-info-value {
-  color: var(--ch-white);
-}
-
-.indotech-static-page .contact-info-card--featured .contact-info-value:hover {
-  color: var(--ch-lime);
-}
-
-.indotech-static-page .contact-info-card--featured .contact-info-note {
-  color: var(--ch-on-dark);
-}
-
-.indotech-static-page .contact-form-wrap {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-lg);
-  padding: clamp(28px, 4vw, 44px);
-}
-
-.indotech-static-page .form-label {
-  color: var(--ch-ink);
-}
-
-.indotech-static-page .form-required {
-  color: var(--ch-cobalt);
-}
-
-.indotech-static-page .form-input {
-  min-height: 48px;
-  padding: 12px 16px;
-  border-radius: 14px;
-  border: 1.5px solid var(--ch-grid);
-  background: var(--ch-canvas);
-  color: var(--ch-ink);
-  font-size: 0.9375rem;
-}
-
-.indotech-static-page .form-input::placeholder {
-  color: var(--ch-slate);
-}
-
-.indotech-static-page .form-input:focus {
-  background: var(--ch-white);
-  border-color: var(--ch-cobalt);
-  box-shadow: 0 0 0 3px rgba(20, 78, 227, 0.14);
-}
-
-.indotech-static-page .ch-form-submit {
-  width: 100%;
-  min-height: 52px;
-}
-
-.indotech-static-page .contact-wa-strip {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-md);
-}
-
-.indotech-static-page .contact-wa-icon {
-  background: var(--ch-ink);
-  color: var(--ch-lime-bright);
-  border-radius: 14px;
-}
-
-.indotech-static-page .contact-wa-label {
-  color: var(--ch-slate);
-  font-size: 0.8125rem;
-}
-
-.indotech-static-page .contact-wa-number {
-  color: var(--ch-ink);
-}
-
-.indotech-static-page .contact-wa-number:hover {
-  color: var(--ch-cobalt);
-}
-
-.indotech-static-page .contact-perk {
-  color: var(--ch-slate);
-}
-
-.indotech-static-page .contact-perk svg {
-  stroke: var(--ch-cobalt);
-}
-
-.indotech-static-page .contact-map-placeholder {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-lg);
-}
-
-.indotech-static-page .operating-hours {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-md);
-}
-
-.indotech-static-page .oh-title {
-  color: var(--ch-slate);
-}
-
-.indotech-static-page .oh-day {
-  color: var(--ch-slate);
-}
-
-.indotech-static-page .oh-time {
-  color: var(--ch-ink);
-  font-variant-numeric: tabular-nums;
-}
-
-/* Obsidian-Navy Contained WhatsApp CTA Strip */
-.indotech-static-page .wa-cta-strip {
-  width: min(1320px, calc(100% - 2 * var(--ch-gutter)));
-  margin: 0 auto clamp(24px, 3.5vw, 44px);
-  padding: clamp(24px, 3.2vw, 36px) clamp(22px, 4vw, 48px);
-  border-radius: var(--ch-radius-lg);
-  background: var(--ch-ink);
-  color: var(--ch-white);
-}
-
-.indotech-static-page .wa-cta-strip > .container {
-  max-width: 100%;
-}
-
-.indotech-static-page .wa-cta-title {
-  color: var(--ch-white);
-  font-size: clamp(1.25rem, 2.2vw, 1.625rem);
-}
-
-.indotech-static-page .wa-cta-sub {
-  color: var(--ch-on-dark);
-  font-size: 0.9375rem;
-}
-
-.indotech-static-page .wa-cta-btn {
-  background: var(--ch-lime);
-  color: var(--ch-ink);
-  border-radius: 999px;
-  min-height: 48px;
-  padding: 12px 24px;
   font-family: 'Inter', sans-serif;
-  font-weight: 700;
-}
-
-.indotech-static-page .wa-cta-btn svg {
-  fill: var(--ch-ink);
-}
-
-.indotech-static-page .wa-cta-btn:hover {
-  background: var(--ch-lime-bright);
-  color: var(--ch-ink);
-}
-
-.indotech-static-page .wa-cta-btn:hover svg {
-  fill: var(--ch-ink);
-}
-
-/* ── FAQ Page (migrated from page-faq.php inline <style>) ── */
-.indotech-static-page .ch-faq-container {
-  padding-top: clamp(32px, 4vw, 48px);
-  padding-bottom: clamp(48px, 6vw, 84px);
-}
-
-.indotech-static-page .faq-search-wrap {
-  margin-bottom: clamp(28px, 4vw, 44px);
-}
-
-.indotech-static-page .faq-search-card {
-  background: var(--ch-white);
-  border: 1.5px solid var(--ch-grid);
-  border-radius: 999px;
-  min-height: 56px;
-  padding: 8px 22px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  max-width: 680px;
-  margin-inline: auto;
-  transition: border-color 0.2s var(--ch-ease), box-shadow 0.2s var(--ch-ease);
-}
-
-.indotech-static-page .faq-search-card:focus-within {
-  border-color: var(--ch-cobalt);
-  box-shadow: 0 0 0 3px rgba(20, 78, 227, 0.14);
-}
-
-.indotech-static-page .faq-search-icon {
-  color: var(--ch-slate);
-  display: flex;
-  flex-shrink: 0;
-}
-
-.indotech-static-page .faq-search-input {
-  border: 0;
-  outline: 0;
-  width: 100%;
-  background: transparent;
-  color: var(--ch-ink);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9375rem;
-  min-height: 40px;
-}
-
-.indotech-static-page .faq-search-input::placeholder {
-  color: var(--ch-slate);
-}
-
-.indotech-static-page .faq-layout-grid {
-  display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: clamp(28px, 4vw, 48px);
-  align-items: start;
-}
-
-.indotech-static-page .faq-sidebar {
-  position: sticky;
-  top: calc(var(--header-h, 72px) + 24px);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.indotech-static-page .faq-nav-btn {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 48px;
-  padding: 12px 16px;
-  border-radius: 14px;
-  border: 1px solid transparent;
-  color: var(--ch-slate);
-  font-size: 0.9375rem;
-  font-weight: 600;
-  text-align: left;
-  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
-}
-
-.indotech-static-page .faq-nav-btn:hover {
-  background: var(--ch-white);
-  color: var(--ch-ink);
-}
-
-.indotech-static-page .faq-nav-btn--active {
-  background: var(--ch-cobalt-tint);
-  color: var(--ch-cobalt);
-  border-color: rgba(20, 78, 227, 0.2);
-}
-
-.indotech-static-page .faq-content-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-.indotech-static-page .faq-group-section {
-  scroll-margin-top: calc(var(--header-h, 72px) + 24px);
-}
-
-.indotech-static-page .faq-group-title-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--ch-grid);
-}
-
-.indotech-static-page .faq-group-title-wrap svg {
-  color: var(--ch-cobalt);
-}
-
-.indotech-static-page .faq-group-title {
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: var(--ch-ink);
-  margin: 0;
-}
-
-.indotech-static-page .faq-accordion-item {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-md);
-  margin-bottom: 14px;
-  overflow: hidden;
-  transition: border-color 0.2s var(--ch-ease), box-shadow 0.2s var(--ch-ease);
-}
-
-.indotech-static-page .faq-accordion-item:hover,
-.indotech-static-page .faq-accordion-item--active {
-  border-color: rgba(20, 78, 227, 0.35);
-}
-
-.indotech-static-page .faq-header-btn {
-  width: 100%;
-  min-height: 60px;
-  padding: 18px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  text-align: left;
-  font-family: 'Onest', 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--ch-ink);
-}
-
-.indotech-static-page .faq-toggle-icon {
-  flex-shrink: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: var(--ch-canvas);
-  color: var(--ch-slate);
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s var(--ch-ease);
-}
-
-.indotech-static-page .faq-accordion-item--active .faq-toggle-icon {
-  background: var(--ch-cobalt);
-  color: var(--ch-white);
-  transform: rotate(180deg);
-}
-
-.indotech-static-page .faq-body-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.36s var(--ch-ease);
-}
-
-.indotech-static-page .faq-body-inner {
-  padding: 0 24px 22px;
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  color: var(--ch-slate);
-}
-
-.indotech-static-page .faq-empty-state {
-  display: none;
-  text-align: center;
-  padding: 48px 24px;
-  background: var(--ch-white);
-  border: 1px dashed var(--border-dark);
-  border-radius: var(--ch-radius-md);
-  color: var(--ch-slate);
-}
-
-/* ── Blog Page (migrated from page-blog.php inline <style>) ─ */
-.indotech-static-page .blog-section-header {
-  margin-bottom: clamp(24px, 3vw, 36px);
-}
-
-.indotech-static-page .blog-featured-card {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-lg);
-}
-
-.indotech-static-page .blog-featured-card:hover {
-  border-color: rgba(20, 78, 227, 0.3);
-  box-shadow: 0 16px 36px rgba(11, 18, 32, 0.07);
-}
-
-.indotech-static-page .blog-featured-thumb .blog-category,
-.indotech-static-page #blog-posts-grid .blog-category {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  background: var(--ch-ink);
-  color: var(--ch-lime);
   font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 5px 12px;
-  border-radius: 999px;
+  vertical-align: middle;
 }
 
-.indotech-static-page .blog-meta {
+.cs-eyebrow-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--ch-slate);
+  margin-bottom: 6px;
+}
+
+.cs-index-num {
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ch-cobalt);
+  line-height: 1;
+}
+
+.cs-muted-note {
+  color: var(--ch-slate);
+  font-size: 0.9375rem;
+}
+
+/* ── Section Rhythm & Breadcrumb ─────────────────────────── */
+.cs-hero {
+  position: relative;
+  z-index: 2;
+  padding-top: clamp(22px, 3vw, 36px);
+  padding-bottom: clamp(44px, 5.5vw, 76px);
+}
+
+.cs-hero--compact {
+  padding-bottom: clamp(28px, 3.8vw, 48px);
+}
+
+.cs-band {
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(40px, 5vw, 72px);
+}
+
+.cs-band--tight {
+  padding-block: clamp(20px, 3vw, 36px);
+}
+
+.cs-breadcrumb {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
   font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ch-slate);
+  margin-bottom: clamp(16px, 2.2vw, 24px);
+}
+
+.cs-breadcrumb a {
+  color: var(--ch-slate);
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.18s ease;
+}
+
+.cs-breadcrumb a:hover {
+  color: var(--ch-cobalt);
+}
+
+.cs-breadcrumb [aria-current="page"] {
+  color: var(--ch-ink);
+  font-weight: 600;
+}
+
+/* ── Manufy Asymmetric Hero Head ─────────────────────────── */
+.cs-hero-head {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+  gap: clamp(20px, 3.5vw, 48px);
+  align-items: end;
+  margin-bottom: clamp(24px, 3.2vw, 40px);
+}
+
+.cs-hero-head--legal {
+  grid-template-columns: minmax(250px, 340px) minmax(0, 1fr);
+  margin-bottom: clamp(18px, 2.5vw, 28px);
+}
+
+.cs-hero-copy p {
+  color: var(--ch-slate);
+  font-size: 0.9375rem;
+  line-height: 1.58;
+  max-width: 34ch;
+  margin-bottom: 18px;
+}
+
+.cs-hero-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
+  gap: 10px 20px;
 }
 
-.indotech-static-page .blog-featured-title {
+.cs-hero-title-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.cs-hero-h1,
+.cs-hero .ch-hero-h1 {
+  font-size: clamp(2.4rem, 4.7vw, 4.15rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--ch-ink);
+  margin: 0;
+}
+
+.cs-h1-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cs-h1-block {
+  display: block;
+}
+
+/* ── Tentang Kami: Photographic Media Stage + Flat KPI Dock ── */
+.cs-media-stage {
+  position: relative;
+  border-radius: var(--ch-radius-lg);
+  overflow: hidden;
+  background: var(--ch-ink);
+  min-height: clamp(360px, 40vw, 500px);
+  display: flex;
+  align-items: flex-end;
+}
+
+.cs-media-stage-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+}
+
+.cs-media-stage .ch-stage-scrim {
+  background: linear-gradient(180deg, rgba(11, 18, 32, 0) 30%, rgba(11, 18, 32, 0.86) 100%);
+}
+
+.cs-stage-footer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding: clamp(20px, 3vw, 32px);
+}
+
+.cs-kpi-dock {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 12px 24px;
+  flex: 1 1 580px;
+  margin: 0;
+  padding: 16px 0 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.cs-kpi-dock-item {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 4px;
+  padding-right: 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.cs-kpi-dock-item:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.cs-kpi-dock-item dt {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ch-on-dark);
+}
+
+.cs-kpi-dock-item dd {
+  margin: 0;
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ch-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-stage-video-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 60px;
+  padding: 10px 20px 10px 12px;
+  border-radius: 999px;
+  background: var(--ch-lime);
+  color: var(--ch-ink);
+  box-shadow: 0 16px 34px rgba(11, 18, 32, 0.36);
+  transition: transform 0.22s var(--ch-ease), background-color 0.18s ease;
+}
+
+.cs-stage-video-trigger:hover {
+  transform: translateY(-2px);
+  background: var(--ch-white);
+}
+
+.cs-stage-play-dot {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--ch-ink);
+  color: var(--ch-lime);
+}
+
+.cs-stage-play-dot svg {
+  transform: translateX(1px);
+}
+
+.cs-stage-video-meta {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.25;
+}
+
+.cs-stage-video-meta strong {
+  font-size: 0.9375rem;
+  font-weight: 700;
   color: var(--ch-ink);
 }
 
-.indotech-static-page .blog-featured-title a:hover {
-  color: var(--ch-cobalt);
+.cs-stage-video-meta span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ch-ink-elevated);
 }
 
-.indotech-static-page .blog-featured-excerpt {
-  color: var(--ch-slate);
-}
-
-.indotech-static-page .blog-archive-container {
+/* ── Tentang Kami: Story & Hairline Tabular Timeline ─────── */
+.cs-story-layout {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
-  gap: clamp(24px, 3.5vw, 40px);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(32px, 5vw, 72px);
   align-items: start;
 }
 
-.indotech-static-page .filter-panel {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: 24px;
-  padding: 24px;
+.cs-story-lead {
   position: sticky;
   top: calc(var(--header-h, 72px) + 24px);
 }
 
-.indotech-static-page .filter-panel-title {
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--ch-ink);
-  margin-bottom: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--ch-grid);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+.cs-story-prose {
+  margin: 20px 0 18px;
 }
 
-.indotech-static-page .filter-group-title {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+.cs-story-prose p {
+  font-size: 1rem;
+  line-height: 1.65;
   color: var(--ch-slate);
-  display: block;
-  margin-bottom: 8px;
+  max-width: 56ch;
+  margin-bottom: 12px;
 }
 
-.indotech-static-page .blog-search-group,
-.indotech-static-page .blog-sort-group {
-  margin-bottom: 18px;
-}
-
-.indotech-static-page .ch-input-icon-wrap {
+.cs-inset-portrait {
   position: relative;
-  display: flex;
-  align-items: center;
+  margin: 26px 0 0;
+  border-radius: 24px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--ch-ink);
 }
 
-.indotech-static-page .ch-input-icon-wrap svg {
-  position: absolute;
-  right: 14px;
-  color: var(--ch-slate);
-  pointer-events: none;
-}
-
-.indotech-static-page .ch-blog-input,
-.indotech-static-page .ch-blog-select {
+.cs-inset-portrait img {
   width: 100%;
-  min-height: 44px;
-  padding: 10px 38px 10px 14px;
-  border: 1.5px solid var(--ch-grid);
-  border-radius: 12px;
-  background: var(--ch-canvas);
-  color: var(--ch-ink);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  appearance: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
 }
 
-.indotech-static-page .ch-blog-select {
-  cursor: pointer;
-}
-
-.indotech-static-page .ch-blog-input:focus,
-.indotech-static-page .ch-blog-select:focus {
-  outline: none;
-  background: var(--ch-white);
-  border-color: var(--ch-cobalt);
-  box-shadow: 0 0 0 3px rgba(20, 78, 227, 0.14);
-}
-
-.indotech-static-page .filter-list {
+.cs-inset-caption {
+  position: absolute;
+  inset: auto 20px 18px 20px;
+  z-index: 4;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
 }
 
-.indotech-static-page .filter-btn {
+.cs-inset-caption span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ch-lime);
+}
+
+.cs-inset-caption strong {
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  color: var(--ch-white);
+}
+
+.cs-ledger-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--ch-grid);
+}
+
+.cs-ledger-row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 20px;
+  padding-block: 26px;
+  border-bottom: 1px solid var(--ch-grid);
+  align-items: baseline;
+}
+
+.cs-ledger-year {
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: clamp(1.5rem, 2.3vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ch-cobalt);
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-ledger-body h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ch-ink);
+  margin: 0 0 8px;
+}
+
+.cs-ledger-body p {
+  font-size: 0.9375rem;
+  line-height: 1.62;
+  color: var(--ch-slate);
+  max-width: 58ch;
+  margin: 0;
+}
+
+/* ── Obsidian-Navy Architectural Panels (NO Nested Cards) ─── */
+.cs-dark-section {
+  position: relative;
+  z-index: 2;
+  margin-block: clamp(16px, 2vw, 28px);
+}
+
+.cs-dark-panel {
+  background: var(--ch-ink);
+  color: var(--ch-white);
+  border-radius: 32px;
+  padding: clamp(36px, 5vw, 72px) clamp(24px, 4.5vw, 60px);
+}
+
+.cs-dark-h2 {
+  font-size: clamp(2rem, 3.8vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.06;
+  color: var(--ch-white);
+  margin: 0 0 18px;
+}
+
+.cs-dark-h2 span {
+  color: var(--ch-lime);
+}
+
+.cs-dark-h2--sm {
+  font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+  margin-bottom: 12px;
+}
+
+.cs-dark-kicker {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ch-lime-bright);
+  margin-bottom: 12px;
+}
+
+.cs-visi-split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(32px, 5vw, 68px);
+  align-items: start;
+}
+
+.cs-visi-statement h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ch-white);
+  margin: 0 0 14px;
+}
+
+.cs-visi-statement p {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ch-on-dark);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.cs-dark-ledger {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--ch-rule-dark);
+}
+
+.cs-dark-ledger li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 16px;
+  padding-block: 18px;
+  border-bottom: 1px solid var(--ch-rule-dark);
+  align-items: baseline;
+}
+
+.cs-dark-index {
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ch-lime-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-dark-ledger p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ch-on-dark);
+  margin: 0;
+}
+
+.cs-cert-band {
+  margin-top: clamp(36px, 5vw, 56px);
+  padding-top: clamp(36px, 5vw, 56px);
+  border-top: 1px solid var(--ch-rule-dark);
+}
+
+.cs-cert-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 42ch);
+  gap: 16px 40px;
+  align-items: end;
+  margin-bottom: 32px;
+}
+
+.cs-cert-head .cs-pill-tag {
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-bottom: 0;
+}
+
+.cs-cert-h2 {
+  font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ch-white);
+  margin: 0;
+}
+
+.cs-cert-head p {
+  color: var(--ch-on-dark);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.cs-cert-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px 36px;
+}
+
+.cs-cert-item {
+  padding-top: 20px;
+  border-top: 1px solid var(--ch-rule-dark);
+}
+
+.cs-cert-title-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  min-height: 44px;
-  padding: 8px 12px;
-  border-radius: 12px;
-  color: var(--ch-slate);
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-align: left;
-  transition: background-color 0.18s ease, color 0.18s ease;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
-.indotech-static-page .filter-btn:hover {
-  background: var(--ch-canvas);
-  color: var(--ch-ink);
+.cs-dark-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #1d2942;
+  color: var(--ch-lime-bright);
 }
 
-.indotech-static-page .filter-btn.active {
-  background: var(--ch-cobalt-tint);
-  color: var(--ch-cobalt);
-  font-weight: 600;
-}
-
-.indotech-static-page .filter-count {
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: var(--ch-canvas);
-  color: var(--ch-slate);
-  padding: 2px 8px;
-  border-radius: 999px;
-}
-
-.indotech-static-page .filter-btn.active .filter-count {
+.cs-dark-icon--cobalt {
   background: var(--ch-cobalt);
   color: var(--ch-white);
 }
 
-.indotech-static-page .ch-blog-sidebar-cta {
-  margin-top: 24px;
-  padding: 22px;
-  border-radius: var(--ch-radius-md);
+.cs-cert-title-row h3,
+.cs-dark-col-head h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ch-white);
+  margin: 0;
+}
+
+.cs-cert-item p,
+.cs-dark-col > p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ch-on-dark);
+  margin: 0;
+}
+
+/* ── Hairline 4-Column Values Matrix ─────────────────────── */
+.cs-hairline-matrix {
+  display: grid;
+  gap: 24px 36px;
+}
+
+.cs-hairline-matrix--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.cs-hairline-cell {
+  padding-top: 20px;
+  border-top: 2px solid var(--ch-grid);
+  transition: border-color 0.2s ease;
+}
+
+.cs-hairline-cell:hover {
+  border-top-color: var(--ch-cobalt);
+}
+
+.cs-cell-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cs-cell-head h3 {
+  font-size: 1.1875rem;
+  font-weight: 600;
+  color: var(--ch-ink);
+  margin: 0;
+}
+
+.cs-hairline-cell p {
+  font-size: 0.9375rem;
+  line-height: 1.62;
+  color: var(--ch-slate);
+  margin: 0;
+}
+
+/* ── Aplikasi Layanan B2B Cards ──────────────────────────── */
+.cs-app-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.cs-app-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 32px);
+  border-radius: 24px;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+  transition: border-color 0.2s ease, transform 0.2s var(--ch-ease), box-shadow 0.2s ease;
+}
+
+.cs-app-card:hover {
+  border-color: rgba(20, 78, 227, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
+}
+
+.cs-app-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.cs-app-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--ch-cobalt-tint);
+  color: var(--ch-cobalt);
+}
+
+.cs-app-kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ch-cobalt);
+}
+
+.cs-app-title {
+  font-size: 1.3125rem;
+  font-weight: 600;
+  color: var(--ch-ink);
+  margin: 0 0 10px;
+}
+
+.cs-app-desc {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ch-slate);
+  margin: 0 0 18px;
+}
+
+.cs-app-link {
+  margin-top: auto;
+}
+
+.cs-empty-panel {
+  grid-column: 1 / -1;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+  border-radius: 24px;
+  padding: 40px 28px;
+  text-align: center;
+  color: var(--ch-slate);
+}
+
+.cs-empty-panel h3 {
+  font-size: 1.25rem;
+  color: var(--ch-ink);
+  margin: 0 0 8px;
+}
+
+.cs-empty-panel p {
+  max-width: 48ch;
+  margin: 0 auto 20px;
+}
+
+/* ── Split HQ Office Map Stage (Tentang Kami & Kontak) ───── */
+.cs-hq-split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  border-radius: 32px;
+  overflow: hidden;
   background: var(--ch-ink);
   color: var(--ch-white);
 }
 
-.indotech-static-page .ch-blog-sidebar-tag {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: var(--ch-lime);
-  color: var(--ch-ink);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.indotech-static-page .ch-blog-sidebar-cta h4 {
-  color: var(--ch-white);
-  font-size: 1.0625rem;
-  margin: 0 0 8px;
-}
-
-.indotech-static-page .ch-blog-sidebar-cta p {
-  color: var(--ch-on-dark);
-  font-size: 0.875rem;
-  line-height: 1.55;
-  margin: 0 0 16px;
-}
-
-.indotech-static-page .ch-blog-sidebar-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: var(--ch-lime);
-  color: var(--ch-ink);
-  font-size: 0.875rem;
-  font-weight: 700;
-  transition: background-color 0.18s ease;
-}
-
-.indotech-static-page .ch-blog-sidebar-btn:hover {
-  background: var(--ch-lime-bright);
-}
-
-.indotech-static-page #blog-posts-grid.blog-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  overflow: visible;
-}
-
-.indotech-static-page #blog-posts-grid .blog-card {
+.cs-hq-split--light {
   background: var(--ch-white);
+  color: var(--ch-ink);
   border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-md);
-  overflow: hidden;
+}
+
+.cs-hq-info {
+  padding: clamp(28px, 4vw, 48px);
   display: flex;
   flex-direction: column;
-  min-height: 380px;
-  transition: transform 0.22s var(--ch-ease), border-color 0.22s var(--ch-ease), box-shadow 0.22s var(--ch-ease);
+  justify-content: center;
 }
 
-.indotech-static-page #blog-posts-grid .blog-card:hover {
-  background: var(--ch-white);
-  border-color: rgba(20, 78, 227, 0.35);
-  box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
-  transform: translateY(-3px);
+.cs-hq-address {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ch-on-dark);
+  margin: 8px 0 22px;
+  max-width: 42ch;
 }
 
-.indotech-static-page #blog-posts-grid .blog-thumb {
-  width: 100%;
-  height: 190px;
-  position: relative;
-  overflow: hidden;
-  background: var(--surface-2);
+.cs-hq-split--light .cs-hq-address,
+.cs-hq-note {
+  color: var(--ch-slate);
+}
+
+.cs-hq-note {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  max-width: 42ch;
+}
+
+.cs-hq-hours {
+  list-style: none;
+  margin: 0 0 26px;
+  padding: 0;
+  border-top: 1px solid var(--ch-rule-dark);
+}
+
+.cs-hq-hours li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 11px;
+  border-bottom: 1px solid var(--ch-rule-dark);
+  font-size: 0.875rem;
+}
+
+.cs-hq-hours span {
+  color: var(--ch-on-dark);
+}
+
+.cs-hq-hours strong {
+  color: var(--ch-white);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-hours-closed {
+  color: var(--ch-lime-bright) !important;
+}
+
+.cs-hq-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}
+
+.cs-hq-map {
+  min-height: 400px;
+  background: var(--ch-grid);
+}
+
+.cs-hq-map iframe {
   display: block;
-  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
 }
 
-.indotech-static-page #blog-posts-grid .blog-img {
+/* ── Kemitraan: Collage, Dark Cols, Process Rail & Schemes ─ */
+.cs-partner-collage {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.cs-collage-main,
+.cs-collage-side {
+  position: relative;
+  margin: 0;
+  border-radius: var(--ch-radius-lg);
+  overflow: hidden;
+  background: var(--ch-ink);
+  min-height: clamp(320px, 34vw, 430px);
+}
+
+.cs-collage-main img,
+.cs-collage-side img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.indotech-static-page .blog-img-placeholder {
-  background: var(--surface-2);
-}
-
-.indotech-static-page .blog-placeholder-label {
-  color: var(--ch-slate);
-  font-weight: 600;
-  font-size: 0.9375rem;
-}
-
-.indotech-static-page #blog-posts-grid .blog-body {
-  padding: 22px;
+.cs-collage-l-card {
+  position: relative;
+  z-index: 2;
+  margin: auto 24px 24px auto;
+  width: min(390px, calc(100% - 48px));
   display: flex;
   flex-direction: column;
-  flex: 1;
+  filter: drop-shadow(0 18px 34px rgba(11, 18, 32, 0.24));
 }
 
-.indotech-static-page #blog-posts-grid .blog-title {
-  font-size: 1.0625rem;
-  font-weight: 700;
-  line-height: 1.35;
+.cs-collage-main {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.cs-collage-l-top {
+  position: relative;
+  width: 86%;
+  background: var(--ch-white);
+  padding: 18px 20px 10px;
+  border-radius: 18px 18px 0 0;
+}
+
+.cs-collage-l-top::after {
+  content: '';
+  position: absolute;
+  right: -18px;
+  bottom: 0;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 100% 0, transparent 18px, var(--ch-white) 18.5px);
+  pointer-events: none;
+}
+
+.cs-collage-l-top p {
   color: var(--ch-ink);
-  margin-block: 8px 10px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.45;
+  margin: 0;
 }
 
-.indotech-static-page #blog-posts-grid .blog-title a:hover {
-  color: var(--ch-cobalt);
+.cs-collage-l-bottom {
+  width: 100%;
+  background: var(--ch-white);
+  border-radius: 0 18px 18px 18px;
 }
 
-.indotech-static-page #blog-posts-grid .blog-excerpt {
+.cs-collage-caption {
+  position: absolute;
+  inset: auto 22px 22px 22px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cs-collage-caption span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ch-lime);
+}
+
+.cs-collage-caption strong {
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: 1.1875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ch-white);
+}
+
+.cs-dark-split-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+  gap: 18px 40px;
+  align-items: end;
+  margin-bottom: 36px;
+}
+
+.cs-dark-lead {
+  color: var(--ch-on-dark);
+  font-size: 0.9375rem;
+  line-height: 1.62;
+  max-width: 44ch;
+  margin: 0;
+}
+
+.cs-dark-cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px 36px;
+}
+
+.cs-dark-col {
+  display: flex;
+  flex-direction: column;
+  padding-top: 22px;
+  border-top: 1px solid var(--ch-rule-dark);
+}
+
+.cs-dark-col--highlight {
+  border-top: 2px solid var(--ch-lime-bright);
+}
+
+.cs-dark-col-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cs-dark-checks {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.cs-dark-checks li {
+  position: relative;
+  padding-left: 20px;
   font-size: 0.875rem;
-  color: var(--ch-slate);
-  line-height: 1.58;
-  margin-bottom: 16px;
+  line-height: 1.5;
+  color: var(--ch-on-dark);
 }
 
-.indotech-static-page #blog-posts-grid .blog-read-more {
+.cs-dark-checks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--ch-lime-bright);
+}
+
+.cs-dark-checks--compact {
+  margin-top: 20px;
+}
+
+.cs-dark-col-link {
+  margin-top: 18px;
+}
+
+/* Process Rail */
+.cs-process-rail {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px 32px;
+}
+
+.cs-process-step {
+  padding-top: 22px;
+  border-top: 2px dashed var(--ch-grid);
+  transition: border-color 0.2s ease;
+}
+
+.cs-process-step:last-child,
+.cs-process-step:hover {
+  border-top-color: var(--ch-cobalt);
+}
+
+.cs-process-step p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ch-slate);
+  margin: 0;
+}
+
+/* Interactive 2x2 Scheme Grid */
+.cs-scheme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.cs-scheme-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 3.2vw, 36px);
+  border-radius: 24px;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cs-scheme-card.is-selected {
+  border-color: var(--ch-cobalt);
+  box-shadow: 0 14px 30px rgba(20, 78, 227, 0.08);
+}
+
+.cs-scheme-top h3 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--ch-ink);
+  margin: 0 0 10px;
+}
+
+.cs-scheme-top p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ch-slate);
+  margin: 0 0 18px;
+}
+
+.cs-scheme-list {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 16px 0 0;
+  border-top: 1px solid var(--ch-grid);
+  display: grid;
+  gap: 8px;
+}
+
+.cs-scheme-list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ch-ink);
+}
+
+.cs-scheme-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ch-cobalt);
+}
+
+.cs-scheme-select-btn {
   margin-top: auto;
-  min-height: 44px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 46px;
+  width: 100%;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--ch-canvas);
+  border: 1.5px solid var(--ch-grid);
+  color: var(--ch-ink);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--ch-cobalt);
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
 
-.indotech-static-page .products-loading {
-  opacity: 0.45;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-.indotech-static-page .product-pagination {
-  border-top-color: var(--ch-grid);
-}
-
-.indotech-static-page .product-pagination .page-btn {
-  min-width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  border-color: var(--ch-grid);
-  color: var(--ch-ink);
-}
-
-.indotech-static-page .product-pagination .page-btn.active {
+.cs-scheme-select-btn:hover,
+.cs-scheme-card.is-selected .cs-scheme-select-btn {
   background: var(--ch-cobalt);
   border-color: var(--ch-cobalt);
   color: var(--ch-white);
 }
 
-/* ── Legal & Default Static Page Templates ───────────────── */
-.indotech-static-page .legal-toc {
+/* ── Split Form Studio (Kemitraan & Kontak) ──────────────── */
+.cs-split-studio,
+.cs-contact-studio {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.cs-contact-studio {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+}
+
+.cs-studio-concierge {
+  background: var(--ch-ink);
+  color: var(--ch-white);
+  border-radius: 28px;
+  padding: clamp(28px, 3.8vw, 42px);
+}
+
+.cs-studio-copy {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ch-on-dark);
+  margin: 0 0 22px;
+}
+
+.cs-concierge-wa {
+  padding-block: 16px;
+  border-top: 1px solid var(--ch-rule-dark);
+  border-bottom: 1px solid var(--ch-rule-dark);
+}
+
+.cs-wa-number-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--ch-lime);
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-wa-number-link:hover {
+  text-decoration: underline;
+}
+
+.cs-studio-photo {
+  margin: 26px 0 0;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+
+.cs-studio-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cs-studio-form-wrap {
   background: var(--ch-white);
   border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-md);
-  padding: 22px;
+  border-radius: 28px;
+  padding: clamp(26px, 3.8vw, 42px);
 }
 
-.indotech-static-page .legal-toc-title {
-  color: var(--ch-slate);
-  font-size: 0.75rem;
+.cs-studio-form-head {
+  margin-bottom: 22px;
 }
 
-.indotech-static-page .legal-toc-link {
+.cs-studio-form-head p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
   color: var(--ch-slate);
-  min-height: 40px;
+  margin: 0;
+}
+
+.cs-subject-chips {
   display: flex;
-  align-items: center;
-  padding: 8px 10px;
-  border-radius: 10px;
-  font-size: 0.875rem;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
 }
 
-.indotech-static-page .legal-toc-link:hover,
-.indotech-static-page .legal-toc-link.active {
-  background: var(--ch-cobalt-tint);
+.cs-subject-chip {
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--ch-canvas);
+  border: 1px solid var(--ch-grid);
+  color: var(--ch-slate);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.cs-subject-chip:hover,
+.cs-subject-chip.is-active {
+  background: var(--ch-cobalt);
+  border-color: var(--ch-cobalt);
+  color: var(--ch-white);
+}
+
+.cs-form {
+  display: grid;
+  gap: 18px;
+}
+
+.cs-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cs-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cs-form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ch-ink);
+}
+
+.form-required {
   color: var(--ch-cobalt);
+}
+
+.cs-form-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1.5px solid var(--ch-grid);
+  background: var(--ch-canvas);
+  color: var(--ch-ink);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.cs-form-input::placeholder {
+  color: var(--ch-slate);
+}
+
+.cs-form-input:focus {
+  border-color: var(--ch-cobalt);
+  background: var(--ch-white);
+  outline: none;
+}
+
+.cs-form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.cs-form-submit {
+  width: fit-content;
+  border: 0;
+}
+
+.form-response {
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
 }
 
-.indotech-static-page .legal-content,
-.indotech-static-page .ch-page-article {
-  background: var(--ch-white);
-  border: 1px solid var(--ch-grid);
-  border-radius: var(--ch-radius-lg);
-  padding: clamp(26px, 4vw, 48px);
-}
-
-.indotech-static-page .legal-content.post-body h2,
-.indotech-static-page .ch-page-article h2 {
+.form-response.success {
+  background: var(--ch-lime);
   color: var(--ch-ink);
-  font-size: 1.375rem;
-  margin-top: 32px;
 }
 
-.indotech-static-page .legal-content.post-body h2:first-child,
-.indotech-static-page .ch-page-article h2:first-child {
-  margin-top: 0;
+.form-response.error {
+  background: #fee2e2;
+  color: #991b1b;
 }
 
-.indotech-static-page .legal-content.post-body h3,
-.indotech-static-page .ch-page-article h3 {
-  color: var(--ch-ink);
-  font-size: 1.0625rem;
+/* Split FAQ on Kemitraan */
+.cs-split-faq {
+  display: grid;
+  grid-template-columns: minmax(0, 4.5fr) minmax(0, 7.5fr);
+  gap: clamp(28px, 4.5vw, 60px);
+  align-items: start;
 }
 
-.indotech-static-page .legal-content.post-body p,
-.indotech-static-page .legal-content.post-body li,
-.indotech-static-page .ch-page-article p,
-.indotech-static-page .ch-page-article li {
+.cs-split-faq-left {
+  position: sticky;
+  top: calc(var(--header-h, 72px) + 24px);
+}
+
+.cs-split-faq-left p {
   color: var(--ch-slate);
   font-size: 0.9375rem;
-  line-height: 1.75;
-  max-width: 65ch;
+  line-height: 1.62;
+  max-width: 38ch;
+  margin: 12px 0 22px;
 }
 
-.indotech-static-page .legal-article-footer {
-  border-top-color: var(--ch-grid);
+.cs-split-faq-right {
+  border-top: 1px solid var(--ch-grid);
 }
 
-/* ── 404 Page ────────────────────────────────────────────── */
-.indotech-static-page .ch-404-section {
-  padding-block: clamp(56px, 8vw, 96px);
+/* ── Kontak: Contact Ledger & 3-Division Panel ───────────── */
+.cs-contact-ledger {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px 36px;
+  margin-top: 12px;
+  padding-block: 28px;
+  border-top: 1px solid var(--ch-grid);
+  border-bottom: 1px solid var(--ch-grid);
 }
 
-.indotech-static-page .ch-404-card {
-  max-width: 680px;
-  margin-inline: auto;
-  padding: clamp(32px, 5vw, 56px) clamp(24px, 4vw, 48px);
-  border-radius: 32px;
+.cs-ledger-val {
+  display: inline-block;
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+  font-weight: 700;
+  color: var(--ch-ink);
+  word-break: break-word;
+  margin-bottom: 6px;
+}
+
+.cs-ledger-val--cobalt {
+  color: var(--ch-cobalt);
+}
+
+.cs-ledger-address {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ch-ink);
+  margin: 0 0 6px;
+}
+
+.cs-ledger-cell p:last-child {
+  font-size: 0.875rem;
+  color: var(--ch-slate);
+  margin: 0;
+}
+
+.cs-division-list {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+  border-top: 1px solid var(--ch-rule-dark);
+}
+
+.cs-division-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-block: 14px;
+  border-bottom: 1px solid var(--ch-rule-dark);
+  transition: opacity 0.18s ease;
+}
+
+.cs-division-list a:hover .cs-division-num {
+  color: var(--ch-lime);
+}
+
+.cs-division-meta strong {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ch-white);
+  margin-bottom: 2px;
+}
+
+.cs-division-meta span {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--ch-on-dark);
+}
+
+.cs-division-num {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--ch-lime-bright);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cs-hours-block h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ch-white);
+  margin: 0 0 12px;
+}
+
+.cs-hours-block .cs-hq-hours {
+  margin-bottom: 0;
+}
+
+/* ── Blog Archive Layout & AJAX Grid ─────────────────────── */
+.cs-featured-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   background: var(--ch-white);
   border: 1px solid var(--ch-grid);
-  text-align: center;
+  border-radius: 32px;
+  overflow: hidden;
+  align-items: stretch;
 }
 
-.indotech-static-page .ch-404-code {
-  font-size: clamp(4rem, 11vw, 6.75rem);
-  font-weight: 700;
-  line-height: 0.95;
-  color: var(--ch-muted-display);
-  margin: 14px 0 12px;
+.cs-featured-media {
+  position: relative;
+  display: block;
+  min-height: 360px;
+  background: var(--ch-ink);
+  overflow: hidden;
 }
 
-.indotech-static-page .ch-404-title {
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
+.cs-featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ch-ease);
+}
+
+.cs-featured-stage:hover .cs-featured-img {
+  transform: scale(1.03);
+}
+
+.cs-featured-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--ch-lime);
   color: var(--ch-ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.cs-featured-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(28px, 4vw, 48px);
+}
+
+.cs-featured-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ch-slate);
   margin-bottom: 12px;
 }
 
-.indotech-static-page .ch-404-desc {
-  color: var(--ch-slate);
-  font-size: 1rem;
-  line-height: 1.65;
-  max-width: 46ch;
-  margin: 0 auto 28px;
+.cs-featured-title {
+  font-size: clamp(1.5rem, 2.5vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 14px;
 }
 
-.indotech-static-page .ch-404-actions {
+.cs-featured-title a {
+  color: var(--ch-ink);
+}
+
+.cs-featured-title a:hover {
+  color: var(--ch-cobalt);
+}
+
+.cs-featured-excerpt {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ch-slate);
+  max-width: 58ch;
+  margin: 0 0 24px;
+}
+
+.cs-featured-cta {
+  width: fit-content;
+}
+
+/* Horizontal Filter Toolbar (explicit override of legacy main.css !important rules) */
+.cs-blog-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-bottom: 28px;
+  padding: 14px 18px;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+  border-radius: 20px;
+}
+
+.cs-cat-pills {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.cs-main .cs-blog-toolbar .filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  width: auto !important;
+  text-align: center;
+  padding: 8px 16px !important;
+  border-radius: 999px !important;
+  background: var(--ch-canvas) !important;
+  border: 1px solid var(--ch-grid) !important;
+  color: var(--ch-slate) !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.cs-main .cs-blog-toolbar .filter-btn:hover {
+  background: var(--ch-cobalt-tint) !important;
+  color: var(--ch-ink) !important;
+  border-color: var(--ch-cobalt) !important;
+}
+
+.cs-main .cs-blog-toolbar .filter-btn.active {
+  background: var(--ch-cobalt) !important;
+  border-color: var(--ch-cobalt) !important;
+  color: var(--ch-white) !important;
+  font-weight: 600 !important;
+}
+
+.filter-count {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-blog-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.cs-blog-search-wrap,
+.cs-blog-sort-wrap {
+  position: relative;
+}
+
+.cs-toolbar-input,
+.cs-toolbar-select {
+  min-height: 44px;
+  padding: 9px 38px 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--ch-grid);
+  background: var(--ch-canvas);
+  color: var(--ch-ink);
+  font-family: inherit;
+  font-size: 0.875rem;
+}
+
+.cs-toolbar-input {
+  width: 220px;
+}
+
+.cs-toolbar-input::placeholder {
+  color: var(--ch-slate);
+}
+
+.cs-toolbar-select {
+  appearance: none;
+  padding-right: 34px;
+  cursor: pointer;
+}
+
+.cs-blog-search-wrap svg,
+.cs-blog-sort-wrap svg {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ch-slate);
+  pointer-events: none;
+}
+
+/* 3-Column Blog Card Grid & AJAX Output Styling */
+.cs-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  transition: opacity 0.2s ease;
+}
+
+.cs-blog-grid.products-loading {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+  border-radius: 22px;
+  overflow: hidden;
+  transition: border-color 0.2s ease, transform 0.2s var(--ch-ease), box-shadow 0.2s ease;
+}
+
+.blog-card:hover {
+  border-color: rgba(20, 78, 227, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
+}
+
+.blog-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: var(--ch-cobalt-tint);
+  overflow: hidden;
+}
+
+.blog-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ch-ease);
+}
+
+.blog-card:hover .blog-img {
+  transform: scale(1.03);
+}
+
+.cs-main .blog-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--ch-cobalt-tint) 0%, var(--ch-canvas) 100%) !important;
+}
+
+.cs-main .blog-placeholder-label {
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ch-slate) !important;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+.cs-main .blog-card .blog-category,
+.cs-main .blog-thumb .blog-category {
+  position: absolute;
+  top: auto !important;
+  bottom: 14px !important;
+  left: 14px !important;
+  right: auto !important;
+  padding: 5px 12px !important;
+  border-radius: 999px !important;
+  background: var(--ch-lime) !important;
+  color: var(--ch-ink) !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+}
+
+.blog-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 24px 24px;
+}
+
+.blog-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ch-slate);
+  margin-bottom: 10px;
+}
+
+.blog-title {
+  font-size: 1.1875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0 0 10px;
+}
+
+.blog-title a {
+  color: var(--ch-ink);
+}
+
+.blog-title a:hover {
+  color: var(--ch-cobalt);
+}
+
+.blog-excerpt {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--ch-slate);
+  margin: 0 0 18px;
+}
+
+.blog-read-more {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ch-cobalt);
+}
+
+.blog-read-more:hover {
+  text-decoration: underline;
+}
+
+/* Pagination */
+.product-pagination {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 8px;
+  margin-top: 36px;
+}
+
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+  color: var(--ch-ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.page-btn:hover {
+  border-color: var(--ch-cobalt);
+  color: var(--ch-cobalt);
+}
+
+.page-btn.active {
+  background: var(--ch-cobalt);
+  border-color: var(--ch-cobalt);
+  color: var(--ch-white);
+}
+
+.product-pagination-info {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--ch-slate);
+  margin: 12px 0 0;
+}
+
+/* Dark Blog Strip */
+.cs-blog-cta-strip {
+  background: var(--ch-ink);
+  color: var(--ch-white);
+  border-radius: 28px;
+  padding: clamp(26px, 4vw, 44px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 32px;
+}
+
+.cs-blog-cta-strip h2 {
+  font-size: clamp(1.4rem, 2.5vw, 1.95rem);
+  color: var(--ch-white);
+  margin: 0 0 6px;
+}
+
+.cs-blog-cta-strip p {
+  font-size: 0.9375rem;
+  line-height: 1.58;
+  color: var(--ch-on-dark);
+  max-width: 56ch;
+  margin: 0;
+}
+
+/* ── FAQ Search-First Directory Layout ───────────────────── */
+.cs-faq-search-bar {
+  display: grid;
+  gap: 16px;
+}
+
+.cs-search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--ch-white);
+  border: 1.5px solid var(--ch-grid);
+  border-radius: 999px;
+  padding-inline: 20px;
+}
+
+.cs-search-field:focus-within {
+  border-color: var(--ch-cobalt);
+}
+
+.cs-search-field svg {
+  color: var(--ch-slate);
+  flex-shrink: 0;
+}
+
+.cs-faq-search-input {
+  width: 100%;
+  min-height: 54px;
+  padding: 12px 14px;
+  border: 0;
+  background: transparent;
+  color: var(--ch-ink);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.cs-faq-search-input::placeholder {
+  color: var(--ch-slate);
+}
+
+.cs-faq-search-input:focus {
+  outline: none;
+}
+
+.cs-faq-jumpbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cs-faq-jump-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+  color: var(--ch-slate);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.cs-faq-jump-pill:hover {
+  border-color: var(--ch-cobalt);
+  color: var(--ch-ink);
+}
+
+.cs-faq-jump-pill.faq-nav-btn--active {
+  background: var(--ch-cobalt);
+  border-color: var(--ch-cobalt);
+  color: var(--ch-white);
+}
+
+.cs-jump-count {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-faq-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 4.2fr) minmax(0, 7.8fr);
+  gap: clamp(28px, 4.5vw, 56px);
+  align-items: start;
+}
+
+.cs-faq-concierge {
+  position: sticky;
+  top: calc(var(--header-h, 72px) + 24px);
+  background: var(--ch-ink);
+  color: var(--ch-white);
+  border-radius: 28px;
+  padding: clamp(26px, 3.6vw, 38px);
+}
+
+.cs-faq-concierge h2 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: var(--ch-white);
+  margin: 0 0 12px;
+}
+
+.cs-faq-concierge p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ch-on-dark);
+  margin: 0 0 22px;
+}
+
+.cs-faq-concierge-meta {
+  display: grid;
   gap: 12px;
+  padding-block: 16px;
+  border-top: 1px solid var(--ch-rule-dark);
+  border-bottom: 1px solid var(--ch-rule-dark);
+  margin-bottom: 22px;
 }
 
-/* ── Responsive Adjustments ──────────────────────────────── */
-@media (max-width: 1100px) {
-  .indotech-static-page .about-cert-inner {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 36px;
-  }
-  .indotech-static-page .about-timeline::before {
-    left: 47px;
-  }
+.cs-faq-concierge-meta span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--ch-lime-bright);
+  font-weight: 600;
 }
 
-@media (max-width: 1024px) {
-  .indotech-static-page .services-grid {
-    grid-template-columns: minmax(0, 1fr);
+.cs-faq-concierge-meta strong {
+  font-size: 0.9375rem;
+  color: var(--ch-white);
+}
+
+.cs-faq-sublinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin-top: 14px;
+}
+
+.cs-faq-ledger {
+  display: grid;
+  gap: 36px;
+}
+
+.cs-faq-group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.faq-group-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ch-ink);
+  margin: 0;
+}
+
+.cs-faq-accordion-list {
+  border-top: 1px solid var(--ch-grid);
+}
+
+.cs-faq-row {
+  border-bottom: 1px solid var(--ch-grid);
+}
+
+.cs-faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 58px;
+  padding: 16px 4px;
+  text-align: left;
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--ch-ink);
+}
+
+.cs-faq-trigger:hover,
+.faq-accordion-item--active .cs-faq-trigger {
+  color: var(--ch-cobalt);
+}
+
+.faq-toggle-icon {
+  flex-shrink: 0;
+  color: var(--ch-cobalt);
+  transition: transform 0.2s var(--ch-ease);
+}
+
+.faq-accordion-item--active .faq-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.cs-faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.28s var(--ch-ease);
+}
+
+.cs-faq-answer {
+  padding: 0 4px 18px;
+}
+
+.cs-faq-answer p {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ch-slate);
+  max-width: 62ch;
+  margin: 0;
+}
+
+#faq-empty-state {
+  display: none;
+}
+
+/* ── Legal Documents Reader ──────────────────────────────── */
+.cs-doc-meta-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--ch-grid);
+}
+
+.cs-doc-meta-strip dt {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ch-slate);
+}
+
+.cs-doc-meta-strip dd {
+  margin: 2px 0 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ch-ink);
+}
+
+.cs-doc-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.cs-doc-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+  color: var(--ch-slate);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.cs-doc-pill:hover {
+  border-color: var(--ch-cobalt);
+  color: var(--ch-ink);
+}
+
+.cs-doc-pill.is-active {
+  background: var(--ch-cobalt);
+  border-color: var(--ch-cobalt);
+  color: var(--ch-white);
+}
+
+.cs-legal-band {
+  position: relative;
+  z-index: 2;
+  padding-bottom: clamp(56px, 7vw, 96px);
+}
+
+.cs-legal-grid {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: clamp(28px, 4.5vw, 60px);
+  align-items: start;
+}
+
+.cs-legal-grid--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.cs-legal-rail {
+  position: sticky;
+  top: calc(var(--header-h, 72px) + 24px);
+  padding-top: 12px;
+}
+
+.cs-toc-header {
+  margin-bottom: 14px;
+}
+
+.cs-toc-progress {
+  width: 100%;
+  height: 3px;
+  background: var(--ch-grid);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.cs-toc-progress-bar {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: var(--ch-cobalt);
+  transition: width 0.12s linear;
+}
+
+.cs-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--ch-grid);
+}
+
+.cs-main .legal-toc-link.cs-toc-link {
+  display: block;
+  padding: 7px 0 7px 14px !important;
+  margin-left: -1px;
+  border-radius: 0 !important;
+  background: transparent !important;
+  border-left: 2px solid transparent;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--ch-slate);
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.cs-main .cs-toc-item--lvl-3 .legal-toc-link.cs-toc-link {
+  padding-left: 26px !important;
+  font-size: 0.8125rem;
+}
+
+.cs-main .legal-toc-link.cs-toc-link:hover,
+.cs-main .legal-toc-link.cs-toc-link.active {
+  background: transparent !important;
+  color: var(--ch-cobalt);
+  border-left-color: var(--ch-cobalt);
+  font-weight: 600;
+}
+
+.cs-legal-article {
+  max-width: 72ch;
+}
+
+.cs-legal-article h2 {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  color: var(--ch-ink);
+  margin: 36px 0 14px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ch-grid);
+}
+
+.cs-legal-article h2:first-child {
+  margin-top: 0;
+}
+
+.cs-legal-article h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--ch-ink);
+  margin: 22px 0 8px;
+}
+
+.cs-legal-article p,
+.cs-legal-article li,
+.cs-page-article p,
+.cs-page-article li {
+  max-width: 65ch;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ch-slate);
+}
+
+.cs-legal-article p,
+.cs-page-article p {
+  margin: 0 0 14px;
+}
+
+.cs-legal-article ul,
+.cs-page-article ul {
+  padding-left: 20px;
+  margin: 0 0 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.cs-legal-article strong,
+.cs-page-article strong {
+  color: var(--ch-ink);
+}
+
+.cs-legal-footer-band {
+  margin-top: 44px;
+  padding: clamp(26px, 3.6vw, 40px);
+  border-radius: 28px;
+  background: var(--ch-ink);
+  color: var(--ch-white);
+  display: grid;
+  gap: 20px;
+}
+
+.cs-legal-footer-copy h2 {
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  color: var(--ch-white);
+  margin: 0 0 8px;
+  border: 0;
+  padding: 0;
+}
+
+.cs-legal-footer-copy p {
+  color: var(--ch-on-dark);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  max-width: 58ch;
+  margin: 0;
+}
+
+.cs-legal-footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+}
+
+.cs-dark-outline-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1.5px solid var(--ch-rule-dark);
+  color: var(--ch-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.cs-dark-outline-btn:hover {
+  border-color: var(--ch-lime);
+  color: var(--ch-lime);
+}
+
+/* ── Generic Page & 404 Stage ────────────────────────────── */
+.cs-page-article {
+  max-width: 68ch;
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: 28px;
+  background: var(--ch-white);
+  border: 1px solid var(--ch-grid);
+}
+
+.cs-404-band {
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(44px, 7vw, 96px);
+}
+
+.cs-404-split {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(28px, 4.5vw, 56px);
+  align-items: center;
+}
+
+.cs-404-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+.cs-404-code {
+  font-family: 'Onest', 'Inter', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ch-cobalt);
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-404-lead {
+  color: var(--ch-slate);
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 48ch;
+  margin: 18px 0 26px;
+}
+
+.cs-404-directory {
+  background: var(--ch-ink);
+  color: var(--ch-white);
+  border-radius: 28px;
+  padding: clamp(28px, 3.8vw, 40px);
+}
+
+.cs-404-directory h2 {
+  font-size: 1.5rem;
+  color: var(--ch-white);
+  margin: 0 0 18px;
+}
+
+.cs-route-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--ch-rule-dark);
+}
+
+.cs-route-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 52px;
+  padding-block: 10px;
+  border-bottom: 1px solid var(--ch-rule-dark);
+  color: var(--ch-on-dark);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: color 0.18s ease, padding-left 0.18s ease;
+}
+
+.cs-route-list a:hover {
+  color: var(--ch-lime);
+  padding-left: 6px;
+}
+
+/* ── Responsive Breakpoints ──────────────────────────────── */
+@media (max-width: 1120px) {
+  .cs-hero-head,
+  .cs-hero-head--legal {
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
   }
-  .indotech-static-page .faq-layout-grid,
-  .indotech-static-page .blog-archive-container {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .indotech-static-page .faq-sidebar,
-  .indotech-static-page .filter-panel {
-    position: static;
-  }
-  .indotech-static-page .faq-sidebar {
-    flex-direction: row;
-    overflow-x: auto;
-    padding-bottom: 6px;
-  }
-  .indotech-static-page .faq-nav-btn {
-    flex-shrink: 0;
-  }
-  .indotech-static-page .filter-list {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 6px;
-  }
-  .indotech-static-page .filter-list li {
-    flex: 0 0 auto;
-  }
-  .indotech-static-page .filter-btn {
-    width: auto;
-    white-space: nowrap;
-    background: var(--ch-canvas);
-    border: 1px solid var(--ch-grid);
+  .cs-hairline-matrix--4,
+  .cs-process-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 960px) {
-  .indotech-static-page .legal-toc-link {
-    min-height: 44px;
+  .cs-hero-head,
+  .cs-hero-head--legal,
+  .cs-story-layout,
+  .cs-visi-split,
+  .cs-cert-head,
+  .cs-cert-columns,
+  .cs-dark-split-head,
+  .cs-dark-cols-3,
+  .cs-app-grid,
+  .cs-hq-split,
+  .cs-partner-collage,
+  .cs-scheme-grid,
+  .cs-split-studio,
+  .cs-contact-studio,
+  .cs-split-faq,
+  .cs-contact-ledger,
+  .cs-featured-stage,
+  .cs-blog-grid,
+  .cs-faq-layout,
+  .cs-legal-grid,
+  .cs-404-split {
+    grid-template-columns: minmax(0, 1fr);
   }
-  .indotech-static-page .about-cert-section {
-    padding: clamp(32px, 5vw, 48px) clamp(20px, 4vw, 32px);
-    border-radius: 24px;
+
+  .cs-hero-copy {
+    order: 2;
+  }
+  .cs-hero-title-group {
+    order: 1;
+  }
+
+  .cs-story-lead,
+  .cs-split-faq-left,
+  .cs-faq-concierge,
+  .cs-legal-rail {
+    position: static;
+  }
+
+  .cs-kpi-dock {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cs-kpi-dock-item {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .cs-blog-controls {
+    width: 100%;
+    margin-left: 0;
+  }
+  .cs-toolbar-input {
+    width: 100%;
+  }
+  .cs-blog-search-wrap {
+    flex: 1 1 200px;
   }
 }
 
-@media (max-width: 768px) {
-  .indotech-static-page main#main-content::before {
-    background-image:
-      repeating-linear-gradient(to bottom, var(--ch-grid) 0 4px, transparent 4px 9px),
-      repeating-linear-gradient(to bottom, var(--ch-grid) 0 4px, transparent 4px 9px),
-      repeating-linear-gradient(to bottom, var(--ch-grid) 0 4px, transparent 4px 9px),
-      repeating-linear-gradient(to bottom, var(--ch-grid) 0 4px, transparent 4px 9px);
-    background-position: 0 0, 33.333% 0, 66.666% 0, 100% 0;
-  }
-  .indotech-static-page .applications-grid {
+@media (max-width: 640px) {
+  .cs-hairline-matrix--4,
+  .cs-process-rail,
+  .cs-form-row {
     grid-template-columns: minmax(0, 1fr);
   }
-  .indotech-static-page .about-timeline::before {
-    left: 35px;
-  }
-}
 
-@media (max-width: 575px) {
-  .indotech-static-page #blog-posts-grid.blog-grid {
+  .cs-ledger-row {
     grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .cs-collage-l-card {
+    margin: auto 14px 14px 14px;
+    width: calc(100% - 28px);
+  }
+  .cs-collage-l-top {
+    width: 100%;
+    border-radius: 18px 18px 0 0;
+  }
+  .cs-collage-l-top::after {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .indotech-static-page :is(.btn, .value-card, .premium-app-card, .service-card, .blog-card, .faq-body-content, .faq-toggle-icon) {
+  .cs-main :is(.cs-app-card, .blog-card, .cs-featured-img, .blog-img, .cs-stage-video-trigger, .cs-scheme-select-btn, .filter-btn, .faq-toggle-icon, .cs-route-list a) {
     transition-property: color, background-color, border-color, opacity !important;
-    transition-duration: 0.15s !important;
     transform: none !important;
   }
 }

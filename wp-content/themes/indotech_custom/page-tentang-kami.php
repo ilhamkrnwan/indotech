@@ -2,391 +2,533 @@
 /**
  * Template Name: Tentang Kami
  *
- * Halaman profil perusahaan PT Indotech Berkah Abadi.
- * Sections: Hero · Our Story · Visi & Misi · Nilai Perusahaan · Sertifikasi · CTA
+ * Halaman profil perusahaan PT Indotech Berkah Abadi — Arsitektur Manufy Daylight.
+ * Sections: Split Hero & Media Stage · Kisah & Timeline Ledger · Visi Misi & Sertifikasi (Obsidian-Navy) ·
+ *           Nilai Perusahaan · Aplikasi Layanan B2B · Peta Kantor Sleman · Orbital CTA · Video Lightbox
  */
 
-$phone    = indotech_opt( 'phone',    '+62 856-0006-1005' );
-$email    = indotech_opt( 'email',    'indotechberkahabadi@gmail.com' );
-$whatsapp = indotech_opt( 'whatsapp', '6285600061005' );
-$wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );
-$wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin mengetahui lebih lanjut tentang perusahaan Anda.' );
+$media_cp       = get_theme_file_uri( 'assets/images/company-profile' );
+$phone          = function_exists( 'indotech_opt' ) ? indotech_opt( 'phone', '+62 856-0006-1005' ) : '+62 856-0006-1005';
+$email          = function_exists( 'indotech_opt' ) ? indotech_opt( 'email', 'indotechberkahabadi@gmail.com' ) : 'indotechberkahabadi@gmail.com';
+$address        = function_exists( 'indotech_opt' ) ? indotech_opt( 'address', 'Jongke Tengah No. 30, RT.01/RW.23, Sendangadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55285' ) : 'Jongke Tengah No. 30, Sendangadi, Mlati, Sleman, Yogyakarta 55285';
+$whatsapp       = function_exists( 'indotech_opt' ) ? indotech_opt( 'whatsapp', '6287885590088' ) : '6287885590088';
+$wa_num         = preg_replace( '/[^0-9]/', '', $whatsapp );
+$wa_msg         = rawurlencode( 'Halo Indotech, saya ingin berkonsultasi mengenai profil perusahaan dan kerja sama B2B.' );
+
+$video_raw      = function_exists( 'indotech_opt' ) ? indotech_opt( 'video_url', '' ) : '';
+$video_title    = function_exists( 'indotech_opt' ) ? indotech_opt( 'video_title', 'Profil PT Indotech Berkah Abadi — Ekosistem Manufaktur B2B' ) : 'Profil PT Indotech Berkah Abadi';
+$video_duration = function_exists( 'indotech_opt' ) ? indotech_opt( 'video_duration', '01:05' ) : '01:05';
+$video_config   = function_exists( 'indotech_get_video_embed_config' ) ? indotech_get_video_embed_config( $video_raw ) : [ 'type' => 'none', 'src' => '' ];
+
+$timeline_rows = [
+    [
+        'year'  => '2011',
+        'title' => 'Pendirian Perusahaan',
+        'copy'  => 'PT Indotech Berkah Abadi resmi berdiri dan mulai melayani mitra distribusi di wilayah Yogyakarta dan Pulau Jawa.',
+    ],
+    [
+        'year'  => '2014',
+        'title' => 'Ekspansi Jaringan Nasional',
+        'copy'  => 'Jaringan distribusi berkembang menjangkau 10 provinsi dengan penambahan lini produk kimia laundry profesional.',
+    ],
+    [
+        'year'  => '2017',
+        'title' => 'Izin Edar Kemenkes RI & Halal',
+        'copy'  => 'Lini produk kebersihan utama memperoleh Izin Edar Kemenkes RI (PKRT) serta Sertifikasi Halal untuk memperkuat kepastian legalitas mitra.',
+    ],
+    [
+        'year'  => '2020',
+        'title' => 'Konsolidasi Ekosistem 7 Brand',
+        'copy'  => 'Cleanique Academy, Cleanique Lab, Cleanique Mart, Depo Cleanique, Malabeez, Orchid Care, dan Prokopi hadir melayani segmen B2B terintegrasi.',
+    ],
+    [
+        'year'  => '2024',
+        'title' => '500+ Mitra B2B di 34 Provinsi',
+        'copy'  => 'Melayani lebih dari 500 mitra usaha, agen, toko modern, dan institusi aktif di 34 provinsi dengan 1.000+ varian SKU siap kirim.',
+    ],
+];
+
+$values = [
+    [
+        'num'   => '01',
+        'title' => 'Integritas',
+        'copy'  => 'Setiap janji produksi dan pasokan adalah komitmen. Kami menjunjung keterbukaan spesifikasi dan konsistensi transaksi B2B.',
+    ],
+    [
+        'num'   => '02',
+        'title' => 'Inovasi',
+        'copy'  => 'Pengembangan formula terus berjalan di laboratorium R&D kami untuk menghasilkan performa pembersihan yang efektif dan relevan.',
+    ],
+    [
+        'num'   => '03',
+        'title' => 'Kemitraan',
+        'copy'  => 'Pertumbuhan mitra adalah fondasi kami. Kami mendampingi distributor, gerai ritel, dan pemilik merek pribadi secara jangka panjang.',
+    ],
+    [
+        'num'   => '04',
+        'title' => 'Kualitas',
+        'copy'  => 'Mutu produk dikawal melalui Izin Edar Kemenkes RI (PKRT), Sertifikasi Halal, serta pengujian mutu dan stabilitas terstandar.',
+    ],
+];
+
+$storyboard_steps = [
+    [
+        'time'  => '00:00 – 00:15',
+        'title' => 'Identitas & Basis Operasi Sleman',
+        'copy'  => 'Berdiri sejak 2011 di Sleman, D.I. Yogyakarta, PT Indotech Berkah Abadi hadir sebagai produsen dan supplier kimia kebersihan B2B.',
+    ],
+    [
+        'time'  => '00:15 – 00:32',
+        'title' => 'R&D & Jasa Maklon Cleanique Lab',
+        'copy'  => 'Pengembangan formulasi custom dan layanan private label dengan dukungan pengurusan izin edar Kemenkes RI PKRT serta Halal.',
+    ],
+    [
+        'time'  => '00:32 – 00:48',
+        'title' => 'Suplai 1.000+ SKU & Jaringan Kemitraan',
+        'copy'  => 'Melayani pengadaan grosir hingga pengembangan gerai toko modern Cleanique Mart dan depo isi ulang Depo Cleanique.',
+    ],
+    [
+        'time'  => '00:48 – 01:05',
+        'title' => 'Pelatihan Formulasi Cleanique Academy',
+        'copy'  => 'Membuka transfer ilmu pembuatan produk kebersihan dan pendampingan kewirausahaan bagi mitra di seluruh Indonesia.',
+    ],
+];
 
 get_header();
 ?>
 
-<main id="main-content">
-
-    <!-- ════════════════════════════════════════════════════════
-         HERO — Pendek, elegant (seperti kontak)
-    ════════════════════════════════════════════════════════ -->
-    <section class="inner-page-hero" id="tentang-kami-hero">
-        <div class="hero-bg" aria-hidden="true">
-            <div class="hero-grid-overlay"></div>
-            <div class="hero-glow hero-glow--1" style="opacity:.4;"></div>
+<main id="main-content" class="ch-main cs-main" tabindex="-1">
+    <div class="ch-canvas-band ch-canvas-band--top">
+        <div class="ch-grid-guides" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
         </div>
-        <div class="container inner-page-hero-inner reveal">
-            <nav class="breadcrumb" aria-label="Breadcrumb">
-                <a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a>
+
+        <!-- Band 1: Split Editorial Hero + Full-Bleed Stage -->
+        <section class="cs-hero ch-wrap" id="tentang-kami-hero" aria-labelledby="cs-about-hero-title">
+            <nav class="cs-breadcrumb" aria-label="Breadcrumb">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Beranda</a>
                 <span aria-hidden="true">/</span>
                 <span aria-current="page">Tentang Kami</span>
             </nav>
-            <span class="section-tag">Profil Perusahaan</span>
-            <h1 class="inner-page-title">Membangun Kepercayaan <em>Bisnis B2B</em> Indonesia</h1>
-            <p class="inner-page-subtitle">Kami adalah pemasok produk homecare, laundry, dan pewangi B2B yang berkomitmen menghadirkan kualitas premium dengan harga kompetitif untuk mitra bisnis di seluruh Indonesia.</p>
-        </div>
-    </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         OUR STORY — Timeline & narasi perusahaan
-    ════════════════════════════════════════════════════════ -->
-    <section class="about-story-section section-padding" id="our-story">
-        <div class="container">
-
-            <div class="about-story-grid">
-
-                <!-- Kiri: Narasi -->
-                <div class="about-story-content reveal">
-                    <span class="section-tag">Kisah Kami</span>
-                    <h2 class="section-title" style="margin-bottom:20px;">
-                        Dari Satu Kota,<br>Menjangkau <em>34 Provinsi</em>
-                    </h2>
-                    <p class="why-us-desc">
-                        PT Indotech Berkah Abadi lahir pada tahun 2011 dengan visi sederhana: menyediakan produk kebersihan dan perawatan berkualitas untuk pelaku usaha kecil hingga korporasi besar di Indonesia.
-                    </p>
-                    <p class="why-us-desc" style="margin-bottom:36px;">
-                        Selama lebih dari satu dekade, kami telah membangun jaringan distribusi yang menjangkau seluruh penjuru nusantara — dari Sabang hingga Merauke — dengan standar kualitas yang tidak pernah berkompromi.
-                    </p>
-
-                    <div class="about-stats-strip">
-                        <div class="about-stat-item">
-                            <span class="about-stat-value">15+</span>
-                            <span class="about-stat-label">Tahun Pengalaman</span>
-                        </div>
-                        <div class="about-stat-divider" aria-hidden="true"></div>
-                        <div class="about-stat-item">
-                            <span class="about-stat-value">1.000+</span>
-                            <span class="about-stat-label">Varian Produk</span>
-                        </div>
-                        <div class="about-stat-divider" aria-hidden="true"></div>
-                        <div class="about-stat-item">
-                            <span class="about-stat-value">34</span>
-                            <span class="about-stat-label">Provinsi Terjangkau</span>
-                        </div>
+            <div class="cs-hero-head">
+                <div class="cs-hero-copy">
+                    <p>Produsen, pengembang formulasi, penyedia jasa maklon, dan distributor B2B produk kebersihan terpercaya untuk mitra di seluruh Indonesia.</p>
+                    <div class="cs-hero-actions">
+                        <a class="ch-pill-cta" href="<?php echo esc_url( home_url( '/kontak/#form-kontak' ) ); ?>">
+                            <span>Konsultasi B2B</span>
+                            <span class="ch-pill-cta-icon" aria-hidden="true">
+                                <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                            </span>
+                        </a>
+                        <a class="ch-inline-link" href="#our-story">
+                            <span>Telusuri perjalanan kami</span>
+                            <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Kanan: Timeline -->
-                <div class="about-timeline reveal reveal-delay-1">
-                    <div class="timeline-item timeline-item--active">
-                        <div class="timeline-dot" aria-hidden="true"></div>
-                        <div class="timeline-body">
-                            <span class="timeline-year">2011</span>
-                            <h3>Pendirian Perusahaan</h3>
-                            <p>PT Indotech Berkah Abadi resmi berdiri dan mulai melayani mitra distribusi di wilayah Yogyakarta dan Jawa.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot" aria-hidden="true"></div>
-                        <div class="timeline-body">
-                            <span class="timeline-year">2014</span>
-                            <h3>Ekspansi Nasional</h3>
-                            <p>Jaringan distribusi berkembang ke 10 provinsi, dengan penambahan lini produk laundry profesional.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot" aria-hidden="true"></div>
-                        <div class="timeline-body">
-                            <span class="timeline-year">2017</span>
-                            <h3>Izin Edar Kemenkes RI &amp; Halal</h3>
-                            <p>Lini produk kebersihan kami memperoleh Izin Edar Kemenkes RI (PKRT) serta Sertifikasi Halal, memperkuat kepercayaan mitra bisnis.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot" aria-hidden="true"></div>
-                        <div class="timeline-body">
-                            <span class="timeline-year">2020</span>
-                            <h3>Peluncuran Brand Unggulan</h3>
-                            <p>Cleanique Academy, Cleanique Lab, Cleanique Mart, Depo Cleanique, Malabeez, Orchid Care, dan Prokopi resmi diluncurkan sebagai brand andalan perusahaan.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item timeline-item--active">
-                        <div class="timeline-dot" aria-hidden="true"></div>
-                        <div class="timeline-body">
-                            <span class="timeline-year">2024</span>
-                            <h3>500+ Mitra Aktif</h3>
-                            <p>Mencapai tonggak 500+ mitra bisnis aktif di 34 provinsi Indonesia dengan lini produk yang terus berkembang.</p>
-                        </div>
-                    </div>
+                <div class="cs-hero-title-group">
+                    <h1 id="cs-about-hero-title" class="ch-hero-h1">
+                        <span class="ch-h1-primary">Membangun</span>
+                        <span class="ch-h1-row">
+                            <span class="ch-tilt-badge">Sejak 2011</span>
+                            <span class="ch-h1-secondary">Kepercayaan B2B</span>
+                        </span>
+                    </h1>
+                    <p class="ch-hero-aside">Sleman, D.I. Yogyakarta<br>Jangkauan 34 Provinsi</p>
                 </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ════════════════════════════════════════════════════════
-         VISI & MISI
-    ════════════════════════════════════════════════════════ -->
-    <section class="about-visi-section section-padding" id="visi-misi">
-        <div class="container">
-
-            <div class="section-header reveal">
-                <span class="section-tag section-tag--dark">Arah & Tujuan</span>
-                <h2 class="section-title" style="margin-top:16px;">Visi &amp; Misi</h2>
-                <p class="section-desc">Landasan yang mengarahkan setiap keputusan dan langkah PT Indotech Berkah Abadi.</p>
             </div>
 
-            <div class="visi-misi-grid">
+            <div class="cs-media-stage">
+                <img
+                    class="cs-media-stage-img"
+                    src="<?php echo esc_url( $media_cp . '/hero-manufy-stage.webp' ); ?>"
+                    width="1376"
+                    height="768"
+                    alt="Tim R&D dan kontrol mutu PT Indotech Berkah Abadi memeriksa kualitas formulasi produk"
+                    fetchpriority="high"
+                    decoding="async"
+                >
+                <div class="ch-stage-scrim" aria-hidden="true"></div>
 
-                <!-- Visi -->
-                <div class="visi-card reveal">
-                    <div class="visi-card-icon" aria-hidden="true">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+                <div class="cs-stage-footer">
+                    <dl class="cs-kpi-dock" aria-label="Pencapaian Utama Indotech">
+                        <div class="cs-kpi-dock-item">
+                            <dt>Pengalaman Manufaktur</dt>
+                            <dd>15+ Tahun</dd>
+                        </div>
+                        <div class="cs-kpi-dock-item">
+                            <dt>Mitra B2B Aktif</dt>
+                            <dd>500+ Mitra</dd>
+                        </div>
+                        <div class="cs-kpi-dock-item">
+                            <dt>Varian Formulasi SKU</dt>
+                            <dd>1.000+ SKU</dd>
+                        </div>
+                        <div class="cs-kpi-dock-item">
+                            <dt>Jangkauan Distribusi</dt>
+                            <dd>34 Provinsi</dd>
+                        </div>
+                    </dl>
+
+                    <button
+                        type="button"
+                        class="cs-stage-video-trigger"
+                        data-video-open
+                        aria-haspopup="dialog"
+                        aria-controls="ch-video-modal"
+                    >
+                        <span class="cs-stage-play-dot" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 4 21 12 7 20 7 4"/></svg>
+                        </span>
+                        <span class="cs-stage-video-meta">
+                            <strong>Tonton Video Profil</strong>
+                            <span><?php echo esc_html( $video_duration ); ?> · Fasilitas &amp; R&amp;D</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Band 2: Editorial Story (Left Sticky + Lab Visual) & Tabular Hairline Timeline (Right) -->
+        <section class="cs-band ch-wrap" id="our-story" aria-labelledby="cs-story-title">
+            <div class="cs-story-layout">
+                <div class="cs-story-lead">
+                    <span class="cs-pill-tag">Kisah Kami</span>
+                    <h2 id="cs-story-title" class="ch-section-h2">Dari Satu Kota, <span>Menjangkau 34 Provinsi</span></h2>
+                    <div class="cs-story-prose">
+                        <p>Berdiri pada tahun 2011 di Sleman, Yogyakarta, PT Indotech Berkah Abadi menyatukan riset kimia aplikatif, produksi terukur, dan rantai pasok B2B untuk usaha kecil hingga korporasi.</p>
+                        <p>Selama lebih dari satu dekade, jaringan distribusi kami berkembang menjangkau seluruh penjuru nusantara dengan kepatuhan mutu dan legalitas produk yang konsisten.</p>
                     </div>
-                    <span class="visi-card-label">VISI</span>
-                    <h3 class="visi-card-title">Menjadi Mitra Distribusi B2B Produk Homecare Terpercaya di Asia Tenggara</h3>
-                    <p class="visi-card-desc">
-                        Kami bercita-cita menjadi perusahaan distribusi produk kebersihan dan perawatan yang paling dipercaya, tidak hanya di Indonesia tetapi juga di kawasan Asia Tenggara pada tahun 2030.
-                    </p>
+
+                    <div class="ch-legal-badges" aria-label="Legalitas terverifikasi">
+                        <span class="ch-legal-pill">Izin Edar Kemenkes RI (PKRT)</span>
+                        <span class="ch-legal-pill">Sertifikasi Halal</span>
+                    </div>
+
+                    <figure class="cs-inset-portrait">
+                        <img
+                            src="<?php echo esc_url( $media_cp . '/about-lab-video.webp' ); ?>"
+                            width="800"
+                            height="1000"
+                            alt="Formulator laboratorium Indotech menguji kejernihan dan stabilitas sampel cairan pembersih"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                        <div class="ch-poster-scrim" aria-hidden="true"></div>
+                        <figcaption class="cs-inset-caption">
+                            <span>Laboratorium Formulasi &amp; QC</span>
+                            <strong>Pengujian Stabilitas Batch Produksi</strong>
+                        </figcaption>
+                    </figure>
                 </div>
 
-                <!-- Misi -->
-                <div class="visi-card visi-card--misi reveal reveal-delay-1">
-                    <div class="visi-card-icon" aria-hidden="true">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9,11 12,14 22,4"/><path d="M21,12v7a2,2 0 0,1-2,2H5a2,2 0 0,1-2-2V5a2,2 0 0,1 2-2h11"/></svg>
+                <div class="cs-timeline-col" aria-label="Tonggak sejarah perusahaan">
+                    <ol class="cs-ledger-list">
+                        <?php foreach ( $timeline_rows as $row ) : ?>
+                            <li class="cs-ledger-row">
+                                <span class="cs-ledger-year"><?php echo esc_html( $row['year'] ); ?></span>
+                                <div class="cs-ledger-body">
+                                    <h3><?php echo esc_html( $row['title'] ); ?></h3>
+                                    <p><?php echo esc_html( $row['copy'] ); ?></p>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ol>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Band 3: Full-Width Obsidian-Navy Block (Visi, Misi & Sertifikasi Hairline — NO Nested Cards) -->
+    <section class="ch-wrap cs-dark-section" id="visi-misi" aria-labelledby="cs-visi-title">
+        <div class="cs-dark-panel">
+            <div class="cs-visi-split">
+                <div class="cs-visi-col">
+                    <span class="cs-pill-tag cs-pill-tag--lime">Arah &amp; Tujuan</span>
+                    <h2 id="cs-visi-title" class="cs-dark-h2">Visi &amp; <span>Misi</span></h2>
+                    <div class="cs-visi-statement">
+                        <span class="cs-dark-kicker">VISI 2030</span>
+                        <h3>Menjadi Mitra Distribusi B2B Produk Homecare Terpercaya di Asia Tenggara</h3>
+                        <p>Membangun ekosistem manufaktur dan suplai produk kebersihan yang tangguh, berizin lengkap, dan berdampak bagi ribuan pelaku usaha di kawasan regional.</p>
                     </div>
-                    <span class="visi-card-label">MISI</span>
-                    <h3 class="visi-card-title">Menghadirkan Produk Berkualitas dengan Layanan Prima</h3>
-                    <ul class="misi-list">
+                </div>
+
+                <div class="cs-misi-col">
+                    <span class="cs-dark-kicker">MISI · EMPAT PILAR EKSEKUSI</span>
+                    <ul class="cs-dark-ledger">
                         <li>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>
-                            Menyediakan produk homecare dan laundry bersertifikat standar nasional dan internasional
+                            <span class="cs-dark-index">01</span>
+                            <p>Menyediakan produk homecare, laundry, dan pewangi bersertifikat standar resmi Kemenkes RI (PKRT) &amp; Halal.</p>
                         </li>
                         <li>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>
-                            Membangun kemitraan jangka panjang yang saling menguntungkan dengan seluruh mitra bisnis
+                            <span class="cs-dark-index">02</span>
+                            <p>Membangun kemitraan jangka panjang yang saling menguntungkan bagi agen, distributor, toko ritel, dan pemilik merek.</p>
                         </li>
                         <li>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>
-                            Terus berinovasi dalam lini produk dan sistem distribusi untuk memenuhi kebutuhan pasar
+                            <span class="cs-dark-index">03</span>
+                            <p>Terus berinovasi dalam formulasi kimia terapan dan efisiensi pengemasan curah untuk memperluas daya saing mitra.</p>
                         </li>
                         <li>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>
-                            Memberikan dukungan penuh kepada mitra: pelatihan, marketing materials, dan layanan purna jual
+                            <span class="cs-dark-index">04</span>
+                            <p>Menghadirkan pendampingan menyeluruh berupa pelatihan Cleanique Academy, materi pemasaran, dan layanan purna jual.</p>
                         </li>
                     </ul>
                 </div>
+            </div>
 
+            <div class="cs-cert-band" id="sertifikasi">
+                <div class="cs-cert-head">
+                    <span class="cs-pill-tag cs-pill-tag--lime">Terverifikasi Resmi</span>
+                    <h2 class="cs-cert-h2">Standar Kualitas yang Tidak Berkompromi</h2>
+                    <p>Setiap produk melewati uji kelayakan mutu internal dan memenuhi ketentuan legalitas edar resmi di Indonesia.</p>
+                </div>
+
+                <div class="cs-cert-columns">
+                    <article class="cs-cert-item">
+                        <div class="cs-cert-title-row">
+                            <span class="cs-dark-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </span>
+                            <h3>Kemenkes RI (PKRT)</h3>
+                        </div>
+                        <p>Izin edar resmi Perbekalan Kesehatan Rumah Tangga dari Kementerian Kesehatan Republik Indonesia.</p>
+                    </article>
+
+                    <article class="cs-cert-item">
+                        <div class="cs-cert-title-row">
+                            <span class="cs-dark-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            </span>
+                            <h3>Sertifikasi Halal</h3>
+                        </div>
+                        <p>Jaminan kehalalan pemilihan bahan baku serta proses produksi sesuai ketentuan regulasi halal.</p>
+                    </article>
+
+                    <article class="cs-cert-item">
+                        <div class="cs-cert-title-row">
+                            <span class="cs-dark-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 11 12 14 22 4"/></svg>
+                            </span>
+                            <h3>Uji Mutu &amp; Stabilitas</h3>
+                        </div>
+                        <p>Pengujian formulasi laboratorium terstandar oleh tim R&amp;D berpengalaman sejak tahun 2011.</p>
+                    </article>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         NILAI PERUSAHAAN — 4 value cards
-    ════════════════════════════════════════════════════════ -->
-    <section class="about-values-section section-padding" id="nilai-perusahaan">
-        <div class="container">
-
-            <div class="section-header reveal">
-                <span class="section-tag">DNA Perusahaan</span>
-                <h2 class="section-title" style="margin-top:16px;">Nilai-Nilai Kami</h2>
-                <p class="section-desc">Empat pilar yang membentuk karakter dan budaya kerja PT Indotech Berkah Abadi.</p>
-            </div>
-
-            <div class="values-grid">
-
-                <div class="value-card reveal">
-                    <div class="value-num" aria-hidden="true">01</div>
-                    <div class="ch-card-head">
-                        <div class="service-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        </div>
-                        <h3 class="service-title">Integritas</h3>
-                    </div>
-                    <p class="service-desc">Setiap janji adalah komitmen. Kami menjunjung tinggi kejujuran dan transparansi dalam setiap transaksi dan hubungan bisnis dengan mitra.</p>
-                </div>
-
-                <div class="value-card reveal reveal-delay-1">
-                    <div class="value-num" aria-hidden="true">02</div>
-                    <div class="ch-card-head">
-                        <div class="service-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
-                        </div>
-                        <h3 class="service-title">Inovasi</h3>
-                    </div>
-                    <p class="service-desc">Kami tidak berhenti berkembang. Inovasi produk, sistem distribusi, dan layanan pelanggan terus kami dorong untuk tetap relevan dan kompetitif.</p>
-                </div>
-
-                <div class="value-card reveal reveal-delay-2">
-                    <div class="value-num" aria-hidden="true">03</div>
-                    <div class="ch-card-head">
-                        <div class="service-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                        </div>
-                        <h3 class="service-title">Kemitraan</h3>
-                    </div>
-                    <p class="service-desc">Sukses mitra adalah sukses kami. Kami membangun hubungan bisnis yang setara, saling mendukung, dan berorientasi pada pertumbuhan bersama jangka panjang.</p>
-                </div>
-
-                <div class="value-card reveal reveal-delay-3">
-                    <div class="value-num" aria-hidden="true">04</div>
-                    <div class="ch-card-head">
-                        <div class="service-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polyline points="9,11 12,14 22,4"/><path d="M21,12v7a2,2 0 0,1-2,2H5a2,2 0 0,1-2-2V5a2,2 0 0,1 2-2h11"/></svg>
-                        </div>
-                        <h3 class="service-title">Kualitas</h3>
-                    </div>
-                    <p class="service-desc">Standar tidak pernah dikompromikan. Setiap produk melewati seleksi ketat dengan Izin Edar Kemenkes RI (PKRT), Sertifikasi Halal, dan uji stabilitas laboratorium sebagai jaminan mutu.</p>
-                </div>
-
-            </div>
+    <div class="ch-canvas-band">
+        <div class="ch-grid-guides" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
         </div>
-    </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         APLIKASI LAYANAN B2B
-    ════════════════════════════════════════════════════════ -->
-    <section class="about-applications-section section-padding" id="aplikasi-layanan">
-        <div class="container">
+        <!-- Band 4: 4-Column Architectural Hairline Values -->
+        <section class="cs-band ch-wrap" id="nilai-perusahaan" aria-labelledby="cs-values-title">
+            <header class="ch-section-head">
+                <div>
+                    <span class="cs-pill-tag">DNA Perusahaan</span>
+                    <h2 id="cs-values-title" class="ch-section-h2">Nilai-Nilai <span>Utama Kami</span></h2>
+                </div>
+                <p class="ch-section-sub">Empat prinsip kerja yang membentuk standar layanan PT Indotech Berkah Abadi kepada ratusan mitra B2B.</p>
+            </header>
 
-            <div class="section-header reveal">
-                <span class="section-tag section-tag--dark">Penerapan Solusi</span>
-                <h2 class="section-title" style="margin-top:16px;">Aplikasi Layanan B2B</h2>
-                <p class="section-desc">Jangkauan formula produk kimia pembersih dan solusi maklon kami untuk berbagai kebutuhan operasional.</p>
+            <div class="cs-hairline-matrix cs-hairline-matrix--4">
+                <?php foreach ( $values as $val ) : ?>
+                    <article class="cs-hairline-cell">
+                        <div class="cs-cell-head">
+                            <span class="cs-index-num"><?php echo esc_html( $val['num'] ); ?></span>
+                            <h3><?php echo esc_html( $val['title'] ); ?></h3>
+                        </div>
+                        <p><?php echo esc_html( $val['copy'] ); ?></p>
+                    </article>
+                <?php endforeach; ?>
             </div>
+        </section>
 
-            <div class="applications-grid">
+        <!-- Band 5: Aplikasi Layanan B2B (CPT WP_Query Preserved) -->
+        <section class="cs-band ch-wrap" id="aplikasi-layanan" aria-labelledby="cs-apps-title">
+            <header class="ch-section-head">
+                <div>
+                    <span class="cs-pill-tag">Penerapan Solusi</span>
+                    <h2 id="cs-apps-title" class="ch-section-h2">Aplikasi <span>Layanan B2B</span></h2>
+                </div>
+                <p class="ch-section-sub">Jangkauan formula produk kimia pembersih dan solusi maklon kami untuk berbagai sektor operasional usaha.</p>
+            </header>
+
+            <div class="cs-app-grid">
                 <?php
-                $app_query = new WP_Query([
+                $app_query = new WP_Query( [
                     'post_type'      => 'application',
                     'posts_per_page' => 3,
-                    'post_status'    => 'publish'
-                ]);
+                    'post_status'    => 'publish',
+                ] );
 
-                if ($app_query->have_posts()) :
-                    while ($app_query->have_posts()) : $app_query->the_post();
-                        $app_id = get_the_ID();
-                        $tagline = carbon_get_post_meta($app_id, 'app_tagline');
+                if ( $app_query->have_posts() ) :
+                    while ( $app_query->have_posts() ) :
+                        $app_query->the_post();
+                        $app_id      = get_the_ID();
+                        $tagline     = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $app_id, 'app_tagline' ) : '';
+                        $title_lower = strtolower( get_the_title() );
+                        $svg_icon    = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
 
-                        $title_lower = strtolower(get_the_title());
-                        $svg_icon = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
-
-                        if (strpos($title_lower, 'laundry') !== false) {
-                            $svg_icon = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="12" cy="13" r="5"/><path d="M12 10a3 3 0 0 1 0 6"/><circle cx="8" cy="6" r="1"/></svg>';
-                        } elseif (strpos($title_lower, 'detail') !== false || strpos($title_lower, 'car') !== false || strpos($title_lower, 'auto') !== false) {
-                            $svg_icon = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>';
+                        if ( strpos( $title_lower, 'laundry' ) !== false ) {
+                            $svg_icon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="12" cy="13" r="5"/><path d="M12 10a3 3 0 0 1 0 6"/><circle cx="8" cy="6" r="1"/></svg>';
+                        } elseif ( strpos( $title_lower, 'detail' ) !== false || strpos( $title_lower, 'car' ) !== false || strpos( $title_lower, 'auto' ) !== false ) {
+                            $svg_icon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>';
                         }
-                ?>
-                    <article class="premium-app-card reveal">
-                        <div class="premium-app-icon-wrap" aria-hidden="true">
-                            <?php echo $svg_icon; ?>
-                        </div>
-
-                        <div class="premium-app-card-body">
-                            <span class="premium-app-tag">Aplikasi B2B</span>
-                            <h3 class="premium-app-title"><?php the_title(); ?></h3>
-                            <?php if ($tagline) : ?>
-                                <p class="premium-app-desc"><?php echo esc_html($tagline); ?></p>
+                        ?>
+                        <article class="cs-app-card">
+                            <div class="cs-app-meta">
+                                <span class="cs-app-icon"><?php echo $svg_icon; ?></span>
+                                <span class="cs-app-kicker">Aplikasi B2B</span>
+                            </div>
+                            <h3 class="cs-app-title"><?php the_title(); ?></h3>
+                            <?php if ( $tagline ) : ?>
+                                <p class="cs-app-desc"><?php echo esc_html( $tagline ); ?></p>
                             <?php endif; ?>
-                        </div>
-
-                        <a href="<?php the_permalink(); ?>" class="premium-app-btn">
-                            <span>Pelajari Selengkapnya</span>
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                        </a>
-                    </article>
-                <?php 
+                            <a href="<?php the_permalink(); ?>" class="ch-inline-link cs-app-link">
+                                <span>Pelajari Selengkapnya</span>
+                                <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                            </a>
+                        </article>
+                        <?php
                     endwhile;
                     wp_reset_postdata();
-                else : 
-                ?>
-                    <div style="grid-column: 1 / -1; background: var(--ch-white); padding: 40px; border-radius: 20px; text-align: center; color: var(--ch-slate); border: 1px solid var(--ch-grid);">
+                else :
+                    ?>
+                    <div class="cs-empty-panel">
                         Belum ada data aplikasi layanan terdaftar.
                     </div>
                 <?php endif; ?>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         SERTIFIKASI — Strip sertifikat perusahaan
-    ════════════════════════════════════════════════════════ -->
-    <section class="about-cert-section" id="sertifikasi">
-        <div class="container">
-            <div class="about-cert-inner reveal">
-                <div class="about-cert-left">
-                    <span class="section-tag section-tag--dark">Terverifikasi Resmi</span>
-                    <h2 class="section-title" style="margin-top:16px;font-size:clamp(24px,3vw,38px);">
-                        Standar Kualitas<br>yang Tidak Berkompromi
-                    </h2>
-                    <p class="why-us-desc" style="max-width:400px;">
-                        Semua produk kami telah melalui uji kelayakan dan memenuhi legalitas edar resmi yang berlaku di Indonesia.
-                    </p>
-                </div>
-                <div class="about-cert-grid">
-                    <div class="cert-card">
-                        <div class="ch-card-head">
-                            <div class="cert-card-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            </div>
-                            <h3>Kemenkes RI (PKRT)</h3>
-                        </div>
-                        <p>Izin edar resmi Perbekalan Kesehatan Rumah Tangga Kemenkes Republik Indonesia</p>
-                    </div>
-                    <div class="cert-card">
-                        <div class="ch-card-head">
-                            <div class="cert-card-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                            </div>
-                            <h3>Sertifikasi Halal</h3>
-                        </div>
-                        <p>Jaminan kehalalan bahan baku dan proses produksi sesuai ketentuan resmi</p>
-                    </div>
-                    <div class="cert-card">
-                        <div class="ch-card-head">
-                            <div class="cert-card-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9,11 12,14 22,4"/></svg>
-                            </div>
-                            <h3>Uji Mutu &amp; Stabilitas</h3>
-                        </div>
-                        <p>Pengujian formulasi laboratorium terstandar oleh tim R&amp;D kami sejak 2011</p>
+        <!-- Band 6: Split Map & HQ Office Showcase -->
+        <section class="cs-band ch-wrap" id="lokasi-kantor" aria-labelledby="cs-map-title">
+            <div class="cs-hq-split">
+                <div class="cs-hq-info">
+                    <span class="cs-pill-tag cs-pill-tag--lime">Kunjungi Kami</span>
+                    <h2 id="cs-map-title" class="cs-dark-h2 cs-dark-h2--sm">Kantor Pusat &amp; Operasional</h2>
+                    <p class="cs-hq-address"><?php echo esc_html( $address ); ?></p>
+
+                    <ul class="cs-hq-hours">
+                        <li>
+                            <span>Senin – Jumat</span>
+                            <strong>08.00 – 17.00 WIB</strong>
+                        </li>
+                        <li>
+                            <span>Sabtu</span>
+                            <strong>08.00 – 13.00 WIB</strong>
+                        </li>
+                        <li>
+                            <span>Telepon Kantor</span>
+                            <strong><?php echo esc_html( $phone ); ?></strong>
+                        </li>
+                    </ul>
+
+                    <div class="cs-hq-actions">
+                        <a
+                            href="https://maps.google.com/?q=PT.+Indotech+Berkah+Abadi+Sleman+Yogyakarta"
+                            class="ch-pill-cta"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <span>Buka Google Maps</span>
+                            <span class="ch-pill-cta-icon" aria-hidden="true">
+                                <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                            </span>
+                        </a>
+                        <a href="https://wa.me/<?php echo esc_attr( $wa_num ); ?>?text=<?php echo $wa_msg; ?>" class="ch-lime-link" target="_blank" rel="noopener">
+                            <span>Janji Kunjungan WhatsApp</span>
+                            <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                        </a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         LOKASI KANTOR — Map Interaktif
-    ════════════════════════════════════════════════════════ -->
-    <section class="about-map-section section-padding" id="lokasi-kantor">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-tag section-tag--dark">Kunjungi Kami</span>
-                <h2 class="section-title" style="margin-top:16px;">Lokasi Kantor</h2>
-                <p class="section-desc">Kantor pusat dan operasional PT Indotech Berkah Abadi di Yogyakarta.</p>
+                <div class="cs-hq-map">
+                    <iframe
+                        src="https://maps.google.com/maps?q=PT.+Indotech+Berkah+Abadi+Sleman+Yogyakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                        width="100%"
+                        height="100%"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Peta lokasi PT Indotech Berkah Abadi di Sleman, Yogyakarta">
+                    </iframe>
+                </div>
             </div>
-            
-            <div class="about-map-wrap reveal">
-                <iframe
-                    src="https://maps.google.com/maps?q=PT.+Indotech+Berkah+Abadi+Sleman+Yogyakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                    width="100%"
-                    height="100%"
-                    style="border:0;"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    title="Peta lokasi PT Indotech Berkah Abadi di Sleman, Yogyakarta">
-                </iframe>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         CTA BANNER
-    ════════════════════════════════════════════════════════ -->
-    <?php get_template_part( 'template-parts/home/company-cta' ); ?>
-
+        <?php get_template_part( 'template-parts/home/company-cta' ); ?>
+    </div>
 </main>
+
+<div
+    id="ch-video-modal"
+    class="ch-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ch-video-modal-title"
+    data-video-type="<?php echo esc_attr( $video_config['type'] ); ?>"
+    data-video-src="<?php echo esc_url( $video_config['src'] ); ?>"
+    hidden
+>
+    <div class="ch-modal-backdrop" data-modal-close></div>
+    <div class="ch-modal-dialog ch-modal-dialog--video">
+        <div class="ch-modal-header">
+            <h2 id="ch-video-modal-title" class="ch-modal-title"><?php echo esc_html( $video_title ); ?></h2>
+            <button type="button" class="ch-modal-close" data-modal-close aria-label="Tutup pemutar video">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <div class="ch-modal-body">
+            <?php if ( $video_config['type'] !== 'none' ) : ?>
+                <div class="ch-video-frame" id="ch-video-embed-mount"></div>
+            <?php else : ?>
+                <div class="ch-storyboard-preview">
+                    <div class="ch-storyboard-visual">
+                        <img
+                            src="<?php echo esc_url( $media_cp . '/hero-manufy-stage.webp' ); ?>"
+                            width="1376"
+                            height="768"
+                            alt="Preview fasilitas R&D dan operasional PT Indotech Berkah Abadi"
+                            loading="lazy"
+                        >
+                        <div class="ch-storyboard-caption">
+                            <span class="ch-storyboard-badge">Ringkasan Profil · <?php echo esc_html( $video_duration ); ?></span>
+                            <p>Pilih babak di bawah untuk meninjau cakupan ekosistem bisnis PT Indotech Berkah Abadi.</p>
+                        </div>
+                    </div>
+
+                    <div class="ch-storyboard-steps" role="tablist" aria-label="Babak video profil Indotech">
+                        <?php foreach ( $storyboard_steps as $idx => $step ) : ?>
+                            <button
+                                type="button"
+                                role="tab"
+                                class="ch-storyboard-step<?php echo 0 === $idx ? ' is-active' : ''; ?>"
+                                aria-selected="<?php echo 0 === $idx ? 'true' : 'false'; ?>"
+                                data-storyboard-step="<?php echo (int) $idx; ?>"
+                            >
+                                <span class="ch-step-time"><?php echo esc_html( $step['time'] ); ?></span>
+                                <strong><?php echo esc_html( $step['title'] ); ?></strong>
+                                <span class="ch-step-copy"><?php echo esc_html( $step['copy'] ); ?></span>
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <div class="ch-modal-footer-actions">
+                <a class="ch-header-btn ch-header-btn--outline" href="<?php echo esc_url( home_url( '/kemitraan/' ) ); ?>">Program Kemitraan</a>
+                <a class="ch-header-btn ch-header-btn--primary" href="<?php echo esc_url( home_url( '/kontak/#form-kontak' ) ); ?>">Konsultasi B2B</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php get_footer(); ?>

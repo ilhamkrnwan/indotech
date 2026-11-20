@@ -2,246 +2,255 @@
 /**
  * Template Name: FAQ
  *
- * Halaman FAQ (Frequently Asked Questions) PT Indotech Berkah Abadi.
- * Features: Search Filter · Category Navigation · Interactive Accordion · Contact CTA
+ * Halaman Pusat Bantuan & FAQ PT Indotech Berkah Abadi — Arsitektur Manufy Daylight.
+ * Preserves FAQ data, JSON-LD FAQPage schema, #faq-search-input, .faq-nav-btn, #sec-*, and accordion behavior.
  */
 
-$whatsapp = indotech_opt( 'whatsapp', '6285600061005' );
+$whatsapp = function_exists( 'indotech_opt' ) ? indotech_opt( 'whatsapp', '6287885590088' ) : '6287885590088';
 $wa_num   = preg_replace( '/[^0-9]/', '', $whatsapp );
 $wa_msg   = rawurlencode( 'Halo indotech.id, saya ingin bertanya lebih lanjut karena tidak menemukan jawaban di halaman FAQ.' );
 
-get_header();
-
-// FAQ Data Array categorized for clean display
 $faq_categories = [
     'umum' => [
+        'num'   => '01',
         'label' => 'Umum',
-        'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
         'items' => [
             [
                 'q' => 'Siapa PT Indotech Berkah Abadi?',
-                'a' => 'PT Indotech Berkah Abadi adalah produsen dan pemasok terpercaya untuk produk kebersihan rumah tangga (homecare), kimia laundry, produk perawatan otomotif (car care), serta penyedia jasa maklon (private label) yang berpusat di Sleman, Yogyakarta.'
+                'a' => 'PT Indotech Berkah Abadi adalah produsen dan pemasok terpercaya untuk produk kebersihan rumah tangga (homecare), kimia laundry, produk perawatan otomotif (car care), serta penyedia jasa maklon (private label) yang berpusat di Sleman, Yogyakarta.',
             ],
             [
                 'q' => 'Apakah seluruh produk Indotech memiliki izin edar resmi?',
-                'a' => 'Ya, seluruh produk kami telah teruji secara klinis dan memiliki izin edar resmi dari Kementerian Kesehatan Republik Indonesia (Kemenkes RI) serta sertifikasi Halal resmi dari MUI.'
+                'a' => 'Ya, seluruh produk kami telah teruji secara klinis dan memiliki izin edar resmi dari Kementerian Kesehatan Republik Indonesia (Kemenkes RI PKRT) serta sertifikasi Halal resmi.',
             ],
             [
                 'q' => 'Di mana lokasi kantor operasional PT Indotech Berkah Abadi?',
-                'a' => 'Kantor operasional kami berlokasi di Jongke Tengah No. 30, Sendangadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55285. Anda dapat melihat peta petunjuk arah langsung di halaman Kontak kami.'
-            ]
-        ]
+                'a' => 'Kantor operasional kami berlokasi di Jongke Tengah No. 30, Sendangadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55285. Anda dapat melihat peta petunjuk arah langsung di halaman Kontak kami.',
+            ],
+        ],
     ],
     'produk' => [
+        'num'   => '02',
         'label' => 'Produk & Formulasi',
-        'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
         'items' => [
             [
                 'q' => 'Apa keunggulan produk paket bahan sabun (biang/konsentrat)?',
-                'a' => 'Produk paket bahan sabun (seperti Arai, Detta Plus, dan Determat) dirancang untuk meminimalkan biaya pengiriman. Anda cukup membeli biang konsentrat seberat 1 kg, lalu mencampurnya dengan air bersih di lokasi Anda untuk menghasilkan hingga 15 liter sabun siap pakai berkualitas premium.'
+                'a' => 'Produk paket bahan sabun (seperti Arai, Detta Plus, dan Determat) dirancang untuk meminimalkan biaya pengiriman. Anda cukup membeli biang konsentrat seberat 1 kg, lalu mencampurnya dengan air bersih di lokasi Anda untuk menghasilkan hingga 15 liter sabun siap pakai berkualitas premium.',
             ],
             [
                 'q' => 'Bagaimana cara melarutkan paket bahan sabun konsentrat?',
-                'a' => 'Setiap pembelian paket bahan sabun dilengkapi dengan petunjuk pembuatan tertulis yang sangat detail di dalam kemasan. Secara umum, Anda cukup mencampurkan pasta biang ke dalam wadah bersih, lalu menuangkan air secara bertahap sambil diaduk rata, kemudian mendiamkannya selama 12–24 jam hingga busa mereda sepenuhnya.'
+                'a' => 'Setiap pembelian paket bahan sabun dilengkapi dengan petunjuk pembuatan tertulis yang sangat detail di dalam kemasan. Secara umum, Anda cukup mencampurkan pasta biang ke dalam wadah bersih, lalu menuangkan air secara bertahap sambil diaduk rata, kemudian mendiamkannya selama 12–24 jam hingga busa mereda sepenuhnya.',
             ],
             [
                 'q' => 'Apakah produk detergen dan sabun cuci aman untuk kulit sensitif?',
-                'a' => 'Ya, formulasi sabun kami menggunakan pH balancer khusus yang lembut di kulit, ramah lingkungan, serta tidak menimbulkan rasa panas atau iritasi bagi sebagian besar pengguna.'
-            ]
-        ]
+                'a' => 'Ya, formulasi sabun kami menggunakan pH balancer khusus yang lembut di kulit, ramah lingkungan, serta tidak menimbulkan rasa panas atau iritasi bagi sebagian besar pengguna.',
+            ],
+        ],
     ],
     'kemitraan' => [
+        'num'   => '03',
         'label' => 'Kemitraan & Maklon',
-        'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
         'items' => [
             [
                 'q' => 'Bagaimana cara menjadi agen atau distributor resmi Indotech?',
-                'a' => 'Kami membuka kesempatan kemitraan seluas-luasnya di seluruh wilayah Indonesia. Anda dapat mendaftar melalui menu Kemitraan di website ini atau langsung menghubungi perwakilan marketing kami melalui WhatsApp untuk mendapatkan proposal paket kemitraan.'
+                'a' => 'Kami membuka kesempatan kemitraan seluas-luasnya di seluruh wilayah Indonesia. Anda dapat mendaftar melalui menu Kemitraan di website ini atau langsung menghubungi perwakilan marketing kami melalui WhatsApp untuk mendapatkan proposal paket kemitraan.',
             ],
             [
                 'q' => 'Apakah Indotech melayani jasa maklon (private label) produk?',
-                'a' => 'Tentu. Kami melayani jasa maklon OEM/ODM secara profesional mulai dari formulasi custom sesuai kebutuhan Anda, penyediaan kemasan, pendaftaran izin edar Kemenkes RI, hingga produksi massal berskala besar dengan brand milik Anda sendiri.'
+                'a' => 'Tentu. Kami melayani jasa maklon OEM/ODM secara profesional mulai dari formulasi custom sesuai kebutuhan Anda, penyediaan kemasan, pendaftaran izin edar Kemenkes RI PKRT, hingga produksi massal berskala besar dengan brand milik Anda sendiri.',
             ],
             [
                 'q' => 'Apakah ada minimal pemesanan (MOQ) untuk jasa maklon?',
-                'a' => 'Minimal pemesanan (MOQ) untuk maklon bervariasi tergantung pada jenis produk, volume kemasan, dan tingkat kesulitan formulasi. Silakan hubungi tim B2B kami untuk melakukan konsultasi gratis mengenai rencana brand Anda.'
-            ]
-        ]
+                'a' => 'Minimal pemesanan (MOQ) untuk maklon bervariasi tergantung pada jenis produk, volume kemasan, dan tingkat kesulitan formulasi. Silakan hubungi tim B2B kami untuk melakukan konsultasi gratis mengenai rencana brand Anda.',
+            ],
+        ],
     ],
     'pengiriman' => [
+        'num'   => '04',
         'label' => 'Pemesanan & Pengiriman',
-        'icon'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>',
         'items' => [
             [
                 'q' => 'Apakah bisa mengirim ke luar pulau Jawa?',
-                'a' => 'Bisa. Kami bekerja sama dengan berbagai ekspedisi kargo darat dan laut terpercaya yang siap mengantarkan produk kimia cair maupun paket bahan sabun kami dengan aman ke seluruh wilayah 34 provinsi di Indonesia.'
+                'a' => 'Bisa. Kami bekerja sama dengan berbagai ekspedisi kargo darat dan laut terpercaya yang siap mengantarkan produk kimia cair maupun paket bahan sabun kami dengan aman ke seluruh wilayah 34 provinsi di Indonesia.',
             ],
             [
                 'q' => 'Berapa lama estimasi waktu pengiriman barang?',
-                'a' => 'Untuk wilayah pulau Jawa, estimasi pengiriman kargo berkisar antara 2–4 hari kerja. Sedangkan untuk luar pulau Jawa berkisar antara 5–12 hari kerja tergantung jarak lokasi tujuan Anda.'
-            ]
-        ]
-    ]
+                'a' => 'Untuk wilayah pulau Jawa, estimasi pengiriman kargo berkisar antara 2–4 hari kerja. Sedangkan untuk luar pulau Jawa berkisar antara 5–12 hari kerja tergantung jarak lokasi tujuan Anda.',
+            ],
+        ],
+    ],
 ];
 
-// FAQPage schema (GEO): ratakan semua Q&A jadi satu daftar untuk mesin AI.
 $faq_flat = [];
 foreach ( $faq_categories as $cat ) {
-	foreach ( $cat['items'] as $item ) {
-		$faq_flat[] = $item;
-	}
+    foreach ( $cat['items'] as $item ) {
+        $faq_flat[] = $item;
+    }
 }
+
+get_header();
+
 if ( function_exists( 'indotech_render_faq_schema' ) ) {
-	indotech_render_faq_schema( $faq_flat );
+    indotech_render_faq_schema( $faq_flat );
 }
 ?>
 
-<main id="main-content">
-
-    <!-- ════════════════════════════════════════════════════════
-         HERO SECTION
-    ════════════════════════════════════════════════════════ -->
-    <section class="inner-page-hero" id="faq-hero">
-        <div class="hero-bg" aria-hidden="true">
-            <div class="hero-grid-overlay"></div>
-            <div class="hero-glow hero-glow--1" style="opacity:.4;"></div>
+<main id="main-content" class="ch-main cs-main" tabindex="-1">
+    <div class="ch-canvas-band ch-canvas-band--top">
+        <div class="ch-grid-guides" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
         </div>
-        <div class="container inner-page-hero-inner reveal">
-            <nav class="breadcrumb" aria-label="Breadcrumb">
-                <a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a>
+
+        <!-- Band 1: Search-First Editorial Hero + Horizontal Category Pills -->
+        <section class="cs-hero cs-hero--compact ch-wrap" id="faq-hero" aria-labelledby="cs-faq-hero-title">
+            <nav class="cs-breadcrumb" aria-label="Breadcrumb">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Beranda</a>
                 <span aria-hidden="true">/</span>
                 <span aria-current="page">FAQ</span>
             </nav>
-            <span class="section-tag">Pusat Bantuan</span>
-            <h1 class="inner-page-title">Pertanyaan <em>Sering Diajukan</em></h1>
-            <p class="inner-page-subtitle">Temukan jawaban cepat atas pertanyaan seputar formulasi produk, metode penggunaan, serta prosedur kemitraan kami.</p>
-        </div>
-    </section>
 
-    <div class="container ch-faq-container">
-
-        <!-- ════════════════════════════════════════════════════════
-             SEARCH BAR — Filter Pencarian Realtime
-        ════════════════════════════════════════════════════════ -->
-        <div class="faq-search-wrap reveal">
-            <div class="faq-search-card">
-                <div class="faq-search-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <div class="cs-hero-head">
+                <div class="cs-hero-copy">
+                    <p>Temukan jawaban seputar legalitas produk, paket biang konsentrat, syarat kemitraan B2B, maklon merek pribadi, dan pengiriman kargo nasional.</p>
                 </div>
-                <input 
-                    type="text" 
-                    id="faq-search-input" 
-                    class="faq-search-input" 
-                    placeholder="Ketik kata kunci pertanyaan Anda di sini..."
-                    aria-label="Cari pertanyaan"
-                >
+
+                <div class="cs-hero-title-group">
+                    <h1 id="cs-faq-hero-title" class="ch-hero-h1">
+                        <span class="ch-h1-primary">Pusat</span>
+                        <span class="ch-h1-row">
+                            <span class="ch-tilt-badge">Bantuan B2B</span>
+                            <span class="ch-h1-secondary">Informasi &amp; FAQ</span>
+                        </span>
+                    </h1>
+                </div>
             </div>
-        </div>
 
-        <!-- ════════════════════════════════════════════════════════
-             MAIN LAYOUT — Sidebar & List Accordion
-        ════════════════════════════════════════════════════════ -->
-        <div class="faq-layout-grid">
-            
-            <!-- Sidebar Navigation Tabs -->
-            <aside class="faq-sidebar reveal">
-                <?php 
-                $first = true;
-                foreach ($faq_categories as $key => $category) : 
-                ?>
-                    <button 
-                        class="faq-nav-btn <?php echo $first ? 'faq-nav-btn--active' : ''; ?>"
-                        data-target="<?php echo esc_attr($key); ?>"
+            <div class="cs-faq-search-bar">
+                <label class="ch-sr-only" for="faq-search-input">Cari pertanyaan</label>
+                <div class="cs-search-field">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input
+                        type="text"
+                        id="faq-search-input"
+                        class="faq-search-input cs-faq-search-input"
+                        placeholder="Ketik kata kunci pertanyaan Anda di sini (mis. maklon, Kemenkes, luar Jawa)..."
+                        aria-label="Cari pertanyaan"
                     >
-                        <?php echo $category['icon']; ?>
-                        <span><?php echo esc_html($category['label']); ?></span>
-                    </button>
-                <?php 
-                    $first = false;
-                endforeach; 
-                ?>
-            </aside>
+                </div>
 
-            <!-- Accordion List Content -->
-            <div class="faq-content-wrap">
-                
-                <?php foreach ($faq_categories as $key => $category) : ?>
-                    <section class="faq-group-section reveal" id="sec-<?php echo esc_attr($key); ?>">
-                        <div class="faq-group-title-wrap">
-                            <?php echo $category['icon']; ?>
-                            <h2 class="faq-group-title"><?php echo esc_html($category['label']); ?></h2>
+                <nav class="faq-sidebar cs-faq-jumpbar" aria-label="Lompat ke kategori FAQ">
+                    <?php
+                    $first = true;
+                    foreach ( $faq_categories as $key => $category ) :
+                        ?>
+                        <button
+                            type="button"
+                            class="faq-nav-btn cs-faq-jump-pill <?php echo $first ? 'faq-nav-btn--active' : ''; ?>"
+                            data-target="<?php echo esc_attr( $key ); ?>"
+                        >
+                            <span><?php echo esc_html( $category['label'] ); ?></span>
+                            <span class="cs-jump-count"><?php echo count( $category['items'] ); ?></span>
+                        </button>
+                        <?php
+                        $first = false;
+                    endforeach;
+                    ?>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Band 2: Sticky Obsidian-Navy Concierge (Left) + Numbered Hairline Knowledge Ledger (Right) -->
+        <section class="cs-band ch-wrap" id="faq-directory" aria-label="Daftar pertanyaan yang sering diajukan">
+            <div class="cs-faq-layout">
+                <aside class="cs-faq-concierge">
+                    <span class="cs-pill-tag cs-pill-tag--lime">Dukungan Langsung</span>
+                    <h2>Belum Menemukan Jawaban yang Anda Cari?</h2>
+                    <p>Konsultan bisnis dan layanan pelanggan kami siap merespons pertanyaan spesifik mengenai MOQ maklon maupun kontrak pasokan.</p>
+
+                    <div class="cs-faq-concierge-meta">
+                        <div>
+                            <span>Waktu Respon</span>
+                            <strong>1×24 Jam Kerja</strong>
                         </div>
+                        <div>
+                            <span>Jam Operasional</span>
+                            <strong>Senin – Sabtu · 08.00–17.00</strong>
+                        </div>
+                    </div>
 
-                        <div class="faq-accordion-group">
-                            <?php foreach ($category['items'] as $item) : ?>
-                                <div class="faq-accordion-item">
-                                    <button class="faq-header-btn" aria-expanded="false">
-                                        <span><?php echo esc_html($item['q']); ?></span>
-                                        <span class="faq-toggle-icon" aria-hidden="true">
-                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
-                                        </span>
-                                    </button>
-                                    <div class="faq-body-content" aria-hidden="true">
-                                        <div class="faq-body-inner">
-                                            <p><?php echo esc_html($item['a']); ?></p>
+                    <div class="cs-faq-concierge-actions">
+                        <a
+                            href="https://wa.me/<?php echo esc_attr( $wa_num ); ?>?text=<?php echo $wa_msg; ?>"
+                            class="ch-pill-cta"
+                            target="_blank"
+                            rel="noopener"
+                            id="faq-wa-btn"
+                        >
+                            <span>Chat WhatsApp Sekarang</span>
+                            <span class="ch-pill-cta-icon" aria-hidden="true">
+                                <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                            </span>
+                        </a>
+                        <div class="cs-faq-sublinks">
+                            <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="ch-lime-link">Halaman Kontak</a>
+                            <a href="<?php echo esc_url( home_url( '/kemitraan/' ) ); ?>" class="ch-lime-link">Program Kemitraan</a>
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="faq-content-wrap cs-faq-ledger">
+                    <?php foreach ( $faq_categories as $key => $category ) : ?>
+                        <section class="faq-group-section cs-faq-group" id="sec-<?php echo esc_attr( $key ); ?>">
+                            <header class="cs-faq-group-head">
+                                <span class="cs-index-num"><?php echo esc_html( $category['num'] ); ?></span>
+                                <h2 class="faq-group-title"><?php echo esc_html( $category['label'] ); ?></h2>
+                            </header>
+
+                            <div class="faq-accordion-group cs-faq-accordion-list">
+                                <?php foreach ( $category['items'] as $item ) : ?>
+                                    <div class="faq-accordion-item cs-faq-row">
+                                        <button type="button" class="faq-header-btn cs-faq-trigger" aria-expanded="false">
+                                            <span><?php echo esc_html( $item['q'] ); ?></span>
+                                            <span class="faq-toggle-icon" aria-hidden="true">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+                                            </span>
+                                        </button>
+                                        <div class="faq-body-content cs-faq-body" aria-hidden="true">
+                                            <div class="faq-body-inner cs-faq-answer">
+                                                <p><?php echo esc_html( $item['a'] ); ?></p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </section>
-                <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            </div>
+                        </section>
+                    <?php endforeach; ?>
 
-                <!-- Empty State (Jika hasil pencarian tidak ditemukan) -->
-                <div id="faq-empty-state" class="faq-empty-state">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 15h8"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-                    <h3>Pertanyaan tidak ditemukan</h3>
-                    <p>Coba gunakan kata kunci pencarian yang lain.</p>
+                    <div id="faq-empty-state" class="faq-empty-state cs-empty-panel">
+                        <h3>Pertanyaan tidak ditemukan</h3>
+                        <p>Coba gunakan kata kunci pencarian lain atau tampilkan kembali seluruh pertanyaan.</p>
+                        <button type="button" id="faq-reset-btn" class="cs-doc-pill">Tampilkan Semua Pertanyaan</button>
+                    </div>
                 </div>
-
             </div>
+        </section>
 
-        </div>
-
+        <?php get_template_part( 'template-parts/home/company-cta' ); ?>
     </div>
-
-    <!-- ════════════════════════════════════════════════════════
-         STILL HAVE QUESTIONS? — CTA Strip ke WhatsApp
-    ════════════════════════════════════════════════════════ -->
-    <section class="wa-cta-strip" id="faq-wa-strip">
-        <div class="container wa-cta-inner">
-            <div class="wa-cta-text">
-                <span class="wa-cta-title">Belum menemukan jawaban Anda?</span>
-                <span class="wa-cta-sub">Tanyakan langsung pada customer support kami yang ramah via WhatsApp.</span>
-            </div>
-            <a href="https://wa.me/<?php echo esc_attr( $wa_num ); ?>?text=<?php echo $wa_msg; ?>"
-               class="btn wa-cta-btn"
-               target="_blank" rel="noopener"
-               id="faq-wa-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                Chat WhatsApp Sekarang
-            </a>
-        </div>
-    </section>
-
 </main>
 
 <script>
-/**
- * FAQ Interactive JS (Accordion & Filter Search)
- */
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // 1. Accordion Toggle Logic
     const accordionHeaders = document.querySelectorAll('.faq-header-btn');
-    
+
     accordionHeaders.forEach(header => {
         header.addEventListener('click', function() {
             const item = this.parentElement;
             const content = this.nextElementSibling;
             const isOpen = item.classList.contains('faq-accordion-item--active');
-            
-            // Close other open accordions in the same group (optional, but cleaner)
+
             const siblingItems = item.parentElement.querySelectorAll('.faq-accordion-item');
             siblingItems.forEach(sib => {
                 if (sib !== item) {
@@ -252,11 +261,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Toggle current accordion
             if (!isOpen) {
                 item.classList.add('faq-accordion-item--active');
                 this.setAttribute('aria-expanded', 'true');
-                content.style.maxHeight = content.scrollHeight + "px";
+                content.style.maxHeight = content.scrollHeight + 'px';
                 content.setAttribute('aria-hidden', 'false');
             } else {
                 item.classList.remove('faq-accordion-item--active');
@@ -267,30 +275,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 2. Sidebar Navigation Smooth Scroll / Filter
     const navButtons = document.querySelectorAll('.faq-nav-btn');
     const sections = document.querySelectorAll('.faq-group-section');
 
     navButtons.forEach(btn => {
         btn.addEventListener('click', function() {
-            // Remove active classes
             navButtons.forEach(b => b.classList.remove('faq-nav-btn--active'));
             this.classList.add('faq-nav-btn--active');
-
-            const targetId = this.getAttribute('data-target');
-            const targetSection = document.getElementById('sec-' + targetId);
-
+            const targetSection = document.getElementById('sec-' + this.getAttribute('data-target'));
             if (targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
 
-    // Highlight sidebar category on scroll
     window.addEventListener('scroll', function() {
         let currentSectionId = '';
-        const scrollPosition = window.scrollY + 150; // offset
-
+        const scrollPosition = window.scrollY + 150;
         sections.forEach(section => {
             if (section.style.display !== 'none') {
                 const top = section.offsetTop;
@@ -300,24 +301,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-
         if (currentSectionId) {
             navButtons.forEach(btn => {
-                if (btn.getAttribute('data-target') === currentSectionId) {
-                    btn.classList.add('faq-nav-btn--active');
-                } else {
-                    btn.classList.remove('faq-nav-btn--active');
-                }
+                btn.classList.toggle('faq-nav-btn--active', btn.getAttribute('data-target') === currentSectionId);
             });
         }
-    });
+    }, { passive: true });
 
-    // 3. Realtime Search Filter Logic
     const searchInput = document.getElementById('faq-search-input');
     const emptyState = document.getElementById('faq-empty-state');
+    const resetBtn = document.getElementById('faq-reset-btn');
+    const jumpBar = document.querySelector('.cs-faq-jumpbar');
 
-    searchInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase().trim();
+    function runFaqFilter(rawQuery) {
+        const query = rawQuery.toLowerCase().trim();
         let totalVisible = 0;
 
         sections.forEach(section => {
@@ -334,30 +331,36 @@ document.addEventListener('DOMContentLoaded', function() {
                     totalVisible++;
                 } else {
                     item.style.display = 'none';
-                    // If closed, collapse heights
                     item.classList.remove('faq-accordion-item--active');
                     item.querySelector('.faq-header-btn').setAttribute('aria-expanded', 'false');
                     item.querySelector('.faq-body-content').style.maxHeight = null;
                 }
             });
 
-            // If no items match in this section, hide the entire section title
-            if (sectionHasMatches) {
-                section.style.display = 'block';
-            } else {
-                section.style.display = 'none';
-            }
+            section.style.display = sectionHasMatches ? 'block' : 'none';
         });
 
-        // Show/hide empty state message
-        if (totalVisible === 0) {
-            emptyState.style.display = 'block';
-            document.querySelector('.faq-sidebar').style.display = 'none';
-        } else {
-            emptyState.style.display = 'none';
-            document.querySelector('.faq-sidebar').style.display = 'flex';
+        if (emptyState) {
+            emptyState.style.display = totalVisible === 0 ? 'block' : 'none';
         }
-    });
+        if (jumpBar) {
+            jumpBar.style.opacity = totalVisible === 0 ? '0.45' : '1';
+        }
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            runFaqFilter(this.value);
+        });
+    }
+
+    if (resetBtn && searchInput) {
+        resetBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            runFaqFilter('');
+            searchInput.focus();
+        });
+    }
 });
 </script>
 

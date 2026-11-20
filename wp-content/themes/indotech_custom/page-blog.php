@@ -2,42 +2,42 @@
 /**
  * Template Name: Blog
  *
- * Halaman arsip Blog PT Indotech Berkah Abadi.
- * Sections: Hero · Featured Post · Filter Tab Kategori · Grid Artikel · Pagination
+ * Halaman arsip Wawasan & Artikel B2B PT Indotech Berkah Abadi — Arsitektur Manufy.
+ * Preserves AJAX category/search/sort/pagination contracts with functions.php (`indotech_filter_posts`).
  */
 
-if ( isset($_GET['paged']) && absint($_GET['paged']) > 0 ) {
-    $paged = absint($_GET['paged']);
-} elseif ( isset($_GET['page']) && absint($_GET['page']) > 0 ) {
-    $paged = absint($_GET['page']);
-} elseif ( get_query_var('paged') ) {
-    $paged = absint(get_query_var('paged'));
-} elseif ( get_query_var('page') ) {
-    $paged = absint(get_query_var('page'));
+$media_cp = get_theme_file_uri( 'assets/images/company-profile' );
+
+if ( isset( $_GET['paged'] ) && absint( $_GET['paged'] ) > 0 ) {
+    $paged = absint( $_GET['paged'] );
+} elseif ( isset( $_GET['page'] ) && absint( $_GET['page'] ) > 0 ) {
+    $paged = absint( $_GET['page'] );
+} elseif ( get_query_var( 'paged' ) ) {
+    $paged = absint( get_query_var( 'paged' ) );
+} elseif ( get_query_var( 'page' ) ) {
+    $paged = absint( get_query_var( 'page' ) );
 } else {
     $paged = 1;
 }
 $per_page = 6;
 
-// Ambil semua kategori yang digunakan di posts (kecualikan Uncategorized & numerik)
 $categories = get_categories( [
     'orderby'    => 'count',
     'order'      => 'DESC',
     'hide_empty' => true,
-    'exclude'    => [1, 20],
+    'exclude'    => [ 1, 20 ],
 ] );
-if (!empty($categories)) {
-    $categories = array_filter($categories, function($cat) {
-        return !is_numeric($cat->name) && !in_array(strtolower($cat->slug), ['uncategorized', 'tak-berkategori']);
-    });
+if ( ! empty( $categories ) ) {
+    $categories = array_filter( $categories, function ( $cat ) {
+        return ! is_numeric( $cat->name ) && ! in_array( strtolower( $cat->slug ), [ 'uncategorized', 'tak-berkategori' ], true );
+    } );
 }
 
-// Aktif filter dari query string
-$active_cat  = isset( $_GET['kategori'] ) ? sanitize_text_field( $_GET['kategori'] ) : (isset($_GET['cat']) ? sanitize_text_field($_GET['cat']) : '');
+$active_cat  = isset( $_GET['kategori'] ) ? sanitize_text_field( $_GET['kategori'] ) : ( isset( $_GET['cat'] ) ? sanitize_text_field( $_GET['cat'] ) : '' );
 $search_init = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
 $sort_init   = isset( $_GET['sort_by'] ) ? sanitize_text_field( $_GET['sort_by'] ) : 'newest';
 
-// Query args
+$default_cat_id = (int) get_option( 'default_category' );
 $blog_args = [
     'post_type'      => 'post',
     'posts_per_page' => $per_page,
@@ -46,11 +46,13 @@ $blog_args = [
 ];
 if ( $active_cat ) {
     $blog_args['category_name'] = $active_cat;
+} elseif ( $default_cat_id > 0 ) {
+    $blog_args['category__not_in'] = [ $default_cat_id ];
 }
 if ( $search_init ) {
     $blog_args['s'] = $search_init;
 }
-switch ($sort_init) {
+switch ( $sort_init ) {
     case 'oldest':
         $blog_args['orderby'] = 'date';
         $blog_args['order']   = 'ASC';
@@ -66,18 +68,19 @@ switch ($sort_init) {
         break;
 }
 
-// Featured post — sticky atau post terbaru
 $featured_args = [
-    'post_type'      => 'post',
-    'posts_per_page' => 1,
-    'post_status'    => 'publish',
-    'post__in'       => get_option( 'sticky_posts' ) ?: [],
+    'post_type'        => 'post',
+    'posts_per_page'   => 1,
+    'post_status'      => 'publish',
+    'post__in'         => get_option( 'sticky_posts' ) ?: [],
+    'category__not_in' => $default_cat_id > 0 ? [ $default_cat_id ] : [],
 ];
 if ( empty( get_option( 'sticky_posts' ) ) ) {
     $featured_args = [
-        'post_type'      => 'post',
-        'posts_per_page' => 1,
-        'post_status'    => 'publish',
+        'post_type'        => 'post',
+        'posts_per_page'   => 1,
+        'post_status'      => 'publish',
+        'category__not_in' => $default_cat_id > 0 ? [ $default_cat_id ] : [],
     ];
 }
 $featured_query = new WP_Query( $featured_args );
@@ -88,295 +91,290 @@ if ( $featured_query->have_posts() ) {
     wp_reset_postdata();
 }
 
-// Exclude featured dari grid jika di halaman 1 tanpa filter
 if ( $featured_id && $paged === 1 && ! $active_cat && ! $search_init && $sort_init === 'newest' ) {
     $blog_args['post__not_in'] = [ $featured_id ];
 }
 
 $blog_query = new WP_Query( $blog_args );
+$blog_wa    = preg_replace( '/[^0-9]/', '', function_exists( 'indotech_opt' ) ? indotech_opt( 'whatsapp', '6287885590088' ) : '6287885590088' );
 
 get_header();
 ?>
 
-<main id="main-content">
-
-    <!-- ════════════════════════════════════════════════════════
-         PAGE HERO
-    ════════════════════════════════════════════════════════ -->
-    <section class="inner-page-hero" id="blog-hero">
-        <div class="hero-bg" aria-hidden="true">
-            <div class="hero-grid-overlay"></div>
-            <div class="hero-glow hero-glow--1" style="opacity:.35;"></div>
+<main id="main-content" class="ch-main cs-main" tabindex="-1">
+    <div class="ch-canvas-band ch-canvas-band--top">
+        <div class="ch-grid-guides" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
         </div>
-        <div class="container inner-page-hero-inner reveal">
-            <nav class="breadcrumb" aria-label="Breadcrumb">
-                <a href="<?php echo esc_url( home_url('/') ); ?>">Beranda</a>
+
+        <!-- Band 1: Manufy Editorial Masthead -->
+        <section class="cs-hero cs-hero--compact ch-wrap" id="blog-hero" aria-labelledby="cs-blog-hero-title">
+            <nav class="cs-breadcrumb" aria-label="Breadcrumb">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Beranda</a>
                 <span aria-hidden="true">/</span>
                 <span aria-current="page">Blog</span>
             </nav>
-            <span class="section-tag">Insight &amp; Update</span>
-            <h1 class="inner-page-title">Blog <em>Indotech</em></h1>
-            <p class="inner-page-subtitle">Tips bisnis, update produk, edukasi industri B2B, dan berita terbaru dari PT Indotech Berkah Abadi.</p>
-        </div>
-    </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         FEATURED POST
-    ════════════════════════════════════════════════════════ -->
-    <?php if ( $featured_id && ! $active_cat ) :
-        $feat_thumb   = get_the_post_thumbnail_url( $featured_id, 'large' );
-        $feat_cats    = get_the_category( $featured_id );
-        $feat_cat_lbl = $feat_cats ? esc_html( $feat_cats[0]->name ) : 'Artikel';
-        $feat_date    = get_the_date( 'd M Y', $featured_id );
-        $feat_author  = get_the_author_meta( 'display_name', get_post_field( 'post_author', $featured_id ) );
-        $feat_excerpt = get_the_excerpt( $featured_id );
-        $feat_url     = get_permalink( $featured_id );
-        $feat_title   = get_the_title( $featured_id );
-    ?>
-    <section class="blog-featured-section section-padding" id="blog-featured">
-        <div class="container">
-            <div class="blog-section-header">
-                <div class="blog-section-left">
-                    <span class="section-tag section-tag--dark">Artikel Pilihan</span>
-                </div>
-            </div>
-
-            <article class="blog-featured-card reveal">
-                <a href="<?php echo esc_url( $feat_url ); ?>" class="blog-featured-thumb" aria-hidden="true" tabindex="-1">
-                    <?php if ( has_post_thumbnail( $featured_id ) ) : ?>
-                        <?php echo wp_get_attachment_image( get_post_thumbnail_id( $featured_id ), 'indotech-card', false, [
-                            'class'         => 'blog-featured-img',
-                            'loading'       => 'eager',
-                            'fetchpriority' => 'high',
-                            'decoding'      => 'async',
-                            'sizes'         => '(max-width: 768px) 100vw, 600px',
-                        ] ); ?>
-                    <?php else : ?>
-                        <div class="blog-img-placeholder">
-                            <span class="blog-placeholder-label">Indotech Blog</span>
-                        </div>
-                    <?php endif; ?>
-                    <span class="blog-category"><?php echo $feat_cat_lbl; ?></span>
-                </a>
-
-                <div class="blog-featured-body">
-                    <div class="blog-meta">
-                        <span><?php echo esc_html( $feat_date ); ?></span>
-                        <span class="blog-meta-sep" aria-hidden="true">·</span>
-                        <span><?php echo esc_html( $feat_author ); ?></span>
-                    </div>
-                    <h2 class="blog-featured-title">
-                        <a href="<?php echo esc_url( $feat_url ); ?>"><?php echo esc_html( $feat_title ); ?></a>
-                    </h2>
-                    <p class="blog-featured-excerpt"><?php echo esc_html( wp_trim_words( $feat_excerpt, 30, '...' ) ); ?></p>
-                    <a href="<?php echo esc_url( $feat_url ); ?>" class="btn btn-primary">
-                        Baca Artikel
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
-            </article>
-        </div>
-    </section>
-    <?php endif; ?>
-
-    <!-- ════════════════════════════════════════════════════════
-         FILTER KATEGORI, SORTING, SEARCH + GRID ARTIKEL
-    ════════════════════════════════════════════════════════ -->
-    <section class="blog-section section-padding" id="blog-grid">
-        <div class="container">
-
-            <div class="blog-section-header">
-                <div class="blog-section-left">
-                    <span class="section-tag section-tag--dark">Semua Artikel</span>
-                    <h2 class="section-title" style="margin-top:12px;">Artikel Terbaru</h2>
-                </div>
-            </div>
-
-            <!-- ── Layout Grid: Filters on Left (or Top) & Blog Grid on Right ── -->
-            <div class="blog-archive-container">
-                
-                <!-- Filter Panel -->
-                <aside class="filter-panel">
-                    <h3 class="filter-panel-title">Filter Artikel</h3>
-                    <!-- Search & Sort Row -->
-                    <div class="blog-search-sort-row">
-                        <!-- Search Input -->
-                        <div class="blog-search-group">
-                            <label class="filter-group-title" for="blog-search">Cari Artikel</label>
-                            <div class="ch-input-icon-wrap">
-                                <input type="text" id="blog-search" class="ch-blog-input" placeholder="Masukkan kata kunci..." value="<?php echo esc_attr($search_init); ?>" />
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <!-- Sorting Dropdown -->
-                        <div class="blog-sort-group">
-                            <label class="filter-group-title" for="blog-sort">Urutkan Artikel</label>
-                            <div class="ch-input-icon-wrap">
-                                <select id="blog-sort" class="ch-blog-select">
-                                    <option value="newest" <?php selected($sort_init, 'newest'); ?>>Terbaru (Default)</option>
-                                    <option value="oldest" <?php selected($sort_init, 'oldest'); ?>>Terlama</option>
-                                    <option value="title_asc" <?php selected($sort_init, 'title_asc'); ?>>Judul (A-Z)</option>
-                                </select>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Filter: Categories -->
-                    <?php if ( $categories ) : ?>
-                    <div>
-                        <span class="filter-group-title">Kategori Artikel</span>
-                        <ul class="filter-list">
-                            <li>
-                                <button type="button" class="filter-btn <?php echo empty($active_cat) ? 'active' : ''; ?>" data-filter-type="cat" data-filter-val="">
-                                    <span>Semua Kategori</span>
-                                </button>
-                            </li>
-                            <?php foreach ($categories as $cat) : ?>
-                                <li>
-                                    <button type="button" class="filter-btn <?php echo ($active_cat === $cat->slug) ? 'active' : ''; ?>" data-filter-type="cat" data-filter-val="<?php echo esc_attr($cat->slug); ?>">
-                                        <span><?php echo esc_html($cat->name); ?></span>
-                                        <span class="filter-count"><?php echo (int)$cat->count; ?></span>
-                                    </button>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                    <?php endif; ?>
-
-                    <!-- WhatsApp Consultation CTA Widget in Filter Panel -->
-                    <?php 
-                    $blog_wa = preg_replace('/[^0-9]/', '', indotech_opt('whatsapp', '6285600061005')); 
-                    ?>
-                    <div class="ch-blog-sidebar-cta">
-                        <span class="ch-blog-sidebar-tag">Konsultasi B2B</span>
-                        <h4>Butuh Formulasi Khusus?</h4>
-                        <p>Tim teknis Indotech siap membantu pemilihan bahan baku &amp; sampel produk Anda.</p>
-                        <a href="https://wa.me/<?php echo esc_attr($blog_wa); ?>?text=<?php echo urlencode('Halo Indotech, saya membaca blog Indotech dan ingin berkonsultasi seputar bahan baku kimia dan formulasi.'); ?>" target="_blank" rel="noopener noreferrer" class="ch-blog-sidebar-btn">
-                            <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                            <span>Konsultasi WhatsApp</span>
+            <div class="cs-hero-head">
+                <div class="cs-hero-copy">
+                    <p>Panduan formulasi, wawasan industri pembersih komersial, strategi operasional laundry, dan kabar kemitraan Indotech.</p>
+                    <div class="cs-hero-actions">
+                        <a class="ch-inline-link" href="#blog-grid">
+                            <span>Jelajahi semua artikel</span>
+                            <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
                         </a>
                     </div>
-                </aside>
-
-                <!-- Articles View Grid -->
-                <div>
-                    <div id="blog-posts-grid" class="blog-grid" role="list">
-                        
-                        <?php if ( $blog_query->have_posts() ) : ?>
-                            <?php while ( $blog_query->have_posts() ) : $blog_query->the_post();
-                                $thumb     = get_the_post_thumbnail_url( null, 'medium_large' );
-                                $post_cats = get_the_category();
-                                $cat_lbl   = $post_cats ? esc_html( $post_cats[0]->name ) : '';
-                                $card_words = str_word_count(strip_tags(get_the_content()));
-                                $card_reading_time = max(1, ceil($card_words / 200));
-                            ?>
-                            <article class="blog-card reveal" role="listitem" id="post-<?php the_ID(); ?>">
-                                <a href="<?php the_permalink(); ?>" class="blog-thumb" aria-label="Baca: <?php the_title_attribute(); ?>">
-                                    <?php if ( has_post_thumbnail() ) : ?>
-                                        <?php echo wp_get_attachment_image( get_post_thumbnail_id(), 'indotech-card', false, [
-                                            'class'    => 'blog-img',
-                                            'loading'  => 'lazy',
-                                            'decoding' => 'async',
-                                            'sizes'    => '(max-width: 575px) 100vw, (max-width: 991px) 50vw, 380px',
-                                        ] ); ?>
-                                    <?php else : ?>
-                                        <div class="blog-img-placeholder"><span class="blog-placeholder-label">Indotech</span></div>
-                                    <?php endif; ?>
-                                    <?php if ( $cat_lbl ) : ?>
-                                        <span class="blog-category"><?php echo $cat_lbl; ?></span>
-                                    <?php endif; ?>
-                                </a>
-                                <div class="blog-body">
-                                    <div class="blog-meta">
-                                        <time datetime="<?php echo get_the_date('Y-m-d'); ?>"><?php echo get_the_date('d M Y'); ?></time>
-                                        <span class="blog-meta-sep" aria-hidden="true">·</span>
-                                        <span><?php the_author(); ?></span>
-                                        <span class="blog-meta-sep" aria-hidden="true">·</span>
-                                        <span style="display:inline-flex; align-items:center; gap:3px;">
-                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                            <?php echo $card_reading_time; ?> mnt baca
-                                        </span>
-                                    </div>
-                                    <h3 class="blog-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                    <p class="blog-excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 22, '...' ) ); ?></p>
-                                    <a href="<?php the_permalink(); ?>" class="blog-read-more" aria-label="Baca selengkapnya: <?php the_title_attribute(); ?>">
-                                        Baca Selengkapnya →
-                                    </a>
-                                </div>
-                            </article>
-                            <?php endwhile; wp_reset_postdata(); ?>
-                        <?php else : ?>
-                            <div class="blog-empty reveal" style="text-align:center;padding:80px 0;grid-column:1/-1;">
-                                <div class="blog-empty-icon" aria-hidden="true">
-                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="color:var(--border-dark);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-                                </div>
-                                <h3 style="font-size:20px;margin:20px 0 8px;">Belum ada artikel</h3>
-                                <p style="color:var(--text-secondary);margin-bottom:28px;">
-                                    Belum ada artikel yang diterbitkan.
-                                </p>
-                            </div>
-                        <?php endif; ?>
-
-                    </div>
-
-                    <!-- Pagination -->
-                    <div id="blog-pagination-wrap">
-                        <?php
-                        $total_pages  = $blog_query->max_num_pages;
-                        $base_url     = strtok(get_permalink(), '?');
-                        $query_params = [];
-                        if (!empty($active_cat))                    $query_params['kategori'] = $active_cat;
-                        if (!empty($search_init))                   $query_params['s'] = $search_init;
-                        if (!empty($sort_init) && $sort_init !== 'newest') $query_params['sort_by'] = $sort_init;
-
-                        echo indotech_get_pagination_html($paged, $total_pages, $base_url, $query_params, 'Navigasi halaman blog');
-                        ?>
-                    </div>
                 </div>
 
+                <div class="cs-hero-title-group">
+                    <h1 id="cs-blog-hero-title" class="ch-hero-h1">
+                        <span class="ch-h1-primary">Wawasan</span>
+                        <span class="ch-h1-row">
+                            <span class="ch-tilt-badge">Jurnal B2B</span>
+                            <span class="ch-h1-secondary">Indotech</span>
+                        </span>
+                    </h1>
+                    <p class="ch-hero-aside">Edukasi Formulasi<br>&amp; Bisnis Kebersihan</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Band 2: Flagship Featured Article Stage -->
+        <?php if ( $featured_id && ! $active_cat ) :
+            $feat_cats    = get_the_category( $featured_id );
+            $feat_cat_lbl = $feat_cats ? esc_html( $feat_cats[0]->name ) : 'Artikel';
+            $feat_date    = get_the_date( 'd M Y', $featured_id );
+            $feat_author  = get_the_author_meta( 'display_name', get_post_field( 'post_author', $featured_id ) );
+            $feat_excerpt = get_the_excerpt( $featured_id );
+            $feat_url     = get_permalink( $featured_id );
+            $feat_title   = get_the_title( $featured_id );
+            ?>
+            <section class="cs-band cs-band--tight ch-wrap" id="blog-featured" aria-label="Artikel pilihan">
+                <article class="cs-featured-stage">
+                    <a href="<?php echo esc_url( $feat_url ); ?>" class="cs-featured-media" tabindex="-1" aria-hidden="true">
+                        <?php if ( has_post_thumbnail( $featured_id ) ) : ?>
+                            <?php echo wp_get_attachment_image( get_post_thumbnail_id( $featured_id ), 'large', false, [
+                                'class'         => 'cs-featured-img',
+                                'loading'       => 'eager',
+                                'fetchpriority' => 'high',
+                                'decoding'      => 'async',
+                                'sizes'         => '(max-width: 960px) 100vw, 720px',
+                            ] ); ?>
+                        <?php else : ?>
+                            <img
+                                src="<?php echo esc_url( $media_cp . '/ilustrasi-formulasi.webp' ); ?>"
+                                class="cs-featured-img"
+                                width="960"
+                                height="540"
+                                alt=""
+                                fetchpriority="high"
+                                decoding="async"
+                            >
+                        <?php endif; ?>
+                        <span class="cs-featured-badge">Artikel Pilihan · <?php echo $feat_cat_lbl; ?></span>
+                    </a>
+
+                    <div class="cs-featured-body">
+                        <div class="cs-featured-meta">
+                            <span><?php echo esc_html( $feat_date ); ?></span>
+                            <span aria-hidden="true">·</span>
+                            <span><?php echo esc_html( $feat_author ); ?></span>
+                        </div>
+                        <h2 class="cs-featured-title">
+                            <a href="<?php echo esc_url( $feat_url ); ?>"><?php echo esc_html( $feat_title ); ?></a>
+                        </h2>
+                        <p class="blog-featured-excerpt cs-featured-excerpt"><?php echo esc_html( wp_trim_words( $feat_excerpt, 32, '...' ) ); ?></p>
+                        <a href="<?php echo esc_url( $feat_url ); ?>" class="ch-pill-cta cs-featured-cta">
+                            <span>Baca Artikel Lengkap</span>
+                            <span class="ch-pill-cta-icon" aria-hidden="true">
+                                <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                            </span>
+                        </a>
+                    </div>
+                </article>
+            </section>
+        <?php endif; ?>
+
+        <!-- Band 3: Full-Width Horizontal Filter Toolbar + 3-Column Editorial Grid -->
+        <section class="cs-band ch-wrap" id="blog-grid" aria-labelledby="cs-articles-title">
+            <header class="ch-section-head">
+                <div>
+                    <span class="cs-pill-tag">Semua Artikel</span>
+                    <h2 id="cs-articles-title" class="ch-section-h2 ch-section-h2--sm">Arsip <span>Tulisan Terbaru</span></h2>
+                </div>
+            </header>
+
+            <div class="filter-panel cs-blog-toolbar">
+                <?php if ( $categories ) : ?>
+                    <ul class="cs-cat-pills" aria-label="Filter kategori artikel">
+                        <li>
+                            <button type="button" class="filter-btn <?php echo empty( $active_cat ) ? 'active' : ''; ?>" data-filter-type="cat" data-filter-val="">
+                                <span>Semua</span>
+                            </button>
+                        </li>
+                        <?php foreach ( $categories as $cat ) : ?>
+                            <li>
+                                <button type="button" class="filter-btn <?php echo ( $active_cat === $cat->slug ) ? 'active' : ''; ?>" data-filter-type="cat" data-filter-val="<?php echo esc_attr( $cat->slug ); ?>">
+                                    <span><?php echo esc_html( $cat->name ); ?></span>
+                                    <span class="filter-count"><?php echo (int) $cat->count; ?></span>
+                                </button>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+
+                <div class="cs-blog-controls">
+                    <div class="cs-blog-search-wrap">
+                        <label class="ch-sr-only" for="blog-search">Cari Artikel</label>
+                        <input type="text" id="blog-search" class="cs-toolbar-input" placeholder="Cari topik artikel..." value="<?php echo esc_attr( $search_init ); ?>">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                    </div>
+
+                    <div class="cs-blog-sort-wrap">
+                        <label class="ch-sr-only" for="blog-sort">Urutkan Artikel</label>
+                        <select id="blog-sort" class="cs-toolbar-select">
+                            <option value="newest" <?php selected( $sort_init, 'newest' ); ?>>Terbaru</option>
+                            <option value="oldest" <?php selected( $sort_init, 'oldest' ); ?>>Terlama</option>
+                            <option value="title_asc" <?php selected( $sort_init, 'title_asc' ); ?>>Judul (A–Z)</option>
+                        </select>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
-        </div>
-    </section>
+            <div id="blog-posts-grid" class="cs-blog-grid" role="list">
+                <?php if ( $blog_query->have_posts() ) : ?>
+                    <?php while ( $blog_query->have_posts() ) :
+                        $blog_query->the_post();
+                        $post_cats         = get_the_category();
+                        $cat_lbl           = $post_cats ? esc_html( $post_cats[0]->name ) : '';
+                        $card_words        = str_word_count( strip_tags( get_the_content() ) );
+                        $card_reading_time = max( 1, ceil( $card_words / 200 ) );
+                        ?>
+                        <article class="blog-card reveal" role="listitem" id="post-<?php the_ID(); ?>">
+                            <a href="<?php the_permalink(); ?>" class="blog-thumb" aria-label="Baca: <?php the_title_attribute(); ?>">
+                                <?php if ( has_post_thumbnail() ) : ?>
+                                    <?php echo wp_get_attachment_image( get_post_thumbnail_id(), 'indotech-card', false, [
+                                        'class'    => 'blog-img',
+                                        'loading'  => 'lazy',
+                                        'decoding' => 'async',
+                                        'sizes'    => '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 410px',
+                                    ] ); ?>
+                                <?php else : ?>
+                                    <div class="blog-img-placeholder"><span class="blog-placeholder-label">Indotech Journal</span></div>
+                                <?php endif; ?>
+                                <?php if ( $cat_lbl ) : ?>
+                                    <span class="blog-category"><?php echo $cat_lbl; ?></span>
+                                <?php endif; ?>
+                            </a>
+                            <div class="blog-body">
+                                <div class="blog-meta">
+                                    <time datetime="<?php echo esc_attr( get_the_date( 'Y-m-d' ) ); ?>"><?php echo esc_html( get_the_date( 'd M Y' ) ); ?></time>
+                                    <span class="blog-meta-sep" aria-hidden="true">·</span>
+                                    <span><?php the_author(); ?></span>
+                                    <span class="blog-meta-sep" aria-hidden="true">·</span>
+                                    <span><?php echo (int) $card_reading_time; ?> mnt baca</span>
+                                </div>
+                                <h3 class="blog-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <p class="blog-excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 22, '...' ) ); ?></p>
+                                <a href="<?php the_permalink(); ?>" class="blog-read-more" aria-label="Baca selengkapnya: <?php the_title_attribute(); ?>">
+                                    Baca Selengkapnya →
+                                </a>
+                            </div>
+                        </article>
+                    <?php endwhile;
+                    wp_reset_postdata(); ?>
+                <?php else : ?>
+                    <div class="blog-empty cs-empty-panel">
+                        <h3>Belum ada artikel pada filter ini</h3>
+                        <p>Coba kata kunci lain atau tampilkan kembali seluruh kategori artikel Indotech.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
 
-    <!-- Client Script for AJAX Blog Filtering -->
+            <div id="blog-pagination-wrap">
+                <?php
+                $total_pages  = $blog_query->max_num_pages;
+                $base_url     = strtok( get_permalink(), '?' );
+                $query_params = [];
+                if ( ! empty( $active_cat ) ) {
+                    $query_params['kategori'] = $active_cat;
+                }
+                if ( ! empty( $search_init ) ) {
+                    $query_params['s'] = $search_init;
+                }
+                if ( ! empty( $sort_init ) && $sort_init !== 'newest' ) {
+                    $query_params['sort_by'] = $sort_init;
+                }
+
+                if ( function_exists( 'indotech_get_pagination_html' ) ) {
+                    echo indotech_get_pagination_html( $paged, $total_pages, $base_url, $query_params, 'Navigasi halaman blog' );
+                }
+                ?>
+            </div>
+        </section>
+
+        <!-- Band 4: Dark Obsidian-Navy Formulasi Consultation Strip -->
+        <section class="cs-band cs-band--tight ch-wrap" aria-label="Konsultasi formulasi dan bahan baku">
+            <div class="cs-blog-cta-strip">
+                <div>
+                    <span class="cs-pill-tag cs-pill-tag--lime">Konsultasi B2B</span>
+                    <h2>Butuh Rekomendasi Formulasi atau Sampel Produk?</h2>
+                    <p>Tim R&amp;D dan konsultan Indotech siap membantu pemilihan bahan baku kimia, paket usaha, hingga jasa maklon berizin resmi.</p>
+                </div>
+                <a
+                    href="https://wa.me/<?php echo esc_attr( $blog_wa ); ?>?text=<?php echo rawurlencode( 'Halo Indotech, saya membaca blog Indotech dan ingin berkonsultasi seputar bahan baku kimia dan formulasi.' ); ?>"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="ch-pill-cta"
+                >
+                    <span>Chat Tim Teknis WhatsApp</span>
+                    <span class="ch-pill-cta-icon" aria-hidden="true">
+                        <?php get_template_part( 'template-parts/home/company-arrow' ); ?>
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <?php get_template_part( 'template-parts/home/company-cta' ); ?>
+    </div>
+
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const filterBtns  = document.querySelectorAll('.filter-panel .filter-btn');
-        const grid        = document.getElementById('blog-posts-grid');
-        const paginWrap   = document.getElementById('blog-pagination-wrap');
-        const searchInput = document.getElementById('blog-search');
-        const sortSelect  = document.getElementById('blog-sort');
+        const filterBtns      = document.querySelectorAll('.filter-panel .filter-btn');
+        const grid            = document.getElementById('blog-posts-grid');
+        const paginWrap       = document.getElementById('blog-pagination-wrap');
+        const searchInput     = document.getElementById('blog-search');
+        const sortSelect      = document.getElementById('blog-sort');
         const featuredSection = document.getElementById('blog-featured');
         if (!grid) return;
 
-        let activeCat     = "<?php echo esc_js($active_cat); ?>";
-        let activePage    = <?php echo (int)$paged; ?>;
-        let activeSort    = sortSelect ? sortSelect.value : "<?php echo esc_js($sort_init); ?>";
-        let searchQuery   = searchInput ? searchInput.value : "<?php echo esc_js($search_init); ?>";
+        let activeCat     = "<?php echo esc_js( $active_cat ); ?>";
+        let activePage    = <?php echo (int) $paged; ?>;
+        let activeSort    = sortSelect ? sortSelect.value : "<?php echo esc_js( $sort_init ); ?>";
+        let searchQuery   = searchInput ? searchInput.value : "<?php echo esc_js( $search_init ); ?>";
         let searchTimeout = null;
 
         function updateURL() {
             const url = new URL(window.location.href);
-            
+
             if (activePage > 1) {
                 url.searchParams.set('paged', activePage);
             } else {
                 url.searchParams.delete('paged');
             }
-            
+
             if (activeCat) {
                 url.searchParams.set('kategori', activeCat);
             } else {
                 url.searchParams.delete('kategori');
                 url.searchParams.delete('cat');
             }
-            
+
             if (searchQuery) {
                 url.searchParams.set('s', searchQuery);
             } else {
@@ -388,7 +386,7 @@ get_header();
             } else {
                 url.searchParams.delete('sort_by');
             }
-            
+
             history.pushState({
                 page: activePage,
                 cat: activeCat,
@@ -404,7 +402,6 @@ get_header();
                 updateURL();
             }
 
-            // Hide/Show Featured section based on state
             if (featuredSection) {
                 if (activeCat !== '' || searchQuery !== '' || activeSort !== 'newest' || activePage > 1) {
                     featuredSection.style.display = 'none';
@@ -450,7 +447,7 @@ get_header();
                 btn.addEventListener('click', function(e) {
                     if (e.metaKey || e.ctrlKey || e.shiftKey) return;
                     e.preventDefault();
-                    activePage = parseInt(this.dataset.page) || 1;
+                    activePage = parseInt(this.dataset.page, 10) || 1;
                     doFetch(true);
                     grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
@@ -464,18 +461,14 @@ get_header();
                     e.preventDefault();
                     if (searchInput) searchInput.value = '';
                     if (sortSelect) sortSelect.value = 'newest';
-                    
+
                     searchQuery = '';
                     activeSort = 'newest';
                     activeCat = '';
                     activePage = 1;
 
                     filterBtns.forEach(btn => {
-                        if (btn.dataset.filterVal === '') {
-                            btn.classList.add('active');
-                        } else {
-                            btn.classList.remove('active');
-                        }
+                        btn.classList.toggle('active', btn.dataset.filterVal === '');
                     });
 
                     doFetch(true);
@@ -485,7 +478,7 @@ get_header();
 
         window.addEventListener('popstate', function() {
             const urlParams = new URLSearchParams(window.location.search);
-            activePage  = parseInt(urlParams.get('paged')) || 1;
+            activePage  = parseInt(urlParams.get('paged'), 10) || 1;
             activeCat   = urlParams.get('kategori') || urlParams.get('cat') || '';
             searchQuery = urlParams.get('s') || '';
             activeSort  = urlParams.get('sort_by') || 'newest';
@@ -494,12 +487,7 @@ get_header();
             if (sortSelect) sortSelect.value = activeSort;
 
             filterBtns.forEach(btn => {
-                const val = btn.dataset.filterVal;
-                if (val === activeCat) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
+                btn.classList.toggle('active', btn.dataset.filterVal === activeCat);
             });
 
             doFetch(false);
@@ -509,11 +497,8 @@ get_header();
             searchInput.addEventListener('input', function() {
                 searchQuery = this.value;
                 activePage = 1;
-
                 clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    doFetch(true);
-                }, 400);
+                searchTimeout = setTimeout(() => doFetch(true), 400);
             });
         }
 
@@ -525,17 +510,13 @@ get_header();
             });
         }
 
-        // ── Filter Category Buttons ──────────────────────────────────
         filterBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-
                 const val = this.dataset.filterVal;
-
                 const siblings = this.closest('ul').querySelectorAll('.filter-btn');
                 siblings.forEach(s => s.classList.remove('active'));
                 this.classList.add('active');
-
                 activeCat  = val;
                 activePage = 1;
                 doFetch(true);
@@ -546,12 +527,6 @@ get_header();
         bindResetButton();
     });
     </script>
-
-    <!-- ════════════════════════════════════════════════════════
-         CTA BANNER
-    ════════════════════════════════════════════════════════ -->
-    <?php get_template_part( 'template-parts/home/company-cta' ); ?>
-
 </main>
 
 <?php get_footer(); ?>
