@@ -26,6 +26,8 @@
       nav.classList.remove('open');
       toggle.classList.remove('active');
       toggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
+      document.documentElement.classList.remove('nav-open');
       document.body.style.overflow = '';
     }
 
@@ -33,8 +35,10 @@
       const open = nav.classList.toggle('open');
       toggle.classList.toggle('active', open);
       toggle.setAttribute('aria-expanded', String(open));
+      document.body.classList.toggle('nav-open', open);
+      document.documentElement.classList.toggle('nav-open', open);
       document.body.style.overflow = open ? 'hidden' : '';
-      if (open && companyHomepage) nav.querySelector('a')?.focus();
+      if (open && companyHomepage) nav.querySelector('a')?.focus({ preventScroll: true });
     });
 
     // Close on link click

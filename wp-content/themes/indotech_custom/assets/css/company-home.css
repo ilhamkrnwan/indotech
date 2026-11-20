@@ -109,6 +109,7 @@
 .indotech-company-home .site-header {
   position: sticky;
   top: 0;
+  z-index: 1000;
   background: rgba(246, 247, 250, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -2116,16 +2117,37 @@
 }
 
 @media (max-width: 960px) {
+  .indotech-company-home .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+  }
+  body.nav-open .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+  }
+  body.nav-open {
+    overflow: hidden;
+    touch-action: none;
+  }
+  body.nav-open .primary-nav {
+    touch-action: pan-y;
+  }
   .indotech-company-home .menu-toggle {
     display: flex;
     width: 44px;
     height: 44px;
   }
   .indotech-company-home .primary-nav {
-    position: absolute;
+    position: fixed;
     top: var(--header-h);
     left: 0;
     right: 0;
+    bottom: 0;
+    width: 100%;
     height: calc(100dvh - var(--header-h));
     background: var(--ch-white);
     padding: 24px var(--ch-gutter) 40px;
@@ -2133,13 +2155,15 @@
     flex-direction: column;
     justify-content: flex-start;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     visibility: hidden;
     opacity: 0;
     clip-path: inset(0 0 100% 0);
     pointer-events: none;
     transform: none;
     transition: clip-path 0.42s var(--ch-ease), opacity 0.28s ease, visibility 0s linear 0.42s;
-    z-index: 999;
+    z-index: 1000;
   }
   .indotech-company-home .primary-nav.open {
     visibility: visible;
